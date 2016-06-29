@@ -12,7 +12,7 @@ class UsersController extends BaseController
      */
     public function index()
     {
-        $city = M('users_all'); // 实例化User对象
+        $city = M('users'); // 实例化User对象
         $count = $city->count();// 查询满足要求的总记录数
         $Page = new Page($count, 20);// 实例化分页类 传入总记录数和每页显示的记录数(25)
 
