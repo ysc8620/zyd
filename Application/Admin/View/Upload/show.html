@@ -1,0 +1,33 @@
+<style type="text/css">
+    .min-button{border: 1px solid #A8ADB6;border-radius: 2px 2px 2px 2px;cursor: pointer;display: inline-block;font-size: 12px;height: auto;line-height: 16px;overflow: visible;padding: 1px 4px;color: #666;background: linear-gradient(#FFFFFF, #F4F4F4) ;margin-right:0px;margin-left:3px;}
+    .min-button:hover {background: linear-gradient(#FFFFFF, #DDDDDD) ;}
+    .min-button:active {background: linear-gradient(#E2E2E2, #F7F7F7) ;}
+    a.min-button{color:#666}
+    .ui-button {border: 1px solid #A8ADB6;border-radius: 2px 2px 2px 2px;cursor: pointer;display: inline-block;font-size: 12px;height: auto;line-height: 15px;overflow: visible;padding: 3px 12px 4px;background: linear-gradient(#FFFFFF, #F4F4F4) ;}
+    .ui-button-sub{background: linear-gradient(#FFFFFF,#bcff69);}
+    a.ui-button {color: #333}
+    .ui-button:hover {background: linear-gradient(#FFFFFF, #DDDDDD);color:#333;}
+    .ui-button:active {background: linear-gradient(#E2E2E2, #F7F7F7);color:#333;}
+    /*input*/
+    input.blank,input.password,input.date,input.time,input.text,input.num {height: 16px;padding: 3px;border: 1px solid #bbb;background: #fff;line-height: 16px;}
+    input.date,input.time {padding: 3px 2px;font: 400 12px/16px Tahoma, Geneva, sans-serif !important;}
+    input.date {width:80px;}
+    input.time {width:40px;}
+    input.num{width:50px;}
+    input.short{width:100px;}
+    textarea {background: #fff;}
+    textarea.text {overflow: auto;padding: 2px 5px;border: 1px solid #bbb;font-size: 12px;line-height: 22px; min-width: 400px;}
+    input.disabled,.disabled {color: #ccc;background: #eee;cursor:text}
+    input.blank,textarea.blank {color: #ccc;background: #fff;}
+    input.radio,input.checkbox {margin-right: 3px;*margin-right: 2px;margin-bottom: 6px;cursor: pointer}
+    label.radio-for{cursor:pointer}
+    input.file {height: 24px;margin-bottom: 5px;}
+    label.lb-radio{cursor:pointer;}
+    label.disabled {color: #ccc !important;cursor: default !important;}
+    em.lb-next{font: 12px '宋体';margin: 0 5px;}
+</style>
+<form action="{:U('/admin/upload/upload')}" method="post" enctype="multipart/form-data" name="myform" id="myform">
+    <input name="sid" type="hidden" value="{$Think.get.sid|htmlspecialchars}"/>
+    <input name="fileback" type="hidden" value="{$Think.get.fileback|htmlspecialchars}"/>
+    <input type="file" name="upthumb" class="text" id="upthumb" style="height:28px;width:200px"> <input height="26" type="submit" value="上 传" class="ui-button"/>
+</form>

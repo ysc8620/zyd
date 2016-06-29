@@ -1,0 +1,115 @@
+/* CSS Document */
+@charset "utf-8";
+body,div,h1,h2,h3,h4,h5,h6,html,li,ol,p,ul{margin:0;padding:0}
+a,body,button,input{-webkit-tap-highlight-color:transparent}
+li,ol,ul{list-style:none}
+.body{background:#E3E3E3}
+a{text-decoration:none;font-size:100%;color:#55f}
+a:visited{color:#222}
+img{vertical-align:middle;width:100%}
+h1,h2,h3,h4,h5,h6{font-size:100%}
+input{outline:0}
+.clearfix:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0}
+html{font-size:100%}
+body{color:#333;font-family:'Helvetica Neue',Helvetica,'microsoft yahei',Arial,sans-serif;overflow-x:hidden;font-size:12px;}
+@media screen and (min-width:1024px){.wrapper{max-width:1024px;width:1024px}
+}
+.midBody{ width:100%; margin:0px auto;}
+
+.mzt-o-item {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    min-width: 320px;
+    max-width: 640px;
+    margin: 0 auto;
+    font-size: 32px;
+}
+
+.mzt-o-item .tpl_brand {
+    position: relative;
+    float: left;
+    width: 47.5%;
+    padding-bottom: 1px;
+    margin: 0 1.25% 14px;
+    background: #fff;
+}
+.mzt-o-item .gridItem_pic {
+    margin-bottom: 5px;
+    position: relative;
+    overflow: hidden;
+    height: 0;
+    padding-bottom: 100%;
+}
+body .lazy-load {
+    background: url(http://mst.vip.com/demo/image/img-loading.png) center center no-repeat;
+    -webkit-background-size: .6rem;
+    background-size: .6rem;
+}
+.mzt-o-item .gridItem_pic img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 100%;
+    max-height: 100%;
+}
+.mzt-o-item .tpl_brand_msg {
+    position: relative;
+}
+.mzt-o-item .gridItem_b_goods_name {
+    overflow: hidden;
+    width: 100%;
+    height: 1.5em;
+    padding: 0 .2em;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    font-size: .40625em;
+    line-height: 1.5em;
+    text-indent: .5em;
+    color: #000;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.mzt-o-item .gridItem_pricebox {
+    overflow: hidden;
+    height:auto;
+	padding-top:.4em;
+    background: #fff;
+    font-size: .40625em;
+}
+.mzt-o-item .gridItem_pricebox .gridItem_fl {
+    color: #515151;
+	float:left;
+    text-indent: .7em;
+	font-family:"微软雅黑";
+}
+.mzt-o-item .gridItem_pricebox .icon{ border-radius:8px; background:#f8a314; color:#fff; width:auto; float:right; padding:0.05em .4em 0.2em}
+.mzt-o-item .gridItem_pricebox .icon:hover{ background:#f87a14}
+
+/* CSS 详细页面 */
+.search{ width:auto; padding:.2em; overflow:hidden; position:relative;font-family:"微软雅黑";}
+.search .textInput{ width:80%; float:left; height:24px;text-indent: .2em;}
+.search .butInput{ width:16%; background:#3385ff; border:none; color:#fff; margin:0px; padding:0px; float:left; height:30px;}
+.del_img{ width:auto; position:relative;padding:.2em; overflow:hidden; display:block; border-bottom:1px solid #c1c1c1;font-family:"微软雅黑";}
+.del_img .serial{ width:9%; float:left;font-size:.40625em; margin-top:1.6em}
+.del_img .imgTou{ width:20%; float:left}
+.del_img .img{ width:30%; float:left}
+.del_img .text{ float:left; padding-top:.8em;font-size: .40625em; padding-left:1em}
+.del_img .text .icon{ display:inline-block; margin-top:.5em; border-radius:8px; background:#f8a314; color:#fff; padding:0.05em .4em 0.2em}
+.del_text {
+    overflow: hidden;
+    width:auto;
+    height: auto;
+    padding:.2em;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    font-size: .40625em;
+    line-height: 1.5em;
+    color: #000;
+	border-top:#CCC solid 1px;
+	padding-top:2px; position:relative;
+	font-family:"微软雅黑";
+}
+.bottomBut{ width:auto; position:fixed; bottom:0px;}
