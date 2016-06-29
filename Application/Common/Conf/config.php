@@ -6,11 +6,11 @@ $config = array(
     'TMPL_STRIP_SPACE'     =>true,
     'OUTPUT_ENCODE'        =>true, // 页面压缩输出
 
-    'MODULE_ALLOW_LIST'    =>    array('Home','Admin'),
+    'MODULE_ALLOW_LIST'    =>    array('Home','Admin','Api'),
     'DEFAULT_MODULE'       =>    'Home',  // 默认模块
 
     //加密混合值
-    'AUTH_CODE' => 'HunDongV4',
+    'AUTH_CODE' => 'ZhangYuDiV1',
     //数据库配置
     'URL_CASE_INSENSITIVE' => true,
     'URL_HTML_SUFFIX' => 'html',
@@ -36,14 +36,6 @@ $config = array(
     //////////////////////////////////////////////////
     'TAGLIB_BUILD_IN' => 'cx',//芝麻乐标签库
     //'TAGLIB_PRE_LOAD' => '',//芝麻乐命名范围
-
-    'weixin' => array(
-        'red_token' =>'',
-        'encodingaeskey' => '',
-        'appid' => '',
-        'appsecret'=>''
-    )
-
 );
 
 $self_config = APP_PATH .'/Runtime/Conf/config.php';
