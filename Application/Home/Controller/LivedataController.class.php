@@ -15,7 +15,7 @@ class LivedataController extends BaseController {
         $data['get'] = $_GET;
 
         $str = date("Y-m-d H:i:s")."==========================================\r\n";
-        $str .= json_encode($data);
+        $str .= json_encode($data)."\r\n";
         $str .= date("Y-m-d H:i:s")."==========================================\r\n";
         \Org\Util\File::write_file(APP_PATH .'/post.log',$str,'a+');
         echo "ok";
