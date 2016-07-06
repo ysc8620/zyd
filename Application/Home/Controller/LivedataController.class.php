@@ -10,27 +10,26 @@ class LivedataController extends BaseController {
      *
      */
     public function index(){
-        //$data['post_data'] = file_get_contents("php://input");
         $data = $_POST['data'];
         if($data){
-            if(strpos($data,'Soccer') === false){
-                $str = date("Y-m-d H:i:s")."==========================================\r\n";
+            if(strpos($data,'Soccer') !== false){
+                $h = array(
+                    'post_data'=>$data,
+                    'addtime'=>date("Y-m-d H:i:s")
+                );
+                M('post')->add($h);
+                $str = date("Y-m-d H:i:s")."start===========\r\n";
                 $str .= json_encode($data)."\r\n";
-                $str .= date("Y-m-d H:i:s")."==========================================\r\n";
+                $str .= date("Y-m-d H:i:s")."end===========\r\n";
                 \Org\Util\File::write_file(APP_PATH .'/post.log',$str,'a+');
+
+
             }else{
-                $str = date("Y-m-d H:i:s")."==========================================\r\n";
+                $str = date("Y-m-d H:i:s")."start===========\r\n";
                 $str .= json_encode($data)."\r\n";
-                $str .= date("Y-m-d H:i:s")."==========================================\r\n";
+                $str .= date("Y-m-d H:i:s")."end===========\r\n";
                 \Org\Util\File::write_file(APP_PATH .'/other_post.log',$str,'a+');
             }
         }
-//        //$data['get'] = $_GET;
-//
-//        $str = date("Y-m-d H:i:s")."==========================================\r\n";
-//        $str .= json_encode($data)."\r\n";
-//        $str .= date("Y-m-d H:i:s")."==========================================\r\n";
-//        \Org\Util\File::write_file(APP_PATH .'/post.log',$str,'a+');
-        echo "ok";
     }
 }
