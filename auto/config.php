@@ -11,6 +11,31 @@
 
 // 应用入口文件
 
+
+
+header("Content-type:text/html;charset=utf-8");
+echo "start\r\n".date("Y-m-d H:i:s")."\r\n";
+global $mongo;
+/**
+ *
+ */
+function _shutdown_handler(){
+    global $mongo;
+    try{
+        $mongo->close();
+    }catch (\Exception $e){
+        print_r($e);
+    }
+    echo microtime(true);
+}
+register_shutdown_function(_shutdown_handler);
+
+try{
+    $mongo = new \Mongo("mongodb://root:LEsc123456@localhost:27017");
+}catch (\Exception $e){
+    exit('mongodb连接失败');
+}
+
 // 检测PHP环境
 if(version_compare(PHP_VERSION,'5.3.0','<'))  die('require PHP > 5.3.0 !');
 
