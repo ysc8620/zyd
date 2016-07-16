@@ -82,7 +82,7 @@ do{
         $match = $curr->findOne(array('match_id'=>$match_id));
         if($match){
             $asia_info = array_merge((array)$match['asia'], $data);
-            $curr->update(array('_id'=>$match['_id']) ,array('asia'=>$asia_info));
+            $curr->update(array('_id'=>$match['_id']) ,array('$set'=>array('asia'=>$asia_info)));
         }else{
             $full_data = [
                 'match_id' => $match_id,
@@ -112,7 +112,7 @@ do{
         $match = $curr->findOne(array('match_id'=>$match_id));
         if($match){
             $oupei_info = array_merge((array)$match['oupei'], $data);
-            $curr->update(array('_id'=>$match['_id']) ,array('oupei'=>$oupei_info));
+            $curr->update(array('_id'=>$match['_id']) ,array('$set'=>array('oupei'=>$oupei_info)));
         }else{
             $full_data = [
                 'match_id' => $match_id,
@@ -142,7 +142,7 @@ do{
         $match = $curr->findOne(array('match_id'=>$match_id));
         if($match){
             $daxia_info = array_merge((array)$match['daxiaoqiu'], $data);
-            $curr->update(array('_id'=>$match['_id']) ,array('daxiaoqiu'=>$daxia_info));
+            $curr->update(array('_id'=>$match['_id']) ,array('$set'=>array('daxiaoqiu'=>$daxia_info)));
         }else{
             $full_data = [
                 'match_id' => $match_id,
@@ -172,7 +172,7 @@ do{
         $match = $curr->findOne(array('match_id'=>$match_id));
         if($match){
             $half_info = array_merge((array)$match['half'], $data);
-            $curr->update(array('_id'=>$match['_id']) ,array('half'=>$half_info));
+            $curr->update(array('_id'=>$match['_id']) ,array('$set'=>array('half'=>$half_info)));
         }else{
             $full_data = [
                 'match_id' => $match_id,
@@ -202,7 +202,7 @@ do{
         $match = $curr->findOne(array('match_id'=>$match_id));
         if($match){
             $half_daxiaoqiu_info = array_merge((array)$match['half_daxiaoqiu'], $data);
-            $curr->update(array('_id'=>$match['_id']) ,array('half_daxiaoqiu'=>$half_daxiaoqiu_info));
+            $curr->update(array('_id'=>$match['_id']) ,array('$set'=>array('half_daxiaoqiu'=>$half_daxiaoqiu_info)));
         }else{
             $full_data = [
                 'match_id' => $match_id,
