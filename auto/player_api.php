@@ -17,7 +17,7 @@ require_once 'config.php';
 do{
     global $mongo;
     $curr = $mongo->zyd->player;
-    $postStr = file_get_contents("http://interface.win007.com/zq/Player_XML.aspx?day=60");
+    $postStr = file_get_contents("http://interface.win007.com/zq/Player_XML.aspx?day=1");
     $obj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
     $data = json_decode(json_encode($obj), true);
 
