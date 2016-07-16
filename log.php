@@ -13,17 +13,13 @@
 //
 //}
 
-$data = file_get_contents('./log.log');
-$data = explode("\r\n", $data);
-foreach ($data as $item) {
+$postStr = file_get_contents('./baiou.log');
+$obj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
+$data = json_decode(json_encode($obj), true);
 
-    if(strpos($item,'rq[') !== false){
-        preg_match_all("/\"(.*?)\"/i", $item, $res);
-        if($res[0]){
-            if($res[1][0]){
-                $row = explode('^', $res[1][0]);
-                // print_r($row);
-            }
-        }
+foreach($data['h'] as $item){
+    // print_r($item);;
+    foreach($item['odds'] as $odds){
+
     }
 }

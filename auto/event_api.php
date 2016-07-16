@@ -34,9 +34,9 @@ do{
                         'player_id' => $row[5],
                         'player_name' => $row[6],
                     ];
-                    $team = $curr->findOne(array('match_id'=>$info['match_id'], 'time'=>$info['time']));
-                    if($team){
-                        $curr->update(array('_id'=>$team['_id']), array('$set'=>$info));
+                    $event = $curr->findOne(array('match_id'=>$info['match_id'], 'time'=>$info['time']));
+                    if($event){
+                        $curr->update(array('_id'=>$event['_id']), array('$set'=>$info));
                     }else{
                         $curr->insert($info);
                     }
