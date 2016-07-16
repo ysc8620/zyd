@@ -16,7 +16,7 @@ require_once 'config.php';
 //mongodb://admin_miss:miss@localhost:27017/test
 do{
     global $mongo;
-    $curr = $mongo->zyd->baiou;
+    $curr = $mongo->zyd->yapei;
 //    $curr_league = $mongo->zyd->league;
 //    $curr_match = $mongo->zyd->match;
     $postStr = file_get_contents("http://interface.win007.com/zq/odds.aspx");
