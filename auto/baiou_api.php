@@ -46,7 +46,7 @@ do{
             ];
             $baiou = $curr->findOne(array('match_id'=>$info['match_id']));
             if($baiou){
-                $info['odds'] = array_merge($baiou['odds'], $info['odds']);
+                $info['odds'] = array_merge((array)$baiou['odds'], $info['odds']);
                 $curr->update(array('_id'=>$baiou['_id']), array('$set'=>$info));
             }else{
                 $curr->insert($info);
