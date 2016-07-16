@@ -11,10 +11,7 @@
 
 // 应用入口文件
 
-
-
 header("Content-type:text/html;charset=utf-8");
-echo "start\r\n".date("Y-m-d H:i:s")."\r\n";
 global $mongo;
 /**
  *
@@ -28,7 +25,7 @@ function _shutdown_handler(){
     }
     echo microtime(true);
 }
-register_shutdown_function(_shutdown_handler);
+register_shutdown_function('_shutdown_handler');
 
 try{
     $mongo = new \Mongo("mongodb://root:LEsc123456@localhost:27017");
