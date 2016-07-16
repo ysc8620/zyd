@@ -20,7 +20,7 @@ do{
     $postStr = file_get_contents("http://interface.win007.com/zq/Referee.aspx");
     $obj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
     $data = json_decode(json_encode($obj), true);
-    
+
     foreach($data['i'] as $item){
         $info = [
             'schedule_id' => $item['scheduleID'],
@@ -33,7 +33,7 @@ do{
             'country' => $item['country'],
             'photo' => $item['Photo'],
         ];
-        $referee = $curr->findOne(array('referee_id'=>$item['referee_id']));
+        $referee = $curr->findOne(array('referee_id'=>$info['referee_id']));
         if($referee){
             $curr->update(array('referee_id'=>$info['referee_id']), array('$set'=>$info));
         }else{
