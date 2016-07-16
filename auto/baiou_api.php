@@ -42,7 +42,7 @@ do{
                 'away_win' => $row[6],
                 'away_win' => $row[7],
                 'change_time' => $row[8],
-                'info' => $row[9]
+               // 'info' => $row[9]
             ];
             $baiou = $curr->findOne(array('match_id'=>$info['match_id']));
             if($baiou){
