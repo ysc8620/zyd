@@ -12,7 +12,7 @@ class IndexController extends BaseController {
     public function index(){
 
         header("Content-type:text/html;charset=utf-8");
-        echo 'ok';
+        echo 'ok='.date("Y-m-d H:i:s");
     }
 
     /**

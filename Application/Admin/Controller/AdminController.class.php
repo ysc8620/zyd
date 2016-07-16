@@ -86,10 +86,16 @@ class AdminController extends BaseController
         if(IS_POST){
             $config = (array)$_POST['config'];
             arr2file(APP_PATH .'/Runtime/Conf/config.php',$config);
-            @unlink(APP_PATH .'/Runtime/common~runtime.php');
+            if(file_exists(APP_PATH .'/Runtime/common~runtime.php')){
+                unlink(APP_PATH .'/Runtime/common~runtime.php');
+            }
             return $this->success('保存成功', tsurl('admin/set'));
         }
-        $config = (array)@include(APP_PATH .'/Runtime/Conf/config.php');
+        $config = array();
+        if(file_exists(APP_PATH .'/Runtime/Conf/config.php')){
+            $config = include(APP_PATH .'/Runtime/Conf/config.php');
+        }
+
         $this->assign('config', $config);
         $this->display();
     }
