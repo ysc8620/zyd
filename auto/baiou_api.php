@@ -17,16 +17,22 @@ require_once 'config.php';
 do{
     global $mongo;
     $curr = $mongo->zyd->baiou;
-    $postStr = file_get_contents("http://interface.win007.com/zq/1x2.aspx");
+    $postStr = file_get_contents("http://interface.win007.com/zq/1x2.aspx?day=1");
     $obj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
     $data = json_decode(json_encode($obj), true);
 
     foreach($data['h'] as $item){
+        $info = [
+            'match_id' => $item['id'],
+            'time' => $item['time'],
+            'league' => $item['league'],
+            'home' => $item['home'],
+            'away' => $item['away'],
+            'odds' => []
+        ];
         foreach($item['odds']['o'] as $odds){
             $row = explode(',', $odds);
-            $info = [
-                'match_id' => $item['id'],
-                'time' => $item['time'],
+            $info['odds'][$row[0]] = [
                 'company_id' => $row[0],
                 'company_name' => $row[1],
                 'begin_home_win' => $row[2],
@@ -37,9 +43,8 @@ do{
                 'away_win' => $row[7],
                 'change_time' => $row[8],
                 'info' => $row[9]
-
             ];
-            $baiou = $curr->findOne(array('match_id'=>$info['match_id'], 'company_id'=>$info['info']));
+            $baiou = $curr->findOne(array('match_id'=>$info['match_id']));
             if($baiou){
                 $curr->update(array('_id'=>$baiou['_id']), array('$set'=>$info));
             }else{
