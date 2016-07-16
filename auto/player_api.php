@@ -22,7 +22,7 @@ do{
     $data = json_decode(json_encode($obj), true);
 
 
-    foreach($data as $item){
+    foreach($data['i'] as $item){
         $info = [
             'from_id'   => $item['id'],
             'player_id' => $item['PlayerID'],
