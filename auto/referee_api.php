@@ -27,7 +27,7 @@ do{
             'type_id' => $item['typeID'],
             'referee_id' => $item['refereeID'],
             'cn_name' => $item['Name_J'],
-            'tw_name' => $item['Name_F'],
+            'tw_name' => $item['name_f'],
             'en_name' => $item['Name_E'],
             'birthday' => $item['Birthday'],
             'country' => $item['country'],
