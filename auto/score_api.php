@@ -17,23 +17,20 @@ require_once 'config.php';
 do{
     global $mongo;
     $curr = $mongo->zyd->match;
-    $date = date("Y-m-d");
-    $postStr = file_get_contents("http://interface.win007.com/zq/BF_XML.aspx?date={$date}");
+    $postStr = file_get_contents("http://interface.win007.com/zq/today.aspx");
     $obj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
     $data = json_decode(json_encode($obj), true);
 
     foreach($data['match'] as $item){
         $home = explode(',',trim($item['h']));
         $away = explode(',',trim($item['i']));
-        $league = explode(',', $item['c']);
+
         $info = [
-            'match_id' => $item['a'],
-            'color'     => $item['b'],
-            'league'    => $item['c'],
-            'league_id' => $league[3],
-            'league_name' => $league[0],
+            'match_id' => $item['ID'],
+            'color'     => $item['color'],
+            'league'    => $item['league'],
             'time'      => $item['d'],
-            'sub_league'      => $item['e'],
+            'kind'      => $item['e'],
             'state'     => $item['f'],
             'home'      => $item['h'],
             'home_name' => $home[0],
