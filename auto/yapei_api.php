@@ -76,7 +76,9 @@ do{
             'change_home_rate' => $info[6],
             'change_away_rate' => $info[7],
             'is_inclose' => $info[8],
-            'is_walk' => $info[9]
+            'is_walk' => $info[9],
+            'update_time' => time(),
+            'update_date' => date('Y-m-d H:i:s')
         ];
 
         $match = $curr->findOne(array('match_id'=>$match_id));
@@ -106,7 +108,9 @@ do{
             'begin_away_rate' => $info[4],
             'change_home_rate' => $info[5],
             'change_draw_rate' => $info[6],
-            'change_away_rate' => $info[7]
+            'change_away_rate' => $info[7],
+            'update_time' => time(),
+            'update_date' => date('Y-m-d H:i:s')
         ];
 
         $match = $curr->findOne(array('match_id'=>$match_id));
@@ -136,7 +140,9 @@ do{
             'begin_small_rate' => $info[4],
             'change_rate' => $info[5],
             'change_big_rate' => $info[6],
-            'change_small_rate' => $info[7]
+            'change_small_rate' => $info[7],
+            'update_time' => time(),
+            'update_date' => date('Y-m-d H:i:s')
         ];
 
         $match = $curr->findOne(array('match_id'=>$match_id));
@@ -166,7 +172,9 @@ do{
             'begin_small_rate' => $info[4],
             'change_rate' => $info[5],
             'change_big_rate' => $info[6],
-            'change_small_rate' => $info[7]
+            'change_small_rate' => $info[7],
+            'update_time' => time(),
+            'update_date' => date('Y-m-d H:i:s')
         ];
 
         $match = $curr->findOne(array('match_id'=>$match_id));
@@ -196,7 +204,9 @@ do{
             'begin_small_rate' => $info[4],
             'change_rate' => $info[5],
             'change_big_rate' => $info[6],
-            'change_small_rate' => $info[7]
+            'change_small_rate' => $info[7],
+            'update_time' => time(),
+            'update_date' => date('Y-m-d H:i:s')
         ];
 
         $match = $curr->findOne(array('match_id'=>$match_id));

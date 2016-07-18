@@ -40,7 +40,9 @@ do{
             'introduce' => $item['Introduce'],
             'team_id'  => $item['TeamID'],
             'place'    => $item['Place'],
-            'number'   => $item['Number']
+            'number'   => $item['Number'],
+            'update_time' => time(),
+            'update_date' => date('Y-m-d H:i:s')
         ];
         $player = $curr->findOne(array('player_id'=>$item['PlayerID']));
         if($player){

@@ -33,6 +33,8 @@ do{
                         'player' => $row[4],
                         'player_id' => $row[5],
                         'player_name' => $row[6],
+                        'update_time' => time(),
+                        'update_date' => date('Y-m-d H:i:s')
                     ];
                     $event = $curr->findOne(array('match_id'=>$info['match_id'], 'time'=>$info['time']));
                     if($event){

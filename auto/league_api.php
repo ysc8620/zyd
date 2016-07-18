@@ -38,6 +38,8 @@ do{
             'country_id' => $item['countryID'],
             'country_name' => $item['country'],
             'area_id' => $item['areaID'],
+            'update_time' => time(),
+            'update_date' => date('Y-m-d H:i:s')
         ];
         $team = $curr->findOne(array('league_id'=>$info['league_id']));
         if($team){

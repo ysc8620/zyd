@@ -32,6 +32,8 @@ do{
             'birthday' => $item['Birthday'],
             'country' => $item['country'],
             'photo' => $item['Photo'],
+            'update_time' => time(),
+            'update_date' => date('Y-m-d H:i:s')
         ];
         $referee = $curr->findOne(array('referee_id'=>$info['referee_id']));
         if($referee){

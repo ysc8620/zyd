@@ -36,6 +36,8 @@ do{
             'addr' => $item['addr'],
             'url' => $item['URL'],
             'master' => $item['master'],
+            'update_time' => time(),
+            'update_date' => date('Y-m-d H:i:s')
         ];
         $team = $curr->findOne(array('team_id'=>$info['team_id']));
         if($team){

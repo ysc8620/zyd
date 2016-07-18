@@ -28,7 +28,9 @@ do{
             'league' => $item['league'],
             'home' => $item['home'],
             'away' => $item['away'],
-            'odds' => []
+            'odds' => [],
+            'update_time' => time(),
+            'update_date' => date('Y-m-d H:i:s')
         ];
         foreach($item['odds']['o'] as $odds){
             $row = explode(',', $odds);
@@ -42,6 +44,8 @@ do{
                 'away_win' => $row[6],
                 'away_win' => $row[7],
                 'change_time' => $row[8],
+                'update_time' => time(),
+                'update_date' => date('Y-m-d H:i:s')
                // 'info' => $row[9]
             ];
             $baiou = $curr->findOne(array('match_id'=>$info['match_id']));
