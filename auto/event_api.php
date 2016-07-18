@@ -65,7 +65,7 @@ do{
                                 'away' => $list[2]
                             ];
                         }
-                        $curr->update(array('match_id'=>$match_id), array('$set'=>array('technic' =>$technic)));
+                        $curr_match->update(array('match_id'=>$match_id), array('$set'=>array('technic' =>$technic)));
                     }
                 }
             }
