@@ -24,7 +24,6 @@ function _shutdown_handler(){
     }catch (\Exception $e){
         print_r($e);
     }
-    echo microtime(true);
 }
 register_shutdown_function('_shutdown_handler');
 

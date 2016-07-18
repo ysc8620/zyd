@@ -12,7 +12,7 @@
 namespace auto;
 // 检测PHP环境
 require_once __DIR__ .'/config.php';
-
+echo date("Y-m-d")."=change_api=\r\n";
 //mongodb://admin_miss:miss@localhost:27017/test
 do{
     global $mongo;
