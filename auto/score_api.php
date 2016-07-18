@@ -57,7 +57,10 @@ do{
             'is_neutral' => $item['zl'],
             'is_tv' => $item['tv'],
             'is_lineup' => $item['lineup'],
-            'explain2' => $item['explain2']
+            'explain2' => $item['explain2'],
+            'update_time' => time(),
+            'update_date' => date('Y-m-d H:i:s'),
+            'last_update_event' => 'score'
         ];
         $team = $curr->findOne(array('match_id'=>$info['match_id']));
         if($team){

@@ -57,7 +57,10 @@ do{
             'temperature' => $item['w'],
             'match_league' => $item['x'],
             'group' =>$item['y'],
-            'is_neutral' => $item['z']
+            'is_neutral' => $item['z'],
+            'update_time' => time(),
+            'update_date' => date('Y-m-d H:i:s'),
+            'last_update_event' => 'match'
         ];
         $team = $curr->findOne(array('match_id'=>$info['match_id']));
         if($team){

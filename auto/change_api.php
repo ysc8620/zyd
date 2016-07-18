@@ -36,8 +36,10 @@ do{
             'time2'     => $change[9],
             'is_lineup' => $change[11],
             'home_yellow' => $change[12],
-            'away_yellow' => $change[13]
-
+            'away_yellow' => $change[13],
+            'update_time' => time(),
+            'update_date' => date('Y-m-d H:i:s'),
+            'last_update_event' => 'chnage'
         ];
         $match_info = $curr->findOne(array('match_id'=>$match['match_id']));
         if($match_info){
