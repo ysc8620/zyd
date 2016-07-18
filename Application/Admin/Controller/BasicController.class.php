@@ -11,7 +11,11 @@ class BasicController extends BaseController {
         $curr = $mongo->zyd->league;
         $page = I('p',1,'intval');
         $total = $curr->count();
-        $list = $curr->find()->sort(array('update_time'=>-1))->skip( ($page-1)*20)->limit(20);
+        $obj = $curr->find()->sort(array('update_time'=>-1))->skip( ($page-1)*20)->limit(20);
+        $list = [];
+        while($row = $obj->hasNext()){
+            $list[] = $obj->getNext();
+        }
         print_r($list);
         $page = new \Think\Page($total, 20);
         $this->assign('page', $page->show());
