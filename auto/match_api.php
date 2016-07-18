@@ -11,7 +11,7 @@
 // 应用入口文件
 namespace auto;
 // 检测PHP环境
-require_once 'config.php';
+require_once __DIR__ .'/config.php';
 
 //mongodb://admin_miss:miss@localhost:27017/test
 do{
