@@ -1,6 +1,6 @@
 <?php	return array (
    // 'DB_DEPLOY_TYPE'=> true,
-    'MONGO_HOST' => 'location',
+    'MONGO_HOST' => 'localhost',
     'MONGO_USER' => 'root',
     'MONGO_NAME' => 'zyd',
     'MONGO_PWD'  => 'LEsc123456',
