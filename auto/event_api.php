@@ -17,6 +17,7 @@ echo date("Y-m-d H:i:s")."=event_api=\r\n";
 do{
     global $mongo;
     $curr = $mongo->zyd->event;
+    $curr_match = $mongo->zyd->match;
     $postStr = file_get_contents("http://interface.win007.com/zq/detail.aspx");
     $data = explode("\r\n", $postStr);
     foreach ($data as $item) {
@@ -44,6 +45,31 @@ do{
                     }
                 }
             }
+        }elseif(strpos($item,'TC[') !== false){
+            preg_match_all("/\"(.*?)\"/i", $item, $res);
+            if($res[0]){
+                if($res[1][0]){
+                    $info = explode('^', $res[1][0]);
+                    $match_id = $info[0];
+                    $match_info = $curr_match->findOne(array('match_id'=>$match_id));
+                    if($match_info){
+                        $technic = (array)$match_info['technic'];
+                        $info = explode(';', trim($info[1]));
+                        $technic['update_time'] = time();
+                        $technic['update_date'] = date('Y-m-d H:i:s');
+                        $technic['last_update_event'] = 'event';
+                        foreach($info as $row){
+                            $list = explode(',', $row);
+                            $technic['id'.$list[0]] = [
+                                'home' => $list[1],
+                                'away' => $list[2]
+                            ];
+                        }
+                        $curr->update(array('match_id'=>$match_id), array('$set'=>array('technic' =>$technic)));
+                    }
+                }
+            }
+
         }
     }
 

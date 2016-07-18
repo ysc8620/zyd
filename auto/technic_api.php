@@ -26,6 +26,9 @@ do{
         $match_info = $curr->findOne(array('match_id'=>$match_id));
         if($match_info){
             $technic = (array)$match_info['technic'];
+            $technic['update_time'] = time();
+            $technic['update_date'] = date('Y-m-d H:i:s');
+            $technic['last_update_event'] = 'technic';
             $info = explode(';', trim($item['TechnicCount']));
             foreach($info as $row){
                 $list = explode(',', $row);
