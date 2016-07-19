@@ -52,6 +52,8 @@
                 return false;
             }
 
+            var sign = $.trim($('input[name="sign"]').val());
+
             var contact = $.trim($('input[name="contact"]').val());
             if(contact.length < 1){
                 layer.msg("请输入联系方式~", function(){});
@@ -68,7 +70,7 @@
                 type: "post",
                 url: "{:U('/response/post')}",
                 dataType: "json",
-                data:{username:username, contact:contact, content:content},
+                data:{username:username, contact:contact, content:content,sign:sign},
                 success: function (data) {
                     if(data.state == 1){
                         layer.msg('感谢您的反馈信息~', function(){});
