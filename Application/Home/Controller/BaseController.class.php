@@ -8,6 +8,7 @@ class BaseController extends Controller {
 
     public $wechat = null;
     public $from = 0;
+    public static $mongo = null;
 
     /**
      * 初始化操作
