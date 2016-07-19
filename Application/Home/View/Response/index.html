@@ -74,6 +74,7 @@
                 success: function (data) {
                     if(data.state == 1){
                         layer.msg('感谢您的反馈信息~');
+                        window.location.reload();
                         return false;
                     }else{
                         layer.msg(data.msg, function(){});
