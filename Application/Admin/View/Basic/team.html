@@ -51,9 +51,9 @@
                                         <td>{$item.team_id}</td>
                                         <td>{$item.cn_name}</td>
                                         <td>{$item.league_id}</td>
-                                        <td>{$item[found]|default=""}</td>
-                                        <td>{$item[area]|default=""}</td>
-                                        <td>{$item[url]|default=""}</td>
+                                        <td><if condition="empty($item[found])"><else/>{$item[found]}</if></td>
+                                        <td><if condition="empty($item[found])"><else/>{$item[area]}</if></td>
+                                        <td><if condition="empty($item[found])"><else/>{$item[url]|}</if></td>
                                         <td class="center">
                                             <a href="{:U('basic/league_edit', ['id' => $item['league_id']])}"><i class="fa fa-check text-navy"></i>详情</a>
                                         </td>
