@@ -26,16 +26,16 @@ class ResponseController extends BaseController {
         $mongo = $this->initMongo();
         $curr = $mongo->zyd->response;
         do{
-            $sign = I('sign','','strval');
+            $sign = I('post.sign','','strval');
             if($sign != session('sign')){
                 $json['state'] = 2;
                 $json['msg'] = '验证不通过~';
                 break;
             }
 
-            $data['username'] = I('username','','strip_tags,htmlspecialchars');
-            $data['contact'] = I('contact','','strip_tags,htmlspecialchars');
-            $data['content'] = I('content','','strip_tags,htmlspecialchars');
+            $data['username'] = I('post.username','','strip_tags,htmlspecialchars');
+            $data['contact'] = I('post.contact','','strip_tags,htmlspecialchars');
+            $data['content'] = I('post.content','','strip_tags,htmlspecialchars');
             $curr->insert($data);
 
         }while(false);
