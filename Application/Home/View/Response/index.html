@@ -67,7 +67,7 @@
                 return false;
             }
             var index = layer.load(1, {
-                shade: [0.1,'#000'] //0.1透明度的白色背景
+                shade: [0.5,'#000'] //0.1透明度的白色背景
             });
             $.ajax({
                 type: "post",
@@ -77,8 +77,11 @@
                 success: function (data) {
                     //layer.close(index);
                     if(data.state == 1){
+                        $('input[name="username"]').val('')
+                        $('input[name="contact"]').val('')
+                        $('input[textarea="content"]').val('')
                         layer.msg('感谢您的反馈信息~');
-                        setTimeout(function(){window.location.reload()},2000);
+                        // setTimeout(function(){window.location.reload()},2000);
                         return false;
                     }else{
                         layer.msg(data.msg, function(){});
