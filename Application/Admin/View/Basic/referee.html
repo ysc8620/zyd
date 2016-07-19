@@ -49,7 +49,7 @@
                                     <tr class="gradeX">
                                         <td>{$item.referee_id}</td>
                                         <td>{$item.cn_name}</td>
-                                        <td><if condition="$item.type_id eq 1">主裁判<elseif condition="$item.type_id eq 2" />助理裁判<ekse/>第四官员</if></td>
+                                        <td><if condition="$item.type_id eq 1">主裁判<elseif condition="$item.type_id eq 2" />助理裁判<else/>第四官员</if></td>
                                         <td><if condition="empty($item.country)"><else />{$item.country}</if></td>
                                         <td><if condition="empty($item.birthday)"><else />{$item.birthday}</if></td>
                                         <td class="center">
