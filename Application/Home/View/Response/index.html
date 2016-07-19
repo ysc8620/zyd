@@ -53,6 +53,10 @@
             }
 
             var contact = $.trim($('input[name="contact"]').val());
+            if(contact.length < 1){
+                layer.msg("请输入联系方式~", function(){});
+                return false;
+            }
 
             var content = $.trim($('textarea[name="content"]').val());
             if(content.length < 3){
