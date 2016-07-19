@@ -11,7 +11,7 @@ class BasicController extends BaseController {
         $curr = $mongo->zyd->league;
         $page = I('p',1,'intval');
         $total = $curr->count();
-        $obj = $curr->find()->sort(array('league_id'=>-1))->skip( ($page-1)*20)->limit(20);
+        $obj = $curr->find()->sort(array('league_id'=>1))->skip( ($page-1)*20)->limit(20);
         $list = [];
         while($row = $obj->hasNext()){
             $list[] = $obj->getNext();
@@ -51,7 +51,7 @@ class BasicController extends BaseController {
         $curr = $mongo->zyd->team;
         $page = I('p',1,'intval');
         $total = $curr->count();
-        $obj = $curr->find()->sort(array('team_id'=>-1))->skip( ($page-1)*20)->limit(20);
+        $obj = $curr->find()->sort(array('team_id'=>1))->skip( ($page-1)*20)->limit(20);
         $list = [];
         while($row = $obj->hasNext()){
             $list[] = $obj->getNext();
@@ -125,7 +125,7 @@ class BasicController extends BaseController {
         $curr = $mongo->zyd->referee;
         $page = I('p',1,'intval');
         $total = $curr->count();
-        $obj = $curr->find()->sort(array('referee_id'=>-1))->skip( ($page-1)*20)->limit(20);
+        $obj = $curr->find()->sort(array('referee_id'=>1))->skip( ($page-1)*20)->limit(20);
         $list = [];
         while($row = $obj->hasNext()){
             $list[] = $obj->getNext();
