@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>联赛管理-后台系统</title>
-    <meta name="keywords" content="用户管理">
-    <meta name="description" content="用户管理">
+    <title>球队管理-后台系统</title>
+    <meta name="keywords" content="球队管理">
+    <meta name="description" content="球队管理">
     <link rel="shortcut icon" href="favicon.ico">
     <link href="__PUBLIC__/admin/css/bootstrap.min.css?v=3.3.5" rel="stylesheet">
     <link href="__PUBLIC__/admin/css/font-awesome.css?v=4.4.0" rel="stylesheet">
@@ -21,7 +21,7 @@
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>联赛管理</h5>
+                    <h5>球队管理</h5>
                     <!--
                     <div class="ibox-tools"> <a class="collapse-link"> <i class="fa fa-chevron-up"></i> </a> <a class="dropdown-toggle" data-toggle="dropdown" href="table_data_tables.html#"> <i class="fa fa-wrench"></i> </a>
                       <ul class="dropdown-menu dropdown-user">
@@ -36,28 +36,23 @@
                             <table class="table table-striped table-bordered table-hover" id="editable">
                                 <thead>
                                 <tr>
-                                    <th>联赛ID</th>
-                                    <th>联赛名称</th>
-                                    <th>联赛类型</th>
-                                    <th>总伦次</th>
-                                    <th>当前轮</th>
-                                    <th>当前赛季</th>
-                                    <th>所属国家</th>
-                                    <th>所属区域</th>
+                                    <th>球队ID</th>
+                                    <th>球队名称</th>
+                                    <th>所属联赛</th>
+                                    <th>成立时间</th>
+                                    <th>所在地</th>
+                                    <th>网址</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <volist name="list" id="item">
                                     <tr class="gradeX">
+                                        <td>{$item.team_id}</td>
                                         <td>{$item.league_id}</td>
-                                        <td>{$item.cn_name}</td>
-                                        <td><if condition="$item.type eq 1">联赛<else/>杯赛</if></td>
-                                        <td>{:intval($item[sum_round])}</td>
-                                        <td>{:intval($item[curr_round])}</td>
-                                        <td>{$item.curr_match_season}</td>
-                                        <td>{$item.country_name}</td>
-                                        <td>{:getAreaName($item[area_id])}</td>
+                                        <td>{:strval($item[found])}</td>
+                                        <td>{:strval($item[area])}</td>
+                                        <td>{:strval($item[url])}</td>
                                         <td class="center">
                                             <a href="{:U('basic/league_edit', ['id' => $item['league_id']])}"><i class="fa fa-check text-navy"></i>详情</a>
                                         </td>
