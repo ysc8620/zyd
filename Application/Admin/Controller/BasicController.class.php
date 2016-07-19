@@ -16,10 +16,29 @@ class BasicController extends BaseController {
         while($row = $obj->hasNext()){
             $list[] = $obj->getNext();
         }
-        print_r($list);
         $page = new \Think\Page($total, 20);
         $this->assign('page', $page->show());
         $this->assign('list', $list);
+
+        $this->display();
+    }
+
+    /**
+     * 联赛编辑
+     */
+    public function league_edit(){
+        $mongo = $this->initMongo();
+        $curr = $mongo->zyd->league;
+        $id = I('request.id',0,"intval");
+        if(empty($id)){
+            return $this->error('请选择联赛', U('basic/league'));
+        }
+        if(IS_POST){
+
+        }
+
+        $league = $curr->findOne(array('league_id'=>$id));
+        $this->assign('league', $league);
 
         $this->display();
     }

@@ -6,6 +6,27 @@
  * Time: 11:20
  */
 
+/**
+ * 获取区域信息
+ * @param $area_id
+ * @return string
+ */
+function getAreaName($area_id){
+    switch(intval($area_id)){
+        case 1:
+            return '欧洲联赛';
+        case 2:
+            return '美洲联赛';
+        case 3:
+            return '亚洲联赛';
+        case 4:
+            return '大洋洲联赛';
+        case 5:
+            return '非洲联赛';
+    }
+    return '未知';
+}
+
 /*-------------------------------------------------文件夹与文件操作开始------------------------------------------------------------------*/
 //读取文件
 function read_file($l1){
