@@ -52,11 +52,11 @@
                                     <tr class="gradeX">
                                         <td>{$item.match_id}</td>
                                         <td>{$item.league_name}</td>
-                                        <td>{$item.homg_name}-{$item.aray_name}</td>
+                                        <td>{$item.home_name}-{$item.away_name}</td>
                                         <td>{$item.time}</td>
-                                        <td>{$item.home_score}-{$item.home_score}</td>
-                                        <td>{$item.home_red_score}-{$item.home_red_score}</td>
-                                        <td>{$item.home_yellow_score}-{$item.home_yellow_score}</td>
+                                        <td>{$item.home_score}-{$item.away_score}</td>
+                                        <td>{$item.home_red_score}-{$item.away_red_score}</td>
+                                        <td>{$item.home_yellow_score}-{$item.away_yellow_score}</td>
                                         <td>{:getMatchStatus($item[state])}</td>
                                         <td class="center">
                                             <a href="{:U('admin/edit', ['id' => $item['id']])}"><i class="fa fa-check text-navy"></i>编辑</a>
