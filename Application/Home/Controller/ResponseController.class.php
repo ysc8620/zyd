@@ -36,6 +36,7 @@ class ResponseController extends BaseController {
             $data['username'] = I('post.username','','strip_tags,htmlspecialchars');
             $data['contact'] = I('post.contact','','strip_tags,htmlspecialchars');
             $data['content'] = I('post.content','','strip_tags,htmlspecialchars');
+            $data['create_time'] = date("Y-m-d H:i:s");
             $curr->insert($data);
 
         }while(false);
