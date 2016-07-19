@@ -42,4 +42,44 @@ class BasicController extends BaseController {
 
         $this->display();
     }
+
+    /**
+     * 球队列表
+     */
+    public function team(){
+        $mongo  = $this->initMongo();
+        $curr = $mongo->zyd->team;
+        $page = I('p',1,'intval');
+        $total = $curr->count();
+        $obj = $curr->find()->sort(array('update_time'=>-1))->skip( ($page-1)*20)->limit(20);
+        $list = [];
+        while($row = $obj->hasNext()){
+            $list[] = $obj->getNext();
+        }
+        $page = new \Think\Page($total, 20);
+        $this->assign('page', $page->show());
+        $this->assign('list', $list);
+
+        $this->display();
+    }
+
+    /**
+     * 球队编辑
+     */
+    public function team_edit(){
+        $mongo = $this->initMongo();
+        $curr = $mongo->zyd->team;
+        $id = I('request.id',0,"intval");
+        if(empty($id)){
+            return $this->error('请选择球队', U('basic/team'));
+        }
+        if(IS_POST){
+
+        }
+
+        $team = $curr->findOne(array('team_id'=>$id));
+        $this->assign('team', $team);
+
+        $this->display();
+    }
 }

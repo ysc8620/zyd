@@ -1,0 +1,83 @@
+<include file="layer:header" xmlns="http://www.w3.org/1999/html"/>
+<script type="text/javascript" src="__PUBLIC__/js/utils.js"></script>
+<script type="text/javascript">
+    onload = function() {
+        if (!document.all)
+        {
+            document.forms['theForm'].reset();
+        }
+    }
+
+</script>
+
+<div class="container">
+	<div class="from">
+        <form action="{:U('/response/post')}" method="post" name="theForm" id="theForm" >
+            <input type="hidden" name="sign" value="{$sign}" />
+		<ul>
+			<div class="row" >
+				<input class="fl color_999 tl text"  name="username"  id="username"  placeholder="用户名" />
+			</div>
+		</ul>
+            <ul>
+                <div class="row" >
+                    <input class="fl color_999 tl text"  name="contact"  id="contact"  placeholder="联系方式" />
+                </div>
+            </ul>
+            <ul>
+                <div class="row" style="height: 120px;">
+                    <textarea class="fl color_999 tl text" style="width: 100%; height: 120px;"  name="content"  id="content"  placeholder="反馈内容" ></textarea>
+                </div>
+            </ul>
+		<ul class="cl mt10">
+		<div class="tit ">
+			<div class=" mc">
+			<input type="button" name="post" class="btn send_post" value="发 布" />
+			</div>
+            <div class="w90 mc tc f12 ptop6" style="color: #494949; margin-top: 12px; display: none;">深圳一窝蜂网络提供技术支持</div>
+			</div>
+		</ul>
+		</form>
+	</div>
+
+</div>
+</div>
+<include file="layer:foot" />
+<script type="text/javascript">
+    $('input[name="post"]').click(function(){
+        do{
+            var username = $.trim($('input[name="username"]').val());
+            if(username.length < 1){
+                layer.msg("请输入用户名~", function(){});
+                return false;
+            }
+
+            var contact = $.trim($('input[name="contact"]').val());
+
+            var content = $.trim($('textarea[name="content"]').val());
+            if(content.length < 3){
+                layer.msg("请输入反馈内容~", function(){});
+                return false;
+            }
+
+            $.ajax({
+                type: "post",
+                url: "{:U('/response/post')}",
+                dataType: "json",
+                data:{username:username, contact:contact, content:content},
+                success: function (data) {
+                    if(data.state == 1){
+                        layer.msg('感谢您的反馈信息~', function(){});
+                        return false;
+                    }else{
+                        layer.msg(data.msg, function(){});
+                        return false;
+                    }
+                }
+            });
+        }while(false);
+        return true;
+    });
+</script>
+</body>
+</html>

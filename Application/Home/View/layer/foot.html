@@ -1,0 +1,10 @@
+<if condition="session('error_message')">
+<script type="text/javascript">
+    layer.msg("{:session('error_message')}", function(){});
+</script>
+</if>
+<if condition="session('success_message')">
+    <script type="text/javascript">
+        layer.msg("{:session('success_message')}");
+    </script>
+</if>
