@@ -45,6 +45,7 @@
 <include file="layer:foot" />
 <script type="text/javascript">
     $('input[name="post"]').click(function(){
+
         do{
             var username = $.trim($('input[name="username"]').val());
             if(username.length < 1){
@@ -65,16 +66,19 @@
                 layer.msg("请输入反馈内容~", function(){});
                 return false;
             }
-
+            var index = layer.load(1, {
+                shade: [0.1,'#000'] //0.1透明度的白色背景
+            });
             $.ajax({
                 type: "post",
                 url: "{:U('/response/post')}",
                 dataType: "json",
                 data:{username:username, contact:contact, content:content,sign:sign},
                 success: function (data) {
+                    //layer.close(index);
                     if(data.state == 1){
                         layer.msg('感谢您的反馈信息~');
-                        window.location.reload();
+                        setTimeout(function(){window.location.reload()},2000);
                         return false;
                     }else{
                         layer.msg(data.msg, function(){});
