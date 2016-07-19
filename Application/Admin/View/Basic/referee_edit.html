@@ -30,11 +30,11 @@
         </div>
         <div class="ibox-content">
           <form method="post" name="edit" target="_self" action="{:U('basic/referee_edit')}" class="form-horizontal">
-              <input type="hidden" name="id" value="{$team.league_id}" />
+              <input type="hidden" name="id" value="{$referee.referee_id}" />
             <div class="form-group">
               <label class="col-sm-2 control-label">裁判名：</label>
               <div class="col-sm-10">
-                <input type="text" name="cn_name" value="{$team.cn_name}" class="form-control">
+                <input type="text" name="cn_name" value="{$referee.cn_name}" class="form-control">
               </div>
             </div>
               <div class="hr-line-dashed"></div>

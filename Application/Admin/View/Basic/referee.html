@@ -38,26 +38,20 @@
                                 <tr>
                                     <th>裁判ID</th>
                                     <th>裁判名称</th>
-                                    <th>联赛类型</th>
-                                    <th>总伦次</th>
-                                    <th>当前轮</th>
-                                    <th>当前赛季</th>
-                                    <th>所属国家</th>
-                                    <th>所属区域</th>
+                                    <th>裁判类型</th>
+                                    <th>国籍</th>
+                                    <th>出生年月</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <volist name="list" id="item">
                                     <tr class="gradeX">
-                                        <td>{$item.league_id}</td>
+                                        <td>{$item.referee_id}</td>
                                         <td>{$item.cn_name}</td>
-                                        <td><if condition="$item.type eq 1">联赛<else/>杯赛</if></td>
-                                        <td>{:intval($item[sum_round])}</td>
-                                        <td>{:intval($item[curr_round])}</td>
-                                        <td>{$item.curr_match_season}</td>
-                                        <td>{$item.country_name}</td>
-                                        <td>{:getAreaName($item[area_id])}</td>
+                                        <td><if condition="$item.type_id eq 1">主裁判<elseif condition="$item.type_id eq 2" />助理裁判<ekse/>第四官员</if></td>
+                                        <td><if condition="empty($item.country)"><else />{$item.country}</if></td>
+                                        <td><if condition="empty($item.birthday)"><else />{$item.birthday}</if></td>
                                         <td class="center">
                                             <a href="{:U('basic/league_edit', ['id' => $item['league_id']])}"><i class="fa fa-check text-navy"></i>详情</a>
                                         </td>

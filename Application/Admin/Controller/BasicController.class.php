@@ -108,14 +108,14 @@ class BasicController extends BaseController {
         $curr = $mongo->zyd->player;
         $id = I('request.id',0,"intval");
         if(empty($id)){
-            return $this->error('请选择球队', U('basic/team'));
+            return $this->error('请选球员', U('basic/player'));
         }
         if(IS_POST){
 
         }
 
-        $team = $curr->findOne(array('team_id'=>$id));
-        $this->assign('team', $team);
+        $player= $curr->findOne(array('player_id'=>$id));
+        $this->assign('player', $player);
 
         $this->display();
     }
@@ -145,14 +145,14 @@ class BasicController extends BaseController {
         $curr = $mongo->zyd->referee;
         $id = I('request.id',0,"intval");
         if(empty($id)){
-            return $this->error('请选择球队', U('basic/team'));
+            return $this->error('请选裁判', U('basic/referee'));
         }
         if(IS_POST){
 
         }
 
-        $team = $curr->findOne(array('team_id'=>$id));
-        $this->assign('team', $team);
+        $referee = $curr->findOne(array('referee_id'=>$id));
+        $this->assign('referee', $referee);
 
         $this->display();
     }
