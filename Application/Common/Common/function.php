@@ -27,6 +27,38 @@ function getAreaName($area_id){
     return '未知'.$area_id;
 }
 
+/**
+ * @param $state
+ * 比赛状态 0:未开,1:上半场,2:中场,3:下半场,4,加时，-11:待定,-12:腰斩,-13:中断,-14:推迟,-1:完场，-10取消
+ */
+function getMatchStatus($state){
+    switch(intval($state)){
+        case 0 && !is_array($state):
+            return '未开始';
+        case 1:
+            return '上半场';
+        case 2:
+            return '中场';
+        case 3:
+            return '下半场';
+        case 4:
+            return '加时';
+        case -11:
+            return '待定';
+        case -12:
+            return '腰斩';
+        case -13:
+            return '中断';
+        case -14:
+            return '推迟';
+        case -1:
+            return '完场';
+        case -10:
+            return '取消';
+    }
+    return '未知';
+}
+
 /*-------------------------------------------------文件夹与文件操作开始------------------------------------------------------------------*/
 //读取文件
 function read_file($l1){

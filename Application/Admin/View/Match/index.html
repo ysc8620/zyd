@@ -37,9 +37,12 @@
                                 <thead>
                                 <tr>
                                     <th>赛事ID</th>
-                                    <th>赛事名称</th>
+                                    <th>所属联赛</th>
                                     <th>参与球队</th>
                                     <th>比赛时间</th>
+                                    <th>比分情况</th>
+                                    <th>红牌情况</th>
+                                    <th>黄牌情况</th>
                                     <th>状态</th>
                                     <th>操作</th>
                                 </tr>
@@ -47,11 +50,14 @@
                                 <tbody>
                                 <volist name="list" id="item">
                                     <tr class="gradeX">
-                                        <td>{$item.id}</td>
-                                        <td>{$item.uname}</td>
-                                        <td>{$item.uname}</td>
-                                        <td>{$item.last_login_time|date="Y-m-d H:i:s",###}</td>
-                                        <td><if condition="$item[status] eq 1">正常<else/>锁定</if></td>
+                                        <td>{$item.match_id}</td>
+                                        <td>{$item.league_name}</td>
+                                        <td>{$item.homg_name}-{$item.aray_name}</td>
+                                        <td>{$item.time}</td>
+                                        <td>{$item.home_score}-{$item.home_score}</td>
+                                        <td>{$item.home_red_score}-{$item.home_red_score}</td>
+                                        <td>{$item.home_yellow_score}-{$item.home_yellow_score}</td>
+                                        <td>{:getMatchStatus($item[state])}</td>
                                         <td class="center">
                                             <a href="{:U('admin/edit', ['id' => $item['id']])}"><i class="fa fa-check text-navy"></i>编辑</a>
                                         </td>
