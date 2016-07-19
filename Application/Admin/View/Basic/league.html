@@ -53,8 +53,8 @@
                                         <td>{$item.league_id}</td>
                                         <td>{$item.cn_name}</td>
                                         <td><if condition="$item.type eq 1">联赛<else/>杯赛</if></td>
-                                        <td>{$item.sum_round}</td>
-                                        <td>{$item.curr_round}</td>
+                                        <td>{:intval($item[sum_round])}</td>
+                                        <td>{:intval($item[curr_round])}</td>
                                         <td>{$item.curr_match_season}</td>
                                         <td>{$item.country_name}</td>
                                         <td>{:getAreaName($item[area_id])}</td>
