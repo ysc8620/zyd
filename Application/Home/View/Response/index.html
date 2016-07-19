@@ -75,7 +75,7 @@
                 dataType: "json",
                 data:{username:username, contact:contact, content:content,sign:sign},
                 success: function (data) {
-                    //layer.close(index);
+                    layer.close(index);
                     if(data.state == 1){
                         $('input[name="username"]').val('')
                         $('input[name="contact"]').val('')
