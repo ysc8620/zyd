@@ -17,6 +17,18 @@ class BaseController extends Controller {
 
     }
 
+    /**
+     * json返回格式
+     */
+    public function simpleJson(){
+        return [
+            'status' => 100,
+            'msg'  => '',
+            'time' => time(),
+            'data' => ''
+        ];
+    }
+
     public function initMongo(){
         if(self::$mongo == null){
             try{
