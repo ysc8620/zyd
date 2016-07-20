@@ -13,6 +13,8 @@
 //
 //}
 
+error_reporting(0);
+header("Content-type:text/html;charset=utf-8");
 // 发送请求
 function httpPost($url, $data = null)
 {
@@ -45,6 +47,8 @@ $data = [
     'appsecret' => 'b8e586b6eb3530f1c5efad7ea3f1359e'
 ];
 $data['sign'] = sign($data);
+$data['remark'] = 'test';
+$data['date'] = date("Y-m-d H:i:s");
 $result = httpPost("https://api.zydzuqiu.com/test/test.html", $data);
 print_r(json_decode($result));
 

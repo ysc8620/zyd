@@ -18,7 +18,7 @@ class BaseApiController extends BaseController {
         $appid = I('post.appid');
         if(empty($sign) || empty($appid)){
             $json = $this->simpleJson();
-            $json['status'] = 103;
+            $json['status'] = 102;
             $json['msg'] = '没有权限1';
             $this->ajaxReturn($json);
         }
@@ -26,7 +26,7 @@ class BaseApiController extends BaseController {
         $data['appsecret'] = C('app')[$appid];
         if(strtolower($sign) != $this->sign($data)){
             $json = $this->simpleJson();
-            $json['status'] = 103;
+            $json['status'] = 102;
             $json['msg'] = '没有权限2';
             $this->ajaxReturn($json);
         }
