@@ -17,38 +17,5 @@ class BaseController extends Controller {
 
     }
 
-    /**
-     * json返回格式
-     */
-    public function simpleJson(){
-        return [
-            'status' => 100,
-            'msg'  => '',
-            'time' => time(),
-            'data' => ''
-        ];
-    }
-
-    public function initMongo(){
-        if(self::$mongo == null){
-            try{
-                self::$mongo = new \Mongo("mongodb://".C('MONGO_USER').":".C('MONGO_PWD')."@".C('MONGO_HOST').":".C('MONGO_PORT'));
-            }catch (\Exception $e){
-                exit('mongodb连接失败');
-            }
-        }
-
-        return self::$mongo;
-    }
-
-    public function __destruct()
-    {
-        // TODO: Implement __destruct() method.
-        if(self::$mongo){
-            try{
-                self::$mongo->close();
-            }catch (\Exception $e){}
-        }
-    }
 
 }

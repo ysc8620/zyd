@@ -1,5 +1,9 @@
 <?php
 $config = array(
+    'app' => array(
+        'zq8bfc58935bf37o2e' => 'b8e586b6eb3530f1c5efad7ea3f1359e',
+        'zq9ged2g338js52h3i' => 'b31d023048ba9f8736d219bi00bb6ab0',
+    ),
     //'配置项'=>'配置值'
     'URL_MODEL'            =>3,    //2是去除index.php
     'DB_FIELDTYPE_CHECK'   =>true,

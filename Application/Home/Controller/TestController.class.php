@@ -4,9 +4,9 @@ use Weixin\MyWechat;
 use Home\Model\UsersModel;
 use Redis\MyRedis;
 
-class TestController extends BaseController {
+class TestController extends BaseApiController {
     /**
-     * 
+     *
      */
     public function test(){
         $json = $this->simpleJson();

@@ -13,28 +13,37 @@
 //
 //}
 
-
-$postStr = file_get_contents('./log.log');
-$obj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
-$data = json_decode(json_encode($obj), true);
-
-
-foreach($data['match'] as $item){
-    $match_id = $item['id'];
-    $match_info = true;//$curr->findOne(array('match_id'=>$match_id));
-    if($match_info)
-    {
-        $technic = (array)$match_info['technic'];
-        $info = explode(';', trim($item['TechnicCount']));
-        foreach ($info as $row) {
-            $list = explode(',', $row);
-            if(count($list) != 3)continue;
-            $technic['id' . $list[0]] = [
-                'home' => $list[1],
-                'away' => $list[2]
-            ];
-        }
-        print_r($technic);
-    }
+// 发送请求
+function httpPost($url, $data = null)
+{
+    $ch = curl_init();
+    //curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)");
+    curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+    curl_setopt($ch, CURLOPT_POST, TRUE);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    $temp=curl_exec ($ch);
+    curl_close ($ch);
+    return $temp;
 }
+// 生成加密串
+function sign($data)
+{
+    return md5($data['version'].$data['appid'].$data['time'].$data['appsecret']);
+}
+
+$data = [
+    'version'=> '1.0',
+    'appid' =>'zq8bfc58935bf37o2e',
+    'time' => '1456356854',
+    'appsecret' => 'b8e586b6eb3530f1c5efad7ea3f1359e'
+];
+$data['sign'] = sign($data);
+$result = httpPost("https://api.zydzuqiu.com/test/test.html", $data);
+print_r(json_decode($result));
 
