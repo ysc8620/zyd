@@ -15,11 +15,11 @@ class BaseApiController extends BaseController {
      */
     public function _initialize(){
         $header = getallheaders();
+        $header = array_change_key_case($header, CASE_LOWER);
         $sign = $header['sign'];
         $appid = $header['appid'];
         if(empty($sign) || empty($appid)){
             $json = $this->simpleJson();
-            $json['header'] = $header;
             $json['status'] = 102;
             $json['msg'] = '没有权限1';
             $this->ajaxReturn($json);
@@ -74,7 +74,7 @@ class BaseApiController extends BaseController {
 
     public function sign($data)
     {
-        return md5(trim($data['appVersion']).trim($data['appid']).trim($data['time']).trim($data['appsecret']));
+        return md5(trim($data['appversion']).trim($data['appid']).trim($data['time']).trim($data['appsecret']));
     }
 
 }
