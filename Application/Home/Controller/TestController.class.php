@@ -15,6 +15,7 @@ class TestController extends BaseApiController {
         unset($data['version']);
         unset($data['time']);
         unset($data['sign']);
+        unset($data['appsecret']);
         $json['data'] = $data;
         $this->ajaxReturn($json);
     }
