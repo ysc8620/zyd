@@ -147,6 +147,7 @@ class BasicController extends BaseController {
         if(empty($id)){
             return $this->error('请选裁判', U('basic/referee'));
         }
+        
         if(IS_POST){
 
         }
