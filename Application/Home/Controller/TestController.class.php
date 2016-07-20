@@ -16,7 +16,7 @@ class TestController extends BaseApiController {
         $json['data'] = $data;
         $json['post'] = $_POST;
         $json['header'] = getallheaders();
-        \Org\Util\File::write_file('./newpost.log', date("Y-m-d H:i:s")."==========================\r\n".json_decode($json)."\r\n==================================\r\rn");
+        \Org\Util\File::write_file('./newpost.log', date("Y-m-d H:i:s")."==========================\r\n".json_encode($json)."\r\n==================================\r\rn");
         $this->ajaxReturn($json);
     }
 }

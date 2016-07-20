@@ -18,7 +18,7 @@ class BaseApiController extends BaseController {
         $header = array_change_key_case($header, CASE_LOWER);
         $json = $this->simpleJson();
         $json['ee'] = $header;
-        \Org\Util\File::write_file('./newpost.log', date("Y-m-d H:i:s")."==========================\r\n".json_decode($json)."\r\n==================================\r\rn");
+        \Org\Util\File::write_file('./newpost.log', date("Y-m-d H:i:s")."==========================\r\n".json_encode($json)."\r\n==================================\r\rn");
 
         $sign = $header['sign'];
         $appid = $header['appid'];
