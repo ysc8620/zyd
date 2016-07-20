@@ -14,18 +14,24 @@ class BaseApiController extends BaseController {
      * 初始化操作
      */
     public function _initialize(){
-        $sign = I('post.sign');
-        $appid = I('post.appid');
+        $header = getallheaders();
+        $sign = $header['sign'];
+        $appid = $header['appid'];
         if(empty($sign) || empty($appid)){
             $json = $this->simpleJson();
+
             $json['status'] = 102;
             $json['msg'] = '没有权限1';
             $this->ajaxReturn($json);
         }
-        $data = $_POST;
-        $data['appsecret'] = C('app')[$appid];
-        if(strtolower($sign) != $this->sign($data)){
+
+        $header['appsecret'] = C('app')[$appid];
+
+
+        if(strtolower($sign) != $this->sign($header)){
+
             $json = $this->simpleJson();
+
             $json['status'] = 102;
             $json['msg'] = '没有权限2';
             $this->ajaxReturn($json);
@@ -68,7 +74,7 @@ class BaseApiController extends BaseController {
 
     public function sign($data)
     {
-        return md5($data['version'].$data['appid'].$data['time'].$data['appsecret']);
+        return md5(trim($data['appVersion']).trim($data['appid']).trim($data['time']).trim($data['appsecret']));
     }
 
 }
