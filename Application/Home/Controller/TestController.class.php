@@ -10,7 +10,12 @@ class TestController extends BaseApiController {
      */
     public function test(){
         $json = $this->simpleJson();
-        $json['data'] = $_POST;
+        $data = $_POST;
+        unset($data['appid']);
+        unset($data['version']);
+        unset($data['time']);
+        unset($data['sign']);
+        $json['data'] = $data;
         $this->ajaxReturn($json);
     }
 }

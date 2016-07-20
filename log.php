@@ -37,6 +37,7 @@ function sign($data)
     return md5($data['version'].$data['appid'].$data['time'].$data['appsecret']);
 }
 
+
 $data = [
     'version'=> '1.0',
     'appid' =>'zq8bfc58935bf37o2e',
