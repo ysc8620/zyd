@@ -8,6 +8,18 @@ use Redis\MyRedis;
 
 class NewController extends BaseController {
     /**
+     * json返回格式
+     */
+    public function simpleJson(){
+        return [
+            'status' => 100,
+            'msg'  => '',
+            'time' => time(),
+            'data' => ''
+        ];
+    }
+    
+    /**
      *
      */
     public function test(){
