@@ -15,8 +15,8 @@ require_once __DIR__ .'/config.php';
 echo date("Y-m-d H:i:s")."=score_api=\r\n";
 //mongodb://admin_miss:miss@localhost:27017/test
 do{
-    global $mongo;
-    $curr = $mongo->zyd->match;
+//    global $mongo;
+//    $curr = $mongo->zyd->match;
     $postStr = file_get_contents("http://interface.win007.com/zq/today.aspx");
     $obj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
     $data = json_decode(json_encode($obj), true);
@@ -62,11 +62,11 @@ do{
             'update_date' => date('Y-m-d H:i:s'),
             'last_update_event' => 'score'
         ];
-        $team = $curr->findOne(array('match_id'=>$info['match_id']));
+        $team = M('match')->where(array('match_id'=>$info['match_id']))->find();
         if($team){
-            $curr->update(array('match_id'=>$info['match_id']), array('$set'=>$info));
+            M('match')->where(array('match_id'=>$info['match_id']))->add($info);
         }else{
-            $curr->insert($info);
+            M('match')->add($info);
         }
     }
 }while(false);

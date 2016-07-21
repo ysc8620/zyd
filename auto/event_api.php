@@ -16,8 +16,8 @@ echo date("Y-m-d H:i:s")."=event_api=\r\n";
 //mongodb://admin_miss:miss@localhost:27017/test
 do{
     global $mongo;
-    $curr = $mongo->zyd->event;
-    $curr_match = $mongo->zyd->match;
+//    $curr = $mongo->zyd->event;
+//    $curr_match = $mongo->zyd->match;
     $postStr = file_get_contents("http://interface.win007.com/zq/detail.aspx");
     $data = explode("\r\n", $postStr);
     foreach ($data as $item) {
@@ -37,11 +37,11 @@ do{
                         'update_time' => time(),
                         'update_date' => date('Y-m-d H:i:s')
                     ];
-                    $event = $curr->findOne(array('match_id'=>$info['match_id'], 'time'=>$info['time']));
+                    $event = M('event')->where(array('match_id'=>$info['match_id'], 'time'=>$info['time']))->find();
                     if($event){
-                        $curr->update(array('_id'=>$event['_id']), array('$set'=>$info));
+                        M('event')->where(array('id'=>$event['_id']))->save($info);
                     }else{
-                        $curr->insert($info);
+                        M('event')->add($info);
                     }
                 }
             }
@@ -51,7 +51,8 @@ do{
                 if($res[1][0]){
                     $info = explode('^', $res[1][0]);
                     $match_id = $info[0];
-                    $match_info = $curr_match->findOne(array('match_id'=>$match_id));
+//                    $match_info = $curr_match->findOne(array('match_id'=>$match_id));
+                    $match_info = M('match')->where(array('match_id'=>$match_id))->find();
                     if($match_info){
                         $technic = (array)$match_info['technic'];
                         $info = explode(';', trim($info[1]));
@@ -65,7 +66,7 @@ do{
                                 'away' => $list[2]
                             ];
                         }
-                        $curr_match->update(array('match_id'=>$match_id), array('$set'=>array('technic' =>$technic)));
+                        M('match')->where(array('match_id'=>$match_id))->save(array('technic' =>json_encode($technic)));
                     }
                 }
             }
