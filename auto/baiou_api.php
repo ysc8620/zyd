@@ -23,37 +23,32 @@ do{
 
     foreach($data['h'] as $item){
         $info = [
-            'match_id' => $item['id'],
-            'time' => $item['time'],
-            'league' => $item['league'],
-            'home' => $item['home'],
-            'away' => $item['away'],
-            'odds' => [],
+            'match_id' => intval($item['id']),
+            'time' => strval($item['time']),
+            'league' => strval($item['league']),
+            'home' => strval($item['home']),
+            'away' => strval($item['away']),
             'update_time' => time(),
-            'update_date' => date('Y-m-d H:i:s')
         ];
         foreach($item['odds']['o'] as $odds){
             $row = explode(',', $odds);
-            $info['odds']['id'.$row[0]] = [
-                'company_id' => $row[0],
-                'company_name' => $row[1],
-                'begin_home_win' => $row[2],
-                'begin_draw' => $row[3],
-                'away_win' => $row[4],
-                'home_win' => $row[5],
-                'away_win' => $row[6],
-                'away_win' => $row[7],
-                'change_time' => $row[8],
+            $info1= [
+                'company_id' => strval($row[0]),
+                'company_name' => strval($row[1]),
+                'begin_home_win' => strval($row[2]),
+                'begin_draw' => strval($row[3]),
+                'begin_away_win' => strval($row[4]),
+                'home_win' => strval($row[5]),
+                'draw_win' => strval($row[6]),
+                'away_win' => strval($row[7]),
+                'change_time' => strval($row[8]),
                 'update_time' => time(),
-                'update_date' => date('Y-m-d H:i:s')
                // 'info' => $row[9]
             ];
-            $baiou = $curr->findOne(array('match_id'=>$info['match_id']));
-            if($baiou){
-                $info['odds'] = array_merge((array)$baiou['odds'], $info['odds']);
-                $curr->update(array('_id'=>$baiou['_id']), array('$set'=>$info));
-            }else{
-                $curr->insert($info);
+            $new = array_merge($info, $info1);
+            $baiou = M('baiou')->where(array('match_id'=>$info['match_id'],'company_id'=>$new['company_id'], 'change_time'=>$new['change_time']))->find();
+            if(!$baiou){
+                M('baiou')->add($info);
             }
         }
 
