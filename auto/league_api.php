@@ -15,37 +15,37 @@ require_once __DIR__ .'/config.php';
 echo date("Y-m-d H:i:s")."=league_api=\r\n";
 //mongodb://admin_miss:miss@localhost:27017/test
 do{
-    global $mongo;
-    $curr = $mongo->zyd->league;
+//    global $mongo;
+//    $curr = $mongo->zyd->league;
     $postStr = file_get_contents("http://interface.win007.com/zq/League_XML.aspx");
     $obj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
     $data = json_decode(json_encode($obj), true);
 
     foreach($data['match'] as $item){
         $info = [
-            'league_id' => $item['id'],
-            'color'    => $item['color'],
-            'cn_short' => $item['gb_short'],
-            'tw_short' => trim($item['big_short']),
-            'en_short' => trim($item['en_short']),
-            'cn_name' => trim($item['gb']),
-            'tw_name' => $item['big'],
-            'en_name' => $item['en'],
-            'type' => $item['type'],
-            'sum_round' => $item['sum_round'],
-            'curr_round' => $item['curr_round'],
-            'curr_match_season' => $item['Curr_matchSeason'],
-            'country_id' => $item['countryID'],
-            'country_name' => $item['country'],
-            'area_id' => $item['areaID'],
+            'league_id' => intval($item['id']),
+            'color'    => strval($item['color']),
+            'cn_short' => strval($item['gb_short']),
+            'tw_short' => strval($item['big_short']),
+            'en_short' => strval($item['en_short']),
+            'cn_name' => strval($item['gb']),
+            'tw_name' => strval($item['big']),
+            'en_name' => strval($item['en']),
+            'type' => intval($item['type']),
+            'sum_round' => strval($item['sum_round']),
+            'curr_round' => strval($item['curr_round']),
+            'curr_match_season' => strval($item['Curr_matchSeason']),
+            'country_id' => intval($item['countryID']),
+            'country_name' => strval($item['country']),
+            'area_id' => intval($item['areaID']),
             'update_time' => time(),
             'update_date' => date('Y-m-d H:i:s')
         ];
-        $team = $curr->findOne(array('league_id'=>$info['league_id']));
+        $team = M('league')->where(array('league_id'=>$info['league_id']))->find();
         if($team){
-            $curr->update(array('league_id'=>$info['league_id']), array('$set'=>$info));
+            M('league')->where(array('league_id'=>$info['league_id']))->save($info);
         }else{
-            $curr->insert($info);
+            M('league')->add($info);
         }
     }
 }while(false);
