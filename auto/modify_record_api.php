@@ -15,8 +15,8 @@ require_once __DIR__ .'/config.php';
 echo date("Y-m-d H:i:s")."=team_api=\r\n";
 //mongodb://admin_miss:miss@localhost:27017/test
 do{
-    global $mongo;
-    $curr = $mongo->zyd->match;
+//    global $mongo;
+//    $curr = $mongo->zyd->match;
     $postStr = file_get_contents("http://interface.win007.com/zq/ModifyRecord.aspx");
     $obj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
     $data = json_decode(json_encode($obj), true);
@@ -32,9 +32,9 @@ do{
         }elseif($match['type'] == 'delete'){
             $info['state'] = -10;
         }
-        $team = $curr->findOne(array('match_id'=>$info['match_id']));
+        $team = M('match')->where(array('match_id'=>$info['match_id']))->find();
         if($team){
-            $curr->update(array('match_id'=>$info['match_id']), array('$set'=>$info),false,true);
+            M('match')->where(array('match_id'=>$info['match_id']))->save($info);
         }
     }
 }while(false);
