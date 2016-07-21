@@ -15,31 +15,31 @@ require_once __DIR__ .'/config.php';
 echo date("Y-m-d H:i:s")."=referee_api=\r\n";
 //mongodb://admin_miss:miss@localhost:27017/test
 do{
-    global $mongo;
-    $curr = $mongo->zyd->referee;
+//    global $mongo;
+//    $curr = $mongo->zyd->referee;
     $postStr = file_get_contents("http://interface.win007.com/zq/Referee.aspx");
     $obj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
     $data = json_decode(json_encode($obj), true);
 
     foreach($data['i'] as $item){
         $info = [
-            'schedule_id' => $item['scheduleID'],
-            'type_id' => $item['typeID'],
-            'referee_id' => $item['refereeID'],
-            'cn_name' => trim($item['Name_J']),
-            'tw_name' => trim($item['name_f']),
-            'en_name' => trim($item['Name_E']),
-            'birthday' => $item['Birthday'],
-            'country' => $item['country'],
-            'photo' => $item['Photo'],
+            'schedule_id' => intval($item['scheduleID']),
+            'type_id' => intval($item['typeID']),
+            'referee_id' => intval($item['refereeID']),
+            'cn_name' => strval($item['Name_J']),
+            'tw_name' => strval($item['name_f']),
+            'en_name' => strval($item['Name_E']),
+            'birthday' => strval($item['Birthday']),
+            'country' => strval($item['country']),
+            'photo' => strval($item['Photo']),
             'update_time' => time(),
             'update_date' => date('Y-m-d H:i:s')
         ];
-        $referee = $curr->findOne(array('referee_id'=>$info['referee_id']));
+        $referee = M('referee')->where(array('referee_id'=>$info['referee_id']))->find();
         if($referee){
-            $curr->update(array('referee_id'=>$info['referee_id']), array('$set'=>$info));
+            M('referee')->where(array('referee_id'=>$info['referee_id']))->save($info);
         }else{
-            $curr->insert($info);
+            M('referee')->add($info);
         }
     }
 }while(false);
