@@ -24,7 +24,6 @@ do{
     foreach($data['match'] as $match){
         $info = [
             'match_id' => $match['ID'],
-
             'update_time' => time(),
             'update_date' => date('Y-m-d H:i:s')
         ];
@@ -35,9 +34,7 @@ do{
         }
         $team = $curr->findOne(array('match_id'=>$info['match_id']));
         if($team){
-            $curr->update(array('match_id'=>$info['match_id']), array('$set'=>$info));
-        }else{
-            $curr->insert($info);
+            $curr->update(array('match_id'=>$info['match_id']), array('$set'=>$info),false,true);
         }
     }
 }while(false);
