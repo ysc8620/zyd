@@ -15,35 +15,33 @@ require_once __DIR__ .'/config.php';
 echo date("Y-m-d H:i:s")."=team_api=\r\n";
 //mongodb://admin_miss:miss@localhost:27017/test
 do{
-    global $mongo;
-    $curr = $mongo->zyd->team;
     $postStr = file_get_contents("http://interface.win007.com/zq/Team_XML.aspx");
     $obj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
     $data = json_decode(json_encode($obj), true);
 
     foreach($data['i'] as $item){
         $info = [
-            'team_id' => $item['id'],
-            'league_id' => $item['lsID'],
-            'cn_name' => $item['g'],
-            'tw_name' => trim($item['b']),
-            'en_name' => trim($item['e']),
-            'found' => trim($item['Found']),
-            'area' => $item['Area'],
-            'gym' => $item['gym'],
-            'capacity' => $item['Capacity'],
-            'flag' => $item['Flag'],
-            'addr' => $item['addr'],
-            'url' => $item['URL'],
-            'master' => $item['master'],
+            'team_id' => intval($item['id']),
+            'league_id' => intval($item['lsID']),
+            'cn_name' => strval($item['g']),
+            'tw_name' => strval($item['b']),
+            'en_name' => strval($item['e']),
+            'found' => strval($item['Found']),
+            'area' => strval($item['Area']),
+            'gym' => strval($item['gym']),
+            'capacity' => strval($item['Capacity']),
+            'flag' => strval($item['Flag']),
+            'addr' => strval($item['addr']),
+            'url' => strval($item['URL']),
+            'master' => strval($item['master']),
             'update_time' => time(),
             'update_date' => date('Y-m-d H:i:s')
         ];
-        $team = $curr->findOne(array('team_id'=>$info['team_id']));
+        $team = M('team')->where(array('team_id'=>$info['team_id']))->find();
         if($team){
-            $curr->update(array('team_id'=>$info['team_id']), array('$set'=>$info));
+            M('team')->where(array('id'=>$team['id']))->save($info);
         }else{
-            $curr->insert($info);
+            M('team')->add($info);
         }
     }
 }while(false);
