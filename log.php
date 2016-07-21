@@ -12,7 +12,7 @@ header("Content-type:text/html;charset=utf-8");
 function httpPost($url, $data = null)
 {
     $param = [
-        'appVersion'=> '1.0.0',
+        'appVersion'=> '1.0',
         'appid' =>'zq8bfc58935bf37o2e',
         'time' => '1456356854',
         'system' => 'IOS',
