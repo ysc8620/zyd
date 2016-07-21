@@ -18,8 +18,8 @@ do{
     global $mongo;
     $curr = $mongo->zyd->match;
 
-    $date = date("Y-m-d");
-    $list = $curr->find(array("time"=>array('$lt'=>$date), "state"=>array('$gt'=>'-1'), array('$or'=>array('last_time'=>null, 'last_time'=>array('$lt'=>$date)))));
+    $date = strtotime(date("Y-m-d"));
+    $list = $curr->find(array("state"=>array('$gt'=>'-1'), array('$or'=>array('last_time'=>null, 'last_time'=>array('$lt'=>$date)))));
     while( $list->hasNext()){
         $item = $list->getNext();
         $postStr = file_get_contents("http://interface.win007.com/zq/BF_XMLByID.aspx?id={$item['match_id']}");
