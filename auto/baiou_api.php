@@ -48,7 +48,7 @@ do{
             $new = array_merge($info, $info1);
             $baiou = M('baiou')->where(array('match_id'=>$info['match_id'],'company_id'=>$new['company_id'], 'change_time'=>$new['change_time']))->find();
             if(!$baiou){
-                M('baiou')->add($info);
+                M('baiou')->add($new);
             }
         }
 
