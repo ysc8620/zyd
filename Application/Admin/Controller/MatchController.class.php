@@ -1,6 +1,7 @@
 <?php
 namespace Admin\Controller;
 use Think\Controller;
+use Think\Page;
 class MatchController extends BaseController {
     public function index(){
         $state = I('status','','strval');
