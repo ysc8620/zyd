@@ -64,7 +64,7 @@ do{
         ];
         $team = M('match')->where(array('match_id'=>$info['match_id']))->find();
         if($team){
-            M('match')->where(array('match_id'=>$info['match_id']))->add($info);
+            M('match')->where(array('match_id'=>$info['match_id']))->save($info);
         }else{
             M('match')->add($info);
         }
