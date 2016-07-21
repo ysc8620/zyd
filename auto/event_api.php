@@ -54,7 +54,7 @@ do{
 //                    $match_info = $curr_match->findOne(array('match_id'=>$match_id));
                     $match_info = M('match')->where(array('match_id'=>$match_id))->find();
                     if($match_info){
-                        $technic = (array)$match_info['technic'];
+                        $technic = empty($match_info['technic'])?[]:json_decode($match_info['technic'],true);
                         $info = explode(';', trim($info[1]));
                         $technic['update_time'] = time();
                         $technic['update_date'] = date('Y-m-d H:i:s');
