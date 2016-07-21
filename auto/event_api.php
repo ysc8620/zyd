@@ -27,13 +27,13 @@ do{
                 if($res[1][0]){
                     $row = explode('^', $res[1][0]);
                     $info = [
-                        'match_id' => $row[0],
-                        'is_home_away' => $row[1],
-                        'event_type' => $row[2],
-                        'time' => $row[3],
-                        'player' => $row[4],
-                        'player_id' => $row[5],
-                        'player_name' => $row[6],
+                        'match_id' => intval($row[0]),
+                        'is_home_away' => intval($row[1]),
+                        'event_type' => strval($row[2]),
+                        'time' => strval($row[3]),
+                        'player' => strval($row[4]),
+                        'player_id' => strval($row[5]),
+                        'player_name' => strval($row[6]),
                         'update_time' => time(),
                         'update_date' => date('Y-m-d H:i:s')
                     ];

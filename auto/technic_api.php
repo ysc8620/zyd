@@ -34,7 +34,7 @@ do{
                 $list = explode(',', $row);
                 $technic['id'.$list[0]] = [
                   'home' => $list[1],
-                    'away' => $list[2]
+                  'away' => $list[2]
                 ];
             }
             M('match')->where(array('id'=>$match_info['id']))->save(array('technic' =>json_encode($technic)));
