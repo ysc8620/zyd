@@ -25,7 +25,7 @@ class BaseApiController extends BaseController {
         if(empty($sign) || empty($appid)){
             $json = $this->simpleJson();
             $json['status'] = 102;
-            $json['msg'] = 'no1';
+            $json['msg'] = '权限no1';
             $this->ajaxReturn($json);
         }
 
@@ -37,7 +37,7 @@ class BaseApiController extends BaseController {
             $json = $this->simpleJson();
 
             $json['status'] = 102;
-            $json['msg'] = 'no2';
+            $json['msg'] = '权限no1no2';
             $this->ajaxReturn($json);
         }
     }
