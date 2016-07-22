@@ -18,7 +18,7 @@ class NewController extends BaseController {
             'data' => ''
         ];
     }
-    
+
     /**
      *
      */
