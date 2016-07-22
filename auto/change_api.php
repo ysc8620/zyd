@@ -26,15 +26,15 @@ do{
 
         $match = [
             'match_id' => intval($change[0]),
-            'state'     => strval($change[1]),
+            'state'     => getValue($change[1]),
             'home_score' => intval($change[2]),
             'away_score' => intval($change[3]),
             'home_half_score' => intval($change[4]),
             'away_half_score' => intval($change[5]),
             'home_red' => intval($change[6]),
             'away_red' => intval($change[7]),
-            'time2'     => strval($change[9]),
-            'is_lineup' => strval($change[11]),
+            'time2'     => getValue($change[9]),
+            'is_lineup' => getValue($change[11]),
             'home_yellow' => intval($change[12]),
             'away_yellow' => intval($change[13]),
             'update_time' => time(),

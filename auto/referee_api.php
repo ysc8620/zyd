@@ -26,12 +26,12 @@ do{
             'schedule_id' => intval($item['scheduleID']),
             'type_id' => intval($item['typeID']),
             'referee_id' => intval($item['refereeID']),
-            'cn_name' => strval($item['Name_J']),
-            'tw_name' => strval($item['name_f']),
-            'en_name' => strval($item['Name_E']),
-            'birthday' => strval($item['Birthday']),
-            'country' => strval($item['country']),
-            'photo' => strval($item['Photo']),
+            'cn_name' => getValue($item['Name_J']),
+            'tw_name' => getValue($item['name_f']),
+            'en_name' => getValue($item['Name_E']),
+            'birthday' => getValue($item['Birthday']),
+            'country' => getValue($item['country']),
+            'photo' => getValue($item['Photo']),
             'update_time' => time(),
             'update_date' => date('Y-m-d H:i:s')
         ];

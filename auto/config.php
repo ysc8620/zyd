@@ -27,6 +27,10 @@ function _shutdown_handler(){
 }
 register_shutdown_function('_shutdown_handler');
 
+function getValue($value){
+    return is_array($value)?strval($value):"";
+}
+
 try{
     $mongo = new \Mongo("mongodb://root:LEsc123456@localhost:27017");
 }catch (\Exception $e){

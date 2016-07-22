@@ -24,24 +24,24 @@ do{
     foreach($data['h'] as $item){
         $info = [
             'match_id' => intval($item['id']),
-            'time' => strval($item['time']),
-            'league' => strval($item['league']),
-            'home' => strval($item['home']),
-            'away' => strval($item['away']),
+            'time' => getValue($item['time']),
+            'league' => getValue($item['league']),
+            'home' => getValue($item['home']),
+            'away' => getValue($item['away']),
             'update_time' => time(),
         ];
         foreach($item['odds']['o'] as $odds){
             $row = explode(',', $odds);
             $info1= [
-                'company_id' => strval($row[0]),
-                'company_name' => strval($row[1]),
-                'begin_home_win' => strval($row[2]),
-                'begin_draw' => strval($row[3]),
-                'begin_away_win' => strval($row[4]),
-                'home_win' => strval($row[5]),
-                'draw_win' => strval($row[6]),
-                'away_win' => strval($row[7]),
-                'change_time' => strval($row[8]),
+                'company_id' => getValue($row[0]),
+                'company_name' => getValue($row[1]),
+                'begin_home_win' => getValue($row[2]),
+                'begin_draw' => getValue($row[3]),
+                'begin_away_win' => getValue($row[4]),
+                'home_win' => getValue($row[5]),
+                'draw_win' => getValue($row[6]),
+                'away_win' => getValue($row[7]),
+                'change_time' => getValue($row[8]),
                 'update_time' => time(),
                // 'info' => $row[9]
             ];

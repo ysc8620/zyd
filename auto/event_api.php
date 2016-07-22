@@ -29,11 +29,11 @@ do{
                     $info = [
                         'match_id' => intval($row[0]),
                         'is_home_away' => intval($row[1]),
-                        'event_type' => strval($row[2]),
-                        'time' => strval($row[3]),
-                        'player' => strval($row[4]),
-                        'player_id' => strval($row[5]),
-                        'player_name' => strval($row[6]),
+                        'event_type' => getValue($row[2]),
+                        'time' => getValue($row[3]),
+                        'player' => getValue($row[4]),
+                        'player_id' => getValue($row[5]),
+                        'player_name' => getValue($row[6]),
                         'update_time' => time(),
                         'update_date' => date('Y-m-d H:i:s')
                     ];
