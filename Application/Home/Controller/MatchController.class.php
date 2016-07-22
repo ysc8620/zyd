@@ -20,7 +20,7 @@ class MatchController extends BaseApiController {
      */
     public function index(){
         $json = $this->simpleJson();
-        $mongo = $this->initMongo();
+        //$mongo = $this->initMongo();
         do{
             $page = I('request.p', 1,'intval');
             $type = I('request.type','');// 1进行中， 2已完成，3为开始，4个人收藏
@@ -56,7 +56,15 @@ class MatchController extends BaseApiController {
                 $list[$i]['home_corner'] = 0;
                 $list[$i]['away_corner'] = 0;
             }
-            $json['data']['list'] = $list;
+
+            $data = [];
+            foreach($list as $match){
+                $data[$match['league_id']]['league_id'] = $match['league_id'];
+                $data[$match['league_id']]['league_name'] = $match['league_name'];
+                $data[$match['league_id']]['league_ico'] = C('BASE_URL').'Public/static/noimg.png';
+                $data[$match['league_id']]['list'][] = $match;
+            }
+            $json['data']['list'] = $data;
             $json['data']['total'] = $total;
             $json['data']['page'] = $page;
             $json['data']['total_page'] = ceil($total/10);
