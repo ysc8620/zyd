@@ -43,6 +43,13 @@ class MatchController extends BaseApiController {
             $total = M('match')->where($where)->count();
             $list = M('match')->field('match_id,time as match_time,league_id,league_name,home_id,home_name,home_score,away_id,away_name,away_score')->where($where)->order("time DESC")->limit(10)->select();
             foreach($list as $i=>$item){
+                $baiou = M('baiou')->where(array('match_id'=>$item['match_id']))->find();
+                $list[$i]['begin_home_win'] = "{$baiou['begin_home_win']}";
+                $list[$i]['begin_draw'] = "{$baiou['begin_draw']}";
+                $list[$i]['begin_away_win'] = "{$baiou['begin_away_win']}";
+                $list[$i]['home_win'] = "{$baiou['home_win']}";
+                $list[$i]['draw_win'] = "{$baiou['draw_win']}";
+                $list[$i]['away_win'] = "{$baiou['away_win']}";
                 $event_list = M('event')->where(array('match_id'=>$item['match_id']))->order("time ASC")->select();
                 $list[$i]['events'] = (array)$event_list;
                 $list[$i]['match_name'] = '';

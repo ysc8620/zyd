@@ -23,6 +23,14 @@ if (!function_exists('getallheaders'))
 }
 
 /**
+ * @param $value
+ * @return string
+ */
+function get_value($value){
+    return strval($value) == 'array'?'':$value;
+}
+
+/**
  * 获取区域信息
  * @param $area_id
  * @return string
