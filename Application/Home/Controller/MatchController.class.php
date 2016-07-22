@@ -22,13 +22,37 @@ class MatchController extends BaseApiController {
         $json = $this->simpleJson();
         $mongo = $this->initMongo();
         do{
-            $curr = $mongo->zyd->match;
-            $p = I('POST.p', 1,'intval');
-            $type = I('POST.type','');// 1进行中， 2已完成，3为开始，个人收藏
-            $league_ids = I('POST.league_ids',[]);
-            $list = $curr->find()->sort(array("update_time"=>1))->limt(10);
+            $page = I('POST.p', 1,'intval');
+            $type = I('POST.type','');// 1进行中， 2已完成，3为开始，4个人收藏
+            $league_ids = (array)I('POST.league_ids',[]);
+            $where = [];
 
+            // 进行中
+            if($type == 1){
+                $where['state'] = array('in',array(1,2,3,4));
+            }elseif($type == 2){
+                $where['state'] = -1;
+            }elseif($type == 3){
+                $where['state'] = 0;
+            }else{
 
+            }
+            if($league_ids){
+                $where['league_id'] = array('in', $league_ids);
+            }
+            $total = M('match')->where($where)->count();
+            $list = M('match')->field('match_id,time as match_time,league_id,league_name,home_id,home_name,home_score,away_i,away_name,away_score')->where($where)->order("time DESC")->limit(10)->select();
+            foreach($list as $i=>$item){
+                $event_list = M('event')->where(array('match_id'=>$item['match_id']))->order("time ASC")->select();
+                $list[$i]['events'] = (array)$event_list;
+                $list[$i]['match_name'] = '';
+                $list[$i]['home_corner'] = 0;
+                $list[$i]['away_corner'] = 0;
+            }
+            $json['data']['list'] = $list;
+            $json['data']['total'] = $total;
+            $json['data']['page'] = $page;
+            $json['data']['total_page'] = ceil($total/10);
         }while(false);
         $this->ajaxReturn($json);
     }
