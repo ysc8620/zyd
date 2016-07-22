@@ -23,7 +23,7 @@ class MatchController extends BaseApiController {
         //$mongo = $this->initMongo();
         do{
             $page = I('request.p', 1,'intval');
-            $type = I('request.type','');// 1进行中， 2已完成，3为开始，4个人收藏
+            $type = I('request.type',1,'strval');// 1进行中， 2已完成，3为开始，4个人收藏
             $league_ids = (array)I('request.league_ids',[]);
             $where = [];
 

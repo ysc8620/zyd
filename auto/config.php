@@ -28,7 +28,7 @@ function _shutdown_handler(){
 register_shutdown_function('_shutdown_handler');
 
 function getValue($value){
-    return is_array($value)?strval($value):"";
+    return is_array($value)?"":strval($value);
 }
 
 try{
