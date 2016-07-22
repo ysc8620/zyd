@@ -14,31 +14,30 @@ class BaseApiController extends BaseController {
      * 初始化操作
      */
     public function _initialize(){
-        $header = getallheaders();
-        $header = array_change_key_case($header, CASE_LOWER);
-        $json = $this->simpleJson();
-        $json['ee'] = $header;
-        \Org\Util\File::write_file('./newpost.log', date("Y-m-d H:i:s")."==========================\r\n".json_encode($json)."\r\n==================================\r\rn");
+        if($_SERVER["HTTP_HOST"] != 'api2.zydzuqiu.com'){
+            $header = getallheaders();
+            $header = array_change_key_case($header, CASE_LOWER);
 
-        $sign = $header['sign'];
-        $appid = $header['appid'];
-        if(empty($sign) || empty($appid)){
-            $json = $this->simpleJson();
-            $json['status'] = 102;
-            $json['msg'] = '权限no1';
-            $this->ajaxReturn($json);
-        }
+            $sign = $header['sign'];
+            $appid = $header['appid'];
+            if(empty($sign) || empty($appid)){
+                $json = $this->simpleJson();
+                $json['status'] = 102;
+                $json['msg'] = '权限no1';
+                $this->ajaxReturn($json);
+            }
 
-        $header['appsecret'] = C('app')[$appid];
+            $header['appsecret'] = C('app')[$appid];
 
 
-        if(strtolower($sign) != $this->sign($header)){
+            if(strtolower($sign) != $this->sign($header)){
 
-            $json = $this->simpleJson();
+                $json = $this->simpleJson();
 
-            $json['status'] = 102;
-            $json['msg'] = '权限no1no2';
-            $this->ajaxReturn($json);
+                $json['status'] = 102;
+                $json['msg'] = '权限no1no2';
+                $this->ajaxReturn($json);
+            }
         }
     }
 
