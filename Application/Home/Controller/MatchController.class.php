@@ -22,9 +22,9 @@ class MatchController extends BaseApiController {
         $json = $this->simpleJson();
         $mongo = $this->initMongo();
         do{
-            $page = I('POST.p', 1,'intval');
-            $type = I('POST.type','');// 1进行中， 2已完成，3为开始，4个人收藏
-            $league_ids = (array)I('POST.league_ids',[]);
+            $page = I('request.p', 1,'intval');
+            $type = I('request.type','');// 1进行中， 2已完成，3为开始，4个人收藏
+            $league_ids = (array)I('request.league_ids',[]);
             $where = [];
 
             // 进行中
