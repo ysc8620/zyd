@@ -179,11 +179,11 @@ do{
             'update_time' => time()
         ];
 
-        $match = M('asia_daxiaoqiu')->where(array('match_id'=>$match_id,'company_id'=>$data['company_id']))->find();
+        $match = M('asia_half_daxiaoqiu')->where(array('match_id'=>$match_id,'company_id'=>$data['company_id']))->find();
         if($match){
-            M('asia_daxiaoqiu')->where(array('id'=>$match['id']))->save($data);
+            M('asia_half_daxiaoqiu')->where(array('id'=>$match['id']))->save($data);
         }else{
-            M('asia_daxiaoqiu')->insert($data);
+            M('asia_half_daxiaoqiu')->insert($data);
         }
     }
 }while(false);
