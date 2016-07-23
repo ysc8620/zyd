@@ -49,7 +49,7 @@ class MatchController extends BaseApiController {
 
             foreach($list as $i=>$match){
                 //
-                $list[$i]['technic'] = empty($match['technic'])?[]:json_decode($match['technic'], true);
+                //$list[$i]['technic'] = empty($match['technic'])?[]:json_decode($match['technic'], true);
                 // 标准
                 $baiou = M('asia_oupei')->where(array('match_id'=>$match['match_id']))->find();
                 $list[$i]['begin_home_rate'] = floatval("{$baiou['begin_home_rate']}");
@@ -130,7 +130,7 @@ class MatchController extends BaseApiController {
 
 
             //
-            $match['technic'] = empty($match['technic'])?[]:json_decode($match['technic'], true);
+            //$match['technic'] = empty($match['technic'])?[]:json_decode($match['technic'], true);
             // 标准
             $baiou = M('asia_oupei')->where(array('match_id'=>$match['match_id']))->find();
             $match['begin_home_rate'] = floatval("{$baiou['begin_home_rate']}");
