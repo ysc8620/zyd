@@ -25,6 +25,7 @@ class MatchController extends BaseApiController {
             $page = I('request.p', 1,'intval');
             $type = I('request.type',1,'strval');// 1进行中， 2已完成，3为开始，4个人收藏
             $league_ids = (array)I('request.league_ids',[]);
+            $limit = I('request.limit',10,'intval');
             $where = [];
 
             // 进行中
@@ -41,15 +42,61 @@ class MatchController extends BaseApiController {
                 $where['league_id'] = array('in', $league_ids);
             }
             $total = M('match')->where($where)->count();
-            $list = M('match')->field('match_id,time as match_time,league_id,league_name,home_id,home_name,home_score,away_id,away_name,away_score')->where($where)->order("time DESC")->limit(10)->select();
+            $Page = new Page($total, $limit);
+            $list = M('match')->field
+                ('match_id,time as match_time,league_id,league_name,kind,level,state,home_id,home_name,home_score,away_id,
+                away_name,away_score,home_red,away_red,home_yellow,away_yellow,match_round,address,weather_ico,weather,temperature,is_neutral,technic'
+                )
+                ->where($where)->order("time DESC")->limit($Page->firstRow . ',' . $Page->listRows)->select();
+
             foreach($list as $i=>$item){
-                $baiou = M('baiou')->where(array('match_id'=>$item['match_id']))->find();
-                $list[$i]['begin_home_win'] = floatval("{$baiou['begin_home_win']}");
-                $list[$i]['begin_draw'] = floatval("{$baiou['begin_draw']}");
-                $list[$i]['begin_away_win'] = floatval("{$baiou['begin_away_win']}");
-                $list[$i]['home_win'] = floatval("{$baiou['home_win']}");
-                $list[$i]['draw_win'] = floatval("{$baiou['draw_win']}");
-                $list[$i]['away_win'] = floatval("{$baiou['away_win']}");
+                //
+                $list[$i]['technic'] = empty($item['technic'])?[]:json_decode($item['technic'], true);
+                // 标准
+                $baiou = M('asia_oupei')->where(array('match_id'=>$item['match_id']))->find();
+                $list[$i]['begin_home_rate'] = floatval("{$baiou['begin_home_rate']}");
+                $list[$i]['begin_draw_rate'] = floatval("{$baiou['begin_draw_rate']}");
+                $list[$i]['begin_away_rate'] = floatval("{$baiou['begin_away_rate']}");
+                $list[$i]['change_home_rate'] = floatval("{$baiou['change_home_rate']}");
+                $list[$i]['change_draw_rate'] = floatval("{$baiou['change_draw_rate']}");
+                $list[$i]['change_away_rate'] = floatval("{$baiou['change_away_rate']}");
+
+                // 欧赔
+                $list[$i]['oupei']['begin_home_rate'] = floatval("{$baiou['begin_home_rate']}");
+                $list[$i]['oupei']['begin_draw_rate'] = floatval("{$baiou['begin_draw_rate']}");
+                $list[$i]['oupei']['begin_away_rate'] = floatval("{$baiou['begin_away_rate']}");
+                $list[$i]['oupei']['change_home_rate'] = floatval("{$baiou['change_home_rate']}");
+                $list[$i]['oupei']['change_draw_rate'] = floatval("{$baiou['change_draw_rate']}");
+                $list[$i]['oupei']['change_away_rate'] = floatval("{$baiou['change_away_rate']}");
+
+                // 亚赔
+                $yapei = M('asia_yapei')->where(array('match_id'=>$item['match_id']))->find();
+                $list[$i]['yapei']['begin_rate'] = floatval("{$yapei['begin_rate']}");
+                $list[$i]['yapei']['begin_home_rate'] = floatval("{$yapei['begin_home_rate']}");
+                $list[$i]['yapei']['begin_away_rate'] = floatval("{$yapei['begin_away_rate']}");
+                $list[$i]['yapei']['change_rate'] = floatval("{$yapei['change_rate']}");
+                $list[$i]['yapei']['change_home_rate'] = floatval("{$yapei['change_home_rate']}");
+                $list[$i]['yapei']['change_away_rate'] = floatval("{$yapei['change_away_rate']}");
+
+                // 大小球
+                $daxiaoqiu = M('asia_daxiaoqiu')->where(array('match_id'=>$item['match_id']))->find();
+                $list[$i]['daxiaoqiu']['begin_rate'] = floatval("{$daxiaoqiu['begin_rate']}");
+                $list[$i]['daxiaoqiu']['begin_big_rate'] = floatval("{$daxiaoqiu['begin_big_rate']}");
+                $list[$i]['daxiaoqiu']['begin_small_rate'] = floatval("{$daxiaoqiu['begin_small_rate']}");
+                $list[$i]['daxiaoqiu']['change_rate'] = floatval("{$daxiaoqiu['change_rate']}");
+                $list[$i]['daxiaoqiu']['change_big_rate'] = floatval("{$daxiaoqiu['change_big_rate']}");
+                $list[$i]['daxiaoqiu']['change_small_rate'] = floatval("{$daxiaoqiu['change_small_rate']}");
+
+                // 竟彩
+                $jingcai = M('asia_daxiaoqiu')->where(array('match_id'=>$item['match_id']))->find();
+                $list[$i]['jingcai']['home_rate'] = floatval("{$daxiaoqiu['begin_rate']}");
+                $list[$i]['jingcai']['away_rate'] = floatval("{$daxiaoqiu['begin_big_rate']}");
+                $list[$i]['jingcai']['draw_rate'] = floatval("{$daxiaoqiu['begin_small_rate']}");
+                $list[$i]['jingcai']['home_win_rate'] = floatval("{$daxiaoqiu['change_rate']}");
+                $list[$i]['jingcai']['away_win_rate'] = floatval("{$daxiaoqiu['change_big_rate']}");
+                $list[$i]['jingcai']['draw_win_rate'] = floatval("{$daxiaoqiu['change_small_rate']}");
+
+                //
                 $event_list = M('event')->where(array('match_id'=>$item['match_id']))->order("time ASC")->select();
                 $list[$i]['events'] = (array)$event_list;
                 $list[$i]['match_name'] = '';
@@ -67,7 +114,7 @@ class MatchController extends BaseApiController {
             $json['data']['list'] = $data;
             $json['data']['total'] = $total;
             $json['data']['page'] = $page;
-            $json['data']['total_page'] = ceil($total/10);
+            $json['data']['total_page'] = ceil($total/$limit);
         }while(false);
         $this->ajaxReturn($json);
     }
