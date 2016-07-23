@@ -138,6 +138,7 @@ class MatchController extends BaseApiController {
 
             // 赛事统计
             $technic = empty($match['technic'])?[]:json_decode($match['technic'], true);
+            $match['technic'] = [];
             for($j=0; $j<41;$j++){
                 $match['technic']['id'.$j]['home'] = isset($technic['id'.$j])?$technic['id'.$j]['home']:'';
                 $match['technic']['id'.$j]['away'] = isset($technic['id'.$j])?$technic['id'.$j]['away']:'';
