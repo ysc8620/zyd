@@ -192,6 +192,7 @@ class MatchController extends BaseApiController {
             $event_list = M('event')->where(array('match_id'=>$match['match_id']))->order("time ASC")->select();
             $match['events'] = (array)$event_list;
             $match['match_name'] = '';
+            $json['data'] = $match;
 
         }while(false);
         $this->ajaxReturn($json);
