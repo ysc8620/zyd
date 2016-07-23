@@ -183,7 +183,7 @@ do{
         if($match){
             M('asia_half_daxiaoqiu')->where(array('id'=>$match['id']))->save($data);
         }else{
-            M('asia_half_daxiaoqiu')->insert($data);
+            M('asia_half_daxiaoqiu')->add($data);
         }
     }
 }while(false);
