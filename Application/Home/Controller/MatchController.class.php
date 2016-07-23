@@ -121,22 +121,22 @@ class MatchController extends BaseApiController {
             // if($page)
             if($type == 1){
                 $league_list = M()->table(C('DB_PREFIX').'league as l, '.C('DB_PREFIX').'match as m')->where("l.league_id = m.league_id AND m.state in(1,2,3,4)")
-                    ->field('league_id,color,cn_short,cn_name,type,sum_round,curr_round,curr_match_season,country_name,is_hot,count(*) as total_match')
+                    ->field('l.league_id,l.color,l.cn_short,l.cn_name,l.type,l.sum_round,l.curr_round,l.curr_match_season,l.country_name,l.is_hot,count(*) as total_match')
                     ->group('m.league_id')
                     ->order("is_hot DESC, weight DESC")->select();
             }elseif($type == 2){
                 $league_list = M()->table(C('DB_PREFIX').'league as l, '.C('DB_PREFIX').'match as m')->where("l.league_id = m.league_id AND m.state = -1")
-                    ->field('league_id,color,cn_short,cn_name,type,sum_round,curr_round,curr_match_season,country_name,is_hot,count(*) as total_match')
+                    ->field('l.league_id,l.color,l.cn_short,l.cn_name,l.type,l.sum_round,l.curr_round,l.curr_match_season,l.country_name,l.is_hot,count(*) as total_match')
                     ->group('m.league_id')
                     ->order("is_hot DESC, weight DESC")->select();
             }elseif($type == 3){
                 $league_list = M()->table(C('DB_PREFIX').'league as l, '.C('DB_PREFIX').'match as m')->where("l.league_id = m.league_id AND m.state =0")
-                    ->field('league_id,color,cn_short,cn_name,type,sum_round,curr_round,curr_match_season,country_name,is_hot,count(*) as total_match')
+                    ->field('l.league_id,l.color,l.cn_short,l.cn_name,l.type,l.sum_round,l.curr_round,l.curr_match_season,l.country_name,l.is_hot,count(*) as total_match')
                     ->group('m.league_id')
                     ->order("is_hot DESC, weight DESC")->select();
             }else{
                 $league_list = M()->table(C('DB_PREFIX').'league as l, '.C('DB_PREFIX').'match as m')->where("l.league_id = m.league_id AND m.state in(1,2,3,4)")
-                    ->field('league_id,color,cn_short,cn_name,type,sum_round,curr_round,curr_match_season,country_name,is_hot,count(*) as total_match')
+                    ->field('l.league_id,l.color,l.cn_short,l.cn_name,l.type,l.sum_round,l.curr_round,l.curr_match_season,l.country_name,l.is_hot,count(*) as total_match')
                     ->group('m.league_id')
                     ->order("is_hot DESC, weight DESC")->select();
             }
@@ -146,6 +146,9 @@ class MatchController extends BaseApiController {
             $json['data']['total'] = $total;
             $json['data']['page'] = $page;
             $json['data']['total_page'] = ceil($total/$limit);
+            $json['data']['type'] = $type;
+            $json['data']['league_ids'] = $league_ids;
+            
         }while(false);
         $this->ajaxReturn($json);
     }
