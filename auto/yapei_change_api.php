@@ -22,7 +22,7 @@ do{
     $postStr = file_get_contents("http://interface.win007.com/zq/ch_odds.xml");
     preg_match_all("/(<h>[^(<h>)]*?<\/h>)+/is",$postStr,$list);
     if(count($list[0]) == 5){
-        echo "err";
+        echo "ok";
         // 亚赔（让球盘）
         // $match = $curr->findOne(array('match_id'=>$));
         $asia_list = explode(';', $list[0][0]);
@@ -151,7 +151,7 @@ do{
             }
         }
     }else{
-        echo "ok";
+        echo "err";
     }
 
 }while(false);
