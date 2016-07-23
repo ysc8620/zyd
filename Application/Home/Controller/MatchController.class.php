@@ -50,6 +50,14 @@ class MatchController extends BaseApiController {
             foreach($list as $i=>$match){
                 //
                 //$list[$i]['technic'] = empty($match['technic'])?[]:json_decode($match['technic'], true);
+                // 赛事统计
+                $technic = empty($match['technic'])?[]:json_decode($match['technic'], true);
+                $list[$i]['technic'] = [];
+                for($j=0; $j<41;$j++){
+                    $list[$i]['technic']['id'.$j]['home'] = isset($technic['id'.$j])?$technic['id'.$j]['home']:'';
+                    $list[$i]['technic']['id'.$j]['away'] = isset($technic['id'.$j])?$technic['id'.$j]['away']:'';
+                }
+
                 // 标准
                 $baiou = M('asia_oupei')->where(array('match_id'=>$match['match_id']))->find();
                 $list[$i]['begin_home_rate'] = floatval("{$baiou['begin_home_rate']}");
@@ -128,9 +136,13 @@ class MatchController extends BaseApiController {
             )
                 ->where(array('match_id'=>$match_id))->find();
 
+            // 赛事统计
+            $technic = empty($match['technic'])?[]:json_decode($match['technic'], true);
+            for($j=0; $j<41;$j++){
+                $match['technic']['id'.$j]['home'] = isset($technic['id'.$j])?$technic['id'.$j]['home']:'';
+                $match['technic']['id'.$j]['away'] = isset($technic['id'.$j])?$technic['id'.$j]['away']:'';
+            }
 
-            //
-            //$match['technic'] = empty($match['technic'])?[]:json_decode($match['technic'], true);
             // 标准
             $baiou = M('asia_oupei')->where(array('match_id'=>$match['match_id']))->find();
             $match['begin_home_rate'] = floatval("{$baiou['begin_home_rate']}");
