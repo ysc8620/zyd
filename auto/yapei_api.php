@@ -15,8 +15,8 @@ require_once __DIR__ .'/config.php';
 echo date("Y-m-d H:i:s")."=yapei_api=\r\n";
 //mongodb://admin_miss:miss@localhost:27017/test
 do{
-    global $mongo;
-    $curr = $mongo->zyd->yapei;
+//    global $mongo;
+//    $curr = $mongo->zyd->yapei;
 //    $curr_league = $mongo->zyd->league;
 //    $curr_match = $mongo->zyd->match;
     $postStr = file_get_contents("http://interface.win007.com/zq/odds.aspx");
@@ -65,32 +65,25 @@ do{
     foreach($asia_list as $asia){
         $info = explode(',', $asia);
         $match_id = $info[0];
-        $data = [];
-        $data['id'.$info[1]] = [
-            'match_id' => $info[0],
-            'company_id' => $info[1],
-            'begin_rate' => $info[2],
-            'begin_home_rate' => $info[3],
-            'begin_away_rate' => $info[4],
-            'change_rate' => $info[5],
-            'change_home_rate' => $info[6],
-            'change_away_rate' => $info[7],
-            'is_inclose' => $info[8],
-            'is_walk' => $info[9],
-            'update_time' => time(),
-            'update_date' => date('Y-m-d H:i:s')
+        $data = [
+            'match_id' => intval($info[0]),
+            'company_id' => intval($info[1]),
+            'begin_rate' => floatval($info[2]),
+            'begin_home_rate' => floatval($info[3]),
+            'begin_away_rate' => floatval($info[4]),
+            'change_rate' => floatval($info[5]),
+            'change_home_rate' => floatval($info[6]),
+            'change_away_rate' => floatval($info[7]),
+            'is_inclose' => strval($info[8]),
+            'is_walk' => strval($info[9]),
+            'update_time' => time()
         ];
 
-        $match = $curr->findOne(array('match_id'=>$match_id));
+        $match = M('asia_yapei')->where(array('match_id'=>$match_id,'company_id'=>$data['company_id']))->find();
         if($match){
-            $asia_info = array_merge((array)$match['asia'], $data);
-            $curr->update(array('_id'=>$match['_id']) ,array('$set'=>array('asia'=>$asia_info)));
+            M('asia_yapei')->where(array('id'=>$match['id']))->save($data);
         }else{
-            $full_data = [
-                'match_id' => $match_id,
-                'asia' => $data
-            ];
-            $curr->insert($full_data);
+            M('asia_yapei')->add($data);
         }
     }
 
@@ -99,30 +92,23 @@ do{
     foreach($oupei_list as $oupei){
         $info = explode(',', $oupei);
         $match_id = $info[0];
-        $data = [];
-        $data['id'.$info[1]] = [
-            'match_id' => $info[0],
-            'company_id' => $info[1],
-            'begin_home_rate' => $info[2],
-            'begin_draw_rate' => $info[3],
-            'begin_away_rate' => $info[4],
-            'change_home_rate' => $info[5],
-            'change_draw_rate' => $info[6],
-            'change_away_rate' => $info[7],
-            'update_time' => time(),
-            'update_date' => date('Y-m-d H:i:s')
+        $data = [
+            'match_id' => intval($info[0]),
+            'company_id' => intval($info[1]),
+            'begin_home_rate' => floatval($info[2]),
+            'begin_draw_rate' => floatval($info[3]),
+            'begin_away_rate' => floatval($info[4]),
+            'change_home_rate' => floatval($info[5]),
+            'change_draw_rate' => floatval($info[6]),
+            'change_away_rate' => floatval($info[7]),
+            'update_time' => time()
         ];
 
-        $match = $curr->findOne(array('match_id'=>$match_id));
+        $match = M('asia_oupei')->where(array('match_id'=>$match_id,'company_id'=>$data['company_id']))->find();
         if($match){
-            $oupei_info = array_merge((array)$match['oupei'], $data);
-            $curr->update(array('_id'=>$match['_id']) ,array('$set'=>array('oupei'=>$oupei_info)));
+            M('asia_oupei')->where(array('id'=>$match['id']))->save($data);
         }else{
-            $full_data = [
-                'match_id' => $match_id,
-                'oupei' => $data
-            ];
-            $curr->insert($full_data);
+            M('asia_oupei')->add($data);
         }
     }
 
@@ -131,62 +117,48 @@ do{
     foreach($daxiaoqiu_list as $daxiaoqiu){
         $info = explode(',', $daxiaoqiu);
         $match_id = $info[0];
-        $data = [];
-        $data['id'.$info[1]] = [
-            'match_id' => $info[0],
-            'company_id' => $info[1],
-            'begin_rate' => $info[2],
-            'begin_big_rate' => $info[3],
-            'begin_small_rate' => $info[4],
-            'change_rate' => $info[5],
-            'change_big_rate' => $info[6],
-            'change_small_rate' => $info[7],
-            'update_time' => time(),
-            'update_date' => date('Y-m-d H:i:s')
+        $data = [
+            'match_id' => intval($info[0]),
+            'company_id' => intval($info[1]),
+            'begin_rate' => floatval($info[2]),
+            'begin_big_rate' => floatval($info[3]),
+            'begin_small_rate' => floatval($info[4]),
+            'change_rate' => floatval($info[5]),
+            'change_big_rate' => floatval($info[6]),
+            'change_small_rate' => floatval($info[7]),
+            'update_time' => time()
         ];
 
-        $match = $curr->findOne(array('match_id'=>$match_id));
+        $match = M('asia_daxiaoqiu')->where(array('match_id'=>$match_id,'company_id'=>$data['company_id']));
         if($match){
-            $daxia_info = array_merge((array)$match['daxiaoqiu'], $data);
-            $curr->update(array('_id'=>$match['_id']) ,array('$set'=>array('daxiaoqiu'=>$daxia_info)));
+            M('asia_daxiaoqiu')->where(array('id'=>$match['id']))->save($data);
         }else{
-            $full_data = [
-                'match_id' => $match_id,
-                'daxiaoqiu' => $data
-            ];
-            $curr->insert($full_data);
+            M('asia_daxiaoqiu')->add($data);
         }
     }
 
-    // 大小球
+    // 半场大小球
     $half_list = explode(';', $list[4]);
     foreach($half_list as $half){
         $info = explode(',', $half);
         $match_id = $info[0];
-        $data = [];
-        $data['id'.$info[1]] = [
-            'match_id' => $info[0],
-            'company_id' => $info[1],
-            'begin_rate' => $info[2],
-            'begin_big_rate' => $info[3],
-            'begin_small_rate' => $info[4],
-            'change_rate' => $info[5],
-            'change_big_rate' => $info[6],
-            'change_small_rate' => $info[7],
-            'update_time' => time(),
-            'update_date' => date('Y-m-d H:i:s')
+        $data = [
+            'match_id' => intval($info[0]),
+            'company_id' => intval($info[1]),
+            'begin_rate' => floatval($info[2]),
+            'begin_home_rate' => floatval($info[3]),
+            'begin_away_rate' => floatval($info[4]),
+            'change_rate' => floatval($info[5]),
+            'change_home_rate' => floatval($info[6]),
+            'change_away_rate' => floatval($info[7]),
+            'update_time' => time()
         ];
 
-        $match = $curr->findOne(array('match_id'=>$match_id));
+        $match = M('asia_half')->where(array('match_id'=>$match_id,'company_id'=>$data['company_id']))->find();
         if($match){
-            $half_info = array_merge((array)$match['half'], $data);
-            $curr->update(array('_id'=>$match['_id']) ,array('$set'=>array('half'=>$half_info)));
+            M('asia_half')->where(array('id'=>$match['id']))->save($data);
         }else{
-            $full_data = [
-                'match_id' => $match_id,
-                'half' => $data
-            ];
-            $curr->insert($full_data);
+            M('asia_half')->add($data);
         }
     }
 
@@ -195,30 +167,23 @@ do{
     foreach($half_daxiaoqiu_list as $half_daxiaoqiu){
         $info = explode(',', $half_daxiaoqiu);
         $match_id = $info[0];
-        $data = [];
-        $data['id'.$info[1]] = [
-            'match_id' => $info[0],
-            'company_id' => $info[1],
-            'begin_rate' => $info[2],
-            'begin_big_rate' => $info[3],
-            'begin_small_rate' => $info[4],
-            'change_rate' => $info[5],
-            'change_big_rate' => $info[6],
-            'change_small_rate' => $info[7],
-            'update_time' => time(),
-            'update_date' => date('Y-m-d H:i:s')
+        $data = [
+            'match_id' => intval($info[0]),
+            'company_id' => intval($info[1]),
+            'begin_rate' => floatval($info[2]),
+            'begin_big_rate' => floatval($info[3]),
+            'begin_small_rate' => floatval($info[4]),
+            'change_rate' => floatval($info[5]),
+            'change_big_rate' => floatval($info[6]),
+            'change_small_rate' => floatval($info[7]),
+            'update_time' => time()
         ];
 
-        $match = $curr->findOne(array('match_id'=>$match_id));
+        $match = M('asia_daxiaoqiu')->where(array('match_id'=>$match_id,'company_id'=>$data['company_id']))->find();
         if($match){
-            $half_daxiaoqiu_info = array_merge((array)$match['half_daxiaoqiu'], $data);
-            $curr->update(array('_id'=>$match['_id']) ,array('$set'=>array('half_daxiaoqiu'=>$half_daxiaoqiu_info)));
+            M('asia_daxiaoqiu')->where(array('id'=>$match['id']))->save($data);
         }else{
-            $full_data = [
-                'match_id' => $match_id,
-                'half_daxiaoqiu' => $data
-            ];
-            $curr->insert($full_data);
+            M('asia_daxiaoqiu')->insert($data);
         }
     }
 }while(false);
