@@ -106,6 +106,8 @@ class MatchController extends BaseApiController {
                 $event_list = M('event')->where(array('match_id'=>$match['match_id']))->order("time ASC")->select();
                 $list[$i]['events'] = (array)$event_list;
                 $list[$i]['match_name'] = '';
+                $list[$i]['is_collect'] = 0;
+                $list[$i]['total_collect'] = 0;
             }
 
             $data = [];
@@ -148,7 +150,7 @@ class MatchController extends BaseApiController {
             $json['data']['total_page'] = ceil($total/$limit);
             $json['data']['type'] = $type;
             $json['data']['league_ids'] = $league_ids;
-            
+
         }while(false);
         $this->ajaxReturn($json);
     }
@@ -222,6 +224,8 @@ class MatchController extends BaseApiController {
             $event_list = M('event')->where(array('match_id'=>$match['match_id']))->order("time ASC")->select();
             $match['events'] = (array)$event_list;
             $match['match_name'] = '';
+            $match['is_collect'] = 0;
+            $match['total_collect'] = 0;
             $json['data'] = $match;
 
         }while(false);
