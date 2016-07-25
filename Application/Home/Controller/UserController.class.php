@@ -375,4 +375,81 @@ class UserController extends BaseApiController {
         }while(false);
         $this->ajaxReturn($json);
     }
+
+    /**
+     *  用户关注接口
+     */
+    public function follow(){
+        $json = $this->simpleJson();
+        do {
+            // 1 注册, 2登录, 3,找回密码
+            $user_id = I('request.user_id', 0, 'intval');
+            $to_user_id = I('request.to_user_id',0,'intval');
+            if(empty($user_id) || empty($to_user_id)){
+                $json['status'] = 110;
+                $json['msg'] = '用户ID不能为空';
+                break;
+            }
+            $follow = M('users_follow')->where(array('from_user_id'=>$user_id,'to_user_id'=>$to_user_id));
+            if($follow){
+                $json['msg'] = '关注成功';
+                $json['data']['user_id'] = $user_id;
+                $json['data']['to_user_id'] = $to_user_id;
+                break;
+            }else{
+                $data = [
+                    'from_user_id' => $user_id,
+                    'to_user_id' => $to_user_id,
+                    'create_time' => time()
+                ];
+                $res = M('users_follow')->add($data);
+                if($res){
+                    $json['msg'] = '关注成功';
+                    $json['data']['user_id'] = $user_id;
+                    $json['data']['to_user_id'] = $to_user_id;
+                    break;
+                }else{
+                    $json['status'] = 111;
+                    $json['msg'] = '关注失败';
+                    break;
+                }
+            }
+        }while(false);
+        $this->ajaxReturn($json);
+    }
+
+    /**
+     * 用户关注列表
+     */
+    public function follow_list(){
+        $json = $this->simpleJson();
+        do {
+            // 1 注册, 2登录, 3,找回密码
+            $user_id = I('request.user_id', 0, 'intval');
+            $limit = I('request.limit',10,'intval');
+            $page = I('request.p',1,'intval');
+            if(empty($user_id) ){
+                $json['status'] = 110;
+                $json['msg'] = '用户ID不能为空';
+                break;
+            }
+            $total = M()->table(C('DB_PREFIX').'users as u, '.C('DB_PREFIX').'users_follow as uf')->where("u.status = 1 AND uf.from_user_id=$user_id AND u.id = uf.from_user_id")->count();
+            $Page = new \Think\Page($total, $limit); // 实例化分页类 传入总记录数和每页显示的记录数(25)
+            $Page->show();
+
+            $list = M()->table(C('DB_PREFIX').'users as u, '.C('DB_PREFIX').'users_follow as uf')->where("u.status = 1 AND uf.from_user_id=$user_id AND u.id = uf.from_user_id")
+                ->field("`id`,`nickname`, `pic`, `mobile`, `is_expert`, `vip`, `credit`,`register_time`, `update_time`,  `total_send_info`, `total_collect_user`, `total_collect_match`, `total_follow_user`")
+                ->limit($Page->firstRow . ',' . $Page->listRows)->order("uf.create_time DESC")->select();
+            
+            $json['data'] = [
+                'list' => $list,
+                'page' => $page,
+                'total' => $total,
+                'limit' => $limit,
+                'total_page' => ceil($total/$limit),
+                'user_id' => $user_id
+            ];
+        }while(false);
+        $this->ajaxReturn($json);
+    }
 }
