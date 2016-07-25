@@ -36,7 +36,7 @@ class SportteryController extends BaseController {
 
     public function daxiaoqiu(){
 
-        $curr = M('asia_daxiaqiu'); // 实例化User对象
+        $curr = M('asia_daxiaoqiu'); // 实例化User对象
 
         $count = $curr->count();// 查询满足要求的总记录数
         $Page = new Page($count, 20);// 实例化分页类 传入总记录数和每页显示的记录数(25)
