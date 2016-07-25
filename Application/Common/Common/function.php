@@ -46,7 +46,7 @@ function getCompanyName($company_id){
         31=>'利记',
         33=>'永利高',
         35=>'盈禾'];
-    return isset($company_list[$company_id])?$company_list[$company_id]:'未知';
+    return isset($company_list[$company_id])?$company_list[$company_id]:'未知'.$company_id;
 }
 
 /**
