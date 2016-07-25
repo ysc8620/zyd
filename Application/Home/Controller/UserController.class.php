@@ -1,7 +1,7 @@
 <?php
 namespace Home\Controller;
 
-class MsgController extends BaseApiController {
+class UserController extends BaseApiController {
 
     /**
      * 用户注册
