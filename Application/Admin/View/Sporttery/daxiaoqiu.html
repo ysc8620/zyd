@@ -39,11 +39,11 @@
                                     <th>赛事ID</th>
                                     <th>博彩公司</th>
                                     <th>初盘盘口</th>
-                                    <th>主队初盘赔率</th>
-                                    <th>客队初盘赔率</th>
+                                    <th>初盘大球赔率</th>
+                                    <th>初盘小球赔率</th>
                                     <th>即时盘口</th>
-                                    <th>主队即时赔率</th>
-                                    <th>客队即时赔率</th>
+                                    <th>即时大球赔率</th>
+                                    <th>即时小球赔率</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>
@@ -53,11 +53,11 @@
                                         <td>{$item.match_id}</td>
                                         <td>{:getCompanyName($item[company_id])}</td>
                                         <td>{$item.begin_rate}</td>
-                                        <td>{$item.begin_home_rate}</td>
-                                        <td>{$item.begin_away_rate}</td>
+                                        <td>{$item.begin_bog_rate}</td>
+                                        <td>{$item.begin_small_rate}</td>
                                         <td>{$item.change_rate}</td>
-                                        <td>{$item.change_home_rate}</td>
-                                        <td>{$item.change_away_rate}</td>
+                                        <td>{$item.change_big_rate}</td>
+                                        <td>{$item.change_small_rate}</td>
                                         <td class="center">
                                         </td>
                                     </tr>
