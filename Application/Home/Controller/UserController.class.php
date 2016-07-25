@@ -135,7 +135,7 @@ class UserController extends BaseApiController {
                 // 用户锁定
                 if($member['status'] < 1){
                     $json['status'] = 111;
-                    $json['msg'] = '用户异常不能正常使用';
+                    $json['msg'] = '用户被锁定不能使用';
                     break;
                 }
                 $member['pic'] = pic_url($member['pic']);
@@ -155,7 +155,7 @@ class UserController extends BaseApiController {
                 // 用户锁定
                 if($member['status'] < 1){
                     $json['status'] = 111;
-                    $json['msg'] = '用户异常不能正常使用';
+                    $json['msg'] = '用户被锁定不能使用';
                     break;
                 }
 
@@ -205,7 +205,7 @@ class UserController extends BaseApiController {
             // 用户锁定
             if($member['status'] < 1){
                 $json['status'] = 111;
-                $json['msg'] = '用户异常不能正常使用';
+                $json['msg'] = '用户被锁定不能使用';
                 break;
             }
             $member['pic'] = pic_url($member['pic']);
