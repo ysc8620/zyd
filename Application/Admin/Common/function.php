@@ -9,16 +9,6 @@
 use Helpers\Presenter;
 use Redis\MyRedis;
 
-/**
- *
- * @param $password
- * @param $salt
- */
-function encrypt_password($password, $salt = '')
-{
-    return md5(crc32($password) . md5($salt));
-}
-
 function getAccessToken($city_id)
 {
     $appId = D('city')->where(['id' => $city_id])->getField('appid');
