@@ -102,7 +102,12 @@ class SportteryController extends BaseController {
         $this->display();
     }
 
-    public function baidan(){
+    public function beidan(){
+
+        $this->display();
+    }
+
+    public function jiaoqiu(){
 
         $this->display();
     }
