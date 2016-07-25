@@ -22,6 +22,32 @@ if (!function_exists('getallheaders'))
     }
 }
 
+/**
+ * @param $company_id
+ */
+function getCompanyName($company_id){
+    $company_list = [1=>'澳门',
+        2=>'波音',
+        3=>'ＳＢ/皇冠',
+        4=>'立博',
+        5=>'云鼎',
+        7=>'SNAI',
+        8=>'Bet365',
+        9=>'威廉希尔',
+        12=>'易胜博',
+        14=>'韦德',
+        17=>'明陞',
+        18=>'Eurobet',
+        19=>'Interwetten',
+        23=>'金宝博',
+        24=>'12bet/沙巴',
+        29=>'乐天堂',
+        31=>'利记',
+        33=>'永利高',
+        35=>'盈禾'];
+    return isset($company_list[$company_id])?$company_list[$company_id]:'未知';
+}
+
 function pic_url($url){
     return 'http://api2.zydzuqiu.com/'.$url;
 }
