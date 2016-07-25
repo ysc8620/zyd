@@ -26,7 +26,8 @@ if (!function_exists('getallheaders'))
  * @param $company_id
  */
 function getCompanyName($company_id){
-    $company_list = [1=>'澳门',
+    $company_list = [
+        1=>'澳门',
         2=>'波音',
         3=>'ＳＢ/皇冠',
         4=>'立博',
@@ -46,6 +47,15 @@ function getCompanyName($company_id){
         33=>'永利高',
         35=>'盈禾'];
     return isset($company_list[$company_id])?$company_list[$company_id]:'未知';
+}
+
+/**
+ * @param $match_id
+ * @return string
+ */
+function getMatchName($match_id){
+    $match = M('match')->where(array('match_id'=>$match_id))->find();
+    return $match_id['home_name'].':'.$match['away_name'];
 }
 
 function pic_url($url){
