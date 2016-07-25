@@ -1,12 +1,7 @@
 <?php
 namespace Home\Controller;
-use Weixin\MyWechat;
-use Home\Model\UsersModel;
-use Redis\MyRedis;
 
-
-
-class MsgController extends BaseApiController {
+class SmsController extends BaseApiController {
 
     /**
      * 短信验证
@@ -97,6 +92,9 @@ class MsgController extends BaseApiController {
             if($code == $sms['msg']){
                 M('sms_log')->where(array('id'=>$sms['id']))->save(array('status'=>1));
                 $json['msg'] = '验证成功';
+                $json['data']['code'] = $code;
+                $json['data']['mobile'] = $mobile;
+                $json['data']['send_time'] = $sms['send_time'];
                 break;
             }else{
                 $json['status'] = 111;
