@@ -7,16 +7,10 @@ class BasicController extends BaseController {
      * 联赛信息
      */
     public function league(){
-        $mongo  = $this->initMongo();
-        $curr = $mongo->zyd->league;
-        $page = I('p',1,'intval');
-        $total = $curr->count();
-        $obj = $curr->find()->sort(array('league_id'=>1))->skip( ($page-1)*20)->limit(20);
-        $list = [];
-        while($row = $obj->hasNext()){
-            $list[] = $obj->getNext();
-        }
+        $total = M('league')->count();
         $page = new \Think\Page($total, 20);
+        $list = M('league')->order('league_id DESC')->limit($page->firstRow, $page->listRows)->select();
+
         $this->assign('page', $page->show());
         $this->assign('list', $list);
 
@@ -27,8 +21,6 @@ class BasicController extends BaseController {
      * 联赛编辑
      */
     public function league_edit(){
-        $mongo = $this->initMongo();
-        $curr = $mongo->zyd->league;
         $id = I('request.id',0,"intval");
         if(empty($id)){
             return $this->error('请选择联赛', U('basic/league'));
@@ -37,7 +29,7 @@ class BasicController extends BaseController {
 
         }
 
-        $league = $curr->findOne(array('league_id'=>$id));
+        $league =  M('league')->where(array('league_id'=>$id))->find();
         $this->assign('league', $league);
 
         $this->display();
@@ -47,16 +39,10 @@ class BasicController extends BaseController {
      * 球队列表
      */
     public function team(){
-        $mongo  = $this->initMongo();
-        $curr = $mongo->zyd->team;
-        $page = I('p',1,'intval');
-        $total = $curr->count();
-        $obj = $curr->find()->sort(array('team_id'=>1))->skip( ($page-1)*20)->limit(20);
-        $list = [];
-        while($row = $obj->hasNext()){
-            $list[] = $obj->getNext();
-        }
+        $total = M('team')->count();
         $page = new \Think\Page($total, 20);
+        $list = M('team')->order('team_id DESC')->limit($page->firstRow, $page->listRows)->select();
+
         $this->assign('page', $page->show());
         $this->assign('list', $list);
 
@@ -67,8 +53,6 @@ class BasicController extends BaseController {
      * 球队编辑
      */
     public function team_edit(){
-        $mongo = $this->initMongo();
-        $curr = $mongo->zyd->team;
         $id = I('request.id',0,"intval");
         if(empty($id)){
             return $this->error('请选择球队', U('basic/team'));
@@ -77,23 +61,20 @@ class BasicController extends BaseController {
 
         }
 
-        $team = $curr->findOne(array('team_id'=>$id));
+        $team = M('team')->where(array('team_id'=>$id))->find();
         $this->assign('team', $team);
 
         $this->display();
     }
 
+    /**
+     * 赛事列表
+     */
     public function player(){
-        $mongo  = $this->initMongo();
-        $curr = $mongo->zyd->player;
-        $page = I('p',1,'intval');
-        $total = $curr->count();
-        $obj = $curr->find()->sort(array('player_id'=>1))->skip( ($page-1)*20)->limit(20);
-        $list = [];
-        while($row = $obj->hasNext()){
-            $list[] = $obj->getNext();
-        }
+        $total = M('player')->count();
         $page = new \Think\Page($total, 20);
+        $list = M('player')->order('player_id DESC')->limit($page->firstRow, $page->listRows)->select();
+
         $this->assign('page', $page->show());
         $this->assign('list', $list);
 
@@ -104,8 +85,6 @@ class BasicController extends BaseController {
      * 球队编辑
      */
     public function player_edit(){
-        $mongo = $this->initMongo();
-        $curr = $mongo->zyd->player;
         $id = I('request.id',0,"intval");
         if(empty($id)){
             return $this->error('请选球员', U('basic/player'));
@@ -114,23 +93,17 @@ class BasicController extends BaseController {
 
         }
 
-        $player= $curr->findOne(array('player_id'=>$id));
+        $player= M('player')->where(array('player_id'=>$id))->find();
         $this->assign('player', $player);
 
         $this->display();
     }
 
     public function referee(){
-        $mongo  = $this->initMongo();
-        $curr = $mongo->zyd->referee;
-        $page = I('p',1,'intval');
-        $total = $curr->count();
-        $obj = $curr->find()->sort(array('referee_id'=>1))->skip( ($page-1)*20)->limit(20);
-        $list = [];
-        while($row = $obj->hasNext()){
-            $list[] = $obj->getNext();
-        }
+        $total = M('referee')->count();
         $page = new \Think\Page($total, 20);
+        $list = M('referee')->order('player_id DESC')->limit($page->firstRow, $page->listRows)->select();
+
         $this->assign('page', $page->show());
         $this->assign('list', $list);
 
@@ -141,8 +114,6 @@ class BasicController extends BaseController {
      * 球队编辑
      */
     public function referee_edit(){
-        $mongo = $this->initMongo();
-        $curr = $mongo->zyd->referee;
         $id = I('request.id',0,"intval");
         if(empty($id)){
             return $this->error('请选裁判', U('basic/referee'));
@@ -152,7 +123,7 @@ class BasicController extends BaseController {
 
         }
 
-        $referee = $curr->findOne(array('referee_id'=>$id));
+        $referee = M('referee')->where(array('referee_id'=>$id))->find();
         $this->assign('referee', $referee);
 
         $this->display();
