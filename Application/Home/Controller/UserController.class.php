@@ -117,27 +117,26 @@ class UserController extends BaseApiController {
 
                     if($code == $sms['msg']){
                         M('sms_log')->where(array('id'=>$sms['id']))->save(array('status'=>1));
-                        $member = M('users')->where(array('mobile'=>$mobile))->field("`id`, `nickname`, `pic`, `mobile`, `is_expert`, `vip`, `credit`,`register_time`, `update_time`,  `total_send_info`, `total_collect_user`, `total_collect_match`, `total_follow_user`")->find();
-                        // 用户锁定
-                        if(!$member){
-                            $json['status'] = 111;
-                            $json['msg'] = '登录信息错误';
-                            break;
-                        }
-
-                        // 用户锁定
-                        if($member['status'] < 1){
-                            $json['status'] = 111;
-                            $json['msg'] = '用户异常不能正常使用';
-                            break;
-                        }
                     }else{
                         $json['status'] = 111;
                         $json['msg'] = '验证码错误';
                         break;
                     }
                 }
-                //
+                $member = M('users')->where(array('mobile'=>$mobile))->field("`id`, `nickname`, `pic`, `mobile`, `is_expert`, `vip`, `credit`,`register_time`, `update_time`,  `total_send_info`, `total_collect_user`, `total_collect_match`, `total_follow_user`")->find();
+                // 用户锁定
+                if(!$member){
+                    $json['status'] = 111;
+                    $json['msg'] = '登录信息错误';
+                    break;
+                }
+
+                // 用户锁定
+                if($member['status'] < 1){
+                    $json['status'] = 111;
+                    $json['msg'] = '用户异常不能正常使用';
+                    break;
+                }
                 $member['pic'] = pic_url($member['pic']);
                 $json['msg'] = '用户登录成功';
                 $json['data'] = $member;
