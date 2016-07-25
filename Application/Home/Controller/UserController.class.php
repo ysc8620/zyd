@@ -51,7 +51,8 @@ class UserController extends BaseApiController {
             $user = [
                 'nickname' => $mobile,
                 'mobile' => $mobile,
-                'pic' => '/Public/static/userimg.jpg'
+                'pic' => '/Public/static/userimg.jpg',
+                'status' => 1
             ];
 
             if($password){
