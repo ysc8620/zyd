@@ -457,6 +457,7 @@ class UserController extends BaseApiController {
             $list = M()->table(C('DB_PREFIX').'users as u, '.C('DB_PREFIX').'users_follow as uf')->where("u.status = 1 AND uf.from_user_id=$user_id AND u.id = uf.from_user_id")
                 ->field($this->getField('u'))
                 ->limit($Page->firstRow . ',' . $Page->listRows)->order("uf.create_time DESC")->select();
+            
             foreach($list as $i=>$item){
                 $list[$i] = $this->get_return_member($item);
             }
@@ -492,6 +493,10 @@ class UserController extends BaseApiController {
                     ->field($this->field)
                     ->limit($Page->firstRow . ',' . $Page->listRows)->order("total_follow_user DESC, total_rate DESC")->select();
 
+                foreach($list as $i=>$item){
+                    $list[$i] = $this->get_return_member($item);
+                }
+
                 $json['data'] = [
                     'list' => $list,
                     'page' => $page,
@@ -509,7 +514,9 @@ class UserController extends BaseApiController {
                 $list = M('users')->where("is_expert=1 AND status = 1")
                     ->field($this->field)
                     ->limit($Page->firstRow . ',' . $Page->listRows)->order("total_month_rate DESC, total_rate DESC")->select();
-
+                foreach($list as $i=>$item){
+                    $list[$i] = $this->get_return_member($item);
+                }
                 $json['data'] = [
                     'list' => $list,
                     'page' => $page,
@@ -533,6 +540,10 @@ class UserController extends BaseApiController {
                 $list = M()->table(C('DB_PREFIX').'users as u, '.C('DB_PREFIX').'users_follow as uf')->where("u.is_expert=1 AND u.status = 1 AND uf.from_user_id=$user_id AND u.id = uf.from_user_id")
                     ->field("`id`,`nickname`, `pic`, `mobile`, `is_expert`, `vip`, `credit`,`register_time`, `update_time`,  `total_send_info`, `total_collect_user`, `total_collect_match`, `total_follow_user`")
                     ->limit($Page->firstRow . ',' . $Page->listRows)->order("uf.create_time DESC")->select();
+
+                foreach($list as $i=>$item){
+                    $list[$i] = $this->get_return_member($item);
+                }
 
                 $json['data'] = [
                     'list' => $list,
