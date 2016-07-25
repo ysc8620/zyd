@@ -51,8 +51,7 @@ class UserController extends BaseApiController {
             $user = [
                 'nickname' => $mobile,
                 'mobile' => $mobile,
-                'pic' => '/Public/static/userimg.jpg',
-                'status' => 1
+                'pic' => '/Public/static/userimg.jpg'
             ];
 
             if($password){
@@ -124,7 +123,7 @@ class UserController extends BaseApiController {
                         break;
                     }
                 }
-                $member = M('users')->where(array('mobile'=>$mobile))->field("`id`, `nickname`, `pic`, `mobile`, `is_expert`, `vip`, `credit`,`register_time`, `update_time`,  `total_send_info`, `total_collect_user`, `total_collect_match`, `total_follow_user`")->find();
+                $member = M('users')->where(array('mobile'=>$mobile))->field("`id`, `nickname`, `pic`, `mobile`, `is_expert`, `vip`, `credit`,`register_time`, `update_time`,  `total_send_info`, `total_collect_user`, `total_collect_match`, `total_follow_user`,`status`")->find();
                 // 用户锁定
                 if(!$member){
                     $json['status'] = 111;
@@ -138,13 +137,14 @@ class UserController extends BaseApiController {
                     $json['msg'] = '用户被锁定不能使用';
                     break;
                 }
+                unset($member['status']);
                 $member['pic'] = pic_url($member['pic']);
                 $json['msg'] = '用户登录成功';
                 $json['data'] = $member;
 
             // 密码登陆
             }elseif($password){
-                $member = M('users')->where(array('mobile'=>$mobile))->field("`id`,`password`,`salt`, `nickname`, `pic`, `mobile`, `is_expert`, `vip`, `credit`,`register_time`, `update_time`,  `total_send_info`, `total_collect_user`, `total_collect_match`, `total_follow_user`")->find();
+                $member = M('users')->where(array('mobile'=>$mobile))->field("`id`,`password`,`salt`, `nickname`, `pic`, `mobile`, `is_expert`, `vip`, `credit`,`register_time`, `update_time`,  `total_send_info`, `total_collect_user`, `total_collect_match`, `total_follow_user`,`status`")->find();
                 // 用户锁定
                 if(!$member){
                     $json['status'] = 111;
@@ -164,7 +164,7 @@ class UserController extends BaseApiController {
                     $json['msg'] = '登录信息错误';
                     break;
                 }
-
+                unset($member['status']);
                 unset($member['password']);
                 unset($member['salt']);
                 $member['pic'] = pic_url($member['pic']);
@@ -194,7 +194,7 @@ class UserController extends BaseApiController {
                 break;
             }
 
-            $member = M('users')->where(array('id'=>$user_id))->field("`id`,`nickname`, `pic`, `mobile`, `is_expert`, `vip`, `credit`,`register_time`, `update_time`,  `total_send_info`, `total_collect_user`, `total_collect_match`, `total_follow_user`")->find();
+            $member = M('users')->where(array('id'=>$user_id))->field("`id`,`nickname`, `pic`, `mobile`, `is_expert`, `vip`, `credit`,`register_time`, `update_time`,  `total_send_info`, `total_collect_user`, `total_collect_match`, `total_follow_user`,`status`")->find();
             // 用户锁定
             if(!$member){
                 $json['status'] = 111;
@@ -208,6 +208,7 @@ class UserController extends BaseApiController {
                 $json['msg'] = '用户被锁定不能使用';
                 break;
             }
+            unset($member['status']);
             $member['pic'] = pic_url($member['pic']);
             $json['data'] = $member;
 
