@@ -1,6 +1,7 @@
 <?php
 namespace Admin\Controller;
 use Think\Controller;
+use Think\Page;
 class SportteryController extends BaseController {
     public function yapei(){
         $curr = M('asia_yapei'); // 实例化User对象
