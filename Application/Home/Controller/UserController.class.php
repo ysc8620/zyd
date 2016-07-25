@@ -338,7 +338,7 @@ class UserController extends BaseApiController {
     /**
      * 用户编辑
      */
-    public function edit_user(){
+    public function edit(){
         $json = $this->simpleJson();
         do {
             // 1 注册, 2登录, 3,找回密码
