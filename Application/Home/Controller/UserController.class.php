@@ -127,7 +127,7 @@ class MsgController extends BaseApiController {
                         $json['msg'] = '用户异常不能正常使用';
                         break;
                     }
-
+                    $member['pic'] = pic_url($member['pic']);
                     $json['msg'] = '用户登录成功';
                     $json['data'] = $member;
 
@@ -161,6 +161,7 @@ class MsgController extends BaseApiController {
 
                 unset($member['password']);
                 unset($member['salt']);
+                $member['pic'] = pic_url($member['pic']);
                 $json['msg'] = '用户登录成功';
                 $json['data'] = $member;
             }else{
@@ -201,7 +202,7 @@ class MsgController extends BaseApiController {
                 $json['msg'] = '用户异常不能正常使用';
                 break;
             }
-
+            $member['pic'] = pic_url($member['pic']);
             $json['data'] = $member;
 
         }while(false);

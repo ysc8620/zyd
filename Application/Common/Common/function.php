@@ -22,6 +22,10 @@ if (!function_exists('getallheaders'))
     }
 }
 
+function pic_url($url){
+    return 'http://api2.zydzuqiu.com/'.$url;
+}
+
 /**
  *
  * @param $password
