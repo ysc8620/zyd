@@ -75,8 +75,10 @@ class UserController extends BaseApiController {
 
             $user_id = M('users')->add($user);
             if($user_id){
+                $member = M('users')->where(array('id'=>$user_id))->field("`id`, `nickname`, `pic`, `mobile`, `is_expert`, `vip`, `credit`, `total_top_credit`,`register_time`, `update_time`,  `total_send_info`, `total_collect_user`, `total_collect_match`, `total_follow_user`")->find();
+                $member['pic'] = pic_url($member['pic']);
                 $json['msg'] = '用户注册成功';
-                $json['data'] = M('users')->where(array('id'=>$user_id))->field("`id`, `nickname`, `pic`, `mobile`, `is_expert`, `vip`, `credit`, `total_top_credit`,`register_time`, `update_time`,  `total_send_info`, `total_collect_user`, `total_collect_match`, `total_follow_user`")->find();
+                $json['data'] = $member;
             }else{
                 $json['status'] = 111;
                 $json['msg'] = '用户注册失败';
