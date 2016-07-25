@@ -23,6 +23,64 @@ if (!function_exists('getallheaders'))
 }
 
 /**
+ * 验证手机号
+ * @param $mobile
+ * @return bool
+ */
+function is_mobile($mobile){
+    if(! preg_match("/^1[34578]\d{9}$/", $mobile)){
+        return false;
+    }else{
+        return true;
+    }
+}
+
+/**
+ * url 为服务的url地址
+ * query 为请求串
+ */
+function sock_post($url,$query){
+    $data = "";
+    $info=parse_url($url);
+    $fp=fsockopen($info["host"],80,$errno,$errstr,30);
+    if(!$fp){
+        return $data;
+    }
+    $head="POST ".$info['path']." HTTP/1.0\r\n";
+    $head.="Host: ".$info['host']."\r\n";
+    $head.="Referer: http://".$info['host'].$info['path']."\r\n";
+    $head.="Content-type: application/x-www-form-urlencoded\r\n";
+    $head.="Content-Length: ".strlen(trim($query))."\r\n";
+    $head.="\r\n";
+    $head.=trim($query);
+    $write=fputs($fp,$head);
+    $header = "";
+    while ($str = trim(fgets($fp,4096))) {
+        $header.=$str;
+    }
+    while (!feof($fp)) {
+        $data .= fgets($fp,4096);
+    }
+    return $data;
+}
+
+/**
+ * 普通接口发短信
+ * apikey 为云片分配的apikey
+ * text 为短信内容
+ * mobile 为接受短信的手机号
+ * tpl_send_sms('153530eaf64e1d0e93856917ffc11d37',690423,'#name#='.$text.'网站访问异常',18668112791);
+ */
+function send_sms($mobile,$text,$apikey='eaf64e1d0e93856917ffc11d37' ){
+    // 【云片网】您的验证码是
+    $url="http://yunpian.com/v1/sms/send.json";
+    $encoded_text = urlencode("$text");
+    $post_string="apikey=$apikey&text=$encoded_text&mobile=$mobile";
+    return sock_post($url, $post_string);
+}
+
+
+/**
  * @param $value
  * @return string
  */
