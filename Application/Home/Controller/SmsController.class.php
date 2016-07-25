@@ -49,6 +49,7 @@ class SmsController extends BaseApiController {
                     $data['log'] = "【章鱼帝】您的验证码是{$data['msg']}";
                     break;
             }
+            M('sms_log')->add($data);
             $res = send_sms($mobile, $data['log']);
             $json['data'] = [
                 'code' => $data['msg'],
