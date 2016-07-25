@@ -457,7 +457,7 @@ class UserController extends BaseApiController {
             $list = M()->table(C('DB_PREFIX').'users as u, '.C('DB_PREFIX').'users_follow as uf')->where("u.status = 1 AND uf.from_user_id=$user_id AND u.id = uf.from_user_id")
                 ->field($this->getField('u'))
                 ->limit($Page->firstRow . ',' . $Page->listRows)->order("uf.create_time DESC")->select();
-            
+
             foreach($list as $i=>$item){
                 $list[$i] = $this->get_return_member($item);
             }

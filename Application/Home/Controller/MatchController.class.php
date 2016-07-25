@@ -232,4 +232,45 @@ class MatchController extends BaseApiController {
         }while(false);
         $this->ajaxReturn($json);
     }
+
+    /**
+     * 赛事关注
+     */
+    public function follow(){
+        $json = $this->simpleJson();
+        do{
+            $user_id = I('request.user_id',0,'intval');
+            $match_id = I('request.match_id', 0,'intval');
+            if(empty($user_id) || empty($match_id)){
+                $json['status'] = 110;
+                $json['msg'] = '请正确输入赛事和用户信息';
+                break;
+            }
+            $follow = M('match_follow')->where(array('user_id'=>$user_id, 'match_id'=>$match_id))->find();
+            if($follow){
+                $json['msg'] = '赛事关注成功';
+                $json['data']['match_id'] = $match_id;
+                $json['data']['user_id'] = $user_id;
+                break;
+            }else{
+                $data = [
+                    'match_id' => $match_id,
+                    'user_id' => $user_id,
+                    'create_time' => time()
+                ];
+                $res = M('match_follow')->add($data);
+                if($res){
+                    $json['msg'] = '赛事关注成功';
+                    $json['data']['match_id'] = $match_id;
+                    $json['data']['user_id'] = $user_id;
+                    break;
+                }else{
+                    $json['msg'] = '赛事关注失败';
+                    break;
+                }
+            }
+        }while(false);
+        $this->ajaxReturn($json);
+    }
+    
 }
