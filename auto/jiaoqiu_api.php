@@ -34,8 +34,8 @@ do{
                 'update_time' => time()
             ];
 
-            $match_info = M('jiaoqiu')->where(array('schedule_id'=>$info['company_id']))->order('id DESC')->find();
-            if($match_info['modify_time'] < $info['modify_time']){
+            $match_info = M('jiaoqiu')->where(array('schedule_id'=>$info['schedule_id'],'company_id'=>$info['company_id']))->order('id DESC')->find();
+            if(strtotime($match_info['modify_time']) < strtotime($info['modify_time'])){
                 M('beidan')->add($info);
             }
     }
