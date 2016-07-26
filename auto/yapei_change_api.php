@@ -51,7 +51,7 @@ do{
                 }
             }
         }
-        
+
         // 欧赔（标准盘）
         if($list['a'][1]['h']){
             foreach($list['a'][1]['h'] as $oupei){

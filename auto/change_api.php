@@ -15,8 +15,8 @@ require_once __DIR__ .'/config.php';
 echo date("Y-m-d H:i:s")."=change_api=\r\n";
 //mongodb://admin_miss:miss@localhost:27017/test
 do{
-    global $mongo;
-    $curr = $mongo->zyd->match;
+//    global $mongo;
+//    $curr = $mongo->zyd->match;
     $postStr = file_get_contents("http://interface.win007.com/zq/change.xml");
     $obj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
     $data = json_decode(json_encode($obj), true);
