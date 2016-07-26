@@ -99,12 +99,30 @@ class SportteryController extends BaseController {
     }
 
     public function jingcai(){
+        $curr = M('jingcai'); // 实例化User对象
 
+        $count = $curr->count();// 查询满足要求的总记录数
+        $Page = new Page($count, 20);// 实例化分页类 传入总记录数和每页显示的记录数(25)
+
+        $show = $Page->show();// 分页显示输出
+
+        $list = $curr->order('id DESC')->limit($Page->firstRow . ',' . $Page->listRows)->select();
+        $this->assign('list', $list);// 赋值数据集
+        $this->assign('page', $show);// 赋值分页输出
         $this->display();
     }
 
     public function beidan(){
+        $curr = M('beidan'); // 实例化User对象
 
+        $count = $curr->count();// 查询满足要求的总记录数
+        $Page = new Page($count, 20);// 实例化分页类 传入总记录数和每页显示的记录数(25)
+
+        $show = $Page->show();// 分页显示输出
+
+        $list = $curr->order('id DESC')->limit($Page->firstRow . ',' . $Page->listRows)->select();
+        $this->assign('list', $list);// 赋值数据集
+        $this->assign('page', $show);// 赋值分页输出
         $this->display();
     }
 

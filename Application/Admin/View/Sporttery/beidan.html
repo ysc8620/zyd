@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>亚赔赔率(让球盘)-后台系统</title>
-    <meta name="keywords" content="亚赔赔率">
-    <meta name="description" content="亚赔赔率">
+    <title>北单赔率-后台系统</title>
+    <meta name="keywords" content=北单赔率">
+    <meta name="description" content="北单赔率">
     <link rel="shortcut icon" href="favicon.ico">
     <link href="__PUBLIC__/admin/css/bootstrap.min.css?v=3.3.5" rel="stylesheet">
     <link href="__PUBLIC__/admin/css/font-awesome.css?v=4.4.0" rel="stylesheet">
@@ -21,7 +21,7 @@
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>亚赔赔率(让球盘)</h5>
+                    <h5>北单赔率</h5>
                     <!--
                     <div class="ibox-tools"> <a class="collapse-link"> <i class="fa fa-chevron-up"></i> </a> <a class="dropdown-toggle" data-toggle="dropdown" href="table_data_tables.html#"> <i class="fa fa-wrench"></i> </a>
                       <ul class="dropdown-menu dropdown-user">
@@ -37,13 +37,14 @@
                                 <thead>
                                 <tr>
                                     <th>赛事ID</th>
+                                    <th>赛事时间</th>
+                                    <th>联赛信息</th>
+                                    <th>球队信息</th>
                                     <th>博彩公司</th>
-                                    <th>初盘盘口</th>
-                                    <th>主队初盘赔率</th>
-                                    <th>客队初盘赔率</th>
-                                    <th>即时盘口</th>
-                                    <th>主队即时赔率</th>
-                                    <th>客队即时赔率</th>
+                                    <th>赢盘赔率</th>
+                                    <th>和盘赔率</th>
+                                    <th>输盘赔率</th>
+                                    <th>让球数</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>
@@ -51,13 +52,14 @@
                                 <volist name="list" id="item">
                                     <tr class="gradeX">
                                         <td>{$item.match_id}</td>
+                                        <td>{$item.match_time}</td>
+                                        <td>{$item.league_name}</td>
+                                        <td>{$item.home_name}-{$item.away_name}</td>
                                         <td>{:getCompanyName($item[company_id])}</td>
-                                        <td>{$item.begin_rate}</td>
-                                        <td>{$item.begin_home_rate}</td>
-                                        <td>{$item.begin_away_rate}</td>
-                                        <td>{$item.change_rate}</td>
-                                        <td>{$item.change_home_rate}</td>
-                                        <td>{$item.change_away_rate}</td>
+                                        <td>{$item.win_rate}</td>
+                                        <td>{$item.draw_rate}</td>
+                                        <td>{$item.lose_rate}</td>
+                                        <td>{$item.home_concede}</td>
                                         <td class="center">
                                         </td>
                                     </tr>
