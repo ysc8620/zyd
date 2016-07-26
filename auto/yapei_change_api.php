@@ -25,7 +25,7 @@ do{
         echo "ok";
         // 亚赔（让球盘）
         // $match = $curr->findOne(array('match_id'=>$));
-        $asia_list = explode(';', $list[0][0]);
+        preg_match_all("/<h>(.*?)<\/h>/is",$list[0][0],$asia_list);
         foreach($asia_list as $asia){
             $info = explode(',', $asia);
             print_r($info);
@@ -52,7 +52,7 @@ do{
         }
 die();
         // 欧赔（标准盘）
-        $oupei_list = explode(';', $list[0][1]);
+        preg_match_all("/<h>(.*?)<\/h>/is",$list[0][1],$oupei_list);
         foreach($oupei_list as $oupei){
             $info = explode(',', $oupei);
             $match_id = $info[0];
@@ -75,7 +75,7 @@ die();
         }
 
         // 大小球
-        $daxiaoqiu_list = explode(';', $list[0][2]);
+        preg_match_all("/<h>(.*?)<\/h>/is",$list[0][2],$daxiaoqiu_list);
         foreach($daxiaoqiu_list as $daxiaoqiu){
             $info = explode(',', $daxiaoqiu);
             $match_id = $info[0];
@@ -98,7 +98,7 @@ die();
         }
 
         // 半场大小球
-        $half_list = explode(';', $list[0][3]);
+        preg_match_all("/<h>(.*?)<\/h>/is",$list[0][3],$half_list);
         foreach($half_list as $half){
             $info = explode(',', $half);
             $match_id = $info[0];
@@ -121,7 +121,7 @@ die();
         }
 
         // 大小球
-        $half_daxiaoqiu_list = explode(';', $list[0][4]);
+        preg_match_all("/<h>(.*?)<\/h>/is",$list[0][3],$half_daxiaoqiu_list);
         foreach($half_daxiaoqiu_list as $half_daxiaoqiu){
             $info = explode(',', $half_daxiaoqiu);
             $match_id = $info[0];
