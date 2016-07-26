@@ -124,9 +124,9 @@ class SportteryController extends BaseController {
             $data['update_time'] = time();
             $res = M('jingcai')->where(array('id'=>$id))->save($data);
             if($res){
-                $this->success('编辑成功',U('sporttery/jingcai'));
+                return $this->success('编辑成功',U('sporttery/jingcai'));
             }else{
-                $this->error('编辑失败', U('sporttery/jingcai_edit',array('id'=>$id)));
+                return $this->error('编辑失败', U('sporttery/jingcai_edit',array('id'=>$id)));
             }
         }
 
@@ -164,9 +164,9 @@ class SportteryController extends BaseController {
             $data['update_time'] = time();
             $res = M('beidan')->where(array('id'=>$id))->save($data);
             if($res){
-                $this->success('编辑成功',U('sporttery/beidan'));
+                return $this->success('编辑成功',U('sporttery/beidan'));
             }else{
-                $this->error('编辑失败', U('sporttery/beidan_edit',array('id'=>$id)));
+                return $this->error('编辑失败', U('sporttery/beidan_edit',array('id'=>$id)));
             }
         }
 
