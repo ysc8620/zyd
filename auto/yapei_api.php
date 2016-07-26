@@ -65,6 +65,7 @@ do{
     foreach($asia_list as $asia){
         $info = explode(',', $asia);
         $match_id = $info[0];
+        if(empty($match_id)){continue;}
         $data = [
             'match_id' => intval($info[0]),
             'company_id' => intval($info[1]),
@@ -92,6 +93,7 @@ do{
     foreach($oupei_list as $oupei){
         $info = explode(',', $oupei);
         $match_id = $info[0];
+        if(empty($match_id)){continue;}
         $data = [
             'match_id' => intval($info[0]),
             'company_id' => intval($info[1]),
@@ -117,6 +119,7 @@ do{
     foreach($daxiaoqiu_list as $daxiaoqiu){
         $info = explode(',', $daxiaoqiu);
         $match_id = $info[0];
+        if(empty($match_id)){continue;}
         $data = [
             'match_id' => intval($info[0]),
             'company_id' => intval($info[1]),
@@ -142,6 +145,7 @@ do{
     foreach($half_list as $half){
         $info = explode(',', $half);
         $match_id = $info[0];
+        if(empty($match_id)){continue;}
         $data = [
             'match_id' => intval($info[0]),
             'company_id' => intval($info[1]),
@@ -167,6 +171,7 @@ do{
     foreach($half_daxiaoqiu_list as $half_daxiaoqiu){
         $info = explode(',', $half_daxiaoqiu);
         $match_id = $info[0];
+        if(empty($match_id)){continue;}
         $data = [
             'match_id' => intval($info[0]),
             'company_id' => intval($info[1]),
