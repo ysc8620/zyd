@@ -31,7 +31,6 @@ do{
         if(isset($list['a'][0]['h'])){
             foreach($list['a'][0]['h'] as $asia){
                 $info = explode(',', $asia);
-                print_r($info);
                 $match_id = $info[0];
                 if(empty($match_id)){continue;}
                 $data = [
@@ -44,8 +43,6 @@ do{
                     'is_walk' => strval($info[6]),
                     'update_time' => time()
                 ];
-                print_r($data);
-                continue;
                 $match = M('asia_yapei')->where(array('match_id'=>$match_id,'company_id'=>$data['company_id']))->find();
                 if($match){
                     M('asia_yapei')->where(array('id'=>$match['id']))->save($data);
@@ -54,8 +51,7 @@ do{
                 }
             }
         }
-
-die();
+        
         // 欧赔（标准盘）
         if($list['a'][1]['h']){
             foreach($list['a'][1]['h'] as $oupei){
