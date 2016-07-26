@@ -121,6 +121,7 @@ class SportteryController extends BaseController {
 
         if(IS_POST){
             $data = $_POST;
+            $data['update_time'] = time();
             $res = M('jingcai')->where(array('id'=>$id))->save($data);
             if($res){
                 $this->success('编辑成功',U('sporttery/jingcai'));
@@ -160,7 +161,8 @@ class SportteryController extends BaseController {
 
         if(IS_POST){
             $data = $_POST;
-            $res = M('jingcai')->where(array('id'=>$id))->save($data);
+            $data['update_time'] = time();
+            $res = M('beidan')->where(array('id'=>$id))->save($data);
             if($res){
                 $this->success('编辑成功',U('sporttery/beidan'));
             }else{
