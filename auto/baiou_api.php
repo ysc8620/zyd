@@ -47,7 +47,7 @@ do{
             ];
             $new = array_merge($info, $info1);
             $baiou = M('baiou')->where(array('match_id'=>$info['match_id'],'company_id'=>$new['company_id']))->order('id DESC')->find();
-            if($baiou['change_time'] < $info1['change_time']){
+            if(strtotime($baiou['change_time']) < strtotime($info1['change_time'])){
                 M('baiou')->add($new);
             }
         }
