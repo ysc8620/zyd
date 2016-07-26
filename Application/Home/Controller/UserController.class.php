@@ -424,6 +424,7 @@ class UserController extends BaseApiController {
                     $json['msg'] = '关注成功';
                     $json['data']['user_id'] = $user_id;
                     $json['data']['to_user_id'] = $to_user_id;
+                    $json['follow_id'] = $res;
                     break;
                 }else{
                     $json['status'] = 111;

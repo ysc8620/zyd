@@ -58,13 +58,14 @@ class TuijianController extends BaseApiController {
                 $json['msg'] = "请输入查看费用";
                 break;
             }
-            
+
             $data['create_time'] = time();
             $data['update_time'] = time();
             $res = M('tuijian')->add($data);
             if($res){
+                $data['id'] = $res;
                 $json['msg'] = '发布成功';
-                $json['data'] = $res;
+                $json['data'] = $data;
                 break;
             }else{
                 $json['status'] = 111;
@@ -119,8 +120,9 @@ class TuijianController extends BaseApiController {
             $res2 = M()->execute("UPDATE ".C('DB_PREFIX')."users SET credit=credit-'{$tuijian['fee']}' WHERE user_id='{$user_id}' AND credit>='{$tuijian['fee']}'");
             if($res && $res2){
                 M()->commit();
+                $data['id'] = $res;
                 $json['msg'] = '购买成功';
-                $json['data'] = $res;
+                $json['data'] = $data;
             }else{
                 M()->rollback();
                 $json['msg'] = '购买失败';
