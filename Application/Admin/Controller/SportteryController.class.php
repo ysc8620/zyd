@@ -112,6 +112,29 @@ class SportteryController extends BaseController {
         $this->display();
     }
 
+    // 竞彩编辑
+    public function jingcai_edit(){
+        $id = I('request.id',0,"intval");
+        if(empty($id)){
+            return $this->error('请选竞彩', U('sporttery/jingcai'));
+        }
+
+        if(IS_POST){
+            $data = $_POST;
+            $res = M('jingcai')->where(array('id'=>$id))->save($data);
+            if($res){
+                $this->success('编辑成功',U('sporttery/jingcai'));
+            }else{
+                $this->error('编辑失败', U('sporttery/jingcai_edit',array('id'=>$id)));
+            }
+        }
+
+        $jingcai = M('jingcai')->where(array('id'=>$id))->find();
+        $this->assign('jingcai', $jingcai);
+
+        $this->display();
+    }
+
     public function beidan(){
         $curr = M('beidan'); // 实例化User对象
 
@@ -123,6 +146,31 @@ class SportteryController extends BaseController {
         $list = $curr->order('id DESC')->limit($Page->firstRow . ',' . $Page->listRows)->select();
         $this->assign('list', $list);// 赋值数据集
         $this->assign('page', $show);// 赋值分页输出
+        $this->display();
+    }
+
+    /**
+     * 北单编辑
+     */
+    public function beidan_edit(){
+        $id = I('request.id',0,"intval");
+        if(empty($id)){
+            return $this->error('请选竞彩记录', U('sporttery/beidan'));
+        }
+
+        if(IS_POST){
+            $data = $_POST;
+            $res = M('jingcai')->where(array('id'=>$id))->save($data);
+            if($res){
+                $this->success('编辑成功',U('sporttery/beidan'));
+            }else{
+                $this->error('编辑失败', U('sporttery/beidan_edit',array('id'=>$id)));
+            }
+        }
+
+        $referee = M('beidan')->where(array('id'=>$id))->find();
+        $this->assign('beidan', $referee);
+
         $this->display();
     }
 

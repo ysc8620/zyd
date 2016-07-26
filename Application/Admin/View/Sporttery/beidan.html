@@ -40,7 +40,6 @@
                                     <th>赛事时间</th>
                                     <th>联赛信息</th>
                                     <th>球队信息</th>
-                                    <th>博彩公司</th>
                                     <th>赢盘赔率</th>
                                     <th>和盘赔率</th>
                                     <th>输盘赔率</th>
@@ -55,12 +54,13 @@
                                         <td>{$item.match_time}</td>
                                         <td>{$item.league_name}</td>
                                         <td>{$item.home_name}-{$item.away_name}</td>
-                                        <td>{:getCompanyName($item[company_id])}</td>
                                         <td>{$item.win_rate}</td>
                                         <td>{$item.draw_rate}</td>
                                         <td>{$item.lose_rate}</td>
                                         <td>{$item.home_concede}</td>
                                         <td class="center">
+                                            <a href="{:U('sporttery/beidan_edit', ['id' => $item['id']])}"><i class="fa fa-check text-navy"></i>编辑</a>
+
                                         </td>
                                     </tr>
                                 </volist>

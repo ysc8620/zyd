@@ -40,7 +40,6 @@
                                     <th>赛事时间</th>
                                     <th>联赛信息</th>
                                     <th>球队信息</th>
-                                    <th>博彩公司</th>
                                     <th>主胜赔率</th>
                                     <th>平盘赔率</th>
                                     <th>客胜赔率</th>
@@ -58,7 +57,6 @@
                                         <td>{$item.match_time}</td>
                                         <td>{$item.league_name}</td>
                                         <td>{$item.home_name}-{$item.away_name}</td>
-                                        <td>{:getCompanyName($item[company_id])}</td>
                                         <td>{$item.home_rate}</td>
                                         <td>{$item.tie_rate}</td>
                                         <td>{$item.away_rate}</td>
@@ -67,6 +65,8 @@
                                         <td>{$item.lose_rate}</td>
                                         <td>{$item.home_concede}</td>
                                         <td class="center">
+                                            <a href="{:U('sporttery/jingcai_edit', ['id' => $item['id']])}"><i class="fa fa-check text-navy"></i>编辑</a>
+
                                         </td>
                                     </tr>
                                 </volist>
