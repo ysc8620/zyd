@@ -21,6 +21,7 @@ do{
 //    $curr_match = $mongo->zyd->match;
     $postStr = file_get_contents("http://interface.win007.com/zq/ch_odds.xml");
     preg_match_all("/(<h>[^(<h>)]*?<\/h>)+/is",$postStr,$list);
+    print_r($list);die();
     if(count($list[0]) == 5){
         echo "ok";
         // 亚赔（让球盘）
