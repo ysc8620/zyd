@@ -20,129 +20,138 @@ do{
 //    $curr_league = $mongo->zyd->league;
 //    $curr_match = $mongo->zyd->match;
     $postStr = file_get_contents("http://interface.win007.com/zq/ch_odds.xml");
-    preg_match_all("/(<h>[^(<h>)]*?<\/h>)+/is",$postStr,$list);
-    print_r($list);die();
-    if(count($list[0]) == 5){
-        echo "ok";
+    $postStr = str_replace(array('<o>','<d>'),'<a>',$postStr);
+    $postStr = str_replace(array('</o>','</d>'),'</a>',$postStr);
+    $obj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
+    $list = json_decode(json_encode($obj), true);
+
+    if(count($list['a']) == 5){
         // 亚赔（让球盘）
         // $match = $curr->findOne(array('match_id'=>$));
-        preg_match_all("/<h>(.*?)<\/h>/is",$list[0][0],$asia_list);
-        foreach($asia_list as $asia){
-            $info = explode(',', $asia);
-            print_r($info);
-            $match_id = $info[0];
-            if(empty($match_id)){continue;}
-            $data = [
-                'match_id' => intval($info[0]),
-                'company_id' => intval($info[1]),
-                'change_rate' => floatval($info[2]),
-                'change_home_rate' => floatval($info[3]),
-                'change_away_rate' => floatval($info[4]),
-                'is_inclose' => strval($info[5]),
-                'is_walk' => strval($info[6]),
-                'update_time' => time()
-            ];
-            print_r($data);
-            continue;
-            $match = M('asia_yapei')->where(array('match_id'=>$match_id,'company_id'=>$data['company_id']))->find();
-            if($match){
-                M('asia_yapei')->where(array('id'=>$match['id']))->save($data);
-            }else{
-                M('asia_yapei')->add($data);
+        if(isset($list['a'][0]['h'])){
+            foreach($list['a'][0]['h'] as $asia){
+                $info = explode(',', $asia);
+                print_r($info);
+                $match_id = $info[0];
+                if(empty($match_id)){continue;}
+                $data = [
+                    'match_id' => intval($info[0]),
+                    'company_id' => intval($info[1]),
+                    'change_rate' => floatval($info[2]),
+                    'change_home_rate' => floatval($info[3]),
+                    'change_away_rate' => floatval($info[4]),
+                    'is_inclose' => strval($info[5]),
+                    'is_walk' => strval($info[6]),
+                    'update_time' => time()
+                ];
+                print_r($data);
+                continue;
+                $match = M('asia_yapei')->where(array('match_id'=>$match_id,'company_id'=>$data['company_id']))->find();
+                if($match){
+                    M('asia_yapei')->where(array('id'=>$match['id']))->save($data);
+                }else{
+                    M('asia_yapei')->add($data);
+                }
             }
         }
+
 die();
         // 欧赔（标准盘）
-        preg_match_all("/<h>(.*?)<\/h>/is",$list[0][1],$oupei_list);
-        foreach($oupei_list as $oupei){
-            $info = explode(',', $oupei);
-            $match_id = $info[0];
-            if(empty($match_id)){continue;}
-            $data = [
-                'match_id' => intval($info[0]),
-                'company_id' => intval($info[1]),
-                'change_home_rate' => floatval($info[2]),
-                'change_draw_rate' => floatval($info[3]),
-                'change_away_rate' => floatval($info[4]),
-                'update_time' => time()
-            ];
+        if($list['a'][1]['h']){
+            foreach($list['a'][1]['h'] as $oupei){
+                $info = explode(',', $oupei);
+                $match_id = $info[0];
+                if(empty($match_id)){continue;}
+                $data = [
+                    'match_id' => intval($info[0]),
+                    'company_id' => intval($info[1]),
+                    'change_home_rate' => floatval($info[2]),
+                    'change_draw_rate' => floatval($info[3]),
+                    'change_away_rate' => floatval($info[4]),
+                    'update_time' => time()
+                ];
 
-            $match = M('asia_oupei')->where(array('match_id'=>$match_id,'company_id'=>$data['company_id']))->find();
-            if($match){
-                M('asia_oupei')->where(array('id'=>$match['id']))->save($data);
-            }else{
-                M('asia_oupei')->add($data);
+                $match = M('asia_oupei')->where(array('match_id'=>$match_id,'company_id'=>$data['company_id']))->find();
+                if($match){
+                    M('asia_oupei')->where(array('id'=>$match['id']))->save($data);
+                }else{
+                    M('asia_oupei')->add($data);
+                }
             }
         }
 
-        // 大小球
-        preg_match_all("/<h>(.*?)<\/h>/is",$list[0][2],$daxiaoqiu_list);
-        foreach($daxiaoqiu_list as $daxiaoqiu){
-            $info = explode(',', $daxiaoqiu);
-            $match_id = $info[0];
-            if(empty($match_id)){continue;}
-            $data = [
-                'match_id' => intval($info[0]),
-                'company_id' => intval($info[1]),
-                'change_rate' => floatval($info[2]),
-                'change_big_rate' => floatval($info[3]),
-                'change_small_rate' => floatval($info[4]),
-                'update_time' => time()
-            ];
+        if(isset($list['a'][2]['h'])){
+            // 大小球
+            foreach($list['a'][2]['h'] as $daxiaoqiu){
+                $info = explode(',', $daxiaoqiu);
+                $match_id = $info[0];
+                if(empty($match_id)){continue;}
+                $data = [
+                    'match_id' => intval($info[0]),
+                    'company_id' => intval($info[1]),
+                    'change_rate' => floatval($info[2]),
+                    'change_big_rate' => floatval($info[3]),
+                    'change_small_rate' => floatval($info[4]),
+                    'update_time' => time()
+                ];
 
-            $match = M('asia_daxiaoqiu')->where(array('match_id'=>$match_id,'company_id'=>$data['company_id']))->find();
-            if($match){
-                M('asia_daxiaoqiu')->where(array('id'=>$match['id']))->save($data);
-            }else{
-                M('asia_daxiaoqiu')->add($data);
+                $match = M('asia_daxiaoqiu')->where(array('match_id'=>$match_id,'company_id'=>$data['company_id']))->find();
+                if($match){
+                    M('asia_daxiaoqiu')->where(array('id'=>$match['id']))->save($data);
+                }else{
+                    M('asia_daxiaoqiu')->add($data);
+                }
             }
         }
 
-        // 半场大小球
-        preg_match_all("/<h>(.*?)<\/h>/is",$list[0][3],$half_list);
-        foreach($half_list as $half){
-            $info = explode(',', $half);
-            $match_id = $info[0];
-            if(empty($match_id)){continue;}
-            $data = [
-                'match_id' => intval($info[0]),
-                'company_id' => intval($info[1]),
-                'change_rate' => floatval($info[2]),
-                'change_home_rate' => floatval($info[3]),
-                'change_away_rate' => floatval($info[4]),
-                'update_time' => time()
-            ];
+        if(isset($list['a'][3]['h'])){
+            // 半场大小球
+            foreach($list['a'][3]['h'] as $half){
+                $info = explode(',', $half);
+                $match_id = $info[0];
+                if(empty($match_id)){continue;}
+                $data = [
+                    'match_id' => intval($info[0]),
+                    'company_id' => intval($info[1]),
+                    'change_rate' => floatval($info[2]),
+                    'change_home_rate' => floatval($info[3]),
+                    'change_away_rate' => floatval($info[4]),
+                    'update_time' => time()
+                ];
 
-            $match = M('asia_half')->where(array('match_id'=>$match_id,'company_id'=>$data['company_id']))->find();
-            if($match){
-                M('asia_half')->where(array('id'=>$match['id']))->save($data);
-            }else{
-                M('asia_half')->add($data);
+                $match = M('asia_half')->where(array('match_id'=>$match_id,'company_id'=>$data['company_id']))->find();
+                if($match){
+                    M('asia_half')->where(array('id'=>$match['id']))->save($data);
+                }else{
+                    M('asia_half')->add($data);
+                }
             }
         }
 
-        // 大小球
-        preg_match_all("/<h>(.*?)<\/h>/is",$list[0][3],$half_daxiaoqiu_list);
-        foreach($half_daxiaoqiu_list as $half_daxiaoqiu){
-            $info = explode(',', $half_daxiaoqiu);
-            $match_id = $info[0];
-            if(empty($match_id)){continue;}
-            $data = [
-                'match_id' => intval($info[0]),
-                'company_id' => intval($info[1]),
-                'change_rate' => floatval($info[2]),
-                'change_big_rate' => floatval($info[3]),
-                'change_small_rate' => floatval($info[4]),
-                'update_time' => time()
-            ];
+        if(isset($list['a'][4]['h'])){
+            // 大小球
+            foreach($list['a'][4]['h'] as $half_daxiaoqiu){
+                $info = explode(',', $half_daxiaoqiu);
+                $match_id = $info[0];
+                if(empty($match_id)){continue;}
+                $data = [
+                    'match_id' => intval($info[0]),
+                    'company_id' => intval($info[1]),
+                    'change_rate' => floatval($info[2]),
+                    'change_big_rate' => floatval($info[3]),
+                    'change_small_rate' => floatval($info[4]),
+                    'update_time' => time()
+                ];
 
-            $match = M('asia_half_daxiaoqiu')->where(array('match_id'=>$match_id,'company_id'=>$data['company_id']))->find();
-            if($match){
-                M('asia_half_daxiaoqiu')->where(array('id'=>$match['id']))->save($data);
-            }else{
-                M('asia_half_daxiaoqiu')->add($data);
+                $match = M('asia_half_daxiaoqiu')->where(array('match_id'=>$match_id,'company_id'=>$data['company_id']))->find();
+                if($match){
+                    M('asia_half_daxiaoqiu')->where(array('id'=>$match['id']))->save($data);
+                }else{
+                    M('asia_half_daxiaoqiu')->add($data);
+                }
             }
         }
+
     }else{
         echo "err";
     }

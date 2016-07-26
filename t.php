@@ -7,13 +7,39 @@
  */
 
 
-$postStr = '<?xml  version="1.0" encoding="utf-8"?><c><a><h>1211455,23,-0.5,0.92,1.00,False,False</h><h>1211457,3,-0.25,1.03,0.85,False,False</h><h>1245828,8,0,0.82,1.02,False,False</h><h>1245828,17,0,0.84,1.08,False,True</h><h>1249673,3,0.25,1.08,0.80,False,False</h><h>1261335,17,0.75,1.11,0.74,False,True</h><h>1261335,24,0.75,1.13,0.72,False,True</h><h>1261335,42,0.75,1.10,0.75,False,True</h><h>1273604,17,1.5,1.03,0.87,False,False</h><h>1273604,24,1.5,1.03,0.87,False,False</h><h>1276603,22,0.75,0.94,0.91,False,False</h></a><o><h>1211455,23,3.25,3.60,1.95</h><h>1211456,3,2.8,3.55,2.17</h><h>1211456,35,2.8,3.55,2.17</h><h>1245828,17,2.43,3.20,2.82</h><h>1261335,3,1.65,3.30,4.70</h><h>1261477,3,1.95,3.35,3.45</h><h>1273604,24,1.32,4.90,7.20</h><h>1273604,17,1.32,4.90,7.20</h><h>1275324,22,2.85,3.40,2.25</h><h>1275326,22,4.05,3.45,1.80</h><h>1276603,22,1.68,3.65,4.55</h></o><d><h>1211452,35,2.5,0.85,1.02</h><h>1211456,3,2.75,0.92,0.94</h><h>1211456,35,2.75,0.93,0.94</h><h>1211457,3,2.75,0.96,0.90</h><h>1249673,3,2.25,0.91,0.95</h><h>1261335,24,1.75,0.94,0.88</h><h>1261335,35,1.75,0.95,0.88</h><h>1274106,22,2.25,0.99,0.76</h><h>1276603,22,2.75,0.76,1.03</h></d><a><h>1211456,3,0,1.12,0.77</h><h>1211457,3,-0.25,0.70,1.21</h><h>1249673,3,0,0.81,1.07</h><h>1261335,17,0,0.38,1.85</h><h>1261335,23,0.25,1.26,0.63</h><h>1261335,24,0,0.36,1.92</h><h>1261335,42,0,0.38,1.85</h></a><d><h>1211456,3,1.25,1.12,0.75</h><h>1249673,3,1,1.12,0.75</h><h>1261335,12,0.5,1.25,0.65</h><h>1261335,24,0.75,1.51,0.48</h><h>1261335,42,0.75,1.58,0.44</h><h>1275324,23,1,0.70,1.13</h><h>1276604,22,1,0.63,1.16</h></d></c>';
-preg_match_all("/(<h>[^(<h>)]*?<\/h>)+/is",$postStr,$data);
-print_r($data);
-die();
-if(count($data[0]) == 5){
-    //
-    preg_match_all("/<h>(.*?)<\/h>/is",$data[0][0],$list);
+$postStr = '<?xml  version="1.0" encoding="utf-8"?><c><a><h>1212236,14,-0.25,0.89,0.94,False,False</h><h>1212237,14,0.75,0.86,0.97,False,False</h><h>1212238,14,0,0.97,0.86,False,False</h><h>1212240,14,0,0.78,1.07,False,False</h><h>1252366,14,0,0.83,1.08,False,False</h><h>1252370,14,0,0.89,1.01,False,False</h><h>1252371,14,0,0.90,1.00,False,False</h><h>1261335,17,0.5,0.78,1.06,False,True</h><h>1261335,42,0.5,0.80,1.04,False,True</h><h>1268634,42,1,0.99,0.93,False,False</h><h>1268658,42,0,0.99,0.93,False,False</h></a><o><h>1212238,14,2.75,3.10,2.55</h><h>1212240,14,2.45,3.10,2.88</h><h>1266693,4,5.75,4.33,1.53</h><h>1268634,42,1.54,3.55,6.60</h><h>1268658,42,2.64,3.20,2.57</h></o><d><h>1212236,14,2.5,1.20,0.65</h><h>1252366,14,2.5,0.87,0.95</h><h>1252370,14,2.5,0.98,0.83</h></d><a></a><d><h>1268634,42,1,1.05,0.83</h></d></c>';
+$postStr = str_replace(array('<o>','<d>'),'<a>',$postStr);
+$postStr = str_replace(array('</o>','</d>'),'</a>',$postStr);
+$obj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
+$data = json_decode(json_encode($obj), true);
+
+if(count($data['a']) == 5){
+    foreach($data['a'][0]['h'] as $asia){
+        $info = explode(',', $asia);
+        print_r($info);
+        $match_id = $info[0];
+        if(empty($match_id)){continue;}
+        $data = [
+            'match_id' => intval($info[0]),
+            'company_id' => intval($info[1]),
+            'change_rate' => floatval($info[2]),
+            'change_home_rate' => floatval($info[3]),
+            'change_away_rate' => floatval($info[4]),
+            'is_inclose' => strval($info[5]),
+            'is_walk' => strval($info[6]),
+            'update_time' => time()
+        ];
+        print_r($data);
+        continue;
+        $match = M('asia_yapei')->where(array('match_id'=>$match_id,'company_id'=>$data['company_id']))->find();
+        if($match){
+            M('asia_yapei')->where(array('id'=>$match['id']))->save($data);
+        }else{
+            M('asia_yapei')->add($data);
+        }
+    }
+
+    print_r($data['a'][3]);
 
 }
 //foreach($data as $item){
