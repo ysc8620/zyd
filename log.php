@@ -57,8 +57,8 @@ function sign($data,$appsecret)
 }
 //
 
-$data['match_id'] = '1273430';
-$result = httpPost("https://api.zydzuqiu.com/match/follow.html", $data);
-var_dump($result);
+$data['id'] = '1259738';
+$result = httpPost("https://api.zydzuqiu.com/match/info.html", $data);
+//var_dump($result);
 print_r(json_decode($result, true));
 

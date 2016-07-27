@@ -162,7 +162,12 @@ class MatchController extends BaseApiController {
     public function info(){
         $json = $this->simpleJson();
         do{
-            $match_id = I('request.id', 0,'intval');
+            $match_id = I('request.match_id', 0,'intval');
+            if(empty($match_id)){
+                $json['status'] = 110;
+                $json['msg'] = '请选择查看赛事';
+                break;
+            }
             $match = M('match')->field
             ('match_id,time as match_time,league_id,league_name,kind,level,state,home_id,home_name,home_score,away_id,
                 away_name,away_score,home_red,away_red,home_yellow,away_yellow,match_round,address,weather_ico,weather,temperature,is_neutral,technic'
