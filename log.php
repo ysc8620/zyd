@@ -18,7 +18,8 @@ function httpPost($url, $data = null)
         'system' => 'IOS',
         'systemVersion' => '9.3.2',
         'model' => 'iPhone 6S Plus',
-        'imei' => '3580865021934706'
+        'imei' => '3580865021934706',
+        'ssid'=>'2ea4e60b95ca5462b26037cd3892ee75'
 
     ];
     $param['sign'] = sign($param,'b8e586b6eb3530f1c5efad7ea3f1359e');
@@ -37,7 +38,8 @@ function httpPost($url, $data = null)
         'imei: '.$param['imei'],
         'sign: '.$param['sign'],
         'time:'.$param['time'],
-        'appid:'.$param['appid']
+        'appid:'.$param['appid'],
+        'ssid:'.$param['ssid']
     ) );
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_USERAGENT, isset($_SERVER['HTTP_USER_AGENT'])?$_SERVER['HTTP_USER_AGENT']:"Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)");
@@ -58,6 +60,6 @@ function sign($data,$appsecret)
 $data['remark'] = 'test';
 $data['date'] = date("Y-m-d H:i:s");
 
-$result = httpPost("https://api.zydzuqiu.com/test/test.html", $data);
+$result = httpPost("https://api.zydzuqiu.com/user/check_user.html", $data);
 print_r(json_decode($result));
 
