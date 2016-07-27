@@ -40,7 +40,7 @@ class TuijianController extends BaseApiController {
             }elseif($type == 5){
                 $this->check_login();
                 $user_id = $this->user['id'];
-                
+
                 $where['id'] = array('exp', "in(SELECT tuijian_id FROM ".C('DB_PREFIX')."tuijian_order WHERE user_id='{$user_id}')");
             }
             $total = M('tuijian')->where($where)->count();

@@ -16,7 +16,6 @@ class BaseApiController extends BaseController {
      * 初始化操作
      */
     public function _initialize(){
-        return true;
         if($_SERVER["HTTP_HOST"] != 'api2.zydzuqiu.com'){
             $header = getallheaders();
             $header = array_change_key_case($header, CASE_LOWER);
