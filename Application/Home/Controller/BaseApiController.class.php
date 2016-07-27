@@ -40,6 +40,7 @@ class BaseApiController extends BaseController {
 
             // 用户登录
             $user_ssid = $header['ssid'];
+            $this->ssid = $user_ssid;
             if($user_ssid){
                 $user = M('users')->where(array('ssid'=>$user_ssid))->find();
                 if($user && $user['ssid'] == $user_ssid){
@@ -49,14 +50,23 @@ class BaseApiController extends BaseController {
             }
         }
     }
-
+    
+    /**
+     * 登录验证
+     */
     public function check_login(){
-
         if(empty($this->user)){
-            $json = $this->simpleJson();
-            $json['status'] = 101;
-            $json['msg'] = '请先登录';
-            $this->ajaxReturn($json);
+            if($this->ssid){
+                $json = $this->simpleJson();
+                $json['status'] = 101;
+                $json['msg'] = '登录超时,请重新登录';
+                $this->ajaxReturn($json);
+            }else{
+                $json = $this->simpleJson();
+                $json['status'] = 101;
+                $json['msg'] = '请先登录';
+                $this->ajaxReturn($json);
+            }
         }
     }
 
