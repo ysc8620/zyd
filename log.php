@@ -57,9 +57,7 @@ function sign($data,$appsecret)
 }
 //
 
-$data['tuijian_id'] = '1';
-
-
+$data['tuijian_id'] = '2';
 $result = httpPost("https://api.zydzuqiu.com/tuijian/pay.html", $data);
 var_dump($result);
 print_r(json_decode($result, true));
