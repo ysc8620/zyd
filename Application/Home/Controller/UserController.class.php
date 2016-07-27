@@ -20,11 +20,14 @@ class UserController extends BaseApiController {
         }
     }
 
-    private function get_return_member($member){
+    private function get_return_member($member,$mysalf=false){
         $member['pic'] = pic_url($member['pic']);
         unset($member['status']);
         unset($member['password']);
         unset($member['salt']);
+        if(!$mysalf){
+            unset($member['ssid']);
+        }
         return $member;
     }
     /**
@@ -102,7 +105,7 @@ class UserController extends BaseApiController {
             if($user_id){
                 $member = M('users')->where(array('id'=>$user_id))->field($this->field)->find();
                 $json['msg'] = '用户注册成功';
-                $json['data'] = $this->get_return_member($member);
+                $json['data'] = $this->get_return_member($member, true);
             }else{
                 $json['status'] = 111;
                 $json['msg'] = '用户注册失败';
@@ -165,7 +168,7 @@ class UserController extends BaseApiController {
                 $member['ssid'] = get_login_ssid();
                 M('users')->where(array('id'=>$member['id']))->save(array('ssid'=>$member['ssid'],'update_time'=>time()));
                 $json['msg'] = '用户登录成功';
-                $json['data'] = $this->get_return_member($member);
+                $json['data'] = $this->get_return_member($member, true);
 
             // 密码登陆
             }elseif($password){
@@ -194,7 +197,7 @@ class UserController extends BaseApiController {
                 $member['ssid'] = get_login_ssid();
                 M('users')->where(array('id'=>$member['id']))->save(array('ssid'=>$member['ssid'],'update_time'=>time()));
                 $json['msg'] = '用户登录成功';
-                $json['data'] = $this->get_return_member($member);
+                $json['data'] = $this->get_return_member($member, true);
             }else{
                 $json['status'] = 111;
                 $json['msg'] = '登录信息错误';
@@ -235,7 +238,7 @@ class UserController extends BaseApiController {
                 break;
             }
 
-            $json['data'] = $this->get_return_member($member);
+            $json['data'] = $this->get_return_member($member, true);
 
         }while(false);
         $this->ajaxReturn($json);
@@ -300,7 +303,7 @@ class UserController extends BaseApiController {
                     break;
                 }
                 $json['msg'] = '微信登录成功';
-                $json['data'] = $this->get_return_member($wx_user);
+                $json['data'] = $this->get_return_member($wx_user, true);
                 break;
             }else{
                 $data = [
@@ -316,7 +319,7 @@ class UserController extends BaseApiController {
                 if($res){
                     $member = M('users')->where(array('wx_openid'=>$openid))->field($this->field)->find();
                     $json['msg'] = '微信登录成功';
-                    $json['data'] = $this->get_return_member($member);
+                    $json['data'] = $this->get_return_member($member, true);
                     break;
                 }else{
                     $json['status'] = 111;
@@ -360,12 +363,12 @@ class UserController extends BaseApiController {
             if($wx_user){
                 if($wx_user['id'] == $user_id){
                     $json['msg'] = '微信绑定成功';
-                    $json['data'] = $this->get_return_member($wx_user);
+                    $json['data'] = $this->get_return_member($wx_user, true);
                     break;
                 }else{
                     $json['status'] = 111;
                     $json['msg'] = '微信已绑定其他用户';
-                    $json['data'] = $wx_user;
+                    $json['data'] = '';
                     break;
                 }
             }else{
@@ -383,7 +386,7 @@ class UserController extends BaseApiController {
                 if($res){
                     $member = M('users')->where(array('id'=>$user_id))->field($this->field)->find();
                     $json['msg'] = '微信绑定成功';
-                    $json['data'] = $this->get_return_member($member);
+                    $json['data'] = $this->get_return_member($member,true);
                     break;
                 }else{
                     $json['status'] = 111;
