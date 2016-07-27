@@ -66,7 +66,7 @@ $data['guess_1'] = '2';
 $data['guess_2'] = '0';
 $data['remark'] = '好赞';
 
-$result = httpPost("https://api.zydzuqiu.com/tuijian/post.html", $data);
+$result = httpPost("https://api.zydzuqiu.com/tuijian/pay.html", $data);
 var_dump($result);
 print_r(json_decode($result, true));
 

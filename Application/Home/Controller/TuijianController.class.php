@@ -102,7 +102,7 @@ class TuijianController extends BaseApiController {
 
             if(empty($tuijian_id)){
                 $json['status'] = 110;
-                $json['msg'] = '推荐用户不能为空';
+                $json['msg'] = '请选择购买推荐';
                 break;
             }
             // 购买记录
