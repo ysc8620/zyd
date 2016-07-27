@@ -242,14 +242,15 @@ class MatchController extends BaseApiController {
             $this->check_login();
             $user_id = $this->user['id'];
             $match_id = I('request.match_id', 0,'intval');
-            if(empty($user_id) || empty($match_id)){
+            if( empty($match_id)){
                 $json['status'] = 110;
-                $json['msg'] = '请正确输入赛事和用户信息';
+                $json['msg'] = '请输入关注赛事';
                 break;
             }
             $follow = M('match_follow')->where(array('user_id'=>$user_id, 'match_id'=>$match_id))->find();
             if($follow){
                 $json['msg'] = '赛事关注成功';
+                $json['data']['id'] = $follow['id'];
                 $json['data']['match_id'] = $match_id;
                 $json['data']['user_id'] = $user_id;
                 break;
@@ -262,6 +263,7 @@ class MatchController extends BaseApiController {
                 $res = M('match_follow')->add($data);
                 if($res){
                     $json['msg'] = '赛事关注成功';
+                    $json['data']['id'] = $res;
                     $json['data']['match_id'] = $match_id;
                     $json['data']['user_id'] = $user_id;
                     break;

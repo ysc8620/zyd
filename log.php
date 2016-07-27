@@ -57,8 +57,8 @@ function sign($data,$appsecret)
 }
 //
 
-$data['tuijian_id'] = '2';
-$result = httpPost("https://api.zydzuqiu.com/tuijian/pay.html", $data);
+$data['match_id'] = '1273430';
+$result = httpPost("https://api.zydzuqiu.com/match/follow.html", $data);
 var_dump($result);
 print_r(json_decode($result, true));
 
