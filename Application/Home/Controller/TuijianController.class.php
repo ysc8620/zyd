@@ -61,7 +61,11 @@ class TuijianController extends BaseApiController {
                 break;
             }
 
-            if(strlen())
+            if(strlen($data['remark']) < 1 ){
+                $json['status'] = 110;
+                $json['msg'] = "请输入推荐理由";
+                break;
+            }
             
             $data['create_time'] = time();
             $data['update_time'] = time();
