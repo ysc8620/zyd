@@ -22,9 +22,15 @@ class MatchController extends BaseApiController {
         do{
             $page = I('request.p', 1,'intval');
             $type = I('request.type',1,'strval');// 1进行中， 2已完成，3为开始，4个人收藏
-            $league_ids = (array)I('request.league_ids','');
+            $league_idsstr = I('request.league_ids','','strval');
             $limit = I('request.limit',10,'intval');
             $where = [];
+
+            $league_ids_list = explode(',',$league_idsstr);
+            $league_ids = [];
+            foreach($league_ids_list as $league_id){
+                $league_ids[] = $league_id;
+            }
 
 
             // 进行中
@@ -152,7 +158,7 @@ class MatchController extends BaseApiController {
             $json['data']['total_page'] = ceil($total/$limit);
             $json['data']['type'] = $type;
             $json['data']['limit'] = $limit;
-            $json['data']['league_ids'] = $league_ids;
+            $json['data']['league_ids'] = $league_idsstr;
             $json['data']['req'] = $_REQUEST;
 
         }while(false);
