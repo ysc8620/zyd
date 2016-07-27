@@ -302,9 +302,23 @@ class UserController extends BaseApiController {
                     $json['msg'] = '用户被锁定不能使用';
                     break;
                 }
-                $json['msg'] = '微信登录成功';
-                $json['data'] = $this->get_return_member($wx_user, true);
-                break;
+                $data = [
+                    'ssid' => get_login_ssid(),
+                    'update_time' => time()
+                ];
+
+                $res = M('users')->where(array('id'=>$wx_user['id']))->save($data);
+                if($res){
+                    $wx_user['ssid'] = $data['ssid'];
+                    $wx_user['update_time'] = $data['update_time'];
+                    $json['msg'] = '微信登录成功';
+                    $json['data'] = $this->get_return_member($wx_user, true);
+                    break;
+                }else{
+                    $json['status'] = 111;
+                    $json['msg'] = '微信登录失败';
+                    break;
+                }
             }else{
                 $data = [
                     'nickname' => $nickname,
@@ -328,6 +342,7 @@ class UserController extends BaseApiController {
                 }
             }
         }while(false);
+        $this->ajaxReturn($json);
     }
 
     /**
