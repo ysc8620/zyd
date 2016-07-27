@@ -37,6 +37,9 @@ class TuijianController extends BaseApiController {
                 $where['user_id'] = $user_id;
             }elseif($type == 4){
                 $where['is_expert'] = 1;
+            }elseif($type == 5){
+                //
+                // $where['id'] =
             }
             $total = M('tuijian')->where($where)->count();
             $Page = new Page($total, $limit);

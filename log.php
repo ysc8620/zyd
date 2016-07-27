@@ -58,6 +58,6 @@ function sign($data,$appsecret)
 //
 $data['match_id'] = '1230827';
 $result = httpPost("https://api.zydzuqiu.com/tuijian/index.html", $data);
-//var_dump($result);
+echo ($result);
 print_r(json_decode($result, true));
 
