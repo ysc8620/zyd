@@ -206,9 +206,9 @@ class UserController extends BaseApiController {
     }
 
     /**
-     * 
+     *
      */
-    public function check_login(){
+    public function check_user(){
         $json = $this->simpleJson();
         do {
             // 1 注册, 2登录, 3,找回密码
