@@ -50,7 +50,7 @@ class BaseApiController extends BaseController {
             }
         }
     }
-    
+
     /**
      * 登录验证
      */

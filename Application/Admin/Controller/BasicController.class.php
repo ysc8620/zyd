@@ -102,7 +102,7 @@ class BasicController extends BaseController {
     public function referee(){
         $total = M('referee')->count();
         $page = new \Think\Page($total, 20);
-        $list = M('referee')->order('player_id DESC')->limit($page->firstRow, $page->listRows)->select();
+        $list = M('referee')->order('referee_id DESC')->limit($page->firstRow, $page->listRows)->select();
 
         $this->assign('page', $page->show());
         $this->assign('list', $list);
