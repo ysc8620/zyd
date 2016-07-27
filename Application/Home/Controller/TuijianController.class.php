@@ -136,12 +136,13 @@ class TuijianController extends BaseApiController {
                 break;
             }
 
+
             if(strlen($data['remark']) < 1 ){
                 $json['status'] = 110;
                 $json['msg'] = "请输入推荐理由";
                 break;
             }
-            
+
             $data['create_time'] = time();
             $data['update_time'] = time();
             $res = M('tuijian')->add($data);
@@ -216,8 +217,9 @@ class TuijianController extends BaseApiController {
             $res3 = M('credit_log')->add($credit_log);
             if($res && $res2 && $res3){
                 M()->commit();
+                $data['id'] = $res;
                 $json['msg'] = '购买成功';
-                $json['data'] = $res;
+                $json['data'] = $data;
             }else{
                 M()->rollback();
                 $json['msg'] = '购买失败';
