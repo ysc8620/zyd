@@ -71,8 +71,9 @@ class TuijianController extends BaseApiController {
             $data['update_time'] = time();
             $res = M('tuijian')->add($data);
             if($res){
+                $data['id'] = $res;
                 $json['msg'] = '发布成功';
-                $json['data'] = $res;
+                $json['data'] = $data;
                 break;
             }else{
                 $json['status'] = 111;

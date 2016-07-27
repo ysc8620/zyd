@@ -64,6 +64,7 @@ $data['is_fee'] = '1';
 $data['fee'] = '8';
 $data['guess_1'] = '2';
 $data['guess_2'] = '0';
+$data['remark'] = '好赞';
 
 $result = httpPost("https://api.zydzuqiu.com/tuijian/post.html", $data);
 var_dump($result);
