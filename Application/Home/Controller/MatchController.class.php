@@ -29,6 +29,7 @@ class MatchController extends BaseApiController {
             $league_ids_list = explode(',',$league_idsstr);
             $league_ids = [];
             foreach($league_ids_list as $league_id){
+                if(empty($league_id)){continue;}
                 $league_ids[] = $league_id;
             }
 
