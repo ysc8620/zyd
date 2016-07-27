@@ -19,6 +19,13 @@ class TuijianController extends BaseController {
         }
         $this->assign('state', $state);
         $list = $match->order('create_time DESC')->limit($Page->firstRow . ',' . $Page->listRows)->select();
+        foreach($list as $i=>$item){
+            $info = M('match')->field('id,match_id,time,league_id,league_name,home_name,away_name,home_score,away_score')->where(array('match_id'=>$item['match_id']))->find();
+            $user = M('users')->where(array('id'=>$item['user_id']))->find();
+            $item['match'] = $info;
+            $item['user'] = $user;
+            $list[$i] = $item;
+        }
         $this->assign('list', $list);// 赋值数据集
         $this->assign('page', $show);// 赋值分页输出
         $this->display();
