@@ -45,7 +45,8 @@ class TuijianController extends BaseController {
 
         $list = $match->order('create_time DESC')->limit($Page->firstRow . ',' . $Page->listRows)->select();
         foreach($list as $i=>$item){
-            $info = M('match')->field('id,match_id,time,league_id,league_name,home_name,away_name,home_score,away_score')->where(array('match_id'=>$item['match_id']))->find();
+            $tuijian = M('tuijian')->where(array('id'=>$item['tuijian_id']))->find();
+            $info = M('match')->field('id,match_id,time,league_id,league_name,home_name,away_name,home_score,away_score')->where(array('match_id'=>$tuijian['match_id']))->find();
             $user = M('users')->where(array('id'=>$item['user_id']))->find();
             $item['match'] = $info;
             $item['user'] = $user;
