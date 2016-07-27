@@ -471,9 +471,10 @@ class UserController extends BaseApiController {
                 $json['msg'] = '用户ID不能为空';
                 break;
             }
-            $follow = M('users_follow')->where(array('from_user_id'=>$user_id,'to_user_id'=>$to_user_id));
+            $follow = M('users_follow')->where(array('from_user_id'=>$user_id,'to_user_id'=>$to_user_id))->find();
             if($follow){
                 $json['msg'] = '关注成功';
+                $json['data']['id'] = $follow['id'];
                 $json['data']['user_id'] = $user_id;
                 $json['data']['to_user_id'] = $to_user_id;
                 break;
@@ -486,6 +487,7 @@ class UserController extends BaseApiController {
                 $res = M('users_follow')->add($data);
                 if($res){
                     $json['msg'] = '关注成功';
+                    $json['data']['id'] = $res;
                     $json['data']['user_id'] = $user_id;
                     $json['data']['to_user_id'] = $to_user_id;
                     break;

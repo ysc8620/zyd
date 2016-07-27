@@ -57,9 +57,9 @@ function sign($data,$appsecret)
 }
 //
 
-$data['type'] = '1';
+$data['to_user_id'] = '10001';
 
-$result = httpPost("https://api.zydzuqiu.com/user/get_expert_list.html", $data);
+$result = httpPost("https://api.zydzuqiu.com/user/follow.html", $data);
 var_dump($result);
 print_r(json_decode($result, true));
 
