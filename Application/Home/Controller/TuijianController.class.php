@@ -27,7 +27,7 @@ class TuijianController extends BaseApiController {
             $data['sub_type'] = I('request.sub_type',0,'intval');
             $data['is_fee'] = I('request.is_fee',0,'intval');
             $data['fee'] = I('request.fee',0,'intval');
-            $data['remark'] = I('request.remark','','strval');
+            $data['remark'] = I('request.remark','','strval,trim,strip_tags,htmlspecialchars');
             $data['guess_1'] = I('request.guess_1',0,'intval');
             $data['guess_2'] = I('request.guess_2',0,'intval');
 
@@ -60,6 +60,8 @@ class TuijianController extends BaseApiController {
                 $json['msg'] = "请输入查看费用";
                 break;
             }
+
+            if(strlen())
             
             $data['create_time'] = time();
             $data['update_time'] = time();

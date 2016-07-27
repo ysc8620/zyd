@@ -59,7 +59,7 @@ function sign($data,$appsecret)
 
 $data['type'] = '1';
 $data['sub_type'] = '0';
-$data['match_ids'] = '1273556';
+$data['match_id'] = '1273556';
 $data['is_fee'] = '1';
 $data['fee'] = '8';
 $data['guess_1'] = '2';
