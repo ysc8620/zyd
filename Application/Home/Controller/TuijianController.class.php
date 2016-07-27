@@ -33,13 +33,13 @@ class TuijianController extends BaseApiController {
 
             if(empty($data['match_id'])){
                 $json['status'] = 110;
-                $json['msg'] = "正选择推荐类型";
+                $json['msg'] = "请选择推荐赛事";
                 break;
             }
 
             if(empty($data['type'])){
                 $json['status'] = 110;
-                $json['msg'] = "正选择推荐类型";
+                $json['msg'] = "请选择推荐类型";
                 break;
             }
 

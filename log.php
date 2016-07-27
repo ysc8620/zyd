@@ -57,9 +57,15 @@ function sign($data,$appsecret)
 }
 //
 
-$data['to_user_id'] = '10001';
+$data['type'] = '1';
+$data['sub_type'] = '0';
+$data['match_ids'] = '1273556';
+$data['is_fee'] = '1';
+$data['fee'] = '8';
+$data['guess_1'] = '2';
+$data['guess_2'] = '0';
 
-$result = httpPost("https://api.zydzuqiu.com/user/follow.html", $data);
+$result = httpPost("https://api.zydzuqiu.com/tuijian/post.html", $data);
 var_dump($result);
 print_r(json_decode($result, true));
 
