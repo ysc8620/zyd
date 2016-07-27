@@ -56,7 +56,7 @@ function sign($data,$appsecret)
     return md5($data['appVersion'].$data['appid'].$data['time'].$appsecret);
 }
 //
-$data['league_ids'] = '1471,41';
+$data['match_id'] = '1230827';
 $result = httpPost("https://api.zydzuqiu.com/tuijian/index.html", $data);
 //var_dump($result);
 print_r(json_decode($result, true));

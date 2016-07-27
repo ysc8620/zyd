@@ -13,6 +13,7 @@ class TuijianController extends BaseApiController {
             $match_id = I('request.match_id', 0,'intval');
             $user_id = I('request.user_id',0,'intval');
             $limit = I('request.limit', 10, 'intval');
+            $p = I('request.p',1,'intval');
 
             $where = [];
             $where['status'] = 1;
@@ -71,6 +72,14 @@ class TuijianController extends BaseApiController {
                 $item['is_buy'] = $is_buy;// 默认没有购买
                 $list[$i] = $item;
             }
+            $json['data']['list'] = $list;
+            $json['data']['total'] = $total;
+            $json['data']['page'] = $p;
+            $json['data']['total_page'] = ceil($total/$limit);
+            $json['data']['type'] = $type;
+            $json['data']['limit'] = $limit;
+            $json['data']['user_id'] = $user_id;
+            $json['data']['match_id'] = $match_id;
         }while(false);
         $this->ajaxReturn($json);
     }

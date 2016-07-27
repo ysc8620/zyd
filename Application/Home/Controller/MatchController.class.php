@@ -20,7 +20,7 @@ class MatchController extends BaseApiController {
         $json = $this->simpleJson();
         //$mongo = $this->initMongo();
         do{
-            $page = I('request.p', 1,'intval');
+            $p = I('request.p', 1,'intval');
             $type = I('request.type',1,'strval');// 1进行中， 2已完成，3为开始，4个人收藏
             $league_idsstr = I('request.league_ids','','strval');
             $limit = I('request.limit',10,'intval');
@@ -155,12 +155,11 @@ class MatchController extends BaseApiController {
             $json['data']['league_list'] = $league_list;
             $json['data']['list'] = $data;
             $json['data']['total'] = $total;
-            $json['data']['page'] = $page;
+            $json['data']['page'] = $p;
             $json['data']['total_page'] = ceil($total/$limit);
             $json['data']['type'] = $type;
             $json['data']['limit'] = $limit;
             $json['data']['league_ids'] = $league_idsstr;
-            $json['data']['req'] = $_REQUEST;
 
         }while(false);
         $this->ajaxReturn($json);
