@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>赛事管理-后台系统</title>
-    <meta name="keywords" content="赛事管理">
-    <meta name="description" content="赛事管理">
+    <title>赛事关注管理-后台系统</title>
+    <meta name="keywords" content="事关注">
+    <meta name="description" content="事关注">
     <link rel="shortcut icon" href="favicon.ico">
     <link href="__PUBLIC__/admin/css/bootstrap.min.css?v=3.3.5" rel="stylesheet">
     <link href="__PUBLIC__/admin/css/font-awesome.css?v=4.4.0" rel="stylesheet">
@@ -21,7 +21,7 @@
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>赛事管理</h5>
+                    <h5>赛事关注管理</h5>
                     <!--
                     <div class="ibox-tools"> <a class="collapse-link"> <i class="fa fa-chevron-up"></i> </a> <a class="dropdown-toggle" data-toggle="dropdown" href="table_data_tables.html#"> <i class="fa fa-wrench"></i> </a>
                       <ul class="dropdown-menu dropdown-user">
@@ -41,9 +41,8 @@
                                     <th>参与球队</th>
                                     <th>比赛时间</th>
                                     <th>比分情况</th>
-                                    <th>红牌情况</th>
-                                    <th>黄牌情况</th>
-                                    <th>状态</th>
+                                    <th>关注用户</th>
+                                    <th>关注时间</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>
@@ -51,15 +50,14 @@
                                 <volist name="list" id="item">
                                     <tr class="gradeX">
                                         <td>{$item.match_id}</td>
-                                        <td>{$item.league_name}</td>
-                                        <td>{$item.home_name}-{$item.away_name}</td>
-                                        <td>{$item.time}</td>
-                                        <td>{$item.home_score}-{$item.away_score}</td>
-                                        <td>{$item.home_red_score}-{$item.away_red_score}</td>
-                                        <td>{$item.home_yellow_score}-{$item.away_yellow_score}</td>
-                                        <td>{:getMatchStatus($item[state])}</td>
+                                        <td>{$item.match.league_name}</td>
+                                        <td>{$item.match.home_name}-{$item.match.away_name}</td>
+                                        <td>{$item.match.time}</td>
+                                        <td>{$item.match.home_score}-{$item.match.away_score}</td>
+                                        <td>{$item.user.nickname}</td>
+                                        <td>{$item.create_time|date='Y-m-d H:i:s',###}</td>
                                         <td class="center">
-                                            <a href="{:U('match/edit', ['id' => $item['id']])}"><i class="fa fa-check text-navy"></i>编辑</a>
+
                                         </td>
                                     </tr>
                                 </volist>
