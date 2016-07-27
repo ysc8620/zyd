@@ -42,7 +42,7 @@
                                     <th>是否专家</th>
                                     <th>发布预测数</th>
                                     <th>购买预测数</th>
-                                    <th>被购买预测数</th>
+                                    <th>销售预测数</th>
                                     <th>被关注数</th>
                                     <th>关注数</th>
                                     <th>账户余额</th>
@@ -57,19 +57,19 @@
                                 <volist name="list" id="item">
                                     <tr class="gradeX">
                                         <td>{$item.id}</td>
-                                        <td>{$item.unionid}</td>
-                                        <td>{$item.unionid}</td>
-                                        <td>{$item.openid}</td>
-                                        <td>{$item.cityid}</td>
-                                        <td>{$item.wx_name}</td>
-                                        <td>{$item.cityid}</td>
-                                        <td>{$item.cityid}</td>
-                                        <td>{$item.cityid}</td>
-                                        <td>{$item.cityid}</td>
-                                        <td>{$item.cityid}</td>
-                                        <td><img src="{$item.wx_pic}" width="30"></td>
-                                        <td>{:userSubscribeMap($item['is_subscribe'])}</td>
-                                        <td>{:timestampToDate($item['create_time'])}</td>
+                                        <td>{$item.mobile}</td>
+                                        <td>{$item.nickname}</td>
+                                        <td><if condition="$item.is_expert eq 1"><font color="red">专家</font> <else/>普通</if></td>
+                                        <td>{$item.total_send_info}</td>
+                                        <td>{$item.total_buy_info}</td>
+                                        <td>{$item.total_seller_info}</td>
+                                        <td>{$item.total_follow_user}</td>
+                                        <td>{$item.total_collect_user}</td>
+                                        <td>{$item.credit}</td>
+                                        <td>{$item.credit}</td>
+                                        <td>{$item.credit}</td>
+                                        <td>{$item.create_time|date='Y-m-d H:i:s',###}</td>
+                                        <td>{$item.update_time|date='Y-m-d H:i:s',###}</td>
                                         <td class="center">
                                             <a href="{:U('/users/userview', ['id' => $item['id']])}"><i class="fa fa-check text-navy"></i>详细</a>
                                         </td>
