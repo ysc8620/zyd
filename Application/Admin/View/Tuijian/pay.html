@@ -52,13 +52,13 @@
                                 <tbody>
                                 <volist name="list" id="item">
                                     <tr class="gradeX">
-                                        <td>{$item.match_id}</td>
+                                        <td>{$item.tuijian.match_id}</td>
                                         <td>{$item.match.league_name}</td>
                                         <td>{$item.match.home_name} / {$item.match.away_name}</td>
                                         <td>{$item.match.time}</td>
                                         <td>{$item.match.home_score} / {$item.match.away_score}</td>
                                         <td>{$item.tuijian_user.nickname}</td>
-                                        <td><if condition="$item.tuijian.is_fee eq 1"><font color="red">收费</font> <else/>免费</if></td>
+                                        <td><if condition="$item[tuijian][is_fee] eq 1"><font color="red">收费</font> <else/>免费</if></td>
                                         <td>{$item.tuijian.fee}</td>
                                         <td>{$item.user.nickname}</td>
                                         <td>{$item.create_time|date='Y-m-d H:i:s',###}</td>
