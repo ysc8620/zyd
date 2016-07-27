@@ -6,7 +6,7 @@ class UserController extends BaseApiController {
 
     private $field = "`id`, `nickname`, `pic`, `mobile`, `is_expert`, `vip`, `credit`, `total_top_credit`,
     `register_time`, `update_time`,  `total_send_info`, `total_collect_user`, `total_collect_match`,
-     `total_follow_user`,`total_rate`,`total_month_rate`,`password`,`salt`,`ssid`";
+     `total_follow_user`,`total_rate`,`total_month_rate`,`password`,`salt`,`ssid`,`status`";
 
     private function getField($type=''){
         if($type){
