@@ -20,11 +20,19 @@ class MatchController extends BaseApiController {
         $json = $this->simpleJson();
         //$mongo = $this->initMongo();
         do{
-            $page = I('request.p', 1,'intval');
+            $p = I('request.p', 1,'intval');
             $type = I('request.type',1,'strval');// 1进行中， 2已完成，3为开始，4个人收藏
-            $league_ids = (array)I('request.league_ids',[]);
+            $league_idsstr = I('request.league_ids','','strval');
             $limit = I('request.limit',10,'intval');
             $where = [];
+
+            $league_ids_list = explode(',',$league_idsstr);
+            $league_ids = [];
+            foreach($league_ids_list as $league_id){
+                if(empty($league_id)){continue;}
+                $league_ids[] = $league_id;
+            }
+
 
             // 进行中
             if($type == 1){
@@ -36,6 +44,7 @@ class MatchController extends BaseApiController {
             }else{
 
             }
+
             if($league_ids){
                 $where['league_id'] = array('in', $league_ids);
             }
@@ -146,11 +155,11 @@ class MatchController extends BaseApiController {
             $json['data']['league_list'] = $league_list;
             $json['data']['list'] = $data;
             $json['data']['total'] = $total;
-            $json['data']['page'] = $page;
+            $json['data']['page'] = $p;
             $json['data']['total_page'] = ceil($total/$limit);
             $json['data']['type'] = $type;
             $json['data']['limit'] = $limit;
-            $json['data']['league_ids'] = $league_ids;
+            $json['data']['league_ids'] = $league_idsstr;
 
         }while(false);
         $this->ajaxReturn($json);
@@ -162,7 +171,12 @@ class MatchController extends BaseApiController {
     public function info(){
         $json = $this->simpleJson();
         do{
-            $match_id = I('request.id', 0,'intval');
+            $match_id = I('request.match_id', 0,'intval');
+            if(empty($match_id)){
+                $json['status'] = 110;
+                $json['msg'] = '请选择查看赛事';
+                break;
+            }
             $match = M('match')->field
             ('match_id,time as match_time,league_id,league_name,kind,level,state,home_id,home_name,home_score,away_id,
                 away_name,away_score,home_red,away_red,home_yellow,away_yellow,match_round,address,weather_ico,weather,temperature,is_neutral,technic'
@@ -239,16 +253,18 @@ class MatchController extends BaseApiController {
     public function follow(){
         $json = $this->simpleJson();
         do{
-            $user_id = I('request.user_id',0,'intval');
+            $this->check_login();
+            $user_id = $this->user['id'];
             $match_id = I('request.match_id', 0,'intval');
-            if(empty($user_id) || empty($match_id)){
+            if( empty($match_id)){
                 $json['status'] = 110;
-                $json['msg'] = '请正确输入赛事和用户信息';
+                $json['msg'] = '请输入关注赛事';
                 break;
             }
             $follow = M('match_follow')->where(array('user_id'=>$user_id, 'match_id'=>$match_id))->find();
             if($follow){
                 $json['msg'] = '赛事关注成功';
+                $json['data']['id'] = $follow['id'];
                 $json['data']['match_id'] = $match_id;
                 $json['data']['user_id'] = $user_id;
                 break;
@@ -261,6 +277,7 @@ class MatchController extends BaseApiController {
                 $res = M('match_follow')->add($data);
                 if($res){
                     $json['msg'] = '赛事关注成功';
+                    $json['data']['id'] = $res;
                     $json['data']['match_id'] = $match_id;
                     $json['data']['user_id'] = $user_id;
                     break;

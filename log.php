@@ -18,7 +18,8 @@ function httpPost($url, $data = null)
         'system' => 'IOS',
         'systemVersion' => '9.3.2',
         'model' => 'iPhone 6S Plus',
-        'imei' => '3580865021934706'
+        'imei' => '3580865021934706',
+        'ssid'=>'1a02be1c9d62843b8bf973b98c2180a9'//1a02be1c9d62843b8bf973b98c2180a9
 
     ];
     $param['sign'] = sign($param,'b8e586b6eb3530f1c5efad7ea3f1359e');
@@ -37,7 +38,8 @@ function httpPost($url, $data = null)
         'imei: '.$param['imei'],
         'sign: '.$param['sign'],
         'time:'.$param['time'],
-        'appid:'.$param['appid']
+        'appid:'.$param['appid'],
+        'ssid:'.$param['ssid']
     ) );
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_USERAGENT, isset($_SERVER['HTTP_USER_AGENT'])?$_SERVER['HTTP_USER_AGENT']:"Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)");
@@ -54,10 +56,8 @@ function sign($data,$appsecret)
     return md5($data['appVersion'].$data['appid'].$data['time'].$appsecret);
 }
 //
-
-$data['remark'] = 'test';
-$data['date'] = date("Y-m-d H:i:s");
-
-$result = httpPost("https://api.zydzuqiu.com/test/test.html", $data);
-print_r(json_decode($result));
+$data['match_id'] = '1230827';
+$result = httpPost("https://api.zydzuqiu.com/tuijian/index.html", $data);
+//var_dump($result);
+print_r(json_decode($result, true));
 

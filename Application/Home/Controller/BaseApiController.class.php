@@ -9,6 +9,8 @@ class BaseApiController extends BaseController {
     public $wechat = null;
     public $from = 0;
     public static $mongo = null;
+    public $user = [];
+    public $ssid = '';
 
     /**
      * 初始化操作
@@ -29,15 +31,32 @@ class BaseApiController extends BaseController {
 
             $header['appsecret'] = C('app')[$appid];
 
-
             if(strtolower($sign) != $this->sign($header)){
-
                 $json = $this->simpleJson();
-
                 $json['status'] = 102;
-                $json['msg'] = '权限no1no2';
+                $json['msg'] = '权限no2';
                 $this->ajaxReturn($json);
             }
+
+            // 用户登录
+            $user_ssid = $header['ssid'];
+            if($user_ssid){
+                $user = M('users')->where(array('ssid'=>$user_ssid))->find();
+                if($user && $user['ssid'] == $user_ssid){
+                    $this->ssid = $user_ssid;
+                    $this->user = $user;
+                }
+            }
+        }
+    }
+
+    public function check_login(){
+
+        if(empty($this->user)){
+            $json = $this->simpleJson();
+            $json['status'] = 101;
+            $json['msg'] = '请先登录';
+            $this->ajaxReturn($json);
         }
     }
 
