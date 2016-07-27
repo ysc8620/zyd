@@ -57,7 +57,7 @@ function sign($data,$appsecret)
 }
 //
 $data['league_ids'] = '1471,41';
-$result = httpPost("https://api.zydzuqiu.com/match/index.html", $data);
+$result = httpPost("https://api.zydzuqiu.com/tuijian/index.html", $data);
 //var_dump($result);
 print_r(json_decode($result, true));
 

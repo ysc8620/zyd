@@ -39,7 +39,7 @@ class TuijianController extends BaseApiController {
             }
             $total = M('tuijian')->where($where)->count();
             $Page = new Page($total, $limit);
-            $list = M('tuijian')->where($where)->limit($Page->firstRow, $Page->listRows)->
+            $list = M('tuijian')->where($where)->limit($Page->firstRow, $Page->listRows)->order("id DESC")->
                 field('`id`, `match_id`, `is_expert`, `type`, `sub_type`, `guess_1`, `guess_2`, `is_fee`, `fee`, `user_id`, `is_top`, `is_win`, `remark`, `create_time`')->select();
 
             // 赛事
@@ -74,7 +74,7 @@ class TuijianController extends BaseApiController {
         }while(false);
         $this->ajaxReturn($json);
     }
-    
+
     /**
      * 发布推荐
      */
