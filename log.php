@@ -19,7 +19,7 @@ function httpPost($url, $data = null)
         'systemVersion' => '9.3.2',
         'model' => 'iPhone 6S Plus',
         'imei' => '3580865021934706',
-        'ssid'=>'1a02be1c9d62843b8bf973b98c2180a9'//c42d4da0998e6c197f514d7db3c6bfe2
+        'ssid'=>'1a02be1c9d62843b8bf973b98c2180a9'//1a02be1c9d62843b8bf973b98c2180a9
 
     ];
     $param['sign'] = sign($param,'b8e586b6eb3530f1c5efad7ea3f1359e');
@@ -57,9 +57,9 @@ function sign($data,$appsecret)
 }
 //
 
-$data['nickname'] = '小鱼';
+$data['type'] = '1';
 
-$result = httpPost("https://api.zydzuqiu.com/user/edit.html", $data);
+$result = httpPost("https://api.zydzuqiu.com/user/get_expert_list.html", $data);
 var_dump($result);
 print_r(json_decode($result, true));
 

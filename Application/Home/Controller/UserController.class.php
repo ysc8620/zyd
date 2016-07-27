@@ -599,7 +599,7 @@ class UserController extends BaseApiController {
                 $Page->show();
 
                 $list = M()->table(C('DB_PREFIX').'users as u, '.C('DB_PREFIX').'users_follow as uf')->where("u.is_expert=1 AND u.status = 1 AND uf.from_user_id=$user_id AND u.id = uf.from_user_id")
-                    ->field("`id`,`nickname`, `pic`, `mobile`, `is_expert`, `vip`, `credit`,`register_time`, `update_time`,  `total_send_info`, `total_collect_user`, `total_collect_match`, `total_follow_user`")
+                    ->field($this->getField('u'))
                     ->limit($Page->firstRow . ',' . $Page->listRows)->order("uf.create_time DESC")->select();
 
                 foreach($list as $i=>$item){
