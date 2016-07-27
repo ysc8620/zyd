@@ -22,9 +22,10 @@ class MatchController extends BaseApiController {
         do{
             $page = I('request.p', 1,'intval');
             $type = I('request.type',1,'strval');// 1进行中， 2已完成，3为开始，4个人收藏
-            $league_ids = (array)I('request.league_ids',[]);
+            $league_ids = (array)I('request.league_ids','');
             $limit = I('request.limit',10,'intval');
             $where = [];
+
 
             // 进行中
             if($type == 1){
@@ -36,6 +37,7 @@ class MatchController extends BaseApiController {
             }else{
 
             }
+
             if($league_ids){
                 $where['league_id'] = array('in', $league_ids);
             }
@@ -151,6 +153,7 @@ class MatchController extends BaseApiController {
             $json['data']['type'] = $type;
             $json['data']['limit'] = $limit;
             $json['data']['league_ids'] = $league_ids;
+            $json['data']['req'] = $_REQUEST;
 
         }while(false);
         $this->ajaxReturn($json);

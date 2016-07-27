@@ -57,8 +57,8 @@ function sign($data,$appsecret)
 }
 //
 
-$data['id'] = '1259738';
-$result = httpPost("https://api.zydzuqiu.com/match/info.html", $data);
+$data['league_ids'][] = '1471';
+$result = httpPost("https://api.zydzuqiu.com/match/index.html", $data);
 //var_dump($result);
 print_r(json_decode($result, true));
 
