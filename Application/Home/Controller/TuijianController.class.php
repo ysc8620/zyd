@@ -9,7 +9,7 @@ class TuijianController extends BaseApiController {
         $json = $this->simpleJson();
         do{
             //
-            $type = I('request.type', 1, 'intval'); // 1 某赛事的推荐, 2 我发布的推荐, 3 指定用户发布的推荐, 4,最新推荐
+            $type = I('request.type', 1, 'intval'); // 1 某赛事的推荐, 2 我发布的推荐, 3 指定用户发布的推荐, 4,最新推荐, 5 我购买过的
             $match_id = I('request.match_id', 0,'intval');
             $user_id = I('request.user_id',0,'intval');
             $limit = I('request.limit', 10, 'intval');
@@ -38,8 +38,10 @@ class TuijianController extends BaseApiController {
             }elseif($type == 4){
                 $where['is_expert'] = 1;
             }elseif($type == 5){
-                //
-                // $where['id'] =
+                $this->check_login();
+                $user_id = $this->user['id'];
+                
+                $where['id'] = array('exp', "in(SELECT tuijian_id FROM ".C('DB_PREFIX')."tuijian_order WHERE user_id='{$user_id}')");
             }
             $total = M('tuijian')->where($where)->count();
             $Page = new Page($total, $limit);
