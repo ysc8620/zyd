@@ -206,6 +206,42 @@ class UserController extends BaseApiController {
     }
 
     /**
+     * 
+     */
+    public function check_login(){
+        $json = $this->simpleJson();
+        do {
+            // 1 注册, 2登录, 3,找回密码
+            $this->check_login();
+            $user_id = $this->user['id'];
+            if(!$user_id){
+                $json['status'] = 110;
+                $json['msg'] = '没有找到用户信息';
+                break;
+            }
+
+            $member = M('users')->where(array('id'=>$user_id))->field($this->field)->find();
+            // 用户锁定
+            if(!$member){
+                $json['status'] = 111;
+                $json['msg'] = '没有找到用户信息';
+                break;
+            }
+
+            // 用户锁定
+            if($member['status'] < 1){
+                $json['status'] = 111;
+                $json['msg'] = '用户被锁定不能使用';
+                break;
+            }
+
+            $json['data'] = $this->get_return_member($member);
+
+        }while(false);
+        $this->ajaxReturn($json);
+    }
+
+    /**
      * 获取用户信息
      */
     public function info(){
