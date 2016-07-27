@@ -1,6 +1,6 @@
 <?php
 namespace Home\Controller;
-
+use Think\Page;
 class TuijianController extends BaseApiController {
     /**
      * 推荐列表
@@ -8,10 +8,73 @@ class TuijianController extends BaseApiController {
     public function index(){
         $json = $this->simpleJson();
         do{
+            //
+            $type = I('request.type', 1, 'intval'); // 1 某赛事的推荐, 2 我发布的推荐, 3 指定用户发布的推荐, 4,最新推荐
+            $match_id = I('request.match_id', 0,'intval');
+            $user_id = I('request.user_id',0,'intval');
+            $limit = I('request.limit', 10, 'intval');
 
+            $where = [];
+            $where['status'] = 1;
+            if($type == 1){
+                if(empty($match_id)){
+                    $json['status'] = 110;
+                    $json['msg'] = "请选择查看赛事";
+                    break;
+                }
+                $where['match_id'] = $match_id;
+            }elseif($type == 2){
+                $this->check_login();
+                $user_id = $this->user['id'];
+                $where['user_id'] = $user_id;
+            }elseif($type == 3){
+                if(empty($user_id)){
+                    $json['status'] = 110;
+                    $json['msg'] = "请选择查看专家";
+                    break;
+                }
+                $where['user_id'] = $user_id;
+            }elseif($type == 4){
+                $where['is_expert'] = 1;
+            }
+            $total = M('tuijian')->where($where)->count();
+            $Page = new Page($total, $limit);
+            $list = M('tuijian')->where($where)->limit($Page->firstRow, $Page->listRows)->
+                field('`id`, `match_id`, `is_expert`, `type`, `sub_type`, `guess_1`, `guess_2`, `is_fee`, `fee`, `user_id`, `is_top`, `is_win`, `remark`, `create_time`')->select();
+
+            // 赛事
+            foreach($list as $i=>$item){
+                $match = M('match')->where(array('match_id'=>$item['match_id']))->find();
+                $item['league_id'] = $match['league_id'];
+                $item['league_name'] = $match['league_name'];
+                $item['home_name'] = $match['home_name'];
+                $item['away_name'] = $match['away_name'];
+                $item['match_time'] = $match['time'];
+                #
+                $user = M('users')->where(array('id'=>$item['user_id']))->find();
+                $item['user_name'] = $user['nickname'];
+                $item['user_pic'] = pic_url($user['pic']);
+                $item['user_follow'] = $user['total_follow_user'];
+                $item['user_rate'] = $user['total_rate'];
+                # 是否购买
+                $is_buy = 0;
+                if($item['is_fee']){
+                    if(!empty($this->user)){
+                        $buy = M('tuijian_order')->where(array('tuijian_id'=>$item['id'],'user_id'=>$this->user['id']))->find();
+                        if($buy){
+                            $is_buy = 1;
+                        }
+                    }
+                }else{
+                    $is_buy = 1;
+                }
+                $item['is_buy'] = $is_buy;// 默认没有购买
+                $list[$i] = $item;
+            }
         }while(false);
         $this->ajaxReturn($json);
     }
+    
     /**
      * 发布推荐
      */
