@@ -139,7 +139,7 @@ class TuijianController extends BaseApiController {
             $res2 = M()->execute("UPDATE ".C('DB_PREFIX')."users SET credit=credit-'{$tuijian['fee']}' WHERE id='{$user_id}' AND credit>='{$tuijian['fee']}'");
             $credit_log['from_id'] = $res;
             $res3 = M('credit_log')->add($credit_log);
-            if($res && $res2){
+            if($res && $res2 && $res3){
                 M()->commit();
                 $json['msg'] = '购买成功';
                 $json['data'] = $res;
