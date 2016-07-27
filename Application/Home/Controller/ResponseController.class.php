@@ -12,6 +12,10 @@ class ResponseController extends BaseController {
     public function index(){
         header("Content-type:text/html;charset=utf-8");
         $this->assign('title', '用户信息反馈');
+        $username = I('request.username', '','strval');
+        $contact = I('request.contact', '','strval');
+        $this->assign('username', $username);
+        $this->assign('contact', $contact);
         $sign = md5(microtime(true));
         session('sign', $sign);
         $this->assign('sign', $sign);

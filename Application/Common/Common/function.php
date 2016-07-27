@@ -72,6 +72,13 @@ function encrypt_password($password, $salt = '') {
 }
 
 /**
+ *
+ */
+function get_login_ssid(){
+   return md5(microtime(true).random(12, 'all'));
+}
+
+/**
  * 验证手机号
  * @param $mobile
  * @return bool

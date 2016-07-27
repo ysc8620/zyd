@@ -239,7 +239,8 @@ class MatchController extends BaseApiController {
     public function follow(){
         $json = $this->simpleJson();
         do{
-            $user_id = I('request.user_id',0,'intval');
+            $this->check_login();
+            $user_id = $this->user['id'];
             $match_id = I('request.match_id', 0,'intval');
             if(empty($user_id) || empty($match_id)){
                 $json['status'] = 110;

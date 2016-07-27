@@ -18,11 +18,13 @@ class TuijianController extends BaseApiController {
     public function post(){
         $json = $this->simpleJson();
         do{
+            $this->check_login();
+
             $data = [];
+            $data['user_id'] = $this->user['id'];
             $data['match_id'] = I('request.match_id',0,'intval');
             $data['type'] = I('request.type',0,'intval');
             $data['sub_type'] = I('request.sub_type',0,'intval');
-            $data['user_id'] = I('request.user_id',0,'intval');
             $data['is_fee'] = I('request.is_fee',0,'intval');
             $data['fee'] = I('request.fee',0,'intval');
             $data['remark'] = I('request.remark','','strval');
@@ -81,7 +83,8 @@ class TuijianController extends BaseApiController {
     public function pay(){
         $json = $this->simpleJson();
         do{
-            $user_id = I('request.user_id',0,'intval');
+            $this->check_login();
+            $user_id = $this->user['id'];
             $tuijian_id = I('request.tuijian_id',0,'intval');
 
             if(empty($user_id)){

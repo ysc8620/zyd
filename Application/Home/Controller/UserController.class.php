@@ -6,7 +6,7 @@ class UserController extends BaseApiController {
 
     private $field = "`id`, `nickname`, `pic`, `mobile`, `is_expert`, `vip`, `credit`, `total_top_credit`,
     `register_time`, `update_time`,  `total_send_info`, `total_collect_user`, `total_collect_match`,
-     `total_follow_user`,`total_rate`,`total_month_rate`,`password`,`salt`";
+     `total_follow_user`,`total_rate`,`total_month_rate`,`password`,`salt`,`ssid`";
 
     private function getField($type=''){
         if($type){
@@ -96,11 +96,11 @@ class UserController extends BaseApiController {
             }
             $user['register_time'] = time();
             $user['update_time'] = time();
+            $user['ssid'] = get_login_ssid();
 
             $user_id = M('users')->add($user);
             if($user_id){
                 $member = M('users')->where(array('id'=>$user_id))->field($this->field)->find();
-
                 $json['msg'] = '用户注册成功';
                 $json['data'] = $this->get_return_member($member);
             }else{
@@ -161,7 +161,9 @@ class UserController extends BaseApiController {
                     $json['msg'] = '用户被锁定不能使用';
                     break;
                 }
-
+                # 更新登录ssid
+                $member['ssid'] = get_login_ssid();
+                M('users')->where(array('id'=>$member['id']))->save(array('ssid'=>$member['ssid'],'update_time'=>time()));
                 $json['msg'] = '用户登录成功';
                 $json['data'] = $this->get_return_member($member);
 
@@ -188,6 +190,9 @@ class UserController extends BaseApiController {
                     break;
                 }
 
+                # 更新登录ssid
+                $member['ssid'] = get_login_ssid();
+                M('users')->where(array('id'=>$member['id']))->save(array('ssid'=>$member['ssid'],'update_time'=>time()));
                 $json['msg'] = '用户登录成功';
                 $json['data'] = $this->get_return_member($member);
             }else{
@@ -268,7 +273,8 @@ class UserController extends BaseApiController {
                     'mobile' => '',
                     'wx_openid' => $openid,
                     'register_time' => time(),
-                    'update_time' => time()
+                    'update_time' => time(),
+                    'ssid' => get_login_ssid()
                 ];
                 $res = M('users')->add($data);
                 if($res){
@@ -400,9 +406,10 @@ class UserController extends BaseApiController {
         $json = $this->simpleJson();
         do {
             // 1 注册, 2登录, 3,找回密码
-            $user_id = I('request.user_id', 0, 'intval');
             $to_user_id = I('request.to_user_id',0,'intval');
-            if(empty($user_id) || empty($to_user_id)){
+            $this->check_login();
+            $user_id = $this->user['id'];
+            if(empty($to_user_id)){
                 $json['status'] = 110;
                 $json['msg'] = '用户ID不能为空';
                 break;
@@ -442,7 +449,8 @@ class UserController extends BaseApiController {
         $json = $this->simpleJson();
         do {
             // 1 注册, 2登录, 3,找回密码
-            $user_id = I('request.user_id', 0, 'intval');
+            $this->check_login();
+            $user_id = $this->user['id'];
             $limit = I('request.limit',10,'intval');
             $page = I('request.p',1,'intval');
             if(empty($user_id) ){
@@ -480,7 +488,7 @@ class UserController extends BaseApiController {
         $json = $this->simpleJson();
         do {
             // 1 注册, 2登录, 3,找回密码
-            $user_id = I('request.user_id', 0, 'intval');
+            $user_id = intval($this->user['id']);
             $limit = I('request.limit',10,'intval');
             $page = I('request.p',1,'intval');
             $type = I('request.type',1,'intval'); // 专家类型： 1 按30天胜率， 2，按关注数， 3, 我关注的
@@ -527,11 +535,7 @@ class UserController extends BaseApiController {
                     'type' => $type
                 ];
             }elseif($type == 3){
-                if(empty($user_id)){
-                    $json['status'] = 101;
-                    $json['msg'] = '请先登录';
-                    break;
-                }
+                $this->check_login();
 
                 $total = M()->table(C('DB_PREFIX').'users as u, '.C('DB_PREFIX').'users_follow as uf')->where("u.is_expert=1 AND u.status = 1 AND uf.from_user_id=$user_id AND u.id = uf.from_user_id")->count();
                 $Page = new \Think\Page($total, $limit); // 实例化分页类 传入总记录数和每页显示的记录数(25)
