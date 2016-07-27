@@ -43,7 +43,7 @@ class TuijianController extends BaseController {
         $show = $Page->show();// 分页显示输出
         // 进行分页数据查询 注意limit方法的参数要使用Page类的属性
 
-        $list = $match->order('time DESC')->limit($Page->firstRow . ',' . $Page->listRows)->select();
+        $list = $match->order('create_time DESC')->limit($Page->firstRow . ',' . $Page->listRows)->select();
         foreach($list as $i=>$item){
             $info = M('match')->field('id,match_id,time,league_id,league_name,home_name,away_name,home_score,away_score')->where(array('match_id'=>$item['match_id']))->find();
             $user = M('users')->where(array('id'=>$item['user_id']))->find();
