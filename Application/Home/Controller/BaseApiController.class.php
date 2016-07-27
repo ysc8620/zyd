@@ -40,13 +40,11 @@ class BaseApiController extends BaseController {
 
             // 用户登录
             $user_ssid = $header['ssid'];
-            var_dump($user_ssid);
             if($user_ssid){
                 $user = M('users')->where(array('ssid'=>$user_ssid))->find();
-                var_dump($user);die();
-                if($user){
+                if($user && $user['ssid'] == $user_ssid){
                     $this->ssid = $user_ssid;
-                    $this->user;
+                    $this->user = $user;
                 }
             }
         }

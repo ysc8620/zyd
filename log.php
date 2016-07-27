@@ -61,5 +61,5 @@ $data['remark'] = 'test';
 $data['date'] = date("Y-m-d H:i:s");
 
 $result = httpPost("https://api.zydzuqiu.com/user/check_user.html", $data);
-print_r(json_decode($result));
+print_r(($result));
 
