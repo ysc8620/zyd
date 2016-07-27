@@ -19,7 +19,7 @@ function httpPost($url, $data = null)
         'systemVersion' => '9.3.2',
         'model' => 'iPhone 6S Plus',
         'imei' => '3580865021934706',
-        'ssid'=>'2ea4e60b95ca5462b26037cd3892ee75'
+        'ssid'=>''
 
     ];
     $param['sign'] = sign($param,'b8e586b6eb3530f1c5efad7ea3f1359e');
@@ -57,9 +57,11 @@ function sign($data,$appsecret)
 }
 //
 
-$data['remark'] = 'test';
-$data['date'] = date("Y-m-d H:i:s");
+$data['openid'] = '6bbb46cc9c6b80c7e21023025d77b9bh';
+$data['nickname'] = '不带你玩';
+$data['pic'] = "http://api2.zydzuqiu.com/Public/static/userimg.jpg";
 
-$result = httpPost("https://api.zydzuqiu.com/user/check_user.html", $data);
+$result = httpPost("https://api.zydzuqiu.com/user/wx_bind.html", $data);
+var_dump($result);
 print_r(json_decode($result, true));
 

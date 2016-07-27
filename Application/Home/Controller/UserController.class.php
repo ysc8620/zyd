@@ -337,7 +337,9 @@ class UserController extends BaseApiController {
         $json = $this->simpleJson();
         do {
             // 1 注册, 2登录, 3,找回密码
-            $user_id = I('request.user_id', 0, 'intval');
+            $this->check_login();
+            $user_id = $this->user['id'];
+//            $user_id = I('request.user_id', 0, 'intval');
             $openid = I('request.openid','','strval');
             $nickname = I('request.nickname','','strval');
             $pic = I('request.pic','','strval');
