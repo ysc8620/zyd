@@ -41,6 +41,9 @@
                                     <th>参与球队</th>
                                     <th>比赛时间</th>
                                     <th>比分情况</th>
+                                    <th>推荐用户</th>
+                                    <th>是否免费</th>
+                                    <th>所需球币</th>
                                     <th>购买用户</th>
                                     <th>购买时间</th>
                                     <th>操作</th>
@@ -54,6 +57,9 @@
                                         <td>{$item.match.home_name} / {$item.match.away_name}</td>
                                         <td>{$item.match.time}</td>
                                         <td>{$item.match.home_score} / {$item.match.away_score}</td>
+                                        <td>{$item.tuijian_user.nickname}</td>
+                                        <td>{$item.tuijian.is_fee}</td>
+                                        <td>{$item.tuijian.fee}</td>
                                         <td>{$item.user.nickname}</td>
                                         <td>{$item.create_time|date='Y-m-d H:i:s',###}</td>
                                         <td class="center">

@@ -41,10 +41,13 @@
                                     <th>参与球队</th>
                                     <th>比赛时间</th>
                                     <th>比分情况</th>
-                                    <th>推荐人</th>
+                                    <th>推荐用户</th>
                                     <th>是否专家</th>
                                     <th>推荐类型</th>
                                     <th>推荐详情</th>
+                                    <th>是否推荐</th>
+                                    <th>是否收费</th>
+                                    <th>收费球币</th>
                                     <th>状态</th>
                                     <th>操作</th>
                                 </tr>
@@ -61,6 +64,9 @@
                                         <td><if condition="$item.user.is_expert eq 1">专家<else/>普通用户</if></td>
                                         <td>{$item.type}</td>
                                         <td>{$item.guess_1}, {$item.guess_2}</td>
+                                        <td><if condition="$item.is_top eq 1"><font color="red">推荐</font><else/>普通</if></td>
+                                        <td><if condition="$item.is_fee eq 1"><font color="red">收费</font><else/>免费</if></td>
+                                        <td>{$item.fee}</td>
                                         <td><if condition="$item[status] eq 1">正常<else/>隐藏</if></td>
                                         <td class="center">
                                             <a href="{:U('tuijian/edit', ['id' => $item['id']])}"><i class="fa fa-check text-navy"></i>编辑</a>

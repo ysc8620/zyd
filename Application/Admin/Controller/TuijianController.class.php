@@ -48,6 +48,9 @@ class TuijianController extends BaseController {
             $tuijian = M('tuijian')->where(array('id'=>$item['tuijian_id']))->find();
             $info = M('match')->field('id,match_id,time,league_id,league_name,home_name,away_name,home_score,away_score')->where(array('match_id'=>$tuijian['match_id']))->find();
             $user = M('users')->where(array('id'=>$item['user_id']))->find();
+            $item['tuijian'] = $tuijian;
+            $tuijia_user = M('users')->where(array('id'=>$tuijian['user_id']))->find();
+            $item['tuijian_user'] = $tuijia_user;
             $item['match'] = $info;
             $item['user'] = $user;
             $list[$i] = $item;
