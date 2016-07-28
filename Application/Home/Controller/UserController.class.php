@@ -688,5 +688,7 @@ class UserController extends BaseApiController {
             $json['msg'] = '退出成功';
             break;
         }while(false);
+        $this->ajaxReturn($json);
     }
+
 }
