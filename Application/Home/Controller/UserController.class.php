@@ -53,27 +53,8 @@ class UserController extends BaseApiController {
                 break;
             }
 
-            if($code != 888888){
-                $time = time() - 600;
-                $sms = M('sms_log')->where(array('mobile'=>$mobile, 'send_time' => array('gt', $time)))->order("id DESC")->find();
-                if(!$sms){
-                    $json['status'] = 111;
-                    $json['msg'] = '短信已过期';
-                    break;
-                }
-
-                if($sms['status'] > 0){
-                    $json['status'] = 111;
-                    $json['msg'] = '短信已过期';
-                    break;
-                }
-
-                if($code != $sms['msg']){
-                    $json['status'] = 111;
-                    $json['msg'] = '验证码错误';
-                    break;
-                }
-            }
+            #短信校验
+            $this->check_sms($mobile, $code);
 
             $user = [
                 'nickname' => $mobile,
@@ -141,23 +122,7 @@ class UserController extends BaseApiController {
 
             // 短信登录
             if($code){
-                if($code != 888888){
-                    $time = time() - 600;
-                    $sms = M('sms_log')->where(array('mobile'=>$mobile, 'send_time' => array('gt', $time)))->order("id DESC")->find();
-                    if(!$sms || $sms['status'] > 0){
-                        $json['status'] = 111;
-                        $json['msg'] = '短信已过期';
-                        break;
-                    }
-
-                    if($code == $sms['msg']){
-                        M('sms_log')->where(array('id'=>$sms['id']))->save(array('status'=>1));
-                    }else{
-                        $json['status'] = 111;
-                        $json['msg'] = '验证码错误';
-                        break;
-                    }
-                }
+                $this->check_sms($mobile, $code);
                 $member = M('users')->where(array('mobile'=>$mobile))->field($this->field)->find();
                 // 用户锁定
                 if(!$member){
@@ -676,28 +641,8 @@ class UserController extends BaseApiController {
                 break;
             }
 
-            if ($code != 888888) {
-                $time = time() - 600;
-                $sms = M('sms_log')->where(array('mobile'=>$mobile, 'send_time' => array('gt', $time)))->order("id DESC")->find();
-                if (!$sms) {
-                    $json['status'] = 111;
-                    $json['msg'] = '短信已过期';
-                    break;
-                }
+            $this->check_sms($mobile, $code);
 
-                if ($sms['status'] > 0) {
-                    $json['status'] = 111;
-                    $json['msg'] = '短信已过期';
-                    break;
-                }
-
-                if ($code != $sms['msg']) {
-                    $json['status'] = 111;
-                    $json['msg'] = '验证码错误';
-                    break;
-                }
-            }
-            
             $member = M('users')->where(array('mobile'=>$mobile))->find();
             if(!$member){
                 $json['status'] = 111;
@@ -730,17 +675,18 @@ class UserController extends BaseApiController {
     public function logout(){
         $json = $this->simpleJson();
         do {
-            $this->check_login();
-            $user_id = $this->user['id'];
-            $res = M('users')->where(array('id'=>$user_id))->save(array('ssid'=>md5(time()),'update_time'=>time()));
-            if($res){
-                $json['msg'] = '退出成功';
-                break;
-            }else{
-                $json['status'] = 111;
-                $json['msg'] = '退出失败';
-                break;
+            # $this->check_login();
+            $user_id = intval($this->user['id']);
+            if($user_id){
+                $res = M('users')->where(array('id'=>$user_id))->save(array('ssid'=>md5(time()),'update_time'=>time()));
+                if(! $res){
+                    $json['status'] = 111;
+                    $json['msg'] = '退出失败';
+                    break;
+                }
             }
+            $json['msg'] = '退出成功';
+            break;
         }while(false);
     }
 }

@@ -52,6 +52,52 @@ class BaseApiController extends BaseController {
     }
 
     /**
+     * 短信校验
+     * @param $mobile
+     * @param $code
+     * @param bool|true $is_echo
+     * @return bool
+     */
+    public function check_sms($mobile, $code, $is_echo=true){
+        if($code == 888888){return true;}
+        $json = $this->simpleJson();
+        $time = time() - 600;
+        $sms = M('sms_log')->where(array('mobile'=>$mobile, 'send_time' => array('gt', $time)))->order("id DESC")->find();
+        if(!$sms){
+            $json['status'] = 111;
+            $json['msg'] = '短信已过期';
+            if($is_echo){
+                $this->ajaxReturn($json);
+            }else{
+                return false;
+            }
+        }
+
+        if($sms['status'] > 0){
+            $json['status'] = 111;
+            $json['msg'] = '短信已过期';
+            if($is_echo){
+                $this->ajaxReturn($json);
+            }else{
+                return false;
+            }
+        }
+
+        if($code != $sms['msg']){
+            $json['status'] = 111;
+            $json['msg'] = '验证码错误';
+            if($is_echo){
+                $this->ajaxReturn($json);
+            }else{
+                return false;
+            }
+        }
+
+        M('sms_log')->where(array('id'=>$sms['id']))->save(array('status'=>1));
+        return true;
+    }
+
+    /**
      * 登录验证
      */
     public function check_login(){
