@@ -56,12 +56,12 @@ function sign($data,$appsecret)
     return md5($data['appVersion'].$data['appid'].$data['time'].$appsecret);
 }
 
-echo "---";
-save_img("http://wx.qlogo.cn/mmopen/ajNVdqHZLLDdMxQpVnQgZOjJHJXYCkKvgQ2u00UJ89CbIlSmGJX7U7V10aGywZgr4odZ5umQSe3BEpHfmd0Z8Q/0", "./jpg.jpg");
+
 echo "=\r\n";
-$data['user_id'] = 10003;
-$data['code'] = '888888';
-$result = httpPost("https://api.zydzuqiu.com/user/info.html", $data);
+$data['pic'] = "http://wx.qlogo.cn/mmopen/ajNVdqHZLLDdMxQpVnQgZOjJHJXYCkKvgQ2u00UJ89CbIlSmGJX7U7V10aGywZgr4odZ5umQSe3BEpHfmd0Z8Q/0";
+$data['openid'] = 'ajNVdqHZLLDdMxQpVnQgZOjJHJXYCkKvgQ2u00UJ';
+$data['nickname'] = '小妖';
+$result = httpPost("https://api.zydzuqiu.com/user/wx_login.html", $data);
 echo ($result);
 print_r(json_decode($result, true));
 
