@@ -55,11 +55,7 @@ function sign($data,$appsecret)
 {
     return md5($data['appVersion'].$data['appid'].$data['time'].$appsecret);
 }
-$mobile = "13922806074";
-if($mobile){
-    echo substr_replace($mobile,'*****',3,5);
-}
-die();
+
 //
 echo "=\r\n";
 $data['mobile'] = '13922806074';

@@ -23,13 +23,18 @@ class UserController extends BaseApiController {
         unset($member['status']);
         unset($member['password']);
         unset($member['salt']);
+        unset($member['wx_openid']);
+        unset($member['qq_openid']);
+        
         if(!$mysalf){
             if($member['mobile']){$member['mobile'] = substr_replace($member['mobile'],'*****',3,5);}
             if(is_mobile($member['nickname'])){
                 $member['nickname'] = substr_replace($member['nickname'],'*****',3,5);
             }
+
             unset($member['ssid']);
             unset($member['credit']);
+            unset($member['total_top_credit']);
         }
         return $member;
     }
