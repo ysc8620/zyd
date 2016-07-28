@@ -201,7 +201,9 @@ class UserController extends BaseApiController {
                 $json['data'] = $this->get_return_member($member, true);
             }else{
                 $json['status'] = 111;
-                $json['msg'] = '登录信息错误';
+                $json['msg'] = '登录信息错误2';
+                $json['mobile'] = $mobile;
+                $json['password'] = $password;
                 break;
             }
 
