@@ -63,8 +63,8 @@ class MatchController extends BaseApiController {
                 $technic = empty($match['technic'])?[]:json_decode($match['technic'], true);
                 $list[$i]['technic'] = [];
                 for($j=0; $j<41;$j++){
-                    $list[$i]['technic']['id'.$j]['home'] = isset($technic['id'.$j])?$technic['id'.$j]['home']:'';
-                    $list[$i]['technic']['id'.$j]['away'] = isset($technic['id'.$j])?$technic['id'.$j]['away']:'';
+                    $list[$i]['technic']['id'.$j]['home'] = isset($technic['id'.$j])?$technic['id'.$j]['home']:0;
+                    $list[$i]['technic']['id'.$j]['away'] = isset($technic['id'.$j])?$technic['id'.$j]['away']:0;
                 }
 
                 // 标准
@@ -190,8 +190,8 @@ class MatchController extends BaseApiController {
             $technic = empty($match['technic'])?[]:json_decode($match['technic'], true);
             $match['technic'] = [];
             for($j=0; $j<41;$j++){
-                $match['technic']['id'.$j]['home'] = isset($technic['id'.$j])?$technic['id'.$j]['home']:'';
-                $match['technic']['id'.$j]['away'] = isset($technic['id'.$j])?$technic['id'.$j]['away']:'';
+                $match['technic']['id'.$j]['home'] = isset($technic['id'.$j])?$technic['id'.$j]['home']:0;
+                $match['technic']['id'.$j]['away'] = isset($technic['id'.$j])?$technic['id'.$j]['away']:0;
             }
 
             // 标准
