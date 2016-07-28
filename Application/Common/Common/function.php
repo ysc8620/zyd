@@ -59,7 +59,7 @@ function getMatchName($match_id){
 }
 
 function pic_url($url){
-    return 'http://api2.zydzuqiu.com/'.$url;
+    return (strpos('http://', $url) !== false || strpos('https://',$url) !== false) ? $url : 'http://api2.zydzuqiu.com/'.$url;
 }
 
 /**

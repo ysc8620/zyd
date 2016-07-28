@@ -58,9 +58,9 @@ function sign($data,$appsecret)
 
 //
 echo "=\r\n";
-$data['mobile'] = '13922806074';
+$data['tuijian_id'] = 1;
 $data['code'] = '888888';
-$result = httpPost("https://api.zydzuqiu.com/tuijian/info.html", $data);
+$result = httpPost("https://api.zydzuqiu.com/tuijian/get_user_list.html", $data);
 echo ($result);
 print_r(json_decode($result, true));
 
