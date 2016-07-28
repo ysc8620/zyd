@@ -57,9 +57,10 @@ function sign($data,$appsecret)
 }
 //
 echo "=\r\n";
-$data['mobile'] = '13598170000';
+$data['mobile'] = '13922806074';
+$data['code'] = '888888';
 $data['password'] = 'a123456';
-$result = httpPost("https://api.zydzuqiu.com/user/login.html?d=s", $data);
+$result = httpPost("https://api.zydzuqiu.com/user/find_password.html", $data);
 echo ($result);
 print_r(json_decode($result, true));
 

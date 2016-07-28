@@ -658,7 +658,7 @@ class UserController extends BaseApiController {
             $res = M('users')->where(array('id'=>$member['id']))->save($user);
             if($res){
                 $json['msg'] = '密码更新成功';
-                $json['data'] = $this->get_return_member(M('users')->where(array('id'=>$member['id']))->field($this->field)->find());
+                $json['data'] = $this->get_return_member(M('users')->where(array('id'=>$member['id']))->field($this->field)->find(), true);
                 break;
             }else{
                 $json['status'] = 111;
