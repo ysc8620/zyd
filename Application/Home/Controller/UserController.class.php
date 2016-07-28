@@ -320,6 +320,7 @@ class UserController extends BaseApiController {
                     break;
                 }
             }else{
+                $pic = save_img($pic, APP_PATH.'../Public/static/head/'.md5($pic).'.jpg');
                 $data = [
                     'nickname' => $nickname,
                     'pic' => $pic,
@@ -399,6 +400,7 @@ class UserController extends BaseApiController {
                     $data['nickname'] = $nickname;
                 }
                 if($member['pic'] == $this->default_pic){
+                    $pic = save_img($pic, APP_PATH.'../Public/static/head/'.md5($pic).'.jpg');
                     $member['pic'] = $pic;
                 }
                 $res = M('users')->where(array('id'=>$user_id))->save($data);
