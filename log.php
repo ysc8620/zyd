@@ -56,11 +56,26 @@ function sign($data,$appsecret)
     return md5($data['appVersion'].$data['appid'].$data['time'].$appsecret);
 }
 
+function pic_url($url){
+    var_dump(strpos($url,'http://') !== false );
+    var_dump(strpos($url . 'https://') !== false);
+     if(strpos($url, 'http://') === false && strpos($url,'https://') === false){
+         return 'http://'.$url;
+     }else{
+         return  $url;
+     }
+}
+
+
+$d = pic_url('Public/static/userimg.jpg');
+echo $d;
+
+die();
 //
 echo "=\r\n";
-$data['tuijian_id'] = 1;
+$data['user_id'] = 10002;
 $data['code'] = '888888';
-$result = httpPost("https://api.zydzuqiu.com/tuijian/get_user_list.html", $data);
+$result = httpPost("https://api.zydzuqiu.com/user/info.html", $data);
 echo ($result);
 print_r(json_decode($result, true));
 
