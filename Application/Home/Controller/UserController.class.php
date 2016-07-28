@@ -194,7 +194,7 @@ class UserController extends BaseApiController {
                     break;
                 }
 
-                if($password != encrypt_password($member['password'], $member['salt'])){
+                if($member['password']!= encrypt_password($password, $member['salt'])){
                     $json['status'] = 111;
                     $json['msg'] = '登录信息错误';
                     $json['mobile'] = $mobile;
