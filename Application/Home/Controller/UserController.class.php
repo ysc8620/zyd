@@ -655,6 +655,7 @@ class UserController extends BaseApiController {
             $user['update_time'] = time();
             $user['last_login_time'] = time();
             $user['last_login_type'] = 2;
+            $user['ssid'] = get_login_ssid();
             $res = M('users')->where(array('id'=>$member['id']))->save($user);
             if($res){
                 $json['msg'] = '密码更新成功';
