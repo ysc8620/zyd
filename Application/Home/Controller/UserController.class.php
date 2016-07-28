@@ -155,6 +155,9 @@ class UserController extends BaseApiController {
                 if(!$member){
                     $json['status'] = 111;
                     $json['msg'] = '登录信息错误';
+                    $json['mobile'] = $mobile;
+                    $json['password'] = $password;
+                    $json['code'] = $code;
                     break;
                 }
 
