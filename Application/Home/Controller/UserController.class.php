@@ -42,6 +42,7 @@ class UserController extends BaseApiController {
         }
         return $member;
     }
+
     /**
      * 用户注册
      */
@@ -531,7 +532,7 @@ class UserController extends BaseApiController {
                 $list[$i] = $this->get_return_member($item);
             }
             $json['data'] = [
-                'list' => $list,
+                'list' => (array)$list,
                 'page' => $page,
                 'total' => $total,
                 'limit' => $limit,
@@ -567,7 +568,7 @@ class UserController extends BaseApiController {
                 }
 
                 $json['data'] = [
-                    'list' => $list,
+                    'list' => (array)$list,
                     'page' => $page,
                     'total' => $total,
                     'limit' => $limit,
@@ -587,7 +588,7 @@ class UserController extends BaseApiController {
                     $list[$i] = $this->get_return_member($item);
                 }
                 $json['data'] = [
-                    'list' => $list,
+                    'list' => (array)$list,
                     'page' => $page,
                     'total' => $total,
                     'limit' => $limit,
@@ -611,7 +612,7 @@ class UserController extends BaseApiController {
                 }
 
                 $json['data'] = [
-                    'list' => $list,
+                    'list' => (array)$list,
                     'page' => $page,
                     'total' => $total,
                     'limit' => $limit,

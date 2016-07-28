@@ -155,8 +155,8 @@ class MatchController extends BaseApiController {
                     ->order("is_hot DESC, weight DESC")->select();
             }
 
-            $json['data']['league_list'] = $league_list;
-            $json['data']['list'] = $newdata;
+            $json['data']['league_list'] = (array)$league_list;
+            $json['data']['list'] = (array)$newdata;
             $json['data']['total'] = $total;
             $json['data']['page'] = $p;
             $json['data']['total_page'] = ceil($total/$limit);

@@ -77,7 +77,7 @@ class TuijianController extends BaseApiController {
                 $item['is_buy'] = $is_buy;// 默认没有购买
                 $list[$i] = $item;
             }
-            $json['data']['list'] = $list;
+            $json['data']['list'] = (array)$list;
             $json['data']['total'] = $total;
             $json['data']['page'] = $p;
             $json['data']['total_page'] = ceil($total/$limit);
@@ -227,6 +227,64 @@ class TuijianController extends BaseApiController {
                 $json['msg'] = '购买失败';
                 $json['status'] = 111;
             }
+        }while(false);
+        $this->ajaxReturn($json);
+    }
+
+    /**
+     * 推荐详情
+     */
+    public function info(){
+        $json = $this->simpleJson();
+        do {
+            $tuijian_id = I('request.tuijian_id', 0, 'intval');
+
+            if (empty($tuijian_id)) {
+                $json['status'] = 110;
+                $json['msg'] = '用户不能为空';
+                break;
+            }
+            $tuijian = M('tuijian')->where(array('id'=>$tuijian_id, 'status'=>1))->find();
+            if($tuijian){
+                $json['data'] = $tuijian;
+            }else{
+                $json['status'] = 111;
+                $json['msg'] = '找不到推荐信息或者推荐已关闭';
+            }
+        }while(false);
+        $this->ajaxReturn($json);
+    }
+
+    /**
+     * 获取推荐购买用户列表
+     */
+    public function get_user_list(){
+        $json = $this->simpleJson();
+        do {
+            $tuijian_id = I('request.tuijian_id', 0, 'intval');
+            $p = I('request.p',1,'intval');
+            $limit = I('request.limit',10,'intval');
+
+            if (empty($tuijian_id)) {
+                $json['status'] = 110;
+                $json['msg'] = '用户不能为空';
+                break;
+            }
+            $total = M('tuijian_order')->where(array('tuijian_id'=>$tuijian_id))->count();
+            $Page = new Page($total, $limit);
+            $list = M('tuijian_order')->where(array('tuijian_id'=>$tuijian_id))->limit($Page->firstRow, $Page->listRows)->order("create_time DESC")->select();
+            foreach($list as $i=>$item){
+                $user = M('users')->where(array('id'=>$item['user_id']))->find();
+                $item['nickname'] = $user['nickname'];
+                $item['pic'] = pic_url($user['pic']);
+                $list[$i] = $item;
+            }
+            $json['data']['list'] = (array)$list;
+            $json['data']['total'] = $total;
+            $json['data']['page'] = $p;
+            $json['data']['total_page'] = ceil($total/$limit);
+            $json['data']['limit'] = $limit;
+            $json['data']['tuijian_id'] = $tuijian_id;
         }while(false);
         $this->ajaxReturn($json);
     }
