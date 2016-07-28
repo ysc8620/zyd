@@ -4,9 +4,7 @@ namespace Home\Controller;
 class UserController extends BaseApiController {
     public $default_pic = '/Public/static/userimg.jpg';
 
-    private $field = "`id`, `nickname`, `pic`, `mobile`, `is_expert`, `vip`, `credit`, `total_top_credit`,
-    `register_time`, `update_time`,  `total_send_info`, `total_collect_user`, `total_collect_match`,
-     `total_follow_user`,`total_rate`,`total_month_rate`,`password`,`salt`,`ssid`,`status`";
+    private $field = "*";
 
     private function getField($type=''){
         if($type){
@@ -14,7 +12,7 @@ class UserController extends BaseApiController {
             foreach($fields as $i=>$field){
                 $fields[$i] = $type.'.'.$field;
             }
-            return join(',', $fields);
+            return $type .'.'.$this->type;
         }else{
             return $this->field;
         }
@@ -26,7 +24,12 @@ class UserController extends BaseApiController {
         unset($member['password']);
         unset($member['salt']);
         if(!$mysalf){
+            if($member['mobile']){$member['mobile'] = substr_replace($member['mobile'],'*****',3,5);}
+            if(is_mobile($member['nickname'])){
+                $member['nickname'] = substr_replace($member['nickname'],'*****',3,5);
+            }
             unset($member['ssid']);
+            unset($member['credit']);
         }
         return $member;
     }
