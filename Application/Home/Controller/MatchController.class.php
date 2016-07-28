@@ -126,7 +126,10 @@ class MatchController extends BaseApiController {
                 $data[$match['league_id']]['league_ico'] = C('BASE_URL').'Public/static/noimg.png';
                 $data[$match['league_id']]['list'][] = $match;
             }
-
+            $newdata = [];
+            foreach($data as $item){
+                $newdata[] = $item;
+            }
             // league_list
             $league_list = [];
             // if($page)
@@ -153,7 +156,7 @@ class MatchController extends BaseApiController {
             }
 
             $json['data']['league_list'] = $league_list;
-            $json['data']['list'] = $data;
+            $json['data']['list'] = $newdata;
             $json['data']['total'] = $total;
             $json['data']['page'] = $p;
             $json['data']['total_page'] = ceil($total/$limit);
