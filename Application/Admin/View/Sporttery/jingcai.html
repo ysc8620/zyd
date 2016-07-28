@@ -36,6 +36,7 @@
                             <table class="table table-striped table-bordered table-hover" id="editable">
                                 <thead>
                                 <tr>
+                                    <th>国彩ID</th>
                                     <th>赛事ID</th>
                                     <th>赛事时间</th>
                                     <th>联赛信息</th>
@@ -53,6 +54,7 @@
                                 <tbody>
                                 <volist name="list" id="item">
                                     <tr class="gradeX">
+                                        <td>{$item.match_no}</td>
                                         <td>{$item.match_id}</td>
                                         <td>{$item.match_time}</td>
                                         <td>{$item.league_name}</td>
