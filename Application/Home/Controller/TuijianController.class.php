@@ -241,7 +241,7 @@ class TuijianController extends BaseApiController {
 
             if (empty($tuijian_id)) {
                 $json['status'] = 110;
-                $json['msg'] = '用户不能为空';
+                $json['msg'] = '请选择查看推荐';
                 break;
             }
             $tuijian = M('tuijian')->where(array('id'=>$tuijian_id, 'status'=>1))->find();
