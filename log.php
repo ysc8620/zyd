@@ -58,9 +58,9 @@ function sign($data,$appsecret)
 
 
 echo "=\r\n";
-$data['type'] = 2;
-
-$result = httpPost("https://api.zydzuqiu.com/test/test.html", $data);
+$data['mobile'] = 13800138123;
+$data['code'] = 888888;
+$result = httpPost("https://api.zydzuqiu.com/user/bind_mobile.html", $data);
 echo ($result);
 print_r(json_decode($result, true));
 

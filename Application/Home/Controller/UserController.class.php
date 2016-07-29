@@ -769,6 +769,7 @@ class UserController extends BaseApiController {
             }
 
         }while(false);
+        $this->ajaxReturn($json);
     }
 
 }
