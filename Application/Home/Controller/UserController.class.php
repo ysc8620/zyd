@@ -431,6 +431,8 @@ class UserController extends BaseApiController {
             $this->check_login();
             $user_id = $this->user['id'];
             $nickname = I('request.nickname','','trim,strval,htmlspecialchars,strip_tags');
+            $password = I('request.password','','trim,strval');
+            $type = I('request.type',1,'intval');
 
             if(empty($nickname) || strlen($nickname) > 36){
                 $json['status'] = 110;
@@ -445,8 +447,19 @@ class UserController extends BaseApiController {
             }
             $data = [
                 'nickname' => $nickname,
+                'type' => $type,
                 'update_time' => time()
             ];
+
+            if($password){
+                if( strlen($password) < 6 || strlen($password) > 26){
+                    $json['status'] = 110;
+                    $json['msg'] = '密码长度在6-26个字符之间';
+                    break;
+                }
+                $data['salt'] = random(12,'all');
+                $data['password'] = encrypt_password(trim($password), $data['salt']);
+            }
             $res = M('users')->where(array('id'=>$user_id))->save($data);
             if($res){
                 $member['nickname'] = $nickname;

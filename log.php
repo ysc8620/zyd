@@ -59,7 +59,7 @@ function sign($data,$appsecret)
 
 echo "=\r\n";
 
-$result = httpPost("https://api.zydzuqiu.com/user/follow_list.html", $data);
+$result = httpPost("https://api.zydzuqiu.com/user/check_user.html", $data);
 echo ($result);
 print_r(json_decode($result, true));
 
