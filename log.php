@@ -19,7 +19,7 @@ function httpPost($url, $data = null)
         'systemVersion' => '9.3.2',
         'model' => 'iPhone 6S Plus',
         'imei' => '3580865021934706',
-        'ssid'=>''//1a02be1c9d62843b8bf973b98c2180a9
+        'ssid'=>'1a02be1c9d62843b8bf973b98c2180a9'//1a02be1c9d62843b8bf973b98c2180a9
 
     ];
     $param['sign'] = sign($param,'b8e586b6eb3530f1c5efad7ea3f1359e');
@@ -58,10 +58,8 @@ function sign($data,$appsecret)
 
 
 echo "=\r\n";
-$data['pic'] = "http://wx.qlogo.cn/mmopen/ajNVdqHZLLDdMxQpVnQgZOjJHJXYCkKvgQ2u00UJ89CbIlSmGJX7U7V10aGywZgr4odZ5umQSe3BEpHfmd0Z8Q/0";
-$data['openid'] = 'ajNVdqHZLLDdMxQpVnQgZOjJHJXYCkKvgQ2u00UJ';
-$data['nickname'] = '小妖';
-$result = httpPost("https://api.zydzuqiu.com/user/wx_login.html", $data);
+
+$result = httpPost("https://api.zydzuqiu.com/user/follow_list.html", $data);
 echo ($result);
 print_r(json_decode($result, true));
 

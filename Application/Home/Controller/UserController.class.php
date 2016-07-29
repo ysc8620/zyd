@@ -12,7 +12,7 @@ class UserController extends BaseApiController {
             foreach($fields as $i=>$field){
                 $fields[$i] = $type.'.'.$field;
             }
-            return $type .'.'.$this->type;
+            return $type .'.'.$this->field;
         }else{
             return $this->field;
         }
