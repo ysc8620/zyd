@@ -60,7 +60,7 @@ function sign($data,$appsecret)
 echo "=\r\n";
 $data['type'] = 2;
 
-$result = httpPost("https://api.zydzuqiu.com/tuijian/index.html", $data);
+$result = httpPost("https://api.zydzuqiu.com/test/test.html", $data);
 echo ($result);
 print_r(json_decode($result, true));
 

@@ -722,4 +722,53 @@ class UserController extends BaseApiController {
         $this->ajaxReturn($json);
     }
 
+    /**
+     * 绑定手机
+     */
+    public function bind_mobile(){
+        $json = $this->simpleJson();
+        do{
+            $this->check_login();
+            $user_id = $this->user['id'];
+            $mobile = I('request.mobile','','strval');
+            $code = I('request.code',0,'intval');
+
+            if (!is_mobile($mobile)) {
+                $json['status'] = 110;
+                $json['msg'] = '请正确输入手机号';
+                break;
+            }
+
+            if (!$code) {
+                $json['status'] = 110;
+                $json['msg'] = '请输入验证码';
+                break;
+            }
+
+
+            $this->check_sms($mobile, $code);
+
+            $member = M('users')->where(array('id'=>$user_id))->find();
+            if(!$member){
+                $json['status'] = 111;
+                $json['msg'] = '没找到用户信息';
+                break;
+            }
+            $user = [];
+            $user['update_time'] = time();
+            $user['mobile'] = $mobile;
+            $res = M('users')->where(array('id'=>$member['id']))->save($user);
+            if($res){
+                $json['msg'] = '手机绑定成功';
+                $json['data'] = $this->get_return_member(M('users')->where(array('id'=>$member['id']))->field($this->field)->find(), true);
+                break;
+            }else{
+                $json['status'] = 111;
+                $json['msg'] = '手机绑定失败';
+                break;
+            }
+
+        }while(false);
+    }
+
 }
