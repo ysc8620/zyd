@@ -747,6 +747,12 @@ class UserController extends BaseApiController {
 
 
             $this->check_sms($mobile, $code);
+            $member = M('users')->where(array('mobile'=>$mobile))->find();
+            if($member){
+                $json['status'] = 111;
+                $json['msg'] = '手机已经被绑定';
+                break;
+            }
 
             $member = M('users')->where(array('id'=>$user_id))->find();
             if(!$member){
