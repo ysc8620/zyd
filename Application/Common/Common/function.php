@@ -89,7 +89,7 @@ function save_img($url,$path) {
  * @param $salt
  */
 function encrypt_password($password, $salt = '') {
-    return md5(crc32($password) . md5($salt));
+    return md5(($password) . md5($salt));
 }
 
 /**
