@@ -5,6 +5,20 @@
  * Date: 2016/7/6
  * Time: 18:57
  */
+
+$input = array(12, 10, 9);
+
+$result = array_pad($input, 5, 0);
+print_r($result);
+// result is array(12, 10, 9, 0, 0)
+
+$result = array_pad($input, -7, -1);
+// result is array(-1, -1, -1, -1, 12, 10, 9)
+print_r($result);
+
+$result = array_pad($input, 2, "noop");
+print_r($result);
+die();;
 echo $tmp = 0 == "01"?1:2;
 #echo MD5(microtime(true));
 die();
