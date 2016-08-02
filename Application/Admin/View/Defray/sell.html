@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>用户管理-章鱼帝后台系统</title>
-    <meta name="keywords" content="用户管理">
-    <meta name="description" content="用户管理">
+    <title>销售列表-章鱼帝后台系统</title>
+    <meta name="keywords" content="销售列表">
+    <meta name="description" content="销售列表">
     <link rel="shortcut icon" href="favicon.ico">
     <link href="__PUBLIC__/admin/css/bootstrap.min.css?v=3.3.5" rel="stylesheet">
     <link href="__PUBLIC__/admin/css/font-awesome.css?v=4.4.0" rel="stylesheet">
@@ -21,7 +21,7 @@
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>用户列表</h5>
+                    <h5>销售列表</h5>
                     <!--
                     <div class="ibox-tools"> <a class="collapse-link"> <i class="fa fa-chevron-up"></i> </a> <a class="dropdown-toggle" data-toggle="dropdown" href="table_data_tables.html#"> <i class="fa fa-wrench"></i> </a>
                       <ul class="dropdown-menu dropdown-user">
@@ -36,20 +36,14 @@
                             <table class="table table-striped table-bordered table-hover" id="editable">
                                 <thead>
                                 <tr>
-                                    <th>用户ID</th>
-                                    <th>用户手机</th>
-                                    <th>用户昵称</th>
-                                    <th>是否专家</th>
-                                    <th>发布预测数</th>
-                                    <th>购买预测数</th>
-                                    <th>销售预测数</th>
-                                    <th>被关注数</th>
-                                    <th>关注数</th>
-                                    <th>账户余额</th>
-                                    <th>总收益</th>
-                                    <th>总体现</th>
-                                    <th>创建时间</th>
-                                    <th>上次访问时间</th>
+                                    <th>编号</th>
+                                    <th>推荐编号</th>
+                                    <th>对应赛事</th>
+                                    <th>推荐用户</th>
+                                    <th>购买用户</th>
+                                    <th>花费球币</th>
+                                    <th>预测结果</th>
+                                    <th>购买时间</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>
@@ -57,21 +51,15 @@
                                 <volist name="list" id="item">
                                     <tr class="gradeX">
                                         <td>{$item.id}</td>
-                                        <td>{$item.mobile}</td>
-                                        <td>{$item.nickname}</td>
-                                        <td><if condition="$item.is_expert eq 1"><font color="red">专家</font> <else/>普通</if></td>
-                                        <td>{$item.total_send_info}</td>
-                                        <td>{$item.total_buy_info}</td>
-                                        <td>{$item.total_seller_info}</td>
-                                        <td>{$item.total_follow_user}</td>
-                                        <td>{$item.total_collect_user}</td>
+                                        <td>{$item.tuijian_id}</td>
+                                        <td>{$item.tuijian.match_id}</td>
+                                        <td>{$item.tuijian.nickname}</td>
+                                        <td>{$item.user.nickname}</td>
                                         <td>{$item.credit}</td>
-                                        <td>{$item.credit}</td>
-                                        <td>{$item.credit}</td>
+                                        <td>{$item.status}</td>
                                         <td>{$item.create_time|date='Y-m-d H:i:s',###}</td>
-                                        <td>{$item.update_time|date='Y-m-d H:i:s',###}</td>
                                         <td class="center">
-                                            <a href="{:U('/users/userview', ['id' => $item['id']])}"><i class="fa fa-check text-navy"></i>详细</a>
+                                            <a href="{:U('/defray/sell', ['id' => $item['id']])}"><i class="fa fa-check text-navy"></i>详细</a>
                                         </td>
                                     </tr>
                                 </volist>
