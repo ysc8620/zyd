@@ -64,7 +64,7 @@ class NoticeController extends BaseApiController {
      * 发送消息
      */
     public function send(){
-        
+
     }
 
 }

@@ -32,7 +32,7 @@ function getValue($value){
 }
 
 try{
-    $mongo = new \Mongo("mongodb://root:LEsc123456@localhost:27017");
+    //$mongo = new \Mongo("mongodb://root:LEsc123456@localhost:27017");
 }catch (\Exception $e){
     exit('mongodb连接失败');
 }
