@@ -4,9 +4,7 @@ namespace Home\Controller;
 class UserController extends BaseApiController {
     public $default_pic = '/Public/static/userimg.jpg';
 
-    private $field = "`id`, `nickname`, `pic`, `mobile`, `is_expert`, `vip`, `credit`, `total_top_credit`,
-    `register_time`, `update_time`,  `total_send_info`, `total_collect_user`, `total_collect_match`,
-     `total_follow_user`,`total_rate`,`total_month_rate`,`password`,`salt`,`ssid`,`status`";
+    private $field = "*";
 
     private function getField($type=''){
         if($type){
@@ -14,7 +12,7 @@ class UserController extends BaseApiController {
             foreach($fields as $i=>$field){
                 $fields[$i] = $type.'.'.$field;
             }
-            return join(',', $fields);
+            return $type .'.'.$this->field;
         }else{
             return $this->field;
         }
@@ -25,11 +23,26 @@ class UserController extends BaseApiController {
         unset($member['status']);
         unset($member['password']);
         unset($member['salt']);
+        unset($member['wx_openid']);
+        unset($member['qq_openid']);
+
         if(!$mysalf){
+            if($member['mobile']){$member['mobile'] = substr_replace($member['mobile'],'*****',3,5);}
+            if(is_mobile($member['nickname'])){
+                $member['nickname'] = substr_replace($member['nickname'],'*****',3,5);
+            }
+
             unset($member['ssid']);
+            unset($member['credit']);
+            unset($member['register_time']);
+            unset($member['update_time']);
+            unset($member['last_login_time']);
+            unset($member['last_login_type']);
+            unset($member['total_top_credit']);
         }
         return $member;
     }
+
     /**
      * 用户注册
      */
@@ -53,27 +66,8 @@ class UserController extends BaseApiController {
                 break;
             }
 
-            if($code != 888888){
-                $time = time() - 600;
-                $sms = M('sms_log')->where(array('send_time' => array('gt', $time)))->order("id DESC")->find();
-                if(!$sms){
-                    $json['status'] = 111;
-                    $json['msg'] = '短信已过期';
-                    break;
-                }
-
-                if($sms['status'] > 0){
-                    $json['status'] = 111;
-                    $json['msg'] = '短信已过期';
-                    break;
-                }
-
-                if($code != $sms['msg']){
-                    $json['status'] = 111;
-                    $json['msg'] = '验证码错误';
-                    break;
-                }
-            }
+            #短信校验
+            $this->check_sms($mobile, $code);
 
             $user = [
                 'nickname' => $mobile,
@@ -83,12 +77,20 @@ class UserController extends BaseApiController {
 
             if($password){
                 if( strlen($password) < 6 || strlen($password) > 26){
-                    $json['status'] = 111;
+                    $json['status'] = 110;
                     $json['msg'] = '密码长度在6-26个字符之间';
                     break;
                 }
                 $user['salt'] = random(12,'all');
                 $user['password'] = encrypt_password(trim($password), $user['salt']);
+
+
+                $user['last_login_time'] = time();
+                $user['last_login_type'] = 2;
+            }else{
+
+                $user['last_login_time'] = time();
+                $user['last_login_type'] = 1;
             }
 
             $member = M('users')->where(array('mobile'=>$mobile))->find();
@@ -133,28 +135,12 @@ class UserController extends BaseApiController {
 
             // 短信登录
             if($code){
-                if($code != 888888){
-                    $time = time() - 600;
-                    $sms = M('sms_log')->where(array('send_time' => array('gt', $time)))->order("id DESC")->find();
-                    if(!$sms || $sms['status'] > 0){
-                        $json['status'] = 111;
-                        $json['msg'] = '短信已过期';
-                        break;
-                    }
-
-                    if($code == $sms['msg']){
-                        M('sms_log')->where(array('id'=>$sms['id']))->save(array('status'=>1));
-                    }else{
-                        $json['status'] = 111;
-                        $json['msg'] = '验证码错误';
-                        break;
-                    }
-                }
+                $this->check_sms($mobile, $code);
                 $member = M('users')->where(array('mobile'=>$mobile))->field($this->field)->find();
                 // 用户锁定
                 if(!$member){
                     $json['status'] = 111;
-                    $json['msg'] = '登录信息错误';
+                    $json['msg'] = '没找到登录用户';
                     break;
                 }
 
@@ -166,7 +152,12 @@ class UserController extends BaseApiController {
                 }
                 # 更新登录ssid
                 $member['ssid'] = get_login_ssid();
-                M('users')->where(array('id'=>$member['id']))->save(array('ssid'=>$member['ssid'],'update_time'=>time()));
+                $save = [];
+                $save['ssid'] = $member['ssid'];
+                $save['last_login_time'] = time();
+                $save['last_login_type'] = 1;
+                $save['update_time'] = time();
+                M('users')->where(array('id'=>$member['id']))->save($save);
                 $json['msg'] = '用户登录成功';
                 $json['data'] = $this->get_return_member($member, true);
 
@@ -176,7 +167,7 @@ class UserController extends BaseApiController {
                 // 用户锁定
                 if(!$member){
                     $json['status'] = 111;
-                    $json['msg'] = '登录信息错误';
+                    $json['msg'] = '没找到登录用户';
                     break;
                 }
 
@@ -187,20 +178,27 @@ class UserController extends BaseApiController {
                     break;
                 }
 
-                if($password != encrypt_password($member['password'], $member['salt'])){
+                if($member['password']!= encrypt_password($password, $member['salt'])){
                     $json['status'] = 111;
-                    $json['msg'] = '登录信息错误';
+                    $json['msg'] = '登录密码错误';
                     break;
                 }
 
                 # 更新登录ssid
                 $member['ssid'] = get_login_ssid();
-                M('users')->where(array('id'=>$member['id']))->save(array('ssid'=>$member['ssid'],'update_time'=>time()));
+
+                $save = [];
+                $save['ssid'] = $member['ssid'];
+                $save['last_login_time'] = time();
+                $save['last_login_type'] = 1;
+                $save['update_time'] = time();
+
+                M('users')->where(array('id'=>$member['id']))->save($save);
                 $json['msg'] = '用户登录成功';
                 $json['data'] = $this->get_return_member($member, true);
             }else{
                 $json['status'] = 111;
-                $json['msg'] = '登录信息错误';
+                $json['msg'] = '请输入密码或验证码';
                 break;
             }
 
@@ -304,7 +302,9 @@ class UserController extends BaseApiController {
                 }
                 $data = [
                     'ssid' => get_login_ssid(),
-                    'update_time' => time()
+                    'update_time' => time(),
+                    'last_login_time' => time(),
+                    'last_login_type' => 3
                 ];
 
                 $res = M('users')->where(array('id'=>$wx_user['id']))->save($data);
@@ -320,6 +320,8 @@ class UserController extends BaseApiController {
                     break;
                 }
             }else{
+                save_img($pic, APP_PATH.'../Public/static/head/'.md5($pic).'.jpg');
+                $pic = '/Public/static/head/'.md5($pic).'.jpg';
                 $data = [
                     'nickname' => $nickname,
                     'pic' => $pic,
@@ -327,7 +329,9 @@ class UserController extends BaseApiController {
                     'wx_openid' => $openid,
                     'register_time' => time(),
                     'update_time' => time(),
-                    'ssid' => get_login_ssid()
+                    'ssid' => get_login_ssid(),
+                    'last_login_time' => time(),
+                    'last_login_type' => 3
                 ];
                 $res = M('users')->add($data);
                 if($res){
@@ -397,6 +401,8 @@ class UserController extends BaseApiController {
                     $data['nickname'] = $nickname;
                 }
                 if($member['pic'] == $this->default_pic){
+                    save_img($pic, APP_PATH.'../Public/static/head/'.md5($pic).'.jpg');
+                    $pic = '/Public/static/head/'.md5($pic).'.jpg';
                     $member['pic'] = $pic;
                 }
                 $res = M('users')->where(array('id'=>$user_id))->save($data);
@@ -425,6 +431,8 @@ class UserController extends BaseApiController {
             $this->check_login();
             $user_id = $this->user['id'];
             $nickname = I('request.nickname','','trim,strval,htmlspecialchars,strip_tags');
+            $password = I('request.password','','trim,strval');
+            $type = I('request.type',1,'intval');
 
             if(empty($nickname) || strlen($nickname) > 36){
                 $json['status'] = 110;
@@ -439,8 +447,19 @@ class UserController extends BaseApiController {
             }
             $data = [
                 'nickname' => $nickname,
+                'type' => $type,
                 'update_time' => time()
             ];
+
+            if($password){
+                if( strlen($password) < 6 || strlen($password) > 26){
+                    $json['status'] = 110;
+                    $json['msg'] = '密码长度在6-26个字符之间';
+                    break;
+                }
+                $data['salt'] = random(12,'all');
+                $data['password'] = encrypt_password(trim($password), $data['salt']);
+            }
             $res = M('users')->where(array('id'=>$user_id))->save($data);
             if($res){
                 $member['nickname'] = $nickname;
@@ -530,7 +549,7 @@ class UserController extends BaseApiController {
                 $list[$i] = $this->get_return_member($item);
             }
             $json['data'] = [
-                'list' => $list,
+                'list' => (array)$list,
                 'page' => $page,
                 'total' => $total,
                 'limit' => $limit,
@@ -566,7 +585,7 @@ class UserController extends BaseApiController {
                 }
 
                 $json['data'] = [
-                    'list' => $list,
+                    'list' => (array)$list,
                     'page' => $page,
                     'total' => $total,
                     'limit' => $limit,
@@ -586,7 +605,7 @@ class UserController extends BaseApiController {
                     $list[$i] = $this->get_return_member($item);
                 }
                 $json['data'] = [
-                    'list' => $list,
+                    'list' => (array)$list,
                     'page' => $page,
                     'total' => $total,
                     'limit' => $limit,
@@ -610,7 +629,7 @@ class UserController extends BaseApiController {
                 }
 
                 $json['data'] = [
-                    'list' => $list,
+                    'list' => (array)$list,
                     'page' => $page,
                     'total' => $total,
                     'limit' => $limit,
@@ -622,4 +641,141 @@ class UserController extends BaseApiController {
         }while(false);
         $this->ajaxReturn($json);
     }
+
+    /**
+     * 找回密码
+     */
+    public function find_password(){
+        $json = $this->simpleJson();
+        do {
+            //
+            $mobile = I('request.mobile', '', 'strval');
+            $password = trim(I('request.password', '', 'strval'));
+            $code = I('request.code', '', 'strval');
+
+            if (!is_mobile($mobile)) {
+                $json['status'] = 110;
+                $json['msg'] = '请正确输入手机号';
+                break;
+            }
+
+            if (!$code) {
+                $json['status'] = 110;
+                $json['msg'] = '请输入验证码';
+                break;
+            }
+
+            if( strlen($password) < 6 || strlen($password) > 26){
+                $json['status'] = 110;
+                $json['msg'] = '密码长度在6-26个字符之间';
+                break;
+            }
+
+            $this->check_sms($mobile, $code);
+
+            $member = M('users')->where(array('mobile'=>$mobile))->find();
+            if(!$member){
+                $json['status'] = 111;
+                $json['msg'] = '没找到用户信息';
+                break;
+            }
+            $user = [];
+            $user['salt'] = random(12,'all');
+            $user['password'] = encrypt_password(trim($password), $user['salt']);
+            $user['update_time'] = time();
+            $user['last_login_time'] = time();
+            $user['last_login_type'] = 2;
+            $user['ssid'] = get_login_ssid();
+            $res = M('users')->where(array('id'=>$member['id']))->save($user);
+            if($res){
+                $json['msg'] = '密码更新成功';
+                $json['data'] = $this->get_return_member(M('users')->where(array('id'=>$member['id']))->field($this->field)->find(), true);
+                break;
+            }else{
+                $json['status'] = 111;
+                $json['msg'] = '密码更新失败';
+                break;
+            }
+
+        }while(false);
+        $this->ajaxReturn($json);
+
+    }
+
+    # 退出登录
+    public function logout(){
+        $json = $this->simpleJson();
+        do {
+            # $this->check_login();
+            $user_id = intval($this->user['id']);
+            if($user_id){
+                $res = M('users')->where(array('id'=>$user_id))->save(array('ssid'=>md5(time()),'update_time'=>time()));
+                if(! $res){
+                    $json['status'] = 111;
+                    $json['msg'] = '退出失败';
+                    break;
+                }
+            }
+            $json['msg'] = '退出成功';
+            break;
+        }while(false);
+        $this->ajaxReturn($json);
+    }
+
+    /**
+     * 绑定手机
+     */
+    public function bind_mobile(){
+        $json = $this->simpleJson();
+        do{
+            $this->check_login();
+            $user_id = $this->user['id'];
+            $mobile = I('request.mobile','','strval');
+            $code = I('request.code',0,'intval');
+
+            if (!is_mobile($mobile)) {
+                $json['status'] = 110;
+                $json['msg'] = '请正确输入手机号';
+                break;
+            }
+
+            if (!$code) {
+                $json['status'] = 110;
+                $json['msg'] = '请输入验证码';
+                break;
+            }
+
+
+            $this->check_sms($mobile, $code);
+            $member = M('users')->where(array('mobile'=>$mobile))->find();
+            if($member){
+                $json['status'] = 111;
+                $json['msg'] = '手机已经被绑定';
+                break;
+            }
+
+            $member = M('users')->where(array('id'=>$user_id))->find();
+            if(!$member){
+                $json['status'] = 111;
+                $json['msg'] = '没找到用户信息';
+                break;
+            }
+            $user = [];
+            $user['update_time'] = time();
+            $user['mobile'] = $mobile;
+            $res = M('users')->where(array('id'=>$member['id']))->save($user);
+            if($res){
+                $json['msg'] = '手机绑定成功';
+                $json['data'] = $this->get_return_member(M('users')->where(array('id'=>$member['id']))->field($this->field)->find(), true);
+                break;
+            }else{
+                $json['status'] = 111;
+                $json['msg'] = '手机绑定失败';
+                break;
+            }
+
+        }while(false);
+        $this->ajaxReturn($json);
+    }
+
 }

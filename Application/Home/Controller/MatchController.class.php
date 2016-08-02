@@ -63,8 +63,8 @@ class MatchController extends BaseApiController {
                 $technic = empty($match['technic'])?[]:json_decode($match['technic'], true);
                 $list[$i]['technic'] = [];
                 for($j=0; $j<41;$j++){
-                    $list[$i]['technic']['id'.$j]['home'] = isset($technic['id'.$j])?$technic['id'.$j]['home']:'';
-                    $list[$i]['technic']['id'.$j]['away'] = isset($technic['id'.$j])?$technic['id'.$j]['away']:'';
+                    $list[$i]['technic']['id'.$j]['home'] = isset($technic['id'.$j])?floatval($technic['id'.$j]['home']):0;
+                    $list[$i]['technic']['id'.$j]['away'] = isset($technic['id'.$j])?floatval($technic['id'.$j]['away']):0;
                 }
 
                 // 标准
@@ -126,7 +126,10 @@ class MatchController extends BaseApiController {
                 $data[$match['league_id']]['league_ico'] = C('BASE_URL').'Public/static/noimg.png';
                 $data[$match['league_id']]['list'][] = $match;
             }
-
+            $newdata = [];
+            foreach($data as $item){
+                $newdata[] = $item;
+            }
             // league_list
             $league_list = [];
             // if($page)
@@ -152,8 +155,8 @@ class MatchController extends BaseApiController {
                     ->order("is_hot DESC, weight DESC")->select();
             }
 
-            $json['data']['league_list'] = $league_list;
-            $json['data']['list'] = $data;
+            $json['data']['league_list'] = (array)$league_list;
+            $json['data']['list'] = (array)$newdata;
             $json['data']['total'] = $total;
             $json['data']['page'] = $p;
             $json['data']['total_page'] = ceil($total/$limit);
@@ -187,8 +190,8 @@ class MatchController extends BaseApiController {
             $technic = empty($match['technic'])?[]:json_decode($match['technic'], true);
             $match['technic'] = [];
             for($j=0; $j<41;$j++){
-                $match['technic']['id'.$j]['home'] = isset($technic['id'.$j])?$technic['id'.$j]['home']:'';
-                $match['technic']['id'.$j]['away'] = isset($technic['id'.$j])?$technic['id'.$j]['away']:'';
+                $match['technic']['id'.$j]['home'] = isset($technic['id'.$j])?floatval($technic['id'.$j]['home']):0;
+                $match['technic']['id'.$j]['away'] = isset($technic['id'.$j])?floatval($technic['id'.$j]['away']):0;
             }
 
             // 标准

@@ -59,7 +59,28 @@ function getMatchName($match_id){
 }
 
 function pic_url($url){
-    return 'http://api2.zydzuqiu.com/'.$url;
+    return (strpos($url,'http://') !== false || strpos($url,'https://') !== false) ? $url : ('http://api2.zydzuqiu.com/'.$url);
+}
+
+/**
+ * 保存图片
+ * @param $url
+ * @param $path
+ */
+function save_img($url,$path) {
+    $ch = curl_init ();
+    curl_setopt ( $ch, CURLOPT_CUSTOMREQUEST, 'GET' );
+    curl_setopt ( $ch, CURLOPT_SSL_VERIFYPEER, false );
+    curl_setopt ( $ch, CURLOPT_URL, $url );
+    ob_start ();
+    curl_exec ( $ch );
+    $return_content = ob_get_contents ();
+    ob_end_clean ();
+    $return_code = curl_getinfo ( $ch, CURLINFO_HTTP_CODE );
+
+    $fp= fopen($path,"w"); //将文件绑定到流 
+    fwrite($fp,$return_content); //写入文件
+    fclose($fp);
 }
 
 /**
@@ -68,7 +89,7 @@ function pic_url($url){
  * @param $salt
  */
 function encrypt_password($password, $salt = '') {
-    return md5(crc32($password) . md5($salt));
+    return md5(($password) . md5($salt));
 }
 
 /**

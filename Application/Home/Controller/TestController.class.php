@@ -10,9 +10,9 @@ class TestController extends BaseApiController {
         $data = $_POST;
         $json['post'] = $data;
         $json['data'] = ['id'=>1,'time'=>time(),'d'=>'返回中文测试'];
-        M('match')->where(array('match_id'=>array('exp','in(select id from '.C('DB_PREFIX').'match)')))->limit(10)->select();
-        echo M()->getLastSql();
-        echo "====";
-        #$this->ajaxReturn($json);
+        $header = getallheaders();
+        $header = array_change_key_case($header, CASE_LOWER);
+        $json['header'] = $header;
+        $this->ajaxReturn($json);
     }
 }
