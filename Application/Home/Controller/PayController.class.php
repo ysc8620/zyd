@@ -93,10 +93,13 @@ class PayController extends BaseApiController {
                         'status' => 1,
                         'update_time' => time()
                     ];
-                    M('top')->where(array('id'=>$top['id']))->save($data);
-                    // credit, total_top_credit
-                    M('users')->where(array('id'=>$top['user_id']))->save(array('credit'=>array('exp',"credit+{$top['credit']}"),'total_top_credit'=>array('exp',"total_top_credit+{$top['credit']}")));
-                    $json['data']['status'] = 0;
+                    if($top['status'] == 0){
+                        M('top')->where(array('id'=>$top['id']))->save($data);
+                        // credit, total_top_credit
+                        M('users')->where(array('id'=>$top['user_id']))->save(array('credit'=>array('exp',"credit+{$top['credit']}"),'total_top_credit'=>array('exp',"total_top_credit+{$top['credit']}")));
+
+                    }
+                   $json['data']['status'] = 0;
                     break;
                 }else{
                     $json['data']['status'] = $response2['status'];
@@ -108,8 +111,12 @@ class PayController extends BaseApiController {
                         'status' => 1,
                         'update_time' => time()
                     ];
-                    M('top')->where(array('id'=>$top['id']))->save($data);
-                    M('users')->where(array('id'=>$top['user_id']))->save(array('credit'=>array('exp',"credit+{$top['credit']}"),'total_top_credit'=>array('exp',"total_top_credit+{$top['credit']}")));
+                    if($top['status'] == 0){
+                        M('top')->where(array('id'=>$top['id']))->save($data);
+                        // credit, total_top_credit
+                        M('users')->where(array('id'=>$top['user_id']))->save(array('credit'=>array('exp',"credit+{$top['credit']}"),'total_top_credit'=>array('exp',"total_top_credit+{$top['credit']}")));
+
+                    }
                     $json['data']['status'] = 0;
                     break;
                 }else{
