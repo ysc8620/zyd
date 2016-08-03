@@ -111,7 +111,7 @@ class PayController extends BaseApiController {
                 }
             }
             }catch (\Exception $e){
-                print_r($e);
+                print_r($e);die();
             }
         }while(false);
         $this->ajaxReturn($json);
