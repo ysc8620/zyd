@@ -12,6 +12,7 @@ class PayController extends BaseApiController {
         $json = $this->simpleJson();
         do{
             try{
+            \Org\Util\File::write_file('./post.log', date("Y-m-d H:i:s = ").json_encode($_POST)."\r\n");
             $apple_id = I('request.apple_id','','strval');
             $product_id = I('request.product_id',0,'intval');
             $apple_receipt = I('request.apple_receipt','','strval');
@@ -84,8 +85,8 @@ class PayController extends BaseApiController {
             $response = http_post_data($url,$jsonData);
             if($response['status'] == 21007){
                 $url = 'https://sandbox.itunes.apple.com/verifyReceipt'; //测试验证地址
-                $response = http_post_data($url,$jsonData);
-                if($response['status'] == 0){
+                $response2 = http_post_data($url,$jsonData);
+                if($response2['status'] == 0){
                     $data = [
                         'status' => 1,
                         'update_time' => time()
@@ -95,7 +96,7 @@ class PayController extends BaseApiController {
                     M('users')->where(array('id'=>$top['user_id']))->save(array('credit'=>array('exp',"credit+{$top['credit']}"),'total_top_credit'=>array('exp',"total_top_credit+{$top['credit']}")));
                     $json['data']['status'] = 0;
                 }else{
-                    $json['data']['status'] = $response['status'];
+                    $json['data']['status'] = $response2['status'];
                 }
             }else{
                 if($response['status'] == 0){
