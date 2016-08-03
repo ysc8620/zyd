@@ -67,7 +67,13 @@ class PayController extends BaseApiController {
                     break;
                 }
                 $top = M('top')->where(array('id'=>$res))->find();
+                $json['data']['top_id'] = $top['id'];
+            }else{
+                $json['data']['top_id'] = $top['id'];
             }
+
+            $json['data']['apple_id'] = $apple_id;
+            $json['data']['product_id'] = $product_id;
 
             #$apple_receipt = $this->_post('apple_receipt'); //苹果内购的验证收据,由客户端传过来
             $jsonData = array('receipt-data'=>$apple_receipt);//这里本来是需要base64加密的，我这里没有加密的原因是客户端返回服务器端之前，已经作加密处理
