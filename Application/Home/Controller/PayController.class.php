@@ -83,6 +83,7 @@ class PayController extends BaseApiController {
             $jsonData = json_encode($jsonData);
             $url = 'https://buy.itunes.apple.com/verifyReceipt';  //正式验证地址
             $response = http_post_data($url,$jsonData);
+                var_dump($response);
             if($response['status'] == 21007){
                 $url = 'https://sandbox.itunes.apple.com/verifyReceipt'; //测试验证地址
                 $response2 = http_post_data($url,$jsonData);
@@ -112,6 +113,7 @@ class PayController extends BaseApiController {
                 }
             }
             }catch (\Exception $e){
+                echo "ddddd";
                 print_r($e);die();
             }
         }while(false);
