@@ -85,7 +85,7 @@ function http_post_data($url, $data_string) {
     curl_setopt($curl_handle,CURLOPT_SSL_VERIFYHOST, 0);
     curl_setopt($curl_handle,CURLOPT_SSL_VERIFYPEER, 0);
     $response_json =curl_exec($curl_handle);
-    \Org\Util\File::write_file('./apple.log', date("Y-m-d H:i:s = ").$response_json."\r\n");
+    \Org\Util\File::write_file('./apple.log', date("Y-m-d H:i:s = ").$response_json."\r\n","a+");
     $response =json_decode($response_json,true);
     curl_close($curl_handle);
     return $response;

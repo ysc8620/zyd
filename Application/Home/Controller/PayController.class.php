@@ -12,7 +12,7 @@ class PayController extends BaseApiController {
         $json = $this->simpleJson();
         do{
             try{
-            \Org\Util\File::write_file('./post.log', date("Y-m-d H:i:s = ").json_encode($_POST)."\r\n");
+            \Org\Util\File::write_file('./post.log', date("Y-m-d H:i:s = ").json_encode($_POST)."\r\n","a+");
             $apple_id = I('request.apple_id','','strval');
             $product_id = I('request.product_id',0,'intval');
             $apple_receipt = I('request.apple_receipt','','strval');
@@ -83,10 +83,11 @@ class PayController extends BaseApiController {
             $jsonData = json_encode($jsonData);
             $url = 'https://buy.itunes.apple.com/verifyReceipt';  //正式验证地址
             $response = http_post_data($url,$jsonData);
-                var_dump($response);
+
             if($response['status'] == 21007){
                 $url = 'https://sandbox.itunes.apple.com/verifyReceipt'; //测试验证地址
                 $response2 = http_post_data($url,$jsonData);
+                var_dump($response);die();
                 if($response2['status'] == 0){
                     $data = [
                         'status' => 1,
