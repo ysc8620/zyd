@@ -87,7 +87,7 @@ class PayController extends BaseApiController {
             if($response['status'] == 21007){
                 $url = 'https://sandbox.itunes.apple.com/verifyReceipt'; //测试验证地址
                 $response2 = http_post_data($url,$jsonData);
-                var_dump($response);die();
+                var_dump($response2);die();
                 if($response2['status'] == 0){
                     $data = [
                         'status' => 1,
