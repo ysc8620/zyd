@@ -271,7 +271,7 @@ class TuijianController extends BaseApiController {
                 }else{
                     $is_buy = 1;
                 }
-                $item['is_buy'] = $is_buy;// 默认没有购买
+                $tuijian['is_buy'] = $is_buy;// 默认没有购买
 
                 $json['data'] = $tuijian;
             }else{
