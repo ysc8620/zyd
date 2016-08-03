@@ -58,7 +58,7 @@ class PayController extends BaseApiController {
                     'order_no' => get_order_no(),
                     'apple_receipt' => $apple_receipt,
                     'apple_receipt_md5' => $apple_receipt_md5,
-                    'user_id' => $this->user['id'],
+                    'user_id' =>intval( $this->user['id']),
                     'create_time' => time(),
                     'update_time' => time()
                 ];
