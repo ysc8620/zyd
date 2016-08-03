@@ -63,6 +63,27 @@ function pic_url($url){
 }
 
 /**
+ * apple
+ * @param $url
+ * @param $data_string
+ * @return mixed
+ */
+function http_post_data($url, $data_string) {
+    $curl_handle=curl_init();
+    curl_setopt($curl_handle,CURLOPT_URL, $url);
+    curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl_handle,CURLOPT_HEADER, 0);
+    curl_setopt($curl_handle,CURLOPT_POST, true);
+    curl_setopt($curl_handle,CURLOPT_POSTFIELDS, $data_string);
+    curl_setopt($curl_handle,CURLOPT_SSL_VERIFYHOST, 0);
+    curl_setopt($curl_handle,CURLOPT_SSL_VERIFYPEER, 0);
+    $response_json =curl_exec($curl_handle);
+    $response =json_decode($response_json,true);
+    curl_close($curl_handle);
+    return $response;
+}
+
+/**
  * 保存图片
  * @param $url
  * @param $path
