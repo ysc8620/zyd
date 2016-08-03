@@ -32,7 +32,7 @@ class PayController extends BaseApiController {
                 break;
             }
 
-            $product = M('credit')->where(array('id'=>$product_id))->find();
+            $product = M('product')->where(array('id'=>$product_id))->find();
             if(!$product){
                 $json['status'] = 111;
                 $json['msg'] = "没找到充值产品";
