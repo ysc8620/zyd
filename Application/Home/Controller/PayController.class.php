@@ -11,6 +11,7 @@ class PayController extends BaseApiController {
     public function apple(){
         $json = $this->simpleJson();
         do{
+            echo "---";
             try{
             \Org\Util\File::write_file('./post.log', date("Y-m-d H:i:s = ").json_encode($_POST)."\r\n","a+");
             $apple_id = I('request.apple_id','','strval');
