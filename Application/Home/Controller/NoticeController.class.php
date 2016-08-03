@@ -38,7 +38,7 @@ class NoticeController extends BaseApiController {
     public function read(){
         $json = $this->simpleJson();
         do{
-            $id = I('request.id',0,'intval');
+            $id = I('request.notice_id',0,'intval');
             if($id){
                 $res = M('notice_info')->where(array('id'=>$id))->save(array('status'=>3,'update_time'=>time()));
                 if($res){

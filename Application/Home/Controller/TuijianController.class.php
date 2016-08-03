@@ -246,6 +246,33 @@ class TuijianController extends BaseApiController {
             }
             $tuijian = M('tuijian')->where(array('id'=>$tuijian_id, 'status'=>1))->find();
             if($tuijian){
+
+                $match = M('match')->where(array('match_id'=>$tuijian['match_id']))->find();
+                $tuijian['league_id'] = $match['league_id'];
+                $tuijian['league_name'] = $match['league_name'];
+                $tuijian['home_name'] = $match['home_name'];
+                $tuijian['away_name'] = $match['away_name'];
+                $tuijian['match_time'] = $match['time'];
+                #
+                $user = M('users')->where(array('id'=>$tuijian['user_id']))->find();
+                $tuijian['user_name'] = $user['nickname'];
+                $tuijian['user_pic'] = pic_url($user['pic']);
+                $tuijian['user_follow'] = $user['total_follow_user'];
+                $tuijian['user_rate'] = $user['total_rate'];
+                # 是否购买
+                $is_buy = 0;
+                if($tuijian['is_fee']){
+                    if(!empty($this->user)){
+                        $buy = M('tuijian_order')->where(array('tuijian_id'=>$tuijian['id'],'user_id'=>$this->user['id']))->find();
+                        if($buy){
+                            $is_buy = 1;
+                        }
+                    }
+                }else{
+                    $is_buy = 1;
+                }
+                $item['is_buy'] = $is_buy;// 默认没有购买
+
                 $json['data'] = $tuijian;
             }else{
                 $json['status'] = 111;
