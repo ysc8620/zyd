@@ -1,6 +1,8 @@
 <?php
 namespace Home\Controller;
 
+use Think\Exception;
+
 class PayController extends BaseApiController {
 
     /**
@@ -9,7 +11,7 @@ class PayController extends BaseApiController {
     public function apple(){
         $json = $this->simpleJson();
         do{
-
+            try{
             $apple_id = I('request.apple_id','','strval');
             $product_id = I('request.product_id',0,'intval');
             $apple_receipt = I('request.apple_receipt','','strval');
@@ -107,6 +109,9 @@ class PayController extends BaseApiController {
                 }else{
                     $json['data']['status'] = $response['status'];
                 }
+            }
+            }catch (\Exception $e){
+                print_r($e);
             }
         }while(false);
         $this->ajaxReturn($json);
