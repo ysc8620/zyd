@@ -11,7 +11,6 @@ class PayController extends BaseApiController {
     public function apple(){
         $json = $this->simpleJson();
         do{
-            echo "---";
             try{
             \Org\Util\File::write_file('./post.log', date("Y-m-d H:i:s = ").json_encode($_POST)."\r\n","a+");
             $apple_id = I('request.apple_id','','strval');
@@ -88,18 +87,20 @@ class PayController extends BaseApiController {
             if($response['status'] == 21007){
                 $url = 'https://sandbox.itunes.apple.com/verifyReceipt'; //测试验证地址
                 $response2 = http_post_data($url,$jsonData);
-                var_dump($response2);die();
+
                 if($response2['status'] == 0){
                     $data = [
                         'status' => 1,
                         'update_time' => time()
                     ];
-//                    M('top')->where(array('id'=>$top['id']))->save($data);
-//                    // credit, total_top_credit
-//                    M('users')->where(array('id'=>$top['user_id']))->save(array('credit'=>array('exp',"credit+{$top['credit']}"),'total_top_credit'=>array('exp',"total_top_credit+{$top['credit']}")));
+                    M('top')->where(array('id'=>$top['id']))->save($data);
+                    // credit, total_top_credit
+                    M('users')->where(array('id'=>$top['user_id']))->save(array('credit'=>array('exp',"credit+{$top['credit']}"),'total_top_credit'=>array('exp',"total_top_credit+{$top['credit']}")));
                     $json['data']['status'] = 0;
+                    break;
                 }else{
                     $json['data']['status'] = $response2['status'];
+                    break;
                 }
             }else{
                 if($response['status'] == 0){
@@ -107,16 +108,18 @@ class PayController extends BaseApiController {
                         'status' => 1,
                         'update_time' => time()
                     ];
-//                    M('top')->where(array('id'=>$top['id']))->save($data);
-//                    M('users')->where(array('id'=>$top['user_id']))->save(array('credit'=>array('exp',"credit+{$top['credit']}"),'total_top_credit'=>array('exp',"total_top_credit+{$top['credit']}")));
+                    M('top')->where(array('id'=>$top['id']))->save($data);
+                    M('users')->where(array('id'=>$top['user_id']))->save(array('credit'=>array('exp',"credit+{$top['credit']}"),'total_top_credit'=>array('exp',"total_top_credit+{$top['credit']}")));
                     $json['data']['status'] = 0;
+                    break;
                 }else{
                     $json['data']['status'] = $response['status'];
+                    break;
                 }
             }
             }catch (\Exception $e){
-                echo "ddddd";
-                print_r($e);die();
+                $json['status'] = 111;
+                $json["msg"] = "服务器错误";
             }
         }while(false);
         $this->ajaxReturn($json);
