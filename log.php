@@ -5,7 +5,8 @@
  * Date: 2016/7/20
  * Time: 11:57
  */
-
+echo microtime(true);
+die();
 error_reporting(0);
 header("Content-type:text/html;charset=utf-8");
 // 发送请求

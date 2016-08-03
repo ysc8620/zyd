@@ -62,6 +62,13 @@ function pic_url($url){
     return (strpos($url,'http://') !== false || strpos($url,'https://') !== false) ? $url : ('http://api2.zydzuqiu.com/'.$url);
 }
 
+function get_order_no(){
+    $hm = microtime(true);
+    $list = explode('.',$hm);
+    $hm = str_pad($list[1], 4, "0", STR_PAD_LEFT);
+    return date("YmdHis").$hm.random(6,'number');
+}
+
 /**
  * apple
  * @param $url
