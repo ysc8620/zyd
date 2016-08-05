@@ -137,8 +137,9 @@ class PayController extends BaseApiController {
      */
     public function get_apple_list(){
         $json = $this->simpleJson();
+        $type = I('request.type',1,'intval');
         do{
-            $list = M("product")->where(array('status'=>1))->order("create_time DESC")->select();
+            $list = M("product")->where(array('type'=>$type, 'status'=>1))->order("create_time DESC")->select();
             $json['data'] = $list;
         }while(false);
         $this->ajaxReturn($json);
