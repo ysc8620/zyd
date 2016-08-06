@@ -8,6 +8,7 @@ class ConfigController extends BaseApiController {
      */
     public function init(){
         $json = $this->simpleJson();
+        $json['data'] = (object)array();
         do{
             //
             $json['load_pic'] = 'http://';
