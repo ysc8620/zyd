@@ -42,6 +42,7 @@ class MatchController extends BaseApiController {
             }elseif($type == 3){
                 $where['state'] = 0;
             }else{
+                //
 
             }
 

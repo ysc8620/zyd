@@ -20,7 +20,7 @@ class SmsController extends BaseApiController {
 
             //
             $time = time() - 1800;
-            $send_total = M('sms_log')->where(array('send_time'=>array('gt', $time)))->count();
+            $send_total = M('sms_log')->where(array('mobile'=>$mobile, 'send_time'=>array('gt', $time)))->count();
             if($send_total > 10){
                 $json['status'] = 111;
                 $json['msg'] = '超过数量限制';
@@ -90,7 +90,7 @@ class SmsController extends BaseApiController {
 
             //
             $time = time() - 600;
-            $sms = M('sms_log')->where(array('send_time' => array('gt', $time)))->order("id DESC")->find();
+            $sms = M('sms_log')->where(array('mobile'=>$mobile,'send_time' => array('gt', $time)))->order("id DESC")->find();
             if(!$sms){
                 $json['status'] = 111;
                 $json['msg'] = '短信已过期';
