@@ -1,18 +1,34 @@
 <?php
 namespace Home\Controller;
 
-class TestController extends BaseApiController {
+class RController extends BaseController {
     /**
      *
      */
     public function test(){
+        $d = M('r')->find();
+//        print_r($d);
+//        die();
         $json = $this->simpleJson();
-        $data = $_POST;
-        $json['post'] = $data;
-        $json['data'] = ['id'=>1,'time'=>time(),'d'=>'返回中文测试'];
-        $header = getallheaders();
-        $header = array_change_key_case($header, CASE_LOWER);
-        $json['header'] = $header;
+        do{
+            $data = $_POST;
+            $info = M('r')->where(array('mobile'=>$data['mobile']))->find();
+            if($info){
+
+                $json['id'] = $info['id'];
+                $json['exit'] = true;
+            }else{
+                $data['create_time'] = time();
+                $json['id'] = M('r')->add($data);
+                $json['exit'] = false;
+            }
+        }while(false);
         $this->ajaxReturn($json);
+    }
+
+    function simpleJson(){
+        return [
+            'status' => 200
+        ];
     }
 }
