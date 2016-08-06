@@ -124,7 +124,7 @@ class BaseApiController extends BaseController {
             'status' => 100,
             'msg'  => '',
             'time' => time(),
-            'data' => ''
+            'data' => (object)array()
         ];
     }
 
