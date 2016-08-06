@@ -33,7 +33,6 @@ class MatchController extends BaseApiController {
                 $league_ids[] = $league_id;
             }
 
-
             // 进行中
             if($type == 1){
                 $where['state'] = array('in',array(1,2,3,4));
