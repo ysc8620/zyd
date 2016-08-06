@@ -116,6 +116,7 @@ class MatchController extends BaseApiController {
                 $event_list = M('event')->where(array('match_id'=>$match['match_id']))->order("time ASC")->select();
                 $list[$i]['events'] = (array)$event_list;
                 $list[$i]['match_name'] = '';
+                $list[$i]['match_time2'] = '';
                 $list[$i]['is_collect'] = 0;
                 $list[$i]['total_collect'] = 0;
             }
@@ -243,6 +244,7 @@ class MatchController extends BaseApiController {
             $event_list = M('event')->where(array('match_id'=>$match['match_id']))->order("time ASC")->select();
             $match['events'] = (array)$event_list;
             $match['match_name'] = '';
+            $match['match_time2'] = '';
             $match['is_collect'] = 0;
             $match['total_collect'] = 0;
             $json['data'] = $match;
