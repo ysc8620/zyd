@@ -59,7 +59,6 @@ $apple_receipt = 'MIIT3gYJKoZIhvcNAQcCoIITzzCCE8sCAQExCzAJBgUrDgMCGgUAMIIDfwYJKo
 
 echo "=\r\n";
 $data['product_id'] = 10001;
-$data['apple_id'] = 'com.xianheth.zyd.charge18';
 $data['apple_receipt'] = $apple_receipt;
 $result = httpPost("https://api.zydzuqiu.com/pay/apple.html", $data);
 var_dump($result);
