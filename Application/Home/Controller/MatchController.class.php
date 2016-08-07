@@ -280,6 +280,8 @@ class MatchController extends BaseApiController {
                     'create_time' => time()
                 ];
                 $res = M('match_follow')->add($data);
+                M('match')->where(array('match_id'=>$match_id))->setInc('total_collect', 1);
+                M('users')->where(array('id'=>$user_id))->setInc('total_collect_match', 1);
                 if($res){
                     $json['msg'] = '赛事关注成功';
                     $json['data']['id'] = $res;
@@ -293,6 +295,45 @@ class MatchController extends BaseApiController {
             }
         }while(false);
         $this->ajaxReturn($json);
+    }
+
+    /**
+     * 赛事取消关注
+     */
+    public function un_follow(){
+        $json = $this->simpleJson();
+        do{
+            $this->check_login();
+            $user_id = $this->user['id'];
+            $match_id = I('request.match_id', 0,'intval');
+            if( empty($match_id)){
+                $json['status'] = 110;
+                $json['msg'] = '请输入关注赛事';
+                break;
+            }
+            $follow = M('match_follow')->where(array('user_id'=>$user_id, 'match_id'=>$match_id))->find();
+            if($follow){
+                M('match_follow')->where(array('id'=>$follow['id']))->delete();
+                M('match')->where(array('match_id'=>$match_id))->setDec('total_collect', 1);
+                M('users')->where(array('id'=>$user_id))->setDec('total_collect_match', 1);
+                $json['msg'] = '消关注成功';
+                $json['data']['match_id'] = $match_id;
+                $json['data']['user_id'] = $user_id;
+                break;
+            }else{
+                $json['status'] = 111;
+                $json['msg'] = '没找到关注信息';
+                break;
+            }
+        }while(false);
+        $this->ajaxReturn($json);
+    }
+
+    /**
+     * 赛事推荐
+     */
+    public function tuijian(){
+
     }
     
 }

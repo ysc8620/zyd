@@ -5,7 +5,10 @@
  * Date: 2016/7/20
  * Time: 11:57
  */
-
+$s = '13403';
+$s = str_pad($s,9,'0',STR_PAD_LEFT);
+echo base64_encode($s);
+die();
 error_reporting(0);
 header("Content-type:text/html;charset=utf-8");
 // 发送请求
