@@ -271,6 +271,14 @@ class UserController extends BaseApiController {
                 break;
             }
 
+            $member['is_follow'] = 0;
+            if($user_id){
+                $res = M('users_follow')->where(array('user_id'=>$user_id, 'to_user_id'=>$member['id']))->find();
+                if($res){
+                    $member['is_follow'] = 1;
+                }
+            }
+
             $json['data'] = $this->get_return_member($member);
 
         }while(false);
@@ -516,6 +524,38 @@ class UserController extends BaseApiController {
                     $json['msg'] = '关注失败';
                     break;
                 }
+            }
+        }while(false);
+        $this->ajaxReturn($json);
+    }
+
+    /**
+     *  用户取消关注接口
+     */
+    public function un_follow(){
+        $json = $this->simpleJson();
+        do {
+            // 1 注册, 2登录, 3,找回密码
+            $to_user_id = I('request.to_user_id',0,'intval');
+            $this->check_login();
+            $user_id = $this->user['id'];
+            if(empty($to_user_id)){
+                $json['status'] = 110;
+                $json['msg'] = '用户ID不能为空';
+                break;
+            }
+            $follow = M('users_follow')->where(array('from_user_id'=>$user_id,'to_user_id'=>$to_user_id))->find();
+            if($follow){
+                M('users_follow')->where(array('id'=>$follow['id']))->delete();
+                $json['msg'] = '取消关注成功';
+                $json['data']['user_id'] = $user_id;
+                $json['data']['to_user_id'] = $to_user_id;
+                break;
+            }else{
+                $json['status'] = 111;
+                $json['msg'] = '您没有关注该用户';
+                break;
+
             }
         }while(false);
         $this->ajaxReturn($json);
