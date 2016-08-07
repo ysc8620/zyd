@@ -187,7 +187,7 @@ class TuijianController extends BaseApiController {
             $has = M('tuijian_order')->where(array('user_id'=>$user_id, 'tuijian_id'=>$tuijian_id))->find();
             if($has){
                 $json['msg'] = '你已经购买过';
-                $json['data'] = $has['id'];
+                $json['data']['id'] = $has['id'];
                 break;
             }
             $user = M('users')->where(array('id'=>$user_id))->find();

@@ -397,7 +397,7 @@ class UserController extends BaseApiController {
                 }else{
                     $json['status'] = 111;
                     $json['msg'] = '微信已绑定其他用户';
-                    $json['data'] = '';
+                    $json['data'] = [];
                     break;
                 }
             }else{
@@ -517,7 +517,7 @@ class UserController extends BaseApiController {
                     $json['data']['id'] = $res;
                     $json['data']['user_id'] = $user_id;
                     $json['data']['to_user_id'] = $to_user_id;
-                    $json['follow_id'] = $res;
+                    $json['data']['follow_id'] = $res;
                     break;
                 }else{
                     $json['status'] = 111;

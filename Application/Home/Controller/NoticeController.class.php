@@ -43,12 +43,12 @@ class NoticeController extends BaseApiController {
                 $res = M('notice_info')->where(array('id'=>$id))->save(array('status'=>3,'update_time'=>time()));
                 if($res){
                     $json['msg'] = "消息读取成功";
-                    $json['data'] = $id;
+                    $json['data']['id'] = $id;
                     break;
                 }else{
                     $json['status'] = 111;
                     $json['msg'] = "消息读取失败";
-                    $json['data'] = $id;
+                    $json['data']['id'] = $id;
                     break;
                 }
             }else{
@@ -71,12 +71,12 @@ class NoticeController extends BaseApiController {
                 $res = M('notice_info')->where(array('id'=>$id))->save(array('status'=>4,'update_time'=>time()));
                 if($res){
                     $json['msg'] = "消息删除成功";
-                    $json['data'] = $id;
+                    $json['data']['id'] = $id;
                     break;
                 }else{
                     $json['status'] = 111;
                     $json['msg'] = "消息删除失败";
-                    $json['data'] = $id;
+                    $json['data']['id'] = $id;
                     break;
                 }
             }else{
