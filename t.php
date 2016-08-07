@@ -5,6 +5,286 @@
  * Date: 2016/7/6
  * Time: 18:57
  */
+$json = '{
+    "status": 100,
+    "msg": "",
+    "time": 1469319671,
+    "data": {
+        "league_list": [
+            {
+                "league_id": "1474",
+                "color": "#74d174",
+                "cn_short": "澳布女超",
+                "cn_name": "澳洲布里斯班女子超级联赛",
+                "type": "1",
+                "sum_round": "10",
+                "curr_round": "1",
+                "curr_match_season": "2016",
+                "country_name": "澳洲",
+                "is_hot": "0",
+                "total_match": "3"
+            },
+            {
+                "league_id": "619",
+                "color": "#8c9936",
+                "cn_short": "澳维U21",
+                "cn_name": "澳洲维多利亚超级联赛U21",
+                "type": "1",
+                "sum_round": "26",
+                "curr_round": "22",
+                "curr_match_season": "2016",
+                "country_name": "澳洲",
+                "is_hot": "0",
+                "total_match": "1"
+            }
+        ],
+        "list": [
+             {
+                "league_id": "140",
+                "league_name": "墨西联",
+                "league_ico": "http://api2.zydzuqiu.com/Public/static/noimg.png",
+                "list": [
+                    {
+                        "match_id": "1257184",
+                        "match_time": "2016-07-24 08:05:00",
+                        "league_id": "140",
+                        "league_name": "墨西联",
+                        "kind": "1",
+                        "level": "1",
+                        "state": "1",
+                        "home_id": "10085",
+                        "home_name": "莱昂",
+                        "home_score": "0",
+                        "away_id": "15156",
+                        "away_name": "拿加沙",
+                        "away_score": "0",
+                        "home_red": "0",
+                        "away_red": "0",
+                        "home_yellow": "0",
+                        "away_yellow": "0",
+                        "match_round": "2",
+                        "address": "",
+                        "weather_ico": "5",
+                        "weather": "微雨",
+                        "temperature": "16℃～17℃",
+                        "is_neutral": "False",
+                        "technic": {
+                            "id0": {
+                                "home": "",
+                                "away": ""
+                            },
+                            "id1": {
+                                "home": "",
+                                "away": ""
+                            },
+                            "id2": {
+                                "home": "",
+                                "away": ""
+                            },
+                            "id3": {
+                                "home": "1",
+                                "away": "0"
+                            },
+                            "id4": {
+                                "home": "",
+                                "away": ""
+                            },
+                            "id5": {
+                                "home": "3",
+                                "away": "2"
+                            },
+                            "id6": {
+                                "home": "",
+                                "away": ""
+                            },
+                            "id7": {
+                                "home": "",
+                                "away": ""
+                            },
+                            "id8": {
+                                "home": "",
+                                "away": ""
+                            },
+                            "id9": {
+                                "home": "0",
+                                "away": "2"
+                            },
+                            "id10": {
+                                "home": "",
+                                "away": ""
+                            },
+                            "id11": {
+                                "home": "",
+                                "away": ""
+                            },
+                            "id12": {
+                                "home": "",
+                                "away": ""
+                            },
+                            "id13": {
+                                "home": "",
+                                "away": ""
+                            },
+                            "id14": {
+                                "home": "39%",
+                                "away": "61%"
+                            },
+                            "id15": {
+                                "home": "",
+                                "away": ""
+                            },
+                            "id16": {
+                                "home": "0",
+                                "away": "1"
+                            },
+                            "id17": {
+                                "home": "",
+                                "away": ""
+                            },
+                            "id18": {
+                                "home": "",
+                                "away": ""
+                            },
+                            "id19": {
+                                "home": "",
+                                "away": ""
+                            },
+                            "id20": {
+                                "home": "",
+                                "away": ""
+                            },
+                            "id21": {
+                                "home": "",
+                                "away": ""
+                            },
+                            "id22": {
+                                "home": "",
+                                "away": ""
+                            },
+                            "id23": {
+                                "home": "",
+                                "away": ""
+                            },
+                            "id24": {
+                                "home": "",
+                                "away": ""
+                            },
+                            "id25": {
+                                "home": "",
+                                "away": ""
+                            },
+                            "id26": {
+                                "home": "",
+                                "away": ""
+                            },
+                            "id27": {
+                                "home": "",
+                                "away": ""
+                            },
+                            "id28": {
+                                "home": "",
+                                "away": ""
+                            },
+                            "id29": {
+                                "home": "",
+                                "away": ""
+                            },
+                            "id30": {
+                                "home": "",
+                                "away": ""
+                            },
+                            "id31": {
+                                "home": "",
+                                "away": ""
+                            },
+                            "id32": {
+                                "home": "",
+                                "away": ""
+                            },
+                            "id33": {
+                                "home": "",
+                                "away": ""
+                            },
+                            "id34": {
+                                "home": "",
+                                "away": ""
+                            },
+                            "id35": {
+                                "home": "",
+                                "away": ""
+                            },
+                            "id36": {
+                                "home": "",
+                                "away": ""
+                            },
+                            "id37": {
+                                "home": "",
+                                "away": ""
+                            },
+                            "id38": {
+                                "home": "",
+                                "away": ""
+                            },
+                            "id39": {
+                                "home": "",
+                                "away": ""
+                            },
+                            "id40": {
+                                "home": "",
+                                "away": ""
+                            }
+                        },
+                        "begin_home_rate": 1.52,
+                        "begin_draw_rate": 3.9,
+                        "begin_away_rate": 0,
+                        "change_home_rate": 1.7,
+                        "change_draw_rate": 3.55,
+                        "change_away_rate": 4,
+                        "oupei": {
+                            "begin_home_rate": 1.52,
+                            "begin_draw_rate": 3.9,
+                            "begin_away_rate": 0,
+                            "change_home_rate": 1.7,
+                            "change_draw_rate": 3.55,
+                            "change_away_rate": 4
+                        },
+                        "yapei": {
+                            "begin_rate": 1.25,
+                            "begin_home_rate": 1.18,
+                            "begin_away_rate": 0,
+                            "change_rate": 1,
+                            "change_home_rate": 1.2,
+                            "change_away_rate": 0.6
+                        },
+                        "daxiaoqiu": {
+                            "begin_rate": 2.75,
+                            "begin_big_rate": 0.85,
+                            "begin_small_rate": 0.85,
+                            "change_rate": 2.75,
+                            "change_big_rate": 0.85,
+                            "change_small_rate": 0.85
+                        },
+                        "jingcai": {
+                            "home_rate": 2.75,
+                            "away_rate": 0.85,
+                            "draw_rate": 0.85,
+                            "home_win_rate": 2.75,
+                            "away_win_rate": 0.85,
+                            "draw_win_rate": 0.85
+                        },
+                        "events": [],
+                        "match_name": "",
+                        "is_collect": 0,
+                        "total_collect": 0
+                    }
+                ]
+            }
+        ]
+    }
+}';
+
+print_r(json_decode($json, true));
+die();
 
 $input = array(12, 10, 9);
 
