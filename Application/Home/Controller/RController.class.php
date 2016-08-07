@@ -20,4 +20,12 @@ class RController extends BaseController {
         die();
         // $this->ajaxReturn($json);
     }
+
+    public function test2(){
+        $json = '{"status":100,"msg":"","time":1469319671,"data":{}';
+        header('Content-Type:application/json; charset=utf-8');
+        echo $json;
+        die();
+        // $this->ajaxReturn($json);
+    }
 }
