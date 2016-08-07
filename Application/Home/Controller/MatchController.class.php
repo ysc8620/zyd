@@ -26,6 +26,8 @@ class MatchController extends BaseApiController {
             $limit = I('request.limit',10,'intval');
             $where = [];
 
+            $user_id = intval($this->user['id']);
+
             $league_ids_list = explode(',',$league_idsstr);
             $league_ids = [];
             foreach($league_ids_list as $league_id){
@@ -116,8 +118,16 @@ class MatchController extends BaseApiController {
                 $list[$i]['events'] = (array)$event_list;
                 $list[$i]['match_name'] = '';
                 $list[$i]['match_time2'] = '';
+                //
                 $list[$i]['is_collect'] = 0;
-                $list[$i]['total_collect'] = 0;
+                if($user_id){
+                    $collect = M('match_follow')->where(array('user_id'=>$user_id, 'match_id'=>$match['match_id']))->find();
+                    if($collect){
+                        $list[$i]['is_collect'] = 1;
+                    }
+                }
+
+
             }
 
             $data = [];
@@ -181,6 +191,9 @@ class MatchController extends BaseApiController {
                 $json['msg'] = '请选择查看赛事';
                 break;
             }
+
+            $user_id = intval($this->user['id']);
+
             $match = M('match')->field
             ('match_id,time as match_time,league_id,league_name,kind,level,state,home_id,home_name,home_score,away_id,
                 away_name,away_score,home_red,away_red,home_yellow,away_yellow,match_round,address,weather_ico,weather,temperature,is_neutral,technic'
@@ -244,8 +257,14 @@ class MatchController extends BaseApiController {
             $match['events'] = (array)$event_list;
             $match['match_name'] = '';
             $match['match_time2'] = '';
+
             $match['is_collect'] = 0;
-            $match['total_collect'] = 0;
+            if($user_id){
+                $collect = M('match_follow')->where(array('user_id'=>$user_id, 'match_id'=>$match['match_id']))->find();
+                if($collect){
+                    $match['is_collect'] = 1;
+                }
+            }
             $json['data'] = $match;
 
         }while(false);
