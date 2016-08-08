@@ -5,6 +5,44 @@
  * Date: 2016/7/20
  * Time: 11:57
  */
+$list = [
+    '12'=>[
+        '12'=>[
+            [
+            'name'=>'sd',
+            'list'=>[
+                ['ss'=>'2']
+            ]
+            ]
+        ]
+    ],
+    '15'=>[
+        '16'=>[
+            [
+                'name'=>'sd',
+                'list'=>[
+                    ['ss'=>'2']
+                ]
+            ],
+            [
+                'name'=>'sd',
+                'list'=>[
+                    ['ss'=>'2']
+                ]
+            ]
+        ]
+    ]
+];
+$new_list = [];
+foreach($list as $item){
+    foreach($item as $new_item){
+
+    }
+    $new_list[] = $new_item;
+}
+print_r($new_list);
+die();
+
 $s = '13403';
 $s = str_pad($s,9,'0',STR_PAD_LEFT);
 echo base64_encode($s);

@@ -2,6 +2,25 @@
 namespace Home\Controller;
 use \Think\Page;
 class NoticeController extends BaseApiController {
+    /**
+     * 
+     */
+    public function  news(){
+        $json = $this->simpleJson();
+        do{
+            $user_id = empty($this->user['id'])?0:$this->user['id'];
+            if($user_id){
+                // status 1待发， 2已发，3已读
+                $total = M('notice_info')->where(array('to_id'=>$user_id,'status'=>0))->count();
+                $json['data']['total'] = $total;
+            }else{
+                $json['data']['total'] = 0;
+            }
+
+
+        }while(false);
+        $this->ajaxReturn($json);
+    }
 
     /**
      * 获取消息
@@ -17,7 +36,14 @@ class NoticeController extends BaseApiController {
                 // status 1待发， 2已发，3已读
                 $total = M('notice_info')->where(array('to_id'=>$user_id))->count();
                 $page = new Page($total, $limit);
-                $list = M('notice_info')->where(array('to_id'=>$user_id,'status'=>array('lt', 4)))->limit($page->firstRow, $page->listRows)->order("create_time ASC")->select();
+                $list = M('notice_info')->where(array('to_id'=>$user_id,'status'=>array('lt', 4)))->limit($page->firstRow, $page->listRows)->order("status ASC, create_time ASC")->select();
+                $ids = [];
+                foreach($list as $item){
+                    $ids[] = $item['id'];
+                }
+                if($ids){
+                    M('notice_info')->where(array('id'=>array('in'=>$ids)))->save(array('status'=>1));
+                }
                 $json['data']['list'] = $list;
             }else{
                 $json['data']['list'] = [];
