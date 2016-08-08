@@ -62,7 +62,7 @@ $apple_receipt = 'MIIT3gYJKoZIhvcNAQcCoIITzzCCE8sCAQExCzAJBgUrDgMCGgUAMIIDfwYJKo
 echo "=\r\n";
 $data['user_id'] = 10001;
 $data['apple_receipt'] = $apple_receipt;
-$result = httpPost("https://api.zydzuqiu.com/user/info.html", $data);
+$result = httpPost("https://api.zydzuqiu.com/notice/news.html", $data);
 var_dump($result);
 echo ($result);
 print_r(json_decode($result, true));

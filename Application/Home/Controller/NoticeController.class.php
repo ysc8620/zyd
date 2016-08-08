@@ -3,7 +3,7 @@ namespace Home\Controller;
 use \Think\Page;
 class NoticeController extends BaseApiController {
     /**
-     * 
+     *
      */
     public function  news(){
         $json = $this->simpleJson();

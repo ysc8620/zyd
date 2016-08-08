@@ -169,7 +169,7 @@ class TuijianController extends BaseApiController {
 
             $new = [];
             foreach($list as $i=>$item){
-                $new[$item['league_id']][$item['match_id']] = [
+                $new[$item['match_id']] = [
                     'league_id' => $item['league_id'],
                     'league_name' => $item['league_name'],
                     'match_id' =>$item['match_id'],
@@ -177,15 +177,10 @@ class TuijianController extends BaseApiController {
                     'away_name' => $item['away_name'],
                     'match_time' => $item['match_time']
                 ];
-                $new[$item['league_id']][$item['match_id']]['list'] = $item;
+                $new[$item['match_id']]['list'][] = $item;
             }
             $new_list = [];
             foreach($new as $l=>$item){
-                $new_item = [];
-                foreach($item as $i){
-                    $new_item[] = $i;
-                }
-
                 $new_list[] = $item;
             }
             $list = $new;
