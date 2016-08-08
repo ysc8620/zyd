@@ -183,7 +183,7 @@ class TuijianController extends BaseApiController {
             foreach($new as $l=>$item){
                 $new_list[] = $item;
             }
-            $list = $new;
+            $list = $new_list;
 
             $json['data']['list'] = (array)$list;
             $json['data']['total'] = $total;
