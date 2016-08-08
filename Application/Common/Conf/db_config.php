@@ -10,7 +10,7 @@
     'DB_HOST' => '127.0.0.1',
     'DB_NAME' => 'zyd',
     'DB_USER' => 'root',
-    'DB_PWD' => '123456',
+    'DB_PWD' => 'LEsc2008=',
   //  'DB_RW_SEPARATE'=>true,
     'DB_PREFIX' => 't_',
     'DB_PORT' => '3306', );
