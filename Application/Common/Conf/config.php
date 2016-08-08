@@ -43,10 +43,9 @@ $config = array(
     //'TAGLIB_PRE_LOAD' => '',//芝麻乐命名范围
 );
 
-$self_config = APP_PATH .'/Runtime/Conf/config.php';
-$self_config = file_exists($self_config) ? include "$self_config" : array();
 
-$db_config = APP_PATH .'/Runtime/Conf/db_config.php';
+
+$db_config = __DIR__ .'/db_config.php';
 $db_config = file_exists($db_config) ? include "$db_config" : array();
 
-return array_merge($self_config,$db_config, $config);
+return array_merge($db_config, $config);

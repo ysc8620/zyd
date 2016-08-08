@@ -77,6 +77,22 @@ class TuijianController extends BaseApiController {
                 $item['is_buy'] = $is_buy;// 默认没有购买
                 $list[$i] = $item;
             }
+
+            if($type == 3 || $type == 4 || $type ==5){
+                $new = [];
+                foreach($list as $i=>$item){
+                    $new[$item['league_id']]= [
+                        'league_id' => $item['league_id'],
+                        'league_name' => $item['league_name'],
+                        'match_id' =>$item['match_id'],
+                        'home_name' => $item['home_name'],
+                        'away_name' => $item['away_name'],
+                        'match_time' => $item['match_time']
+                    ];
+                    $new[$item['league_id']]['list'][] = $item;
+                }
+                $list = $new;
+            }
             $json['data']['list'] = (array)$list;
             $json['data']['total'] = $total;
             $json['data']['page'] = $p;
