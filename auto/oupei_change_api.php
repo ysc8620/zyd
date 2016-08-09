@@ -28,7 +28,7 @@ do{
             echo '22';
             print_r($match['odds']);
             foreach($match['odds']['o'] as $rate){
-                $item = explode($rate,',');
+                $item = explode(',',$rate);
                 //`match_id`, `company_id`, `begin_home_rate`, `begin_draw_rate`, `begin_away_rate`, `change_home_rate`,
                 // `change_draw_rate`, `change_away_rate`, `change_date`, `update_time`
                 $data = [
@@ -49,9 +49,8 @@ do{
                 }
             }
         }else{
-            $item = explode($match['odds']['o'],',');
-            echo '11';
-            print_r($match['odds']['o']);
+            $item = explode(',',$match['odds']['o']);
+
             //`match_id`, `company_id`, `begin_home_rate`, `begin_draw_rate`, `begin_away_rate`, `change_home_rate`,
             // `change_draw_rate`, `change_away_rate`, `change_date`, `update_time`
             $data = [
