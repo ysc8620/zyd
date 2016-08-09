@@ -389,7 +389,7 @@ class MatchController extends BaseApiController {
             // 走地
             $json['data']['match_id'] = $match_id;
             $json['data']['oupei'] = [];
-            $field = '`zoudi_id`, `match_id`, `time`, `home_score`, `away_score`, `company_id`, `rate_1`, `rate_2`, `rate_3`, `change_date`';
+            $field = ' `match_id`, `time`, `home_score`, `away_score`, `company_id`, `rate_1`, `rate_2`, `rate_3`, `change_date`';
             $field2 = '';
 
             // 走地数据
@@ -414,7 +414,7 @@ class MatchController extends BaseApiController {
             }
 
             // 变盘数据
-            $field2 = "0 as zoudi_id, `match_id`, '' as time, '' as home_score, '' as away_score, `company_id`, change_home_rate as  rate_1, change_draw_rate as rate_2, change_away_rate as rate_3, '' as change_date";
+            $field2 = " `match_id`, '' as time, '' as home_score, '' as away_score, `company_id`, change_home_rate as  rate_1, change_draw_rate as rate_2, change_away_rate as rate_3, '' as change_date";
             $oupei = M('asia_oupei_change')->where(array('match_id'=>$match_id, 'company_id'=>3))->field($field2)->order('id DESC')->select();
             if($oupei){
                 $json['data']['oupei'] = $oupei;
@@ -457,7 +457,7 @@ class MatchController extends BaseApiController {
             }
 
             // 变盘数据
-            $field2 = "0 as zoudi_id, `match_id`, '' as time, '' as home_score, '' as away_score, `company_id`, change_home_rate as  rate_1, change_rate as rate_2, change_away_rate as rate_3, '' as change_date";
+            $field2 = " `match_id`, '' as time, '' as home_score, '' as away_score, `company_id`, change_home_rate as  rate_1, change_rate as rate_2, change_away_rate as rate_3, '' as change_date";
             $oupei = M('asia_yapei_change')->where(array('match_id'=>$match_id, 'company_id'=>3))->field($field2)->order('id DESC')->select();
             if($oupei){
                 $json['data']['rangqiu'] = $oupei;
@@ -500,7 +500,7 @@ class MatchController extends BaseApiController {
             }
 
             // 变盘数据
-            $field2 = "0 as zoudi_id, `match_id`, '' as time, '' as home_score, '' as away_score, `company_id`, change_big_rate as  rate_1, change_rate as rate_2, change_small_rate as rate_3, '' as change_date";
+            $field2 = "`match_id`, '' as time, '' as home_score, '' as away_score, `company_id`, change_big_rate as  rate_1, change_rate as rate_2, change_small_rate as rate_3, '' as change_date";
             $oupei = M('asia_daxiaoqiu_change')->where(array('match_id'=>$match_id, 'company_id'=>3))->field($field2)->order('id DESC')->select();
             if($oupei){
                 $json['data']['daxiaoqiu'] = $oupei;
