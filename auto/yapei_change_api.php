@@ -43,11 +43,17 @@ do{
                     'is_walk' => strval($info[6]),
                     'update_time' => time()
                 ];
-                $match = M('asia_yapei')->where(array('match_id'=>$match_id,'company_id'=>$data['company_id']))->find();
+                $match = M('asia_yapei_change')->where(array('match_id'=>$match_id,'company_id'=>$data['company_id']))->order("id DESC")->find();
                 if($match){
-                    M('asia_yapei')->where(array('id'=>$match['id']))->save($data);
+                    if($match['change_rate'] != $data['change_rate']
+                        || $match['change_home_rate'] != $data['change_home_rate']
+                        || $match['change_away_rate'] != $data['change_away_rate'])
+                    {
+                        M('asia_yapei_change')->add($data);
+                    }
+                    // M('asia_yapei_change')->where(array('id'=>$match['id']))->save($data);
                 }else{
-                    M('asia_yapei')->add($data);
+                    M('asia_yapei_change')->add($data);
                 }
             }
         }
@@ -67,11 +73,17 @@ do{
                     'update_time' => time()
                 ];
 
-                $match = M('asia_oupei')->where(array('match_id'=>$match_id,'company_id'=>$data['company_id']))->find();
+                $match = M('asia_oupei_change')->where(array('match_id'=>$match_id,'company_id'=>$data['company_id']))->order("id DESC")->find();
                 if($match){
-                    M('asia_oupei')->where(array('id'=>$match['id']))->save($data);
+                    if($match['change_home_rate'] != $data['change_home_rate']
+                        || $match['change_draw_rate'] != $data['change_draw_rate']
+                        || $match['change_away_rate'] != $data['change_away_rate'])
+                    {
+                        M('asia_oupei_change')->add($data);
+                    }
+                    // M('asia_oupei')->where(array('id'=>$match['id']))->save($data);
                 }else{
-                    M('asia_oupei')->add($data);
+                    M('asia_oupei_change')->add($data);
                 }
             }
         }
@@ -91,11 +103,18 @@ do{
                     'update_time' => time()
                 ];
 
-                $match = M('asia_daxiaoqiu')->where(array('match_id'=>$match_id,'company_id'=>$data['company_id']))->find();
+                $match = M('asia_daxiaoqiu_change')->where(array('match_id'=>$match_id,'company_id'=>$data['company_id']))->order("id DESC")->find();
                 if($match){
-                    M('asia_daxiaoqiu')->where(array('id'=>$match['id']))->save($data);
+                    if($match['change_rate'] != $data['change_rate']
+                        || $match['change_big_rate'] != $data['change_big_rate']
+                        || $match['change_small_rate'] != $data['change_small_rate'])
+                    {
+                        M('asia_daxiaoqiu_change')->add($data);
+                    }
+
+//                    M('asia_daxiaoqiu')->where(array('id'=>$match['id']))->save($data);
                 }else{
-                    M('asia_daxiaoqiu')->add($data);
+                    M('asia_daxiaoqiu_change')->add($data);
                 }
             }
         }
@@ -115,11 +134,17 @@ do{
                     'update_time' => time()
                 ];
 
-                $match = M('asia_half')->where(array('match_id'=>$match_id,'company_id'=>$data['company_id']))->find();
+                $match = M('asia_half_change')->where(array('match_id'=>$match_id,'company_id'=>$data['company_id']))->order("id DESC")->find();
                 if($match){
-                    M('asia_half')->where(array('id'=>$match['id']))->save($data);
+                    if($match['change_rate'] != $data['change_rate']
+                        || $match['change_home_rate'] != $data['change_home_rate']
+                        || $match['change_away_rate'] != $data['change_away_rate'])
+                    {
+                        M('asia_half_change')->add($data);
+                    }
+                    // M('asia_half_change')->where(array('id'=>$match['id']))->save($data);
                 }else{
-                    M('asia_half')->add($data);
+                    M('asia_half_change')->add($data);
                 }
             }
         }
@@ -139,11 +164,17 @@ do{
                     'update_time' => time()
                 ];
 
-                $match = M('asia_half_daxiaoqiu')->where(array('match_id'=>$match_id,'company_id'=>$data['company_id']))->find();
+                $match = M('asia_half_daxiaoqiu_change')->where(array('match_id'=>$match_id,'company_id'=>$data['company_id']))->order("id DESC")->find();
                 if($match){
-                    M('asia_half_daxiaoqiu')->where(array('id'=>$match['id']))->save($data);
+                    if($match['change_rate'] != $data['change_rate']
+                        || $match['change_big_rate'] != $data['change_big_rate']
+                        || $match['change_small_rate'] != $data['change_small_rate'])
+                    {
+                        M('asia_half_daxiaoqiu_change')->add($data);
+                    }
+                    //M('asia_half_daxiaoqiu_change')->where(array('id'=>$match['id']))->save($data);
                 }else{
-                    M('asia_half_daxiaoqiu')->add($data);
+                    M('asia_half_daxiaoqiu_change')->add($data);
                 }
             }
         }
