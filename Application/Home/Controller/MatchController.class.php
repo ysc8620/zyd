@@ -390,7 +390,6 @@ class MatchController extends BaseApiController {
             $json['data']['match_id'] = $match_id;
             $json['data']['oupei'] = [];
             $field = ' `match_id`, `time`, `home_score`, `away_score`, `company_id`, `rate_1`, `rate_2`, `rate_3`, `change_date`';
-            $field2 = '';
 
             // 走地数据
             $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>4, 'company_id'=>3))->order('id DESC')->field($field)->select();
@@ -414,26 +413,26 @@ class MatchController extends BaseApiController {
             }
 
             // 变盘数据
-            $field2 = " `match_id`, '' as time, '' as home_score, '' as away_score, `company_id`, change_home_rate as  rate_1, change_draw_rate as rate_2, change_away_rate as rate_3, '' as change_date";
-            $oupei = M('asia_oupei_change')->where(array('match_id'=>$match_id, 'company_id'=>3))->field($field2)->order('id DESC')->select();
-            if($oupei){
-                $json['data']['oupei'] = $oupei;
-            }else{
-                $oupei = M('asia_oupei_change')->where(array('match_id'=>$match_id, 'company_id'=>24))->field($field2)->select();
-                if($oupei){
-                    $json['data']['oupei'] = array_merge($json['data']['oupei'],$oupei);
-                }else{
-                    $oupei = M('asia_oupei_change')->where(array('match_id'=>$match_id,  'company_id'=>31))->field($field2)->select();
-                    if($oupei){
-                        $json['data']['oupei'] = array_merge($json['data']['oupei'],$oupei);
-                    }else{
-                        $oupei = M('asia_oupei_change')->where(array('match_id'=>$match_id,  'company_id'=>8))->field($field2)->select();
-                        if($oupei){
-                            $json['data']['oupei'] = array_merge($json['data']['oupei'],$oupei);
-                        }
-                    }
-                }
-            }
+//            $field2 = " `match_id`, '' as time, '' as home_score, '' as away_score, `company_id`, change_home_rate as  rate_1, change_draw_rate as rate_2, change_away_rate as rate_3, '' as change_date";
+//            $oupei = M('asia_oupei_change')->where(array('match_id'=>$match_id, 'company_id'=>3))->field($field2)->order('id DESC')->select();
+//            if($oupei){
+//                $json['data']['oupei'] = $oupei;
+//            }else{
+//                $oupei = M('asia_oupei_change')->where(array('match_id'=>$match_id, 'company_id'=>24))->field($field2)->select();
+//                if($oupei){
+//                    $json['data']['oupei'] = array_merge($json['data']['oupei'],$oupei);
+//                }else{
+//                    $oupei = M('asia_oupei_change')->where(array('match_id'=>$match_id,  'company_id'=>31))->field($field2)->select();
+//                    if($oupei){
+//                        $json['data']['oupei'] = array_merge($json['data']['oupei'],$oupei);
+//                    }else{
+//                        $oupei = M('asia_oupei_change')->where(array('match_id'=>$match_id,  'company_id'=>8))->field($field2)->select();
+//                        if($oupei){
+//                            $json['data']['oupei'] = array_merge($json['data']['oupei'],$oupei);
+//                        }
+//                    }
+//                }
+//            }
 
             $data['data']['rangqiu'] = [];
             $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>1, 'company_id'=>3))->field($field)->select();
@@ -457,26 +456,26 @@ class MatchController extends BaseApiController {
             }
 
             // 变盘数据
-            $field2 = " `match_id`, '' as time, '' as home_score, '' as away_score, `company_id`, change_home_rate as  rate_1, change_rate as rate_2, change_away_rate as rate_3, '' as change_date";
-            $oupei = M('asia_yapei_change')->where(array('match_id'=>$match_id, 'company_id'=>3))->field($field2)->order('id DESC')->select();
-            if($oupei){
-                $json['data']['rangqiu'] = $oupei;
-            }else{
-                $oupei = M('asia_yapei_change')->where(array('match_id'=>$match_id, 'company_id'=>24))->field($field2)->select();
-                if($oupei){
-                    $json['data']['rangqiu'] = array_merge($json['data']['rangqiu'],$oupei);
-                }else{
-                    $oupei = M('asia_yapei_change')->where(array('match_id'=>$match_id,  'company_id'=>31))->field($field2)->select();
-                    if($oupei){
-                        $json['data']['rangqiu'] = array_merge($json['data']['rangqiu'],$oupei);
-                    }else{
-                        $oupei = M('asia_yapei_change')->where(array('match_id'=>$match_id,  'company_id'=>8))->field($field2)->select();
-                        if($oupei){
-                            $json['data']['rangqiu'] = array_merge($json['data']['rangqiu'],$oupei);
-                        }
-                    }
-                }
-            }
+//            $field2 = " `match_id`, '' as time, '' as home_score, '' as away_score, `company_id`, change_home_rate as  rate_1, change_rate as rate_2, change_away_rate as rate_3, '' as change_date";
+//            $oupei = M('asia_yapei_change')->where(array('match_id'=>$match_id, 'company_id'=>3))->field($field2)->order('id DESC')->select();
+//            if($oupei){
+//                $json['data']['rangqiu'] = $oupei;
+//            }else{
+//                $oupei = M('asia_yapei_change')->where(array('match_id'=>$match_id, 'company_id'=>24))->field($field2)->select();
+//                if($oupei){
+//                    $json['data']['rangqiu'] = array_merge($json['data']['rangqiu'],$oupei);
+//                }else{
+//                    $oupei = M('asia_yapei_change')->where(array('match_id'=>$match_id,  'company_id'=>31))->field($field2)->select();
+//                    if($oupei){
+//                        $json['data']['rangqiu'] = array_merge($json['data']['rangqiu'],$oupei);
+//                    }else{
+//                        $oupei = M('asia_yapei_change')->where(array('match_id'=>$match_id,  'company_id'=>8))->field($field2)->select();
+//                        if($oupei){
+//                            $json['data']['rangqiu'] = array_merge($json['data']['rangqiu'],$oupei);
+//                        }
+//                    }
+//                }
+//            }
 
             $data['data']['daxiaoqiu'] = [];
             $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>2, 'company_id'=>3))->field($field)->select();
@@ -500,26 +499,26 @@ class MatchController extends BaseApiController {
             }
 
             // 变盘数据
-            $field2 = "`match_id`, '' as time, '' as home_score, '' as away_score, `company_id`, change_big_rate as  rate_1, change_rate as rate_2, change_small_rate as rate_3, '' as change_date";
-            $oupei = M('asia_daxiaoqiu_change')->where(array('match_id'=>$match_id, 'company_id'=>3))->field($field2)->order('id DESC')->select();
-            if($oupei){
-                $json['data']['daxiaoqiu'] = $oupei;
-            }else{
-                $oupei = M('asia_daxiaoqiu_change')->where(array('match_id'=>$match_id, 'company_id'=>24))->field($field2)->select();
-                if($oupei){
-                    $json['data']['daxiaoqiu'] = array_merge($json['data']['daxiaoqiu'],$oupei);
-                }else{
-                    $oupei = M('asia_daxiaoqiu_change')->where(array('match_id'=>$match_id,  'company_id'=>31))->field($field2)->select();
-                    if($oupei){
-                        $json['data']['daxiaoqiu'] = array_merge($json['data']['daxiaoqiu'],$oupei);
-                    }else{
-                        $oupei = M('asia_daxiaoqiu_change')->where(array('match_id'=>$match_id,  'company_id'=>8))->field($field2)->select();
-                        if($oupei){
-                            $json['data']['daxiaoqiu'] = array_merge($json['data']['daxiaoqiu'],$oupei);
-                        }
-                    }
-                }
-            }
+//            $field2 = "`match_id`, '' as time, '' as home_score, '' as away_score, `company_id`, change_big_rate as  rate_1, change_rate as rate_2, change_small_rate as rate_3, '' as change_date";
+//            $oupei = M('asia_daxiaoqiu_change')->where(array('match_id'=>$match_id, 'company_id'=>3))->field($field2)->order('id DESC')->select();
+//            if($oupei){
+//                $json['data']['daxiaoqiu'] = $oupei;
+//            }else{
+//                $oupei = M('asia_daxiaoqiu_change')->where(array('match_id'=>$match_id, 'company_id'=>24))->field($field2)->select();
+//                if($oupei){
+//                    $json['data']['daxiaoqiu'] = array_merge($json['data']['daxiaoqiu'],$oupei);
+//                }else{
+//                    $oupei = M('asia_daxiaoqiu_change')->where(array('match_id'=>$match_id,  'company_id'=>31))->field($field2)->select();
+//                    if($oupei){
+//                        $json['data']['daxiaoqiu'] = array_merge($json['data']['daxiaoqiu'],$oupei);
+//                    }else{
+//                        $oupei = M('asia_daxiaoqiu_change')->where(array('match_id'=>$match_id,  'company_id'=>8))->field($field2)->select();
+//                        if($oupei){
+//                            $json['data']['daxiaoqiu'] = array_merge($json['data']['daxiaoqiu'],$oupei);
+//                        }
+//                    }
+//                }
+//            }
         }while(false);
         $this->ajaxReturn($json);
     }
