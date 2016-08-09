@@ -20,7 +20,7 @@ global $mongo;
 function _shutdown_handler(){
     global $mongo;
     try{
-        $mongo->close();
+        //$mongo->close();
     }catch (\Exception $e){
         print_r($e);
     }
