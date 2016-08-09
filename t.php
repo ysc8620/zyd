@@ -5,6 +5,21 @@
  * Date: 2016/7/6
  * Time: 18:57
  */
+$postStr = file_get_contents("F:/user/Odds_1x2_half.aspx");
+$obj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
+$data = json_decode(json_encode($obj), true);
+foreach($data['h'] as $match){
+    print_r($match);die();
+    if(is_array($match['odds']['o'])){
+        foreach($match['odds']['o'] as $rate){
+            echo $rate."\r\n";
+        }
+    }else{
+        echo $match['odds']['o']."\r\n";
+    }
+
+}
+die();
 $json = '{
     "status": 100,
     "msg": "",
