@@ -372,5 +372,19 @@ class MatchController extends BaseApiController {
         }while(false);
         $this->ajaxReturn($json);
     }
+
+    /**
+     * 获取赛事全场盘口
+     */
+    public function get_rate_list(){
+
+    }
+
+    /**
+     * 获取半场赛事盘口
+     */
+    public function get_half_rate_list(){
+
+    }
     
 }
