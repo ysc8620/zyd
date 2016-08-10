@@ -275,7 +275,7 @@ class MatchController extends BaseApiController {
     /**
      * 获取赛事推荐
      */
-    public function tuijia(){
+    public function tuijian_info(){
         $json = $this->simpleJson();
         do{
             $match_id = I('request.match_id',0,'intval');
