@@ -271,6 +271,52 @@ class MatchController extends BaseApiController {
         $this->ajaxReturn($json);
     }
 
+
+    /**
+     * 获取赛事推荐
+     */
+    public function tuijia(){
+        $json = $this->simpleJson();
+        do{
+            $match_id = I('request.match_id',0,'intval');
+            if(empty($match_id)){
+                $json['status'] = 100;
+                $json['msg'] = '找不到赛事信息';
+                break;
+            }
+            $match = M('match')->where(array('match_id'=>$match_id))->find();
+            $tuijian['league_id'] = $match['league_id'];
+            $tuijian['league_name'] = $match['league_name'];
+            $tuijian['home_name'] = $match['home_name'];
+            $tuijian['away_name'] = $match['away_name'];
+            $tuijian['match_time'] = $match['time'];
+            $tuijian['home_score'] = $match['home_score'];
+            $tuijian['away_score'] = $match['away_score'];
+
+            // 竞彩
+            $tuijian['jingcai'] = ["home_rate"=>"", "draw_rate"=>"", "away_rate"=>""];
+            // 竞彩让球
+            $tuijian['jingcai_rangqiu'] = ["home_rate"=>"", "draw_rate"=>"", "away_rate"=>""];
+            // 亚赔
+            $tuijian['rangqiu'] = ["home_rate"=>"", "draw"=>"", "away_rate"=>""];
+            // 亚赔半场
+            $tuijian['rangqiu_half'] = ["home_rate"=>"", "draw"=>"", "away_rate"=>""];
+
+            // 欧赔
+            $tuijian['oupei'] = ["home_rate"=>"", "draw_rate"=>"", "away_rate"=>""];
+            // 欧赔半场
+            $tuijian['oupei_half'] = ["home_rate"=>"", "draw_rate"=>"", "away_rate"=>""];
+
+            // 大小球
+            $tuijian['daxiaoqiu'] = ["home_rate"=>"", "draw_rate"=>"", "away_rate"=>""];
+
+            // 大小球半场
+            $tuijian['daxiaoqiu_half'] = ["big_rate"=>"", "draw_rate"=>"", "small_rate"=>""];
+
+        }while(false);
+        $this->ajaxReturn($json);
+    }
+
     /**
      * 赛事关注
      */
