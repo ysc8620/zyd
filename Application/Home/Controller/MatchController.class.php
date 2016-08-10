@@ -285,6 +285,7 @@ class MatchController extends BaseApiController {
                 break;
             }
             $match = M('match')->where(array('match_id'=>$match_id))->find();
+            $tuijian['match_id'] = $match_id;
             $tuijian['league_id'] = $match['league_id'];
             $tuijian['league_name'] = $match['league_name'];
             $tuijian['home_name'] = $match['home_name'];
@@ -292,26 +293,35 @@ class MatchController extends BaseApiController {
             $tuijian['match_time'] = $match['time'];
             $tuijian['home_score'] = $match['home_score'];
             $tuijian['away_score'] = $match['away_score'];
+            $tuijian['match_time'] = $match['time'];
+            // 标准
+            $baiou = M('asia_oupei')->where(array('match_id'=>$match['match_id']))->find();
+            $tuijian['begin_home_rate'] = floatval("{$baiou['begin_home_rate']}");
+            $tuijian['begin_draw_rate'] = floatval("{$baiou['begin_draw_rate']}");
+            $tuijian['begin_away_rate'] = floatval("{$baiou['begin_away_rate']}");
+            $tuijian['change_home_rate'] = floatval("{$baiou['change_home_rate']}");
+            $tuijian['change_draw_rate'] = floatval("{$baiou['change_draw_rate']}");
+            $tuijian['change_away_rate'] = floatval("{$baiou['change_away_rate']}");
 
             // 竞彩
-            $tuijian['jingcai'] = ["rate_1"=>"", "rate_2"=>"", "rate_3"=>""];
+            $tuijian['jingcai'] = ["rate_1"=>"0", "rate_2"=>"0", "rate_3"=>"0"];
             // 竞彩让球
-            $tuijian['jingcai_rangqiu'] = ["rate_4"=>"", "rate_5"=>"", "rate_6"=>""];
+            $tuijian['jingcai_rangqiu'] = ["rate_4"=>"0", "rate_5"=>"0", "rate_6"=>"0"];
             // 亚赔
-            $tuijian['rangqiu'] = ["rate_1"=>"", "rate_2"=>"", "rate_3"=>""];
+            $tuijian['rangqiu'] = ["rate_1"=>"0", "rate_2"=>"0", "rate_3"=>"0"];
             // 亚赔半场
-            $tuijian['rangqiu_half'] = ["rate_4"=>"", "rate_5"=>"", "rate_6"=>""];
+            $tuijian['rangqiu_half'] = ["rate_4"=>"0", "rate_5"=>"0", "rate_6"=>"0"];
 
             // 欧赔
-            $tuijian['oupei'] = ["rate_1"=>"", "rate_2"=>"", "rate_3"=>""];
+            $tuijian['oupei'] = ["rate_1"=>"0", "rate_2"=>"0", "rate_3"=>"0"];
             // 欧赔半场
-            $tuijian['oupei_half'] = ["rate_4"=>"", "rate_5"=>"", "rate_6"=>""];
+            $tuijian['oupei_half'] = ["rate_4"=>"0", "rate_5"=>"0", "rate_6"=>"0"];
 
             // 大小球
-            $tuijian['daxiaoqiu'] = ["rate_1"=>"", "rate_2"=>"", "rate_3"=>""];
+            $tuijian['daxiaoqiu'] = ["rate_1"=>"0", "rate_2"=>"0", "rate_3"=>"0"];
 
             // 大小球半场
-            $tuijian['daxiaoqiu_half'] = ["rate_4"=>"", "rate_5"=>"", "rate_6"=>""];
+            $tuijian['daxiaoqiu_half'] = ["rate_4"=>"0", "rate_5"=>"0", "rate_6"=>"0"];
 
             $json['data'] = $tuijian;
         }while(false);
