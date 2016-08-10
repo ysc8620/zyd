@@ -465,6 +465,7 @@ class MatchController extends BaseApiController {
                     }
                 }
             }
+            print_r($oupei);die();
 
             // 变盘数据
             $field2 = " `match_id`, '' as time, '' as home_score, '' as away_score, `company_id`, change_home_rate as  rate_1, change_draw_rate as rate_2, change_away_rate as rate_3, '' as change_date";
