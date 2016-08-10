@@ -284,6 +284,8 @@ class MatchController extends BaseApiController {
                 $json['msg'] = '找不到赛事信息';
                 break;
             }
+            // 验证登陆
+            $this->check_login();
             $match = M('match')->where(array('match_id'=>$match_id))->find();
             $tuijian['match_id'] = $match_id;
             $tuijian['league_id'] = $match['league_id'];
