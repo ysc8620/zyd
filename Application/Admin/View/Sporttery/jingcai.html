@@ -55,7 +55,7 @@
                                 <volist name="list" id="item">
                                     <tr class="gradeX">
                                         <td>{$item.match_no}</td>
-                                        <td>{$item.match_id}</td>
+                                        <td><input type="text" data-id="{$item.id}" name="match_id" class="form-control" value="{$item.match_id}" /></td>
                                         <td>{$item.match_time}</td>
                                         <td>{$item.league_name}</td>
                                         <td>{$item.home_name}-{$item.away_name}</td>
@@ -96,28 +96,26 @@
 <script src="__PUBLIC__/admin/js/content.js?v=1.0.0"></script>
 <!-- Page-Level Scripts -->
 <script>
-    $(document).ready(function () {
-        /* Init DataTables */
-//            var oTable = $('#editable').dataTable();
-//
-//            /* Apply the jEditable handlers to the table */
-//            oTable.$('td').editable('../example_ajax.php', {
-//                "callback": function (sValue, y) {
-//                    var aPos = oTable.fnGetPosition(this);
-//                    oTable.fnUpdate(sValue, aPos[0], aPos[1]);
-//                },
-//                "submitdata": function (value, settings) {
-//                    return {
-//                        "row_id": this.parentNode.getAttribute('id'),
-//                        "column": oTable.fnGetPosition(this)[2]
-//                    };
-//                },
-//
-//                "width": "90%",
-//                "height": "100%"
-//            });
+    // 状态修改
+    $('select[name="match_id"]').change(function(){
+        var id = $(this).attr('data-id');
+        var status = $(this).val();
+        var index = parent.layer.load(1, {shade: [0.1,'#000']});
+        $.ajax({
+            type: "post",
+            url: "{:U('/sporttery/jingcai_edit')}",
+            data: {id:id, match_id:match_id},
+            dataType: "json",
+            success: function (data) {
+                parent.layer.close(index);
+                if(data.status == 1){
+                    //提示层
+                    //parent.layer.msg('操作成功',function(){});
+                }
+                // $("input#showTime").val(data[0].demoData);
+            }
+        });
     });
-
 
 </script>
 </body>
