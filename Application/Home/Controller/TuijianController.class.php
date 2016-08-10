@@ -361,6 +361,11 @@ class TuijianController extends BaseApiController {
                 $tuijian['home_name'] = $match['home_name'];
                 $tuijian['away_name'] = $match['away_name'];
                 $tuijian['match_time'] = $match['time'];
+                
+                $tuijian['home_score'] = $match['home_score'];
+                $tuijian['away_score'] = $match['away_score'];
+                $tuijian['home_half_score'] = $match['home_half_score'];
+                $tuijian['away_half_score'] = $match['away_half_score'];
                 #
                 $user = M('users')->where(array('id'=>$tuijian['user_id']))->find();
                 $tuijian['user_name'] = $user['nickname'];
@@ -420,6 +425,17 @@ class TuijianController extends BaseApiController {
             $json['data']['total_page'] = ceil($total/$limit);
             $json['data']['limit'] = $limit;
             $json['data']['tuijian_id'] = $tuijian_id;
+        }while(false);
+        $this->ajaxReturn($json);
+    }
+
+    /**
+     * 获取赛事推荐
+     */
+    public function match(){
+        $json = $this->simpleJson();
+        do{
+
         }while(false);
         $this->ajaxReturn($json);
     }
