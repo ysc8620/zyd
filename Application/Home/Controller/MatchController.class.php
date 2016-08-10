@@ -275,7 +275,7 @@ class MatchController extends BaseApiController {
     /**
      * 获取赛事推荐
      */
-    public function tuijian_info(){
+    public function tuijian(){
         $json = $this->simpleJson();
         do{
             $match_id = I('request.match_id',0,'intval');
@@ -396,29 +396,6 @@ class MatchController extends BaseApiController {
         $this->ajaxReturn($json);
     }
 
-    /**
-     * 赛事推荐
-     */
-    public function tuijian(){
-        $json = $this->simpleJson();
-        do{
-            $match_id = I('request.match_id',0,'intval');
-            if(empty($match_id)){
-                $json['status'] = 110;
-                $json['msg'] = '请选择推荐赛事';
-                break;
-            }
-            $user_id = intval($this->user['id']);
-            $match = M('match')->where(array('match_id'=>$match_id))->find();
-            if(empty($match)){
-                $json['status'] = 111;
-                $json['msg'] = '没找到对应赛事信息';
-                break;
-            }
-
-        }while(false);
-        $this->ajaxReturn($json);
-    }
     /**
      * 获取事件
      */
