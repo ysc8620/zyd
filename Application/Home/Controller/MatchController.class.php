@@ -294,25 +294,26 @@ class MatchController extends BaseApiController {
             $tuijian['away_score'] = $match['away_score'];
 
             // 竞彩
-            $tuijian['jingcai'] = ["home_rate"=>"", "draw_rate"=>"", "away_rate"=>""];
+            $tuijian['jingcai'] = ["rate_1"=>"", "rate_2"=>"", "rate_3"=>""];
             // 竞彩让球
-            $tuijian['jingcai_rangqiu'] = ["home_rate"=>"", "draw_rate"=>"", "away_rate"=>""];
+            $tuijian['jingcai_rangqiu'] = ["rate_4"=>"", "rate_5"=>"", "rate_6"=>""];
             // 亚赔
-            $tuijian['rangqiu'] = ["home_rate"=>"", "draw"=>"", "away_rate"=>""];
+            $tuijian['rangqiu'] = ["rate_1"=>"", "rate_2"=>"", "rate_3"=>""];
             // 亚赔半场
-            $tuijian['rangqiu_half'] = ["home_rate"=>"", "draw"=>"", "away_rate"=>""];
+            $tuijian['rangqiu_half'] = ["rate_4"=>"", "rate_5"=>"", "rate_6"=>""];
 
             // 欧赔
-            $tuijian['oupei'] = ["home_rate"=>"", "draw_rate"=>"", "away_rate"=>""];
+            $tuijian['oupei'] = ["rate_1"=>"", "rate_2"=>"", "rate_3"=>""];
             // 欧赔半场
-            $tuijian['oupei_half'] = ["home_rate"=>"", "draw_rate"=>"", "away_rate"=>""];
+            $tuijian['oupei_half'] = ["rate_4"=>"", "rate_5"=>"", "rate_6"=>""];
 
             // 大小球
-            $tuijian['daxiaoqiu'] = ["home_rate"=>"", "draw_rate"=>"", "away_rate"=>""];
+            $tuijian['daxiaoqiu'] = ["rate_1"=>"", "rate_2"=>"", "rate_3"=>""];
 
             // 大小球半场
-            $tuijian['daxiaoqiu_half'] = ["big_rate"=>"", "draw_rate"=>"", "small_rate"=>""];
+            $tuijian['daxiaoqiu_half'] = ["rate_4"=>"", "rate_5"=>"", "rate_6"=>""];
 
+            $json['data'] = $tuijian;
         }while(false);
         $this->ajaxReturn($json);
     }
