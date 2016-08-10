@@ -372,5 +372,23 @@ class MatchController extends BaseApiController {
         }while(false);
         $this->ajaxReturn($json);
     }
-    
+
+    /**
+     * 获取事件
+     */
+    public function events(){
+        $json = $this->simpleJson();
+        do{
+            $match_id = I('request.match_id',0,'intval');
+            if(empty($match_id)){
+                $json['status'] = 110;
+                $json['msg'] = "请选择赛事";
+                break;
+            }
+            $event_list = M('event')->where(array('match_id'=>$match_id))->order("time ASC")->select();
+            $json['data']['list'] = (array)$event_list;
+        }while(false);
+        $this->ajaxReturn($json);
+
+    }
 }
