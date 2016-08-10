@@ -489,10 +489,9 @@ class MatchController extends BaseApiController {
                 }
             }
 
-            print_r($oupei);
-            die();
 
-            $data['data']['rangqiu'] = [];
+
+            $json['data']['rangqiu'] = [];
             $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>1, 'company_id'=>3))->field($field)->select();
             if($oupei){
                 $json['data']['rangqiu'] = $oupei;
@@ -535,7 +534,7 @@ class MatchController extends BaseApiController {
                 }
             }
 
-            $data['data']['daxiaoqiu'] = [];
+            $json['data']['daxiaoqiu'] = [];
             $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>2, 'company_id'=>3))->field($field)->select();
             if($oupei){
                 $json['data']['daxiaoqiu'] = $oupei;
@@ -643,7 +642,7 @@ class MatchController extends BaseApiController {
                 }
             }
 
-            $data['data']['rangqiu'] = [];
+            $json['data']['rangqiu'] = [];
             $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>1, 'company_id'=>3))->field($field)->select();
             if($oupei){
                 $json['data']['rangqiu'] = $oupei;
@@ -686,7 +685,7 @@ class MatchController extends BaseApiController {
                 }
             }
 
-            $data['data']['daxiaoqiu'] = [];
+            $json['data']['daxiaoqiu'] = [];
             $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>2, 'company_id'=>3))->field($field)->select();
             if($oupei){
                 $json['data']['daxiaoqiu'] = $oupei;
