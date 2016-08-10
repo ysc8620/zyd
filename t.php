@@ -4,7 +4,27 @@
  * User: ShengYue
  * Date: 2016/7/6
  * Time: 18:57
+ *
+ * `zoudi_id`, `match_id`, `time`, `home_score`, `away_score`, `home_yellow`, `away_yellow`, `type`, `company_id`, `rate_1`, `rate_2`, `rate_3`, `change_date`, `update_time`
  */
+$postStr = file_get_contents("F:/user/Odds_Running.aspx");
+$obj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
+$data = json_decode(json_encode($obj), true);
+
+print_r($data);die();
+
+foreach($data['h'] as $match){
+    print_r($match);die();
+    if(is_array($match['odds']['o'])){
+        foreach($match['odds']['o'] as $rate){
+            echo $rate."\r\n";
+        }
+    }else{
+        echo $match['odds']['o']."\r\n";
+    }
+
+}
+die();
 $json = '{
     "status": 100,
     "msg": "",
