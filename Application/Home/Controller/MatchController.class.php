@@ -576,7 +576,7 @@ class MatchController extends BaseApiController {
                     }
                 }
             }
-            
+
         }while(false);
         $this->ajaxReturn($json);
     }
@@ -772,6 +772,7 @@ class MatchController extends BaseApiController {
                 }
             }
 
+            $json['data']['rangqiu'] = [];
             // 变盘数据
             $field2 = "0 as zoudi_id, `match_id`, '' as time, '' as home_score, '' as away_score, `company_id`, change_home_rate as  rate_1, change_rate as rate_2, change_away_rate as rate_3, '' as change_date";
             $oupei = M('asia_half')->where(array('match_id'=>$match_id, 'company_id'=>3))->field($field2)->order('id DESC')->select();
@@ -794,6 +795,7 @@ class MatchController extends BaseApiController {
                 }
             }
 
+            $json['data']['daxiaoqiu'] = [];
             // 变盘数据
             $field2 = "0 as zoudi_id, `match_id`, '' as time, '' as home_score, '' as away_score, `company_id`, change_big_rate as  rate_1, change_rate as rate_2, change_small_rate as rate_3, '' as change_date";
             $oupei = M('asia_half_daxiaoqiu_change')->where(array('match_id'=>$match_id, 'company_id'=>3))->field($field2)->order('id DESC')->select();
