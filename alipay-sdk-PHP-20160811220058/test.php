@@ -5,6 +5,7 @@
  * Date: 2016/8/12
  * Time: 0:18
  */
+echo 'ss';
 require __DIR__."/aop/AopClient.php";
 require __DIR__."/aop/request/AlipayTradeAppPayRequest.php";
 $aop = new AopClient ();
@@ -16,6 +17,7 @@ $aop->apiVersion = '1.0';
 $aop->postCharset='GBK';
 $aop->format='json';
 $request = new AlipayTradeAppPayRequest ();
+var_dump($request);
 $request->setBizContent("{" .
     "    \"body\":\"Iphone6 16G\"," .
     "    \"subject\":\"大乐透\"," .
