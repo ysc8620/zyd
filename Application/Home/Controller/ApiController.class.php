@@ -11,7 +11,6 @@ class ApiController extends BaseController {
      * 回调地址
      */
     public function notify(){
-        die('xxx');
         $type = I('request.type','','trim');
         if($type == 'weixin'){
             require_once APP_PATH . "../ThinkPHP/Library/Weixin/WxpayAPI/example/notify.php";
