@@ -19,7 +19,7 @@ class ApiController extends BaseController {
             $notify->Handle(false);
 
         }elseif($type == 'alipay'){
-
+            echo 'okalipay';
         }else{
             die('error');
         }
