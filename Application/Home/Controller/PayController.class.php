@@ -177,8 +177,8 @@ class PayController extends BaseApiController {
                     break;
                 }
 
-                require_once APP_PATH . "../ThinkPHP/Library/Weixin/WxpayAPI/lib/WxPay.Api.php";
-                require_once APP_PATH . "../ThinkPHP/Library/Weixin/WxpayAPI/lib/WxPay.Notify.php";
+                require_once APP_PATH . "/../ThinkPHP/Library/Weixin/WxpayAPI/lib/WxPay.Api.php";
+                require_once APP_PATH . "/../ThinkPHP/Library/Weixin/WxpayAPI/lib/WxPay.Notify.php";
 
                 #微信订单
 
@@ -235,9 +235,9 @@ class PayController extends BaseApiController {
         * 3、支付宝论坛（http://club.alipay.com/read-htm-tid-8681712.html）
         * 如果不想使用扩展功能请把扩展功能参数赋空值。
         */
-                $alipay_config  = include_once(__DIR__."/alipay.config.php");
-                require_once(__DIR__."/alipay/lib/alipay_submit.class.php");
-                $alipay_config['cacert'] = __DIR__.'/alipay/cacert.pem';
+                $alipay_config  = include_once(APP_PATH."/ThinkPHP/Library/Alipay/alipay.config.php");
+                require_once(APP_PATH."/ThinkPHP/Library/Alipay/alipay/lib/alipay_submit.class.php");
+                $alipay_config['cacert'] = APP_PATH."/ThinkPHP/Library/Alipay/alipay/cacert.pem";
                 /**************************请求参数**************************/
                 //支付类型
                 $payment_type = "1";
