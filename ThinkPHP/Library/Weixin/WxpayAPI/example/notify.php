@@ -25,13 +25,13 @@ class PayNotifyCallBack extends WxPayNotify
 			&& $result["result_code"] == "SUCCESS")
 		{
 			//
-
 			$info = M('top')->where(array('out_trade_no'=>$result['out_trade_no']))->find();
 			if($info['status'] != 1){
 				M()->startTrans();
 				$res1 = M('top')->where(array('out_trade_no'=>$result['out_trade_no']))->save(array('number_no'=>$transaction_id,'status'=>1,'update_time'=>time()));
 				$res2 = M('users')->where(array('id'=>$info['user_id']))->setInc("credit", $info['credit']);
 				$res3 = M('users')->where(array('id'=>$info['user_id']))->setInc("total_top_credit", $info['credit']);
+
 				M('weixin_log')->add($result);
 				if($res1 && $res2 && $res3){
 					M()->commit();

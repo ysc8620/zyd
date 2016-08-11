@@ -210,6 +210,9 @@ class PayController extends BaseApiController {
                     $input->SetNotify_url("https://api.zydzuqiu.com/pay/notify/type/weixin.html");
                     $input->SetTrade_type("APP");
                     $result = \WxPayApi::unifiedOrder($input);
+                    if($result['prepay_id']){
+                        M('top')->where(array('id'=>$res))->save(array('prepay_id'=>$result['prepay_id']));
+                    }
                     $json['data'] = $result;
                 }else{
                     $json['status'] = 111;
