@@ -232,21 +232,13 @@ class PayController extends BaseApiController {
     public function notify(){
         $type = I('request.type','','trim');
         if($type == 'weixin'){
-            $msg = "OK";
-            require_once APP_PATH . "../ThinkPHP/Library/Weixin/WxpayAPI/lib/WxPay.Api.php";
-            require_once APP_PATH . "../ThinkPHP/Library/Weixin/WxpayAPI/lib/WxPay.Notify.php";
-            //当返回false的时候，表示notify中调用NotifyCallBack回调失败获取签名校验失败，此时直接回复失败
-            $result = \WxpayApi::notify(array($this, 'NotifyCallBack'), $msg);
-            if($result == false){
-                $this->SetReturn_code("FAIL");
-                $this->SetReturn_msg($msg);
-                $this->ReplyNotify(false);
-                return;
-            } else {
-                //该分支在成功回调到NotifyCallBack方法，处理完成之后流程
-                $this->SetReturn_code("SUCCESS");
-                $this->SetReturn_msg("OK");
-            }
+            
+            require_once APP_PATH . "../ThinkPHP/Library/Weixin/WxpayAPI/example/notify.php";
+            \Log::DEBUG("begin notify");
+
+            $notify = new \PayNotifyCallBack();
+            $notify->Handle(false);
+
         }elseif($type == 'alipay'){
 
         }else{
