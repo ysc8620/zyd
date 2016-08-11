@@ -235,10 +235,8 @@ class PayController extends BaseApiController {
     public function notify(){
         $type = I('request.type','','trim');
         if($type == 'weixin'){
-            echo 'ok';
             require_once APP_PATH . "../ThinkPHP/Library/Weixin/WxpayAPI/example/notify.php";
-            \Log::DEBUG("begin notify");
-
+            \Log::DEBUG(date("Y-m-d H:i:s")."begin notify");
             $notify = new \PayNotifyCallBack();
             $notify->Handle(false);
 
