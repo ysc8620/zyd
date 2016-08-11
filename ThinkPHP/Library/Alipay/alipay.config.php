@@ -4,13 +4,13 @@
  * @author aloner <qiang_killer@126.com>
  */
 $alipay_config = array(
-	'partner'		    => "2088801028918054",
-	'key'   		    => "ysuc37b5zhpw3hr87st15dczsvyr0zpv",
-	'seller_email'	    => "eb@sundan.com",
-	'notify_url'		=> "http://pay.tupaidang.com/paynotify.alipay",
-	'return_url'		=> "http://pay.tupaidang.com/payment.alipay",
-	'show_url'		    => "http://www.alipay.com",
-	'mainname'		    => "深圳前海图拍档科技有限公司",
+	'partner'		    => "2088421319080851",
+	'key'   		    => "9ph6eh0bg8wn0yp2lsqk62uhlagu6itk",
+	'seller_email'	    => "xianhekeji@qq.com",
+	'notify_url'		=> "https://api.zydzuqiu.com/api/notify/type/alipay.html",
+	'return_url'		=> "https://api.zydzuqiu.com",
+	'show_url'		    => "https://api.zydzuqiu.com",
+	'mainname'		    => "杭州闲鹤科技有限公司",
 	'sign_type'		    =>"MD5",
 	'input_charset'	=> "utf-8",
 	'transport'		    => "http",
