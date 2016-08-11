@@ -325,6 +325,12 @@ class MatchController extends BaseApiController {
             // 大小球半场
             $tuijian['daxiaoqiu_half'] = ["rate_4"=>"0", "rate_5"=>"0", "rate_6"=>"0"];
 
+            // 大小球
+            $tuijian['jiaoqiu'] = ["rate_1"=>"0", "rate_2"=>"0", "rate_3"=>"0"];
+
+            // 大小球半场
+            $tuijian['jiaoqiu_half'] = ["rate_4"=>"0", "rate_5"=>"0", "rate_6"=>"0"];
+
             $json['data'] = $tuijian;
         }while(false);
         $this->ajaxReturn($json);

@@ -153,34 +153,73 @@ class PayController extends BaseApiController {
         $json = $this->simpleJson();
         do{
             $type = I('request.type','','strval');
+            $product_id = I('request.product_id',0,'intval');
+
+            $this->check_login();
+            $user_id = intval($this->user['id']);
+
+
             if($type == 'weixin'){
+
                 ini_set('date.timezone','Asia/Shanghai');
                 error_reporting(E_ERROR);
 
+                $product = M('product')->where(array('id'=>$product_id))->find();
+                if(!$product){
+                    $json['status'] = 111;
+                    $json['msg'] = '没有找到支付产品';
+                    break;
+                }
+
+                if($product['status'] != 1){
+                    $json['status'] = 111;
+                    $json['msg'] = '支付产品已下架';
+                    break;
+                }
+
                 require_once APP_PATH . "../ThinkPHP/Library/Weixin/WxpayAPI/lib/WxPay.Api.php";
                 require_once APP_PATH . "../ThinkPHP/Library/Weixin/WxpayAPI/lib/WxPay.Notify.php";
-                #微信订单
-                $order = [
-                    ''
-                ];
-                //统一下单
-                $input = new \WxPayUnifiedOrder();
-                $input->SetBody("test");
-                $input->SetAttach("test");
-                $input->SetOut_trade_no(\WxPayConfig::MCHID.date("YmdHis"));
-                $input->SetTotal_fee("1");
-                $input->SetTime_start(date("YmdHis"));
-                $input->SetTime_expire(date("YmdHis", time() + 600));
-                $input->SetGoods_tag("test");
-                $input->SetNotify_url("https://api.zydzuqiu.com/pay/notify/type/weixin.html");
-                $input->SetTrade_type("APP");
-                $result = \WxPayApi::unifiedOrder($input);
-                $json['data'] = $result;
 
+                #微信订单
+
+                $out_trade_no = get_order_no();
+                // `id`, `type`, `product_id`, `credit`, `amount`, `order_no`, `apple_receipt`, `apple_receipt_md5`, `number_no`, `user_id`, `status`, `create_time`, `update_time`
+                $data = [
+                    'type'=> 2,
+                    'product_id' => $product_id,
+                    'credit' => $product['credit'],
+                    'amount' => $product['amount'],
+                    'order_no' => $out_trade_no,
+                    'user_id' => $user_id,
+                    'apple_receipt'=>'',
+                    'apple_receipt_md5'=>'',
+                    'create_time' => time(),
+                    'update_time' => time()
+                ];
+                $res = M('top')->add($data);
+                if($res){
+                    //统一下单
+                    $input = new \WxPayUnifiedOrder();
+                    $input->SetBody('章鱼帝充值');
+                    $input->SetAttach('章鱼帝充值');
+                    $input->SetOut_trade_no($out_trade_no);
+                    $input->SetTotal_fee($product['amount'] * 100);
+                    $input->SetTime_start(date("YmdHis"));
+                    $input->SetTime_expire(date("YmdHis", time() + 600));
+                    $input->SetGoods_tag("top");
+                    $input->SetNotify_url("https://api.zydzuqiu.com/pay/notify/type/weixin.html");
+                    $input->SetTrade_type("APP");
+                    $result = \WxPayApi::unifiedOrder($input);
+                    $json['data'] = $result;
+                }else{
+                    $json['status'] = 111;
+                    $json['msg'] = '下单失败~';
+                    break;
+                }
             }elseif($type == 'alipay'){
 
             }else{
-                $json['status'] = 100;
+                $json['status'] = 110;
                 $json['msg'] = '错误支付类型';
             }
         }while(false);
@@ -191,7 +230,28 @@ class PayController extends BaseApiController {
      * 回调地址
      */
     public function notify(){
+        $type = I('request.type','','trim');
+        if($type == 'weixin'){
+            $msg = "OK";
+            require_once APP_PATH . "../ThinkPHP/Library/Weixin/WxpayAPI/lib/WxPay.Api.php";
+            require_once APP_PATH . "../ThinkPHP/Library/Weixin/WxpayAPI/lib/WxPay.Notify.php";
+            //当返回false的时候，表示notify中调用NotifyCallBack回调失败获取签名校验失败，此时直接回复失败
+            $result = \WxpayApi::notify(array($this, 'NotifyCallBack'), $msg);
+            if($result == false){
+                $this->SetReturn_code("FAIL");
+                $this->SetReturn_msg($msg);
+                $this->ReplyNotify(false);
+                return;
+            } else {
+                //该分支在成功回调到NotifyCallBack方法，处理完成之后流程
+                $this->SetReturn_code("SUCCESS");
+                $this->SetReturn_msg("OK");
+            }
+        }elseif($type == 'alipay'){
 
+        }else{
+            die('error');
+        }
     }
 
 
