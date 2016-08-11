@@ -297,8 +297,8 @@ class PayController extends BaseApiController {
 
                 //建立请求
                 $alipaySubmit = new \AlipaySubmit($alipay_config);
-                $alipaySubmit->buildRequestPara($parameter);
-                $json['data'] = $alipaySubmit;
+                $res = $alipaySubmit->buildRequestPara($parameter);
+                $json['data'] = $res;
             }else{
                 $json['status'] = 110;
                 $json['msg'] = '错误支付类型';
