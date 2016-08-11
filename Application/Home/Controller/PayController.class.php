@@ -171,7 +171,7 @@ class PayController extends BaseApiController {
                 $input->SetGoods_tag("test");
                 $input->SetNotify_url("https://api.zydzuqiu.com/pay/notify/type/weixin.html");
                 $input->SetTrade_type("APP");
-                $result = WxPayApi::unifiedOrder($input);
+                $result = \WxPayApi::unifiedOrder($input);
                 $json['data'] = $result;
 
             }elseif($type == 'alipay'){
