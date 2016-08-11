@@ -155,7 +155,7 @@ class PayController extends BaseApiController {
             $type = I('request.type','','strval');
             $product_id = I('request.product_id',0,'intval');
 
-            $this->check_login();
+            //$this->check_login();
             $user_id = intval($this->user['id']);
 
 
