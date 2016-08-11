@@ -162,7 +162,7 @@ class PayController extends BaseApiController {
                 require_once APP_PATH . "../ThinkPHP/Library/Weixin/WxpayAPI/lib/WxPay.Notify.php";
 
                 //统一下单
-                $input = new WxPayUnifiedOrder();
+                $input = new \WxPayUnifiedOrder();
                 $input->SetBody("test");
                 $input->SetAttach("test");
                 $input->SetOut_trade_no(WxPayConfig::MCHID.date("YmdHis"));
