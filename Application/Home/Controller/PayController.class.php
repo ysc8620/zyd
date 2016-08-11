@@ -159,7 +159,10 @@ class PayController extends BaseApiController {
 
                 require_once APP_PATH . "../ThinkPHP/Library/Weixin/WxpayAPI/lib/WxPay.Api.php";
                 require_once APP_PATH . "../ThinkPHP/Library/Weixin/WxpayAPI/lib/WxPay.Notify.php";
-
+                #微信订单
+                $order = [
+                    ''
+                ];
                 //统一下单
                 $input = new \WxPayUnifiedOrder();
                 $input->SetBody("test");
