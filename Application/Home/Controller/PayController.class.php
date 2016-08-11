@@ -207,7 +207,7 @@ class PayController extends BaseApiController {
                     $input->SetTime_start(date("YmdHis"));
                     $input->SetTime_expire(date("YmdHis", time() + 600));
                     $input->SetGoods_tag("top");
-                    $input->SetNotify_url("https://api.zydzuqiu.com/pay/notify/type/weixin.html");
+                    $input->SetNotify_url("https://api.zydzuqiu.com/api/notify/type/weixin.html");
                     $input->SetTrade_type("APP");
                     $result = \WxPayApi::unifiedOrder($input);
                     if($result['prepay_id']){
