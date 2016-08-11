@@ -1,6 +1,7 @@
 <?php
 namespace Home\Controller;
 
+use Think\Crypt\Driver\Think;
 use Think\Exception;
 
 class PayController extends BaseApiController {
@@ -149,6 +150,44 @@ class PayController extends BaseApiController {
      * 支付宝，微信支付
      */
     public function api(){
+        $json = $this->simpleJson();
+        do{
+            $type = I('request.type','','strval');
+            if($type == 'weixin'){
+                ini_set('date.timezone','Asia/Shanghai');
+                error_reporting(E_ERROR);
+
+                require_once APP_PATH . "../ThinkPHP/Library/Weixin/WxpayAPI/lib/WxPay.Api.php";
+                require_once APP_PATH . "../ThinkPHP/Library/Weixin/WxpayAPI/lib/WxPay.Notify.php";
+
+                //统一下单
+                $input = new WxPayUnifiedOrder();
+                $input->SetBody("test");
+                $input->SetAttach("test");
+                $input->SetOut_trade_no(WxPayConfig::MCHID.date("YmdHis"));
+                $input->SetTotal_fee("1");
+                $input->SetTime_start(date("YmdHis"));
+                $input->SetTime_expire(date("YmdHis", time() + 600));
+                $input->SetGoods_tag("test");
+                $input->SetNotify_url("https://api.zydzuqiu.com/pay/notify/type/weixin.html");
+                $input->SetTrade_type("APP");
+                $result = WxPayApi::unifiedOrder($input);
+                $json['data'] = $result;
+
+            }elseif($type == 'alipay'){
+
+            }else{
+                $json['status'] = 100;
+                $json['msg'] = '错误支付类型';
+            }
+        }while(false);
+        $this->ajaxReturn($json);
+    }
+
+    /**
+     * 回调地址
+     */
+    public function notify(){
 
     }
 

@@ -44,6 +44,8 @@ class MatchController extends BaseController {
             $item['match'] = $info;
             $item['user'] = $user;
             $list[$i] = $item;
+
+            // 添加消息
         }
         $this->assign('list', $list);// 赋值数据集
         $this->assign('page', $show);// 赋值分页输出

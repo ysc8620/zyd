@@ -820,5 +820,4 @@ class MatchController extends BaseApiController {
         }while(false);
         $this->ajaxReturn($json);
     }
-
 }
