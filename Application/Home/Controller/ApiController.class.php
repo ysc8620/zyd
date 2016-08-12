@@ -26,7 +26,7 @@ class ApiController extends BaseController {
             require_once(APP_PATH . "/../ThinkPHP/Library/Alipay/lib/alipay_rsa.function.php");
             require_once(APP_PATH . "/../ThinkPHP/Library/Alipay/lib/alipay_core.function.php");
             //计算得出通知验证结果
-            $alipayNotify = new AlipayNotify($alipay_config);
+            $alipayNotify = new \AlipayNotify($alipay_config);
 
             if ($alipayNotify->getResponse($_POST['notify_id']))//判断成功之后使用getResponse方法判断是否是支付宝发来的异步通知。
             {
