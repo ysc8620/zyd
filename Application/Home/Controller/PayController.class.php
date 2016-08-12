@@ -273,6 +273,7 @@ class PayController extends BaseApiController {
                     $json['data']['param'] =  $data;
                     $json['data']['out_trade_no'] = $out_trade_no;
                     $json['data']['total_fee'] = $order['total_fee'];
+                    $json['data']['private_key'] = $alipay_config['private_key'];
                 }
             }else{
                 $json['status'] = 110;
