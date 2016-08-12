@@ -235,7 +235,7 @@ class PayController extends BaseApiController {
                     require_once(APP_PATH . "/../ThinkPHP/Library/Alipay/lib/alipay_notify.class.php");
                     require_once(APP_PATH . "/../ThinkPHP/Library/Alipay/lib/alipay_rsa.function.php");
                     require_once(APP_PATH . "/../ThinkPHP/Library/Alipay/lib/alipay_core.function.php");
-                    global $alipay_config;
+                    #global $alipay_config;
 
                     print_r($alipay_config);die();
 
