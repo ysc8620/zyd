@@ -259,20 +259,20 @@ class PayController extends BaseApiController {
                     //确认PID和接口名称是否匹配。
                     date_default_timezone_set("PRC");
 
-                        //将post接收到的数组所有元素，按照“参数=参数值”的模式用“&”字符拼接成字符串。
-                        $data = createLinkstring($data);
+                    //将post接收到的数组所有元素，按照“参数=参数值”的模式用“&”字符拼接成字符串。
+                    $data = createLinkstring($data);
 
-                        //打印待签名字符串。工程目录下的log文件夹中的log.txt。
-                        logResult($data);
+                    //打印待签名字符串。工程目录下的log文件夹中的log.txt。
+                    logResult($data);
 
-                        //将待签名字符串使用私钥签名,且做urlencode. 注意：请求到支付宝只需要做一次urlencode.
-                        $rsa_sign = urlencode(rsaSign($data, $alipay_config['private_key']));
+                    //将待签名字符串使用私钥签名,且做urlencode. 注意：请求到支付宝只需要做一次urlencode.
+                    $rsa_sign = urlencode(rsaSign($data, $alipay_config['private_key']));
 
-                        //把签名得到的sign和签名类型sign_type拼接在待签名字符串后面。
-                        $data = $data . '&sign=' . '"' . $rsa_sign . '"' . '&sign_type=' . '"' . $alipay_config['sign_type'] . '"';
+                    //把签名得到的sign和签名类型sign_type拼接在待签名字符串后面。
+                    $data = $data . '&sign=' . '"' . $rsa_sign . '"' . '&sign_type=' . '"' . $alipay_config['sign_type'] . '"';
 
-                        //返回给客户端,建议在客户端使用私钥对应的公钥做一次验签，保证不是他人传输。
-                        $json['data'] =  $data;
+                    //返回给客户端,建议在客户端使用私钥对应的公钥做一次验签，保证不是他人传输。
+                    $json['data'] =  $data;
                 }
             }else{
                 $json['status'] = 110;
