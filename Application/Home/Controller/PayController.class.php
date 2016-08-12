@@ -249,7 +249,7 @@ class PayController extends BaseApiController {
                         'seller_id' => 'xianhekeji@qq.com',
                         'body' => '章鱼帝充值',
                         'total_fee' => $product['amount'],
-                        'notify_url' => 'https://api.zydzuqiu.com/api/notify/type/alipay.html',
+                        'notify_url' => 'http://api2.zydzuqiu.com/api/notify/type/alipay.html',
                         'service' => 'mobile.securitypay.pay',
                         'payment_type' => 1,
                         '_input_charset' => 'utf-8'
