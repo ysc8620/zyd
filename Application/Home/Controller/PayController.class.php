@@ -282,24 +282,4 @@ class PayController extends BaseApiController {
         $this->ajaxReturn($json);
     }
 
-    /**
-     * 回调地址
-     */
-    public function notify(){
-        die('xxx');
-        $type = I('request.type','','trim');
-        if($type == 'weixin'){
-            require_once APP_PATH . "../ThinkPHP/Library/Weixin/WxpayAPI/example/notify.php";
-            \Log::DEBUG(date("Y-m-d H:i:s")."begin notify");
-            $notify = new \PayNotifyCallBack();
-            $notify->Handle(false);
-
-        }elseif($type == 'alipay'){
-
-        }else{
-            die('error');
-        }
-    }
-
-
 }

@@ -21,10 +21,10 @@ class ApiController extends BaseController {
 
         } elseif ($type == 'alipay') {
             \Org\Util\File::write_file(APP_PATH . '/../alipay.log', date("Y-m-d H:i:s") . json_encode($_POST) . "\r\n");
-            require_once(APP_PATH . "../ThinkPHP/Library/Alipay/alipay.config.php");
-            require_once(APP_PATH . "../ThinkPHP/Library/Alipay/lib/alipay_notify.class.php");
-            require_once(APP_PATH . "../ThinkPHP/Library/Alipay/lib/alipay_rsa.function.php");
-            require_once(APP_PATH . "../ThinkPHP/Library/Alipay/lib/alipay_core.function.php");
+            require_once(APP_PATH . "/../ThinkPHP/Library/Alipay/alipay.config.php");
+            require_once(APP_PATH . "/../ThinkPHP/Library/Alipay/lib/alipay_notify.class.php");
+            require_once(APP_PATH . "/../ThinkPHP/Library/Alipay/lib/alipay_rsa.function.php");
+            require_once(APP_PATH . "/../ThinkPHP/Library/Alipay/lib/alipay_core.function.php");
             //计算得出通知验证结果
             $alipayNotify = new AlipayNotify($alipay_config);
 
