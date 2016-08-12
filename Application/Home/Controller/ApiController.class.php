@@ -25,7 +25,7 @@ class ApiController extends BaseController {
             require_once(APP_PATH . "/../ThinkPHP/Library/Alipay/lib/alipay_notify.class.php");
             require_once(APP_PATH . "/../ThinkPHP/Library/Alipay/lib/alipay_rsa.function.php");
             require_once(APP_PATH . "/../ThinkPHP/Library/Alipay/lib/alipay_core.function.php");
-            print_r($alipay_config);die();
+
             //计算得出通知验证结果
             $alipayNotify = new \AlipayNotify($alipay_config);
 
