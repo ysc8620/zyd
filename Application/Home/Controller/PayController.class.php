@@ -218,7 +218,7 @@ class PayController extends BaseApiController {
                 }
             }elseif($type == 'alipay'){
                 $data = [
-                    'type'=> 2,
+                    'type'=> 3,
                     'product_id' => $product_id,
                     'credit' => $product['credit'],
                     'amount' => $product['amount'],
