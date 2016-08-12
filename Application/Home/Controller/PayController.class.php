@@ -242,7 +242,7 @@ class PayController extends BaseApiController {
                     // $data = 'partner="2088211317861588"&out_trade_no="0616152240-7392"&subject="测试的商品"&seller_id="chenyin@qjy168.com"&
                     //body="该测试商品的详细描述"&total_fee="0.01"&notify_url="http://notify.msp.hk/notify.htm"&service="mobile.securitypay.pay"&payment_type="1"&_input_charset="utf-8"';
 
-                    $data = [
+                    $order = [
                         'partner' => '2088421319080851',
                         'out_trade_no' => $out_trade_no,
                         'subject' => '章鱼帝充值',
@@ -258,7 +258,7 @@ class PayController extends BaseApiController {
                     date_default_timezone_set("PRC");
 
                     //将post接收到的数组所有元素，按照“参数=参数值”的模式用“&”字符拼接成字符串。
-                    $data = createLinkstring($data);
+                    $data = createLinkstring($order);
 
                     //打印待签名字符串。工程目录下的log文件夹中的log.txt。
                     logResult($data);
@@ -270,7 +270,9 @@ class PayController extends BaseApiController {
                     $data = $data . '&sign=' . '"' . $rsa_sign . '"' . '&sign_type=' . '"' . $alipay_config['sign_type'] . '"';
 
                     //返回给客户端,建议在客户端使用私钥对应的公钥做一次验签，保证不是他人传输。
-                    $json['data'] =  $data;
+                    $json['data']['param'] =  $data;
+                    $json['data']['out_trade_no'] = $out_trade_no;
+                    $json['data']['total_fee'] = $order['total_fee'];
                 }
             }else{
                 $json['status'] = 110;
