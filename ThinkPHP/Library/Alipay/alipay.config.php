@@ -13,8 +13,7 @@
 $alipay_config['partner']		= '2088421319080851';
 
 //商户的私钥,此处填写原始私钥去头去尾，RSA公私钥生成：https://doc.open.alipay.com/doc2/detail.htm?spm=a219a.7629140.0.0.nBDxfy&treeId=58&articleId=103242&docType=1
-$alipay_config['private_key']	= '-----BEGIN PRIVATE KEY-----
-MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAMu5TTuL7k05qkG4
+$alipay_config['private_key']	= 'MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAMu5TTuL7k05qkG4
 ZjywnKP2ldIz7xq1pA0lM2RpBUYJ+KtEMvrsd1S14xSPh84moKcFI+PvcVX6HU9k
 5MTezO3OC4oJFskEFxrQgA49jmaD7NAdCg+e9fIUvTlrFZu9sbg+Dpnuh4K8l50U
 S8AchjiID54YFzhmrS8MirX7dSCrAgMBAAECgYBq6Js3HH+51wEZ7AL65lPNV6HX
@@ -27,8 +26,7 @@ mezNAkAbsPKVtbbGyhID6Vv2OcEzqhQ2quwXNMevnBS2n6tLec3kLM6YB4i356wQ
 HqE71mA+Xu3LsghvjsNJ+Z9TuMtZAkEAkSsTNzPWHu5UpcywBDQrePl55+usP6GE
 ESHuLiD6cEBTzFuahBHZeIfBUmJlqjWrF+LDF+HbwnJzTHy+6g3H7QJAaK8+qSyY
 EPqRa2KKnx3ko4QZ21/WCHjPRMgRO4oeKi/vTBd21S/h14q6z3xxueV07U8WpVuf
-pBjL8xPwhEd77A==
------END PRIVATE KEY-----';
+pBjL8xPwhEd77A==';
 
 //支付宝的公钥，查看地址：https://openhome.alipay.com/platform/keyManage.htm?keyType=partner
 $alipay_config['alipay_public_key']= 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCnxj/9qwVfgoUh/y2W89L6BkRAFljhNhgPdyPuBV64bfQNN1PjbCzkIM6qRdKBoLPXmKKMiFYnkd6rAoprih3/PrQEB/VsW8OoM8fxn67UDYuyBTqA23MML9q1+ilIZwBC2AQ2UBVOrFXfFl75p6/B5KsiNG9zpgmLCUYuLkxpLQIDAQAB';
