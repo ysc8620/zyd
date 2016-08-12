@@ -172,17 +172,13 @@ class PayController extends BaseApiController {
             $out_trade_no = get_order_no();
 
             if($type == 'weixin'){
-
                 ini_set('date.timezone','Asia/Shanghai');
                 error_reporting(E_ERROR);
-
-
 
                 require_once APP_PATH . "/../ThinkPHP/Library/Weixin/WxpayAPI/lib/WxPay.Api.php";
                 require_once APP_PATH . "/../ThinkPHP/Library/Weixin/WxpayAPI/lib/WxPay.Notify.php";
 
                 #微信订单
-
 
                 // `id`, `type`, `product_id`, `credit`, `amount`, `order_no`, `apple_receipt`, `apple_receipt_md5`, `number_no`, `user_id`, `status`, `create_time`, `update_time`
                 $data = [
