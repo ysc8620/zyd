@@ -63,12 +63,12 @@ echo "=\r\n";
 
 $data = [
     'type' => 'alipay',
-    'product_id' => 10006
+    'user_id' => 10006
 ];
 
 
 //$data['apple_receipt'] = $apple_receipt;
-$result = httpPost("https://api.zydzuqiu.com/api/notify/type/alipay.html", $data);
+$result = httpPost("https://api.zydzuqiu.com/user/info.html", $data);
 //var_dump($result);
 echo ($result);
 print_r(json_decode($result, true));
