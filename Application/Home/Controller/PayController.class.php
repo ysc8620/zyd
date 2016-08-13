@@ -155,34 +155,31 @@ class PayController extends BaseApiController {
             $type = I('request.type','','strval');
             $product_id = I('request.product_id',0,'intval');
 
-            //$this->check_login();
+            $this->check_login();
             $user_id = intval($this->user['id']);
+            $product = M('product')->where(array('id'=>$product_id))->find();
+            if(!$product){
+                $json['status'] = 111;
+                $json['msg'] = '没有找到支付产品';
+                break;
+            }
 
+            if($product['status'] != 1){
+                $json['status'] = 111;
+                $json['msg'] = '支付产品已下架';
+                break;
+            }
+            $out_trade_no = get_order_no();
 
             if($type == 'weixin'){
-
                 ini_set('date.timezone','Asia/Shanghai');
                 error_reporting(E_ERROR);
-
-                $product = M('product')->where(array('id'=>$product_id))->find();
-                if(!$product){
-                    $json['status'] = 111;
-                    $json['msg'] = '没有找到支付产品';
-                    break;
-                }
-
-                if($product['status'] != 1){
-                    $json['status'] = 111;
-                    $json['msg'] = '支付产品已下架';
-                    break;
-                }
 
                 require_once APP_PATH . "/../ThinkPHP/Library/Weixin/WxpayAPI/lib/WxPay.Api.php";
                 require_once APP_PATH . "/../ThinkPHP/Library/Weixin/WxpayAPI/lib/WxPay.Notify.php";
 
                 #微信订单
 
-                $out_trade_no = get_order_no();
                 // `id`, `type`, `product_id`, `credit`, `amount`, `order_no`, `apple_receipt`, `apple_receipt_md5`, `number_no`, `user_id`, `status`, `create_time`, `update_time`
                 $data = [
                     'type'=> 2,
@@ -220,85 +217,64 @@ class PayController extends BaseApiController {
                     break;
                 }
             }elseif($type == 'alipay'){
-                /* *
-        * 功能：即时到账交易接口接入页
-        * 版本：3.3
-        * 修改日期：2012-07-23
-        * 说明：
-        * 以下代码只是为了方便商户测试而提供的样例代码，商户可以根据自己网站的需要，按照技术文档编写,并非一定要使用该代码。
-        * 该代码仅供学习和研究支付宝接口使用，只是提供一个参考。
+                $data = [
+                    'type'=> 3,
+                    'product_id' => $product_id,
+                    'credit' => $product['credit'],
+                    'amount' => $product['amount'],
+                    'order_no' => $out_trade_no,
+                    'user_id' => $user_id,
+                    'apple_receipt'=>'',
+                    'apple_receipt_md5'=>'',
+                    'create_time' => time(),
+                    'update_time' => time()
+                ];
+                $res = M('top')->add($data);
+                if($res) {
+                    require_once(APP_PATH . "/../ThinkPHP/Library/Alipay/alipay.config.php");
+                    require_once(APP_PATH . "/../ThinkPHP/Library/Alipay/lib/alipay_notify.class.php");
+                    require_once(APP_PATH . "/../ThinkPHP/Library/Alipay/lib/alipay_rsa.function.php");
+                    require_once(APP_PATH . "/../ThinkPHP/Library/Alipay/lib/alipay_core.function.php");
+                    #global $alipay_config;
 
-        *************************注意*************************
-        * 如果您在接口集成过程中遇到问题，可以按照下面的途径来解决
-        * 1、商户服务中心（https://b.alipay.com/support/helperApply.htm?action=consultationApply），提交申请集成协助，我们会有专业的技术工程师主动联系您协助解决
-        * 2、商户帮助中心（http://help.alipay.com/support/232511-16307/0-16307.htm?sh=Y&info_type=9）
-        * 3、支付宝论坛（http://club.alipay.com/read-htm-tid-8681712.html）
-        * 如果不想使用扩展功能请把扩展功能参数赋空值。
-        */
-                $alipay_config  = include_once(APP_PATH."/../ThinkPHP/Library/Alipay/alipay.config.php");
-                require_once(APP_PATH."/../ThinkPHP/Library/Alipay/alipay/lib/alipay_submit.class.php");
-                $alipay_config['cacert'] = APP_PATH."/../ThinkPHP/Library/Alipay/alipay/cacert.pem";
-                /**************************请求参数**************************/
-                //支付类型
-                $payment_type = "1";
-                //必填，不能修改
-                //服务器异步通知页面路径
-                $notify_url = $alipay_config['notify_url'];//"http://商户网关地址/create_direct_pay_by_user-PHP-UTF-8/notify_url.php";
-                //需http://格式的完整路径，不能加?id=123这类自定义参数
+                    //print_r($alipay_config);die();
 
-                //页面跳转同步通知页面路径
-                $return_url = $alipay_config['return_url'];//"http://商户网关地址/create_direct_pay_by_user-PHP-UTF-8/return_url.php";
-                //需http://格式的完整路径，不能加?id=123这类自定义参数，不能写成http://localhost/
+                    // $data = 'partner="2088211317861588"&out_trade_no="0616152240-7392"&subject="测试的商品"&seller_id="chenyin@qjy168.com"&
+                    //body="该测试商品的详细描述"&total_fee="0.01"&notify_url="http://notify.msp.hk/notify.htm"&service="mobile.securitypay.pay"&payment_type="1"&_input_charset="utf-8"';
 
-                //商户订单号
-                $out_trade_no = get_order_no();
-                //商户网站订单系统中唯一订单号，必填
+                    $order = [
+                        'partner' => '2088421319080851',
+                        'out_trade_no' => $out_trade_no,
+                        'subject' => '章鱼帝充值',
+                        'seller_id' => 'xianhekeji@qq.com',
+                        'body' => '章鱼帝充值',
+                        'total_fee' => $product['amount'],
+                        'notify_url' => 'http://api2.zydzuqiu.com/api/notify/type/alipay.html',
+                        'service' => 'mobile.securitypay.pay',
+                        'payment_type' => 1,
+                        '_input_charset' => 'utf-8'
+                    ];
+                    //确认PID和接口名称是否匹配。
+                    date_default_timezone_set("PRC");
 
-                //订单名称
-                $subject = "章鱼帝充值";
-                //必填
+                    //将post接收到的数组所有元素，按照“参数=参数值”的模式用“&”字符拼接成字符串。
+                    $data = createLinkstring($order);
 
-                //付款金额
-                $total_fee = 0.01;
-                //必填
+                    //打印待签名字符串。工程目录下的log文件夹中的log.txt。
+                    logResult($data);
 
-                //订单描述
-                $body = "章鱼帝充值";
+                    //将待签名字符串使用私钥签名,且做urlencode. 注意：请求到支付宝只需要做一次urlencode.
+                    $rsa_sign = urlencode(rsaSign($data, $alipay_config['private_key']));
 
-                //商品展示地址
-                $show_url = $alipay_config['show_url'];
-                //需以http://开头的完整路径，例如：http://www.商户网址.com/myorder.html
+                    //把签名得到的sign和签名类型sign_type拼接在待签名字符串后面。
+                    $data = $data . '&sign=' . '"' . $rsa_sign . '"' . '&sign_type=' . '"' . $alipay_config['sign_type'] . '"';
 
-                //防钓鱼时间戳
-                $anti_phishing_key = "";
-                //若要使用请调用类文件submit中的query_timestamp函数
-
-                //客户端的IP地址
-                $exter_invoke_ip = "";
-                //非局域网的外网IP地址，如：221.0.0.1
-                /************************************************************/
-                //构造要请求的参数数组，无需改动
-                $parameter = array(
-                    "service" => "create_direct_pay_by_user",
-                    "partner" => trim($alipay_config['partner']),
-                    "seller_email" => trim($alipay_config['seller_email']),
-                    "payment_type"	=> $payment_type,
-                    "notify_url"	=> $notify_url,
-                    "return_url"	=> $return_url,
-                    "out_trade_no"	=> $out_trade_no,
-                    "subject"	=> $subject,
-                    "total_fee"	=> $total_fee,
-                    "body"	=> $body,
-                    "show_url"	=> $show_url,
-                    "anti_phishing_key"	=> $anti_phishing_key,
-                    "exter_invoke_ip"	=> $exter_invoke_ip,
-                    "_input_charset"	=> trim(strtolower($alipay_config['input_charset']))
-                );
-
-                //建立请求
-                $alipaySubmit = new \AlipaySubmit($alipay_config);
-                $res = $alipaySubmit->buildRequestPara($parameter);
-                $json['data'] = $res;
+                    //返回给客户端,建议在客户端使用私钥对应的公钥做一次验签，保证不是他人传输。
+                    $json['data']['param'] =  $data;
+                    $json['data']['out_trade_no'] = $out_trade_no;
+                    $json['data']['total_fee'] = $order['total_fee'];
+                    $json['data']['private_key'] = $alipay_config['private_key'];
+                }
             }else{
                 $json['status'] = 110;
                 $json['msg'] = '错误支付类型';
@@ -306,25 +282,5 @@ class PayController extends BaseApiController {
         }while(false);
         $this->ajaxReturn($json);
     }
-
-    /**
-     * 回调地址
-     */
-    public function notify(){
-        die('xxx');
-        $type = I('request.type','','trim');
-        if($type == 'weixin'){
-            require_once APP_PATH . "../ThinkPHP/Library/Weixin/WxpayAPI/example/notify.php";
-            \Log::DEBUG(date("Y-m-d H:i:s")."begin notify");
-            $notify = new \PayNotifyCallBack();
-            $notify->Handle(false);
-
-        }elseif($type == 'alipay'){
-
-        }else{
-            die('error');
-        }
-    }
-
 
 }

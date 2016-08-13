@@ -2,8 +2,8 @@
 /* *
  * 支付宝接口公用函数
  * 详细：该类是请求、通知返回两个文件所调用的公用函数核心处理文件
- * 版本：3.3
- * 日期：2012-07-19
+ * 版本：1.0
+ * 日期：2016-06-06
  * 说明：
  * 以下代码只是为了方便商户测试而提供的样例代码，商户可以根据自己网站的需要，按照技术文档编写,并非一定要使用该代码。
  * 该代码仅供学习和研究支付宝接口使用，只是提供一个参考。
@@ -27,24 +27,19 @@ function createLinkstring($para) {
 	
 	return $arg;
 }
+
+
 /**
- * 把数组所有元素，按照“参数=参数值”的模式用“&”字符拼接成字符串，并对字符串做urlencode编码
- * @param $para 需要拼接的数组
- * return 拼接完成以后的字符串
+ * 对数组排序
+ * @param $para 排序前的数组
+ * return 排序后的数组
  */
-function createLinkstringUrlencode($para) {
-	$arg  = "";
-	while (list ($key, $val) = each ($para)) {
-		$arg.=$key."=".urlencode($val)."&";
-	}
-	//去掉最后一个&字符
-	$arg = substr($arg,0,count($arg)-2);
-	
-	//如果存在转义字符，那么去掉转义
-	if(get_magic_quotes_gpc()){$arg = stripslashes($arg);}
-	
-	return $arg;
+function argSort($para) {
+	ksort($para);
+	reset($para);
+	return $para;
 }
+
 /**
  * 除去数组中的空值和签名参数
  * @param $para 签名参数组
@@ -58,22 +53,25 @@ function paraFilter($para) {
 	}
 	return $para_filter;
 }
-/**
- * 对数组排序
- * @param $para 排序前的数组
- * return 排序后的数组
- */
-function argSort($para) {
-	ksort($para);
-	reset($para);
-	return $para;
-}
+
+function query_timestamp() {
+		$url = $this->alipay_gateway_new."service=query_timestamp&partner=".trim(strtolower($this->alipay_config['partner']))."&_input_charset=".trim(strtolower($this->alipay_config['input_charset']));
+		$encrypt_key = "";		
+
+		$doc = new DOMDocument();
+		$doc->load($url);
+		$itemEncrypt_key = $doc->getElementsByTagName( "encrypt_key" );
+		$encrypt_key = $itemEncrypt_key->item(0)->nodeValue;
+		
+		return $encrypt_key;
+	}
 /**
  * 写日志，方便测试（看网站需求，也可以改成把记录存入数据库）
  * 注意：服务器需要开通fopen配置
  * @param $word 要写入日志里的文本内容 默认值：空值
  */
 function logResult($word='') {
+	date_default_timezone_set("PRC");
 	$fp = fopen("log.txt","a");
 	flock($fp, LOCK_EX) ;
 	fwrite($fp,"执行日期：".strftime("%Y%m%d%H%M%S",time())."\n".$word."\n");
