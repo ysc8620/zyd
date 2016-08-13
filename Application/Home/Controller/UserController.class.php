@@ -106,6 +106,9 @@ class UserController extends BaseApiController {
             $user_id = M('users')->add($user);
             if($user_id){
                 $member = M('users')->where(array('id'=>$user_id))->field($this->field)->find();
+
+                $total_month_tuijian = M('tuijian')->where(array('user_id'=>$member['id']))->count();
+                $member['total_month_tuijian'] = $total_month_tuijian;
                 $json['msg'] = '用户注册成功';
                 $json['data'] = $this->get_return_member($member, true);
             }else{
@@ -150,6 +153,10 @@ class UserController extends BaseApiController {
                     $json['msg'] = '用户被锁定不能使用';
                     break;
                 }
+
+                $total_month_tuijian = M('tuijian')->where(array('user_id'=>$member['id']))->count();
+                $member['total_month_tuijian'] = $total_month_tuijian;
+
                 # 更新登录ssid
                 $member['ssid'] = get_login_ssid();
                 $save = [];
@@ -183,6 +190,9 @@ class UserController extends BaseApiController {
                     $json['msg'] = '登录密码错误';
                     break;
                 }
+
+                $total_month_tuijian = M('tuijian')->where(array('user_id'=>$member['id']))->count();
+                $member['total_month_tuijian'] = $total_month_tuijian;
 
                 # 更新登录ssid
                 $member['ssid'] = get_login_ssid();
@@ -238,6 +248,7 @@ class UserController extends BaseApiController {
 
             $total_month_tuijian = M('tuijian')->where(array('user_id'=>$user_id))->count();
             $member['total_month_tuijian'] = $total_month_tuijian;
+
             $json['data'] = $this->get_return_member($member, true);
 
         }while(false);
@@ -283,6 +294,7 @@ class UserController extends BaseApiController {
 
             $total_month_tuijian = M('tuijian')->where(array('user_id'=>$user_id))->count();
             $member['total_month_tuijian'] = $total_month_tuijian;
+
             $json['data'] = $this->get_return_member($member);
 
         }while(false);
@@ -324,6 +336,7 @@ class UserController extends BaseApiController {
                     $wx_user['ssid'] = $data['ssid'];
                     $wx_user['update_time'] = $data['update_time'];
                     $json['msg'] = '微信登录成功';
+
                     $json['data'] = $this->get_return_member($wx_user, true);
                     break;
                 }else{
