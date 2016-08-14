@@ -62,13 +62,13 @@ function sign($data,$appsecret)
 echo "=\r\n";
 
 $data = [
-    'type' => 'alipay',
-    'user_id' => 10006
+    'type' => '1',
+    'product_id' => 10006
 ];
 
 
 //$data['apple_receipt'] = $apple_receipt;
-$result = httpPost("https://api.zydzuqiu.com/user/check_user.html", $data);
+$result = httpPost("https://api.zydzuqiu.com/pay/get_apple_list.html", $data);
 //var_dump($result);
 echo ($result);
 print_r(json_decode($result, true));
