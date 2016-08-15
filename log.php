@@ -62,13 +62,13 @@ function sign($data,$appsecret)
 echo "=\r\n";
 
 $data = [
-    'type' => '1',
-    'product_id' => 10006
+    'type' => '2',
+    'match_id' => 1217500
 ];
 
 
 //$data['apple_receipt'] = $apple_receipt;
-$result = httpPost("https://api.zydzuqiu.com/pay/get_apple_list.html", $data);
+$result = httpPost("https://api.zydzuqiu.com/user/get_expert_list.html", $data);
 //var_dump($result);
 echo ($result);
 print_r(json_decode($result, true));

@@ -405,7 +405,7 @@ class MatchController extends BaseApiController {
                 M('match_follow')->where(array('id'=>$follow['id']))->delete();
                 M('match')->where(array('match_id'=>$match_id))->setDec('total_collect', 1);
                 M('users')->where(array('id'=>$user_id))->setDec('total_collect_match', 1);
-                $json['msg'] = '消关注成功';
+                $json['msg'] = '取消关注成功';
                 $json['data']['match_id'] = $match_id;
                 $json['data']['user_id'] = $user_id;
                 break;
