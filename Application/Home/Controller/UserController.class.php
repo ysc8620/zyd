@@ -639,9 +639,16 @@ class UserController extends BaseApiController {
 
                 $list = M('users')->where("is_expert=1 AND status = 1")
                     ->field($this->field)
-                    ->limit($Page->firstRow . ',' . $Page->listRows)->order("total_follow_user DESC, total_rate DESC")->select();
+                    ->limit($Page->firstRow . ',' . $Page->listRows)->order("total_month_rate DESC, total_rate DESC")->select();
 
                 foreach($list as $i=>$item){
+                    $item['is_follow'] = 0;
+                    if($user_id){
+                        $res = M('users_follow')->where(array('user_id'=>$user_id, 'to_user_id'=>$item['id']))->find();
+                        if($res){
+                            $item['is_follow'] = 1;
+                        }
+                    }
                     $list[$i] = $this->get_return_member($item);
                 }
 
@@ -661,8 +668,15 @@ class UserController extends BaseApiController {
 
                 $list = M('users')->where("is_expert=1 AND status = 1")
                     ->field($this->field)
-                    ->limit($Page->firstRow . ',' . $Page->listRows)->order("total_month_rate DESC, total_rate DESC")->select();
+                    ->limit($Page->firstRow . ',' . $Page->listRows)->order("total_follow_user DESC,total_rate DESC")->select();
                 foreach($list as $i=>$item){
+                    $item['is_follow'] = 0;
+                    if($user_id){
+                        $res = M('users_follow')->where(array('user_id'=>$user_id, 'to_user_id'=>$item['id']))->find();
+                        if($res){
+                            $item['is_follow'] = 1;
+                        }
+                    }
                     $list[$i] = $this->get_return_member($item);
                 }
                 $json['data'] = [
@@ -686,6 +700,7 @@ class UserController extends BaseApiController {
                     ->limit($Page->firstRow . ',' . $Page->listRows)->order("uf.create_time DESC")->select();
 
                 foreach($list as $i=>$item){
+                    $item['is_follow'] = 1;
                     $list[$i] = $this->get_return_member($item);
                 }
 

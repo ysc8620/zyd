@@ -7,6 +7,9 @@
  *
  * `zoudi_id`, `match_id`, `time`, `home_score`, `away_score`, `home_yellow`, `away_yellow`, `type`, `company_id`, `rate_1`, `rate_2`, `rate_3`, `change_date`, `update_time`
  */
+echo base64_encode(("1000006"));
+die();
+
 $postStr = file_get_contents("F:/user/Odds_Running.aspx");
 $obj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
 $data = json_decode(json_encode($obj), true);
