@@ -15,12 +15,9 @@ require_once __DIR__ .'/config.php';
 echo date("Y-m-d H:i:s")."=match_api=\r\n";
 //mongodb://admin_miss:miss@localhost:27017/test
 do{
-    global $mongo;
-    $curr = $mongo->zyd->match;
-
-    $date = strtotime(date("Y-m-d"));
 
     $match_list = M('match')->where(array('state'=>array('in',[0,1,2,3,4]),'update_last'=>array('lt', time()-600)))->field("match_id")->limit(200)->order('update_last ASC')->select();
+    var_dump($match_list);
     $match_ids = join(',', $match_list);
     if($match_ids){
 
