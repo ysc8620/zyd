@@ -38,6 +38,7 @@ class MatchController extends BaseApiController {
             // 进行中
             if($type == 1){
                 $where['state'] = array('in',array(1,2,3,4));
+                $where['time'] = array('lt',date("Y-m-d H:i:s"));
             }elseif($type == 2){
                 $where['state'] = -1;
             }elseif($type == 3){
@@ -56,7 +57,7 @@ class MatchController extends BaseApiController {
                 ('match_id,time as match_time,league_id,league_name,kind,level,state,home_id,home_name,home_score,away_id,
                 away_name,away_score,home_red,away_red,home_yellow,away_yellow,match_round,address,weather_ico,weather,temperature,is_neutral,technic'
                 )
-                ->where($where)->order("time DESC")->limit($Page->firstRow . ',' . $Page->listRows)->select();
+                ->where($where)->order("level DESC, time ASC")->limit($Page->firstRow . ',' . $Page->listRows)->select();
 
             foreach($list as $i=>$match){
                 //
@@ -122,6 +123,7 @@ class MatchController extends BaseApiController {
                 $event_list = M('event')->where(array('match_id'=>$match['match_id']))->order("time ASC")->select();
                 $list[$i]['events'] = (array)$event_list;
                 $list[$i]['match_name'] = $match['league_name'];
+                $list[$i]['time22'] = $match['match_time'];
                 // 比赛状态 0:未开,1:上半场,2:中场,3:下半场,4,加时，-11:待定,-12:腰斩,-13:中断,-14:推迟,-1:完场，-10取消
                 if($match['state'] == '0'){
                     $list[$i]['match_time2'] = '未开';
