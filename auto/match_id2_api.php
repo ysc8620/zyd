@@ -17,7 +17,9 @@ echo date("Y-m-d H:i:s")."=match_api=\r\n";
 
 do{
 
-    $match_list = M('match')->where(array('state'=>array('in',[0,1,2,3,4]),'update_last'=>array('lt', time()-180)))->field("match_id")->limit(200)->order('update_last ASC')->select();
+    $match_list = M('match')->where(array('state'=>-1,'update_last'=>array('ngt', 0)))->field("match_id")->limit(200)->order('update_last ASC')->select();
+    echo M()->getLastSql();
+    die();
     $match_list2 = [];
     $match_list3 = [];
     foreach($match_list as $match){
@@ -70,7 +72,7 @@ do{
                 'group' =>getValue($item['y']),
                 'is_neutral' => getValue($item['z']),
                 'update_time' => time(),
-                'update_last' => time(),
+                'update_last' => -9,
                 'update_date' => date('Y-m-d H:i:s'),
                 'last_update_event' => 'match_id_api'
             ];
@@ -78,14 +80,16 @@ do{
             M('match')->where(array('match_id'=>$info['match_id']))->save($info);
 
         }
-
+        print_r($match_list2);
+        print_r($match_list3);
         $match_list2_ids = join(',',$match_list2);
         $match_list3_ids = join(',',$match_list3);
         if(empty($match_list3_ids)){
             $match_list3_ids = '-100';
         }
-        $time = time();
-        M()->execute("UPDATE t_match SET state=99,update_last='$time' WHERE match_id in({$match_list2_ids}) AND match_id not in({$match_list3_ids})");
+
+        M()->execute("UPDATE t_match SET state=99,update_last=-9' WHERE match_id in({$match_list2_ids}) AND match_id not in({$match_list3_ids})");
+
     }
 
 
