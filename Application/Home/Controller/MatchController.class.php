@@ -38,7 +38,6 @@ class MatchController extends BaseApiController {
             // 进行中
             if($type == 1){
                 $where['state'] = array('in',array(1,2,3,4));
-                $where['time'] = array('lt',date("Y-m-d H:i:s"));
             }elseif($type == 2){
                 $where['state'] = -1;
             }elseif($type == 3){

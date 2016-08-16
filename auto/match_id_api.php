@@ -17,7 +17,7 @@ echo date("Y-m-d H:i:s")."=match_api=\r\n";
 
 do{
 
-    $match_list = M('match')->where(array('state'=>array('in',[0,1,2,3,4]),'update_last'=>array('lt', time()-300)))->field("match_id")->limit(200)->order('update_last ASC')->select();
+    $match_list = M('match')->where(array('state'=>array('in',[0,1,2,3,4]),'update_last'=>array('lt', time()-180)))->field("match_id")->limit(200)->order('update_last ASC')->select();
     $match_list2 = [];
     foreach($match_list as $match){
         $match_list2[] = $match['match_id'];
