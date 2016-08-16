@@ -17,7 +17,7 @@ echo date("Y-m-d H:i:s")."=match_api=\r\n";
 
 do{
 
-    $match_list = M('match')->where(array('state'=>-1,'update_last'=>array('ngt', 0)))->field("match_id")->limit(200)->order('update_last ASC')->select();
+    $match_list = M('match')->where(array('state'=>-1,'update_last'=>array('egt', 0)))->field("match_id")->limit(200)->order('update_last ASC')->select();
     echo M()->getLastSql();
     die();
     $match_list2 = [];
@@ -94,3 +94,4 @@ do{
 
 
 }while(false);
+echo "ok";
