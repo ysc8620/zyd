@@ -294,14 +294,21 @@ class TuijianController extends BaseApiController {
             // 购买记录
             $has = M('tuijian_order')->where(array('user_id'=>$user_id, 'tuijian_id'=>$tuijian_id))->find();
             if($has){
+                $data = [
+                    'user_id' => $user_id,
+                    'tuijian_id' => $has['from_id'],
+                    'credit' => $has['credit'],
+                    'create_time' => time(),
+                    'id'=>$has['id']
+                ];
                 $json['msg'] = '你已经购买过';
-                $json['data']['id'] = $has['id'];
+                $json['data'] = $data;
                 break;
             }
             $user = M('users')->where(array('id'=>$user_id))->find();
             $tuijian = M('tuijian')->where(array('id'=>$tuijian_id))->find();
             if($user['credit'] < $tuijian['fee']){
-                $json['status'] = 111;
+                $json['status'] = 112;
                 $json['msg'] = '球币不足,请先充值';
                 break;
             }
