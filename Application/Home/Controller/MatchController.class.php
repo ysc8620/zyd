@@ -47,8 +47,7 @@ class MatchController extends BaseApiController {
                 $list = M('match')->field
                 ('match_id,time as match_time,league_id,league_name,kind,level,state,home_id,home_name,home_score,away_id,
                 away_name,away_score,home_red,away_red,home_yellow,away_yellow,match_round,address,weather_ico,weather,temperature,is_neutral,technic,total_collect'
-                )
-                    ->where($where)->order("time DESC")->limit($Page->firstRow . ',' . $Page->listRows)->select();
+                )->where($where)->order("time DESC")->limit($Page->firstRow . ',' . $Page->listRows)->select();
 
             }elseif($type == 2){
                 $where['state'] = -1;
@@ -61,8 +60,7 @@ class MatchController extends BaseApiController {
                 $list = M('match')->field
                 ('match_id,time as match_time,league_id,league_name,kind,level,state,home_id,home_name,home_score,away_id,
                 away_name,away_score,home_red,away_red,home_yellow,away_yellow,match_round,address,weather_ico,weather,temperature,is_neutral,technic,total_collect'
-                )
-                    ->where($where)->where($where2)->order("time DESC")->limit($Page->firstRow . ',' . $Page->listRows)->select();
+                )->where($where)->where($where2)->order("time DESC")->limit($Page->firstRow . ',' . $Page->listRows)->select();
             }elseif($type == 3){
                 $where['state'] = 0;
                 $where['state'] = array('in',array(1,2,3,4));
@@ -74,10 +72,9 @@ class MatchController extends BaseApiController {
                 $list = M('match')->field
                 ('match_id,time as match_time,league_id,league_name,kind,level,state,home_id,home_name,home_score,away_id,
                 away_name,away_score,home_red,away_red,home_yellow,away_yellow,match_round,address,weather_ico,weather,temperature,is_neutral,technic,total_collect'
-                )
-                    ->where($where)->order("time DESC")->limit($Page->firstRow . ',' . $Page->listRows)->select();
-            }else{
+                )->where($where)->order("time DESC")->limit($Page->firstRow . ',' . $Page->listRows)->select();
 
+            }else{
                 // 验证登录
                 $this->check_login();
                 //
@@ -92,8 +89,8 @@ class MatchController extends BaseApiController {
                 $list =  M()->table(C('DB_PREFIX').'match as m, '.C('DB_PREFIX').'match_follow as mf')->where("mf.user_id=$user_id AND m.match_id = mf.match_id ".$where)->field
                 ('m.match_id,m.time as match_time,m.league_id,m.league_name,m.kind,m.level,m.state,m.home_id,m.home_name,m.home_score,m.away_id,
                 m.away_name,m.away_score,m.home_red,m.away_red,m.home_yellow,m.away_yellow,m.match_round,m.address,m.weather_ico,m.weather,m.temperature,m.is_neutral,m.technic,m.total_collect'
-                )
-                    ->where($where)->order("m.time DESC")->limit($Page->firstRow . ',' . $Page->listRows)->select();
+                )->where($where)->order("m.time DESC")->limit($Page->firstRow . ',' . $Page->listRows)->select();
+                $json['sql'] = M()->getLastSql();
             }
 
 
@@ -219,10 +216,7 @@ class MatchController extends BaseApiController {
                     ->group('m.league_id')
                     ->order("is_hot DESC, weight DESC")->select();
             }else{
-                $league_list = M()->table(C('DB_PREFIX').'league as l, '.C('DB_PREFIX').'match as m')->where("l.league_id = m.league_id AND m.state in(1,2,3,4)")
-                    ->field('l.league_id,l.color,l.cn_short,l.cn_name,l.type,l.sum_round,l.curr_round,l.curr_match_season,l.country_name,l.is_hot,count(*) as total_match')
-                    ->group('m.league_id')
-                    ->order("is_hot DESC, weight DESC")->select();
+                $league_list = [];
             }
 
             foreach($league_list as $i=>$league){
