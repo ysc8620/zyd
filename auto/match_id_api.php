@@ -79,6 +79,7 @@ do{
 
         }
         M('match')->where(array('match_id'=>array('in', $match_list2), 'match_id'=>array('not in'=>$match_list3)))->save(['state'=>99]);
+        echo M()->getLastSql()."\r\n";
     }
 
 
