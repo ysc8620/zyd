@@ -124,6 +124,9 @@ class MatchController extends BaseApiController {
                 $list[$i]['events'] = (array)$event_list;
                 $list[$i]['match_name'] = $match['league_name'];
                 $list[$i]['time22'] = $match['match_time'];
+                $list[$i]['time33'] = strtotime($match['match_time']);
+                $list[$i]['time44'] = time();
+                $list[$i]['time44'] = time()-strtotime($match['match_time']);
                 // 比赛状态 0:未开,1:上半场,2:中场,3:下半场,4,加时，-11:待定,-12:腰斩,-13:中断,-14:推迟,-1:完场，-10取消
                 if($match['state'] == '0'){
                     $list[$i]['match_time2'] = '未开';
@@ -344,7 +347,6 @@ class MatchController extends BaseApiController {
             $tuijian['match_time'] = $match['time'];
             $tuijian['home_score'] = $match['home_score'];
             $tuijian['away_score'] = $match['away_score'];
-            $tuijian['match_time'] = $match['time'];
             // 标准
             $baiou = M('asia_oupei')->where(array('match_id'=>$match['match_id']))->find();
             $tuijian['begin_home_rate'] = ("{$baiou['begin_home_rate']}");
