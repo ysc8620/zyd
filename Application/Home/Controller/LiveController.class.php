@@ -22,13 +22,16 @@ class LiveController extends BaseApiController {
             unset($list[$i]['technic']);
 
             // 标准
-            $baiou = M('asia_oupei')->where(array('match_id'=>$item['match_id']))->find();
+            $baiou = get_rate($item['match_id'],'oupei',$item['state']);
             $list[$i]['begin_home_rate'] = "{$baiou['begin_home_rate']}";
             $list[$i]['begin_draw_rate'] = "{$baiou['begin_draw_rate']}";
             $list[$i]['begin_away_rate'] = "{$baiou['begin_away_rate']}";
             $list[$i]['change_home_rate'] = "{$baiou['change_home_rate']}";
             $list[$i]['change_draw_rate'] = "{$baiou['change_draw_rate']}";
             $list[$i]['change_away_rate'] = "{$baiou['change_away_rate']}";
+
+            $event_list = M('event')->where(array('match_id'=>$item['match_id'], 'event_type'=>1))->order("time DESC")->select();
+            $list[$i]['events'] = (array)$event_list;
         }
         $json['data'] = $list;
         $this->ajaxReturn($json);
