@@ -123,12 +123,10 @@ class MatchController extends BaseApiController {
                 $list[$i]['events'] = (array)$event_list;
                 $list[$i]['match_name'] = $match['league_name'];
                 // 比赛状态 0:未开,1:上半场,2:中场,3:下半场,4,加时，-11:待定,-12:腰斩,-13:中断,-14:推迟,-1:完场，-10取消
-                $list[$i]['time222'] = strtotime($match['time']);
-                $list[$i]['time333'] = time();
                 if($match['state'] == '0'){
                     $list[$i]['match_time2'] = '未开';
                 }elseif(in_array($match['state'],[1,2,3,4])){
-                    $list[$i]['match_time2'] = floor(time() - strtotime($match['time'])/60);
+                    $list[$i]['match_time2'] = floor(time() - strtotime($match['match_time'])/60);
                 }elseif($match['state'] == -1){
                     $list[$i]['match_time2'] = '完场';
                 }elseif($match['state'] == -10){
@@ -291,7 +289,7 @@ class MatchController extends BaseApiController {
             if($match['state'] == '0'){
                 $match['match_time2'] = '未开';
             }elseif(in_array($match['state'],[1,2,3,4])){
-                $match['match_time2'] = floor(time() - strtotime($match['time'])/60);
+                $match['match_time2'] = floor(time() - strtotime($match['match_time'])/60);
             }elseif($match['state'] == -1){
                 $match['match_time2'] = '完场';
             }elseif($match['state'] == -10){
