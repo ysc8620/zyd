@@ -85,6 +85,8 @@ do{
         if(empty($match_list3_ids)){
             $match_list3_ids = '-100';
         }
+        print_r($match_list2);
+        print_r($match_list3);
 
         M()->execute("UPDATE t_match SET state=99,update_last=-9 WHERE match_id in({$match_list2_ids}) AND match_id not in({$match_list3_ids})");
 
