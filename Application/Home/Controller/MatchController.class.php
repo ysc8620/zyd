@@ -375,6 +375,12 @@ class MatchController extends BaseApiController {
             $tuijian['match_time'] = $match['time'];
             $tuijian['home_score'] = $match['home_score'];
             $tuijian['away_score'] = $match['away_score'];
+            $tuijian['state'] = $match['state'];
+            if(in_array($tuijian['state'],[0,1,2,3,4])){
+                $tuijian['status'] = 1;
+            }else{
+                $tuijian['status'] = 0;
+            }
             // 标准
             $baiou = get_rate($match['match_id'],'oupei',$match['state']);
             $tuijian['begin_home_rate'] = $baiou['begin_home_rate'];
