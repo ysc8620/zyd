@@ -58,6 +58,7 @@ class MatchController extends BaseApiController {
                 away_name,away_score,home_red,away_red,home_yellow,away_yellow,match_round,address,weather_ico,weather,temperature,is_neutral,technic'
                 )
                 ->where($where)->order("level DESC, time ASC")->limit($Page->firstRow . ',' . $Page->listRows)->select();
+            $json['sql'] = M()->getLastSql();
 
             foreach($list as $i=>$match){
                 //
