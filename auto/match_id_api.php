@@ -14,6 +14,7 @@ namespace auto;
 require_once __DIR__ .'/config.php';
 echo date("Y-m-d H:i:s")."=match_api=\r\n";
 //mongodb://admin_miss:miss@localhost:27017/test
+
 do{
 
     $match_list = M('match')->where(array('state'=>array('in',[0,1,2,3,4]),'update_last'=>array('lt', time()-600)))->field("match_id")->limit(200)->order('update_last ASC')->select();
@@ -29,54 +30,49 @@ do{
             $obj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
             $data = json_decode(json_encode($obj), true);
 
-            print_r($data);
-            die();
             foreach($data['match'] as $item){
                 $home = explode(',',trim($item['h']));
                 $away = explode(',',trim($item['i']));
                 $league = explode(',', $item['c']);
                 $info = [
-                    'match_id' => $item['a'],
-                    'color'     => $item['b'],
-                    'league'    => $item['c'],
+                    'match_id' => getValue($item['a']),
+                    'color'     => getValue($item['b']),
+                    'league'    => getValue($item['c']),
                     'league_id' => $league[3],
                     'league_name' => $league[0],
-                    'time'      => $item['d'],
-                    'sub_league'      => $item['e'],
-                    'state'     => $item['f'],
-                    'home'      => $item['h'],
+                    'time'      => getValue($item['d']),
+                    'sub_league'      => getValue($item['e']),
+                    'state'     => getValue($item['f']),
+                    'home'      => getValue($item['h']),
                     'home_name' => $home[0],
                     'home_id'   => $home[3],
-                    'away'      => $item['i'],
+                    'away'      => getValue($item['i']),
                     'away_name' => $away[0],
                     'away_id'   => $away[3],
-                    'home_score' => $item['j'],
-                    'away_score' => $item['k'],
-                    'home_half_score' => $item['l'],
-                    'away_half_score' => $item['m'],
-                    'home_red'   => $item['n'],
-                    'away_red'   => $item['o'],
-                    'home_order' => $item['p'],
-                    'away_order' => $item['q'],
-                    'explain'    => $item['r'],
-                    'match_round' => $item['s'],
-                    'address' => $item['t'],
-                    'weather_ico' => $item['u'],
-                    'weather' => $item['v'],
-                    'temperature' => $item['w'],
-                    'match_league' => $item['x'],
-                    'group' =>$item['y'],
-                    'is_neutral' => $item['z'],
+                    'home_score' => getValue($item['j']),
+                    'away_score' => getValue($item['k']),
+                    'home_half_score' => getValue($item['l']),
+                    'away_half_score' => getValue($item['m']),
+                    'home_red'   => getValue($item['n']),
+                    'away_red'   => getValue($item['o']),
+                    'home_order' => getValue($item['p']),
+                    'away_order' => getValue($item['q']),
+                    'explain'    => getValue($item['r']),
+                    'match_round' => getValue($item['s']),
+                    'address' => getValue($item['t']),
+                    'weather_ico' => getValue($item['u']),
+                    'weather' => getValue($item['v']),
+                    'temperature' => getValue($item['w']),
+                    'match_league' => getValue($item['x']),
+                    'group' =>getValue($item['y']),
+                    'is_neutral' => getValue($item['z']),
                     'update_time' => time(),
                     'update_date' => date('Y-m-d H:i:s'),
                     'last_update_event' => 'match'
                 ];
-                $team = $curr->findOne(array('match_id'=>$info['match_id']));
-                if($team){
-                    $curr->update(array('match_id'=>$info['match_id']), array('$set'=>$info));
-                }else{
-                    $curr->insert($info);
-                }
+
+                    M('match')->where(array('match_id'=>$info['match_id']))->save($info);
+
             }
 
     }
