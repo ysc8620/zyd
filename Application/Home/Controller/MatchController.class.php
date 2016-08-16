@@ -119,7 +119,7 @@ class MatchController extends BaseApiController {
                 $list[$i]['jingcai']['draw_win_rate'] = $jingcai['change_small_rate']?$jingcai['change_small_rate']:"0";
 
                 // 直播事件
-                $event_list = M('event')->where(array('match_id'=>$match['match_id'],'event_type'=>1))->order("time ASC")->select();
+                $event_list = M('event')->where(array('match_id'=>$match['match_id'],'event_type'=>1))->order("time DESC")->select();
                 $list[$i]['events'] = (array)$event_list;
                 $list[$i]['match_name'] = $match['league_name'];
 
