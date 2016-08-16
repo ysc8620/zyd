@@ -123,15 +123,12 @@ class MatchController extends BaseApiController {
                 $event_list = M('event')->where(array('match_id'=>$match['match_id']))->order("time ASC")->select();
                 $list[$i]['events'] = (array)$event_list;
                 $list[$i]['match_name'] = $match['league_name'];
-                $list[$i]['time22'] = $match['match_time'];
-                $list[$i]['time33'] = strtotime($match['match_time']);
-                $list[$i]['time44'] = time();
-                $list[$i]['time44'] = time()-strtotime($match['match_time']);
+
                 // 比赛状态 0:未开,1:上半场,2:中场,3:下半场,4,加时，-11:待定,-12:腰斩,-13:中断,-14:推迟,-1:完场，-10取消
                 if($match['state'] == '0'){
                     $list[$i]['match_time2'] = '未开';
                 }elseif(in_array($match['state'],[1,2,3,4])){
-                    $list[$i]['match_time2'] = floor(time() - strtotime($match['match_time'])/60);
+                    $list[$i]['match_time2'] = floor((time() - strtotime($match['match_time']))/60)."'";
                 }elseif($match['state'] == -1){
                     $list[$i]['match_time2'] = '完场';
                 }elseif($match['state'] == -10){
