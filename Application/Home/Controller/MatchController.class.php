@@ -23,6 +23,7 @@ class MatchController extends BaseApiController {
             $p = I('request.p', 1,'intval');
             $type = I('request.type',1,'strval');// 1进行中， 2已完成，3为开始，4个人收藏
             $league_idsstr = I('request.league_ids','','strval');
+            $date = I('request.date','','trim');
             $limit = I('request.limit',10,'intval');
             $where = [];
 
@@ -38,25 +39,64 @@ class MatchController extends BaseApiController {
             // 进行中
             if($type == 1){
                 $where['state'] = array('in',array(1,2,3,4));
-            }elseif($type == 2){
-                $where['state'] = -1;
-            }elseif($type == 3){
-                $where['state'] = 0;
-            }else{
-                //
-
-            }
-
-            if($league_ids){
-                $where['league_id'] = array('in', $league_ids);
-            }
-            $total = M('match')->where($where)->count();
-            $Page = new Page($total, $limit);
-            $list = M('match')->field
+                if($league_ids){
+                    $where['league_id'] = array('in', $league_ids);
+                }
+                $total = M('match')->where($where)->count();
+                $Page = new Page($total, $limit);
+                $list = M('match')->field
                 ('match_id,time as match_time,league_id,league_name,kind,level,state,home_id,home_name,home_score,away_id,
                 away_name,away_score,home_red,away_red,home_yellow,away_yellow,match_round,address,weather_ico,weather,temperature,is_neutral,technic,total_collect'
                 )
-                ->where($where)->order("time DESC")->limit($Page->firstRow . ',' . $Page->listRows)->select();
+                    ->where($where)->order("time DESC")->limit($Page->firstRow . ',' . $Page->listRows)->select();
+
+            }elseif($type == 2){
+                $where['state'] = -1;
+                $where2 = "";
+                if($date){
+                    $where2 = "date(time) = '{$date}'";
+                }
+                $total = M('match')->where($where)->where($where2)->count();
+                $Page = new Page($total, $limit);
+                $list = M('match')->field
+                ('match_id,time as match_time,league_id,league_name,kind,level,state,home_id,home_name,home_score,away_id,
+                away_name,away_score,home_red,away_red,home_yellow,away_yellow,match_round,address,weather_ico,weather,temperature,is_neutral,technic,total_collect'
+                )
+                    ->where($where)->where($where2)->order("time DESC")->limit($Page->firstRow . ',' . $Page->listRows)->select();
+            }elseif($type == 3){
+                $where['state'] = 0;
+                $where['state'] = array('in',array(1,2,3,4));
+                if($league_ids){
+                    $where['league_id'] = array('in', $league_ids);
+                }
+                $total = M('match')->where($where)->count();
+                $Page = new Page($total, $limit);
+                $list = M('match')->field
+                ('match_id,time as match_time,league_id,league_name,kind,level,state,home_id,home_name,home_score,away_id,
+                away_name,away_score,home_red,away_red,home_yellow,away_yellow,match_round,address,weather_ico,weather,temperature,is_neutral,technic,total_collect'
+                )
+                    ->where($where)->order("time DESC")->limit($Page->firstRow . ',' . $Page->listRows)->select();
+            }else{
+
+                // 验证登录
+                $this->check_login();
+                //
+                $where = "";
+                if($league_ids){
+                    $where = "m.league_id in($league_ids)";
+                }
+
+                $total = M()->table(C('DB_PREFIX').'match as m, '.C('DB_PREFIX').'match_follow as mf')->where("mf.user_id=$user_id AND m.match_id = mf.match_id ".$where)->count();
+
+                $Page = new Page($total, $limit);
+                $list =  M()->table(C('DB_PREFIX').'match as m, '.C('DB_PREFIX').'match_follow as mf')->where("mf.user_id=$user_id AND m.match_id = mf.match_id ".$where)->field
+                ('m.match_id,m.time as match_time,m.league_id,m.league_name,m.kind,m.level,m.state,m.home_id,m.home_name,m.home_score,m.away_id,
+                m.away_name,m.away_score,m.home_red,m.away_red,m.home_yellow,m.away_yellow,m.match_round,m.address,m.weather_ico,m.weather,m.temperature,m.is_neutral,m.technic,m.total_collect'
+                )
+                    ->where($where)->order("m.time DESC")->limit($Page->firstRow . ',' . $Page->listRows)->select();
+            }
+
+
 
             foreach($list as $i=>$match){
                 //
@@ -714,5 +754,21 @@ class MatchController extends BaseApiController {
             }
         }while(false);
         $this->ajaxReturn($json);
+    }
+
+    function get_rate($match, $type){
+        if($type == 'rangqiu'){
+
+        }elseif($type == 'rangqiu_half'){
+
+        }elseif($type == 'oupei'){
+
+        }elseif($type == 'oupei_half'){
+
+        }elseif($type =='daxiaoqiu'){
+
+        }elseif($type =='daxiaoqiu_half'){
+
+        }
     }
 }

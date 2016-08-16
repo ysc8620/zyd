@@ -32,7 +32,7 @@ class UserController extends BaseApiController {
             if(is_mobile($member['nickname'])){
                 $member['nickname'] = substr_replace($member['nickname'],'*****',3,5);
             }
-            
+
             unset($member['jiguang_id']);
             unset($member['ssid']);
             unset($member['credit']);
@@ -460,7 +460,8 @@ class UserController extends BaseApiController {
             $user_id = $this->user['id'];
             $nickname = I('request.nickname','','trim,strval,htmlspecialchars,strip_tags');
             $password = I('request.password','','trim,strval');
-            $type = I('request.type',1,'intval');
+            $type = I('request.type',0,'intval');
+            $jiguang_id = I('request.jiguang_id','','trim,strval');
 
             if(empty($nickname) || strlen($nickname) > 36){
                 $json['status'] = 110;
@@ -474,10 +475,18 @@ class UserController extends BaseApiController {
                 break;
             }
             $data = [
-                'nickname' => $nickname,
-                'type' => $type,
                 'update_time' => time()
             ];
+
+            if($nickname){
+                $data['nickname'] = $nickname;
+            }
+            if($type){
+                $data['type'] = $type;
+            }
+            if($jiguang_id){
+                $data['jiguang_id'] = $jiguang_id;
+            }
 
             if($password){
                 if( strlen($password) < 6 || strlen($password) > 26){
