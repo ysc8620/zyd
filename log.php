@@ -63,12 +63,12 @@ echo "=\r\n";
 
 $data = [
     'type' => '2',
-    'match_id' => 1217500
+    'tuijian_id' => 1
 ];
 
 
 //$data['apple_receipt'] = $apple_receipt;
-$result = httpPost("https://api.zydzuqiu.com/user/get_expert_list.html", $data);
+$result = httpPost("https://api.zydzuqiu.com/tuijian/info.html", $data);
 //var_dump($result);
 echo ($result);
 print_r(json_decode($result, true));
