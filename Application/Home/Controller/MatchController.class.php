@@ -64,54 +64,59 @@ class MatchController extends BaseApiController {
                 // 赛事统计
                 $technic = empty($match['technic'])?[]:json_decode($match['technic'], true);
                 $list[$i]['technic'] = [];
-                for($j=0; $j<41;$j++){
-                    $list[$i]['technic']['id'.$j]['home'] = isset($technic['id'.$j])?floatval($technic['id'.$j]['home']):0;
-                    $list[$i]['technic']['id'.$j]['away'] = isset($technic['id'.$j])?floatval($technic['id'.$j]['away']):0;
-                }
+
+                $list[$i]['technic']['id3']['home'] = isset($technic['id3'])?($technic['id3']['home']):0;
+                $list[$i]['technic']['id3']['away'] = isset($technic['id3'])?($technic['id3']['away']):0;
+                $list[$i]['technic']['id4']['home'] = isset($technic['id4'])?($technic['id4']['home']):0;
+                $list[$i]['technic']['id4']['away'] = isset($technic['id4'])?($technic['id4']['away']):0;
+                $list[$i]['technic']['id6']['home'] = isset($technic['id6'])?($technic['id6']['home']):0;
+                $list[$i]['technic']['id6']['away'] = isset($technic['id6'])?($technic['id6']['away']):0;
+                $list[$i]['technic']['id14']['home'] = isset($technic['id14'])?($technic['id14']['home']):0;
+                $list[$i]['technic']['id14']['away'] = isset($technic['id14'])?($technic['id14']['away']):0;
 
                 // 标准
                 $baiou = M('asia_oupei')->where(array('match_id'=>$match['match_id']))->find();
-                $list[$i]['begin_home_rate'] = floatval("{$baiou['begin_home_rate']}");
-                $list[$i]['begin_draw_rate'] = floatval("{$baiou['begin_draw_rate']}");
-                $list[$i]['begin_away_rate'] = floatval("{$baiou['begin_away_rate']}");
-                $list[$i]['change_home_rate'] = floatval("{$baiou['change_home_rate']}");
-                $list[$i]['change_draw_rate'] = floatval("{$baiou['change_draw_rate']}");
-                $list[$i]['change_away_rate'] = floatval("{$baiou['change_away_rate']}");
+                $list[$i]['begin_home_rate'] = ("{$baiou['begin_home_rate']}");
+                $list[$i]['begin_draw_rate'] = ("{$baiou['begin_draw_rate']}");
+                $list[$i]['begin_away_rate'] = ("{$baiou['begin_away_rate']}");
+                $list[$i]['change_home_rate'] = ("{$baiou['change_home_rate']}");
+                $list[$i]['change_draw_rate'] = ("{$baiou['change_draw_rate']}");
+                $list[$i]['change_away_rate'] = ("{$baiou['change_away_rate']}");
 
                 // 欧赔
-                $list[$i]['oupei']['begin_home_rate'] = floatval("{$baiou['begin_home_rate']}");
-                $list[$i]['oupei']['begin_draw_rate'] = floatval("{$baiou['begin_draw_rate']}");
-                $list[$i]['oupei']['begin_away_rate'] = floatval("{$baiou['begin_away_rate']}");
-                $list[$i]['oupei']['change_home_rate'] = floatval("{$baiou['change_home_rate']}");
-                $list[$i]['oupei']['change_draw_rate'] = floatval("{$baiou['change_draw_rate']}");
-                $list[$i]['oupei']['change_away_rate'] = floatval("{$baiou['change_away_rate']}");
+                $list[$i]['oupei']['begin_home_rate'] = ("{$baiou['begin_home_rate']}");
+                $list[$i]['oupei']['begin_draw_rate'] = ("{$baiou['begin_draw_rate']}");
+                $list[$i]['oupei']['begin_away_rate'] = ("{$baiou['begin_away_rate']}");
+                $list[$i]['oupei']['change_home_rate'] = ("{$baiou['change_home_rate']}");
+                $list[$i]['oupei']['change_draw_rate'] = ("{$baiou['change_draw_rate']}");
+                $list[$i]['oupei']['change_away_rate'] = ("{$baiou['change_away_rate']}");
 
                 // 亚赔
                 $yapei = M('asia_yapei')->where(array('match_id'=>$match['match_id']))->find();
-                $list[$i]['yapei']['begin_rate'] = floatval("{$yapei['begin_rate']}");
-                $list[$i]['yapei']['begin_home_rate'] = floatval("{$yapei['begin_home_rate']}");
-                $list[$i]['yapei']['begin_away_rate'] = floatval("{$yapei['begin_away_rate']}");
-                $list[$i]['yapei']['change_rate'] = floatval("{$yapei['change_rate']}");
-                $list[$i]['yapei']['change_home_rate'] = floatval("{$yapei['change_home_rate']}");
-                $list[$i]['yapei']['change_away_rate'] = floatval("{$yapei['change_away_rate']}");
+                $list[$i]['yapei']['begin_rate'] = ("{$yapei['begin_rate']}");
+                $list[$i]['yapei']['begin_home_rate'] = ("{$yapei['begin_home_rate']}");
+                $list[$i]['yapei']['begin_away_rate'] = ("{$yapei['begin_away_rate']}");
+                $list[$i]['yapei']['change_rate'] = ("{$yapei['change_rate']}");
+                $list[$i]['yapei']['change_home_rate'] = ("{$yapei['change_home_rate']}");
+                $list[$i]['yapei']['change_away_rate'] = ("{$yapei['change_away_rate']}");
 
                 // 大小球
                 $daxiaoqiu = M('asia_daxiaoqiu')->where(array('match_id'=>$match['match_id']))->find();
-                $list[$i]['daxiaoqiu']['begin_rate'] = floatval("{$daxiaoqiu['begin_rate']}");
-                $list[$i]['daxiaoqiu']['begin_big_rate'] = floatval("{$daxiaoqiu['begin_big_rate']}");
-                $list[$i]['daxiaoqiu']['begin_small_rate'] = floatval("{$daxiaoqiu['begin_small_rate']}");
-                $list[$i]['daxiaoqiu']['change_rate'] = floatval("{$daxiaoqiu['change_rate']}");
-                $list[$i]['daxiaoqiu']['change_big_rate'] = floatval("{$daxiaoqiu['change_big_rate']}");
-                $list[$i]['daxiaoqiu']['change_small_rate'] = floatval("{$daxiaoqiu['change_small_rate']}");
+                $list[$i]['daxiaoqiu']['begin_rate'] = ("{$daxiaoqiu['begin_rate']}");
+                $list[$i]['daxiaoqiu']['begin_big_rate'] = ("{$daxiaoqiu['begin_big_rate']}");
+                $list[$i]['daxiaoqiu']['begin_small_rate'] = ("{$daxiaoqiu['begin_small_rate']}");
+                $list[$i]['daxiaoqiu']['change_rate'] = ("{$daxiaoqiu['change_rate']}");
+                $list[$i]['daxiaoqiu']['change_big_rate'] = ("{$daxiaoqiu['change_big_rate']}");
+                $list[$i]['daxiaoqiu']['change_small_rate'] = ("{$daxiaoqiu['change_small_rate']}");
 
                 // 竟彩
                 $jingcai = M('asia_daxiaoqiu')->where(array('match_id'=>$match['match_id']))->find();
-                $list[$i]['jingcai']['home_rate'] = floatval("{$jingcai['begin_rate']}");
-                $list[$i]['jingcai']['away_rate'] = floatval("{$jingcai['begin_big_rate']}");
-                $list[$i]['jingcai']['draw_rate'] = floatval("{$jingcai['begin_small_rate']}");
-                $list[$i]['jingcai']['home_win_rate'] = floatval("{$jingcai['change_rate']}");
-                $list[$i]['jingcai']['away_win_rate'] = floatval("{$jingcai['change_big_rate']}");
-                $list[$i]['jingcai']['draw_win_rate'] = floatval("{$jingcai['change_small_rate']}");
+                $list[$i]['jingcai']['home_rate'] = ("{$jingcai['begin_rate']}");
+                $list[$i]['jingcai']['away_rate'] = ("{$jingcai['begin_big_rate']}");
+                $list[$i]['jingcai']['draw_rate'] = ("{$jingcai['begin_small_rate']}");
+                $list[$i]['jingcai']['home_win_rate'] = ("{$jingcai['change_rate']}");
+                $list[$i]['jingcai']['away_win_rate'] = ("{$jingcai['change_big_rate']}");
+                $list[$i]['jingcai']['draw_win_rate'] = ("{$jingcai['change_small_rate']}");
 
                 // 直播事件
                 $event_list = M('event')->where(array('match_id'=>$match['match_id']))->order("time ASC")->select();
@@ -223,54 +228,58 @@ class MatchController extends BaseApiController {
             // 赛事统计
             $technic = empty($match['technic'])?[]:json_decode($match['technic'], true);
             $match['technic'] = [];
-            for($j=0; $j<41;$j++){
-                $match['technic']['id'.$j]['home'] = isset($technic['id'.$j])?floatval($technic['id'.$j]['home']):0;
-                $match['technic']['id'.$j]['away'] = isset($technic['id'.$j])?floatval($technic['id'.$j]['away']):0;
-            }
+            $match['technic']['id3']['home'] = isset($technic['id3'])?($technic['id3']['home']):0;
+            $match['technic']['id3']['away'] = isset($technic['id3'])?($technic['id3']['away']):0;
+            $match['technic']['id4']['home'] = isset($technic['id4'])?($technic['id4']['home']):0;
+            $match['technic']['id4']['away'] = isset($technic['id4'])?($technic['id4']['away']):0;
+            $match['technic']['id6']['home'] = isset($technic['id6'])?($technic['id6']['home']):0;
+            $match['technic']['id6']['away'] = isset($technic['id6'])?($technic['id6']['away']):0;
+            $match['technic']['id14']['home'] = isset($technic['id14'])?($technic['id14']['home']):0;
+            $match['technic']['id14']['away'] = isset($technic['id14'])?($technic['id14']['away']):0;
 
             // 标准
             $baiou = M('asia_oupei')->where(array('match_id'=>$match['match_id']))->find();
-            $match['begin_home_rate'] = floatval("{$baiou['begin_home_rate']}");
-            $match['begin_draw_rate'] = floatval("{$baiou['begin_draw_rate']}");
-            $match['begin_away_rate'] = floatval("{$baiou['begin_away_rate']}");
-            $match['change_home_rate'] = floatval("{$baiou['change_home_rate']}");
-            $match['change_draw_rate'] = floatval("{$baiou['change_draw_rate']}");
-            $match['change_away_rate'] = floatval("{$baiou['change_away_rate']}");
+            $match['begin_home_rate'] = ("{$baiou['begin_home_rate']}");
+            $match['begin_draw_rate'] = ("{$baiou['begin_draw_rate']}");
+            $match['begin_away_rate'] = ("{$baiou['begin_away_rate']}");
+            $match['change_home_rate'] = ("{$baiou['change_home_rate']}");
+            $match['change_draw_rate'] = ("{$baiou['change_draw_rate']}");
+            $match['change_away_rate'] = ("{$baiou['change_away_rate']}");
 
             // 欧赔
-            $match['oupei']['begin_home_rate'] = floatval("{$baiou['begin_home_rate']}");
-            $match['oupei']['begin_draw_rate'] = floatval("{$baiou['begin_draw_rate']}");
-            $match['oupei']['begin_away_rate'] = floatval("{$baiou['begin_away_rate']}");
-            $match['oupei']['change_home_rate'] = floatval("{$baiou['change_home_rate']}");
-            $match['oupei']['change_draw_rate'] = floatval("{$baiou['change_draw_rate']}");
-            $match['oupei']['change_away_rate'] = floatval("{$baiou['change_away_rate']}");
+            $match['oupei']['begin_home_rate'] = ("{$baiou['begin_home_rate']}");
+            $match['oupei']['begin_draw_rate'] = ("{$baiou['begin_draw_rate']}");
+            $match['oupei']['begin_away_rate'] = ("{$baiou['begin_away_rate']}");
+            $match['oupei']['change_home_rate'] = ("{$baiou['change_home_rate']}");
+            $match['oupei']['change_draw_rate'] = ("{$baiou['change_draw_rate']}");
+            $match['oupei']['change_away_rate'] = ("{$baiou['change_away_rate']}");
 
             // 亚赔
             $yapei = M('asia_yapei')->where(array('match_id'=>$match['match_id']))->find();
-            $match['yapei']['begin_rate'] = floatval("{$yapei['begin_rate']}");
-            $match['yapei']['begin_home_rate'] = floatval("{$yapei['begin_home_rate']}");
-            $match['yapei']['begin_away_rate'] = floatval("{$yapei['begin_away_rate']}");
-            $match['yapei']['change_rate'] = floatval("{$yapei['change_rate']}");
-            $match['yapei']['change_home_rate'] = floatval("{$yapei['change_home_rate']}");
-            $match['yapei']['change_away_rate'] = floatval("{$yapei['change_away_rate']}");
+            $match['yapei']['begin_rate'] = ("{$yapei['begin_rate']}");
+            $match['yapei']['begin_home_rate'] = ("{$yapei['begin_home_rate']}");
+            $match['yapei']['begin_away_rate'] = ("{$yapei['begin_away_rate']}");
+            $match['yapei']['change_rate'] = ("{$yapei['change_rate']}");
+            $match['yapei']['change_home_rate'] = ("{$yapei['change_home_rate']}");
+            $match['yapei']['change_away_rate'] = ("{$yapei['change_away_rate']}");
 
             // 大小球
             $daxiaoqiu = M('asia_daxiaoqiu')->where(array('match_id'=>$match['match_id']))->find();
-            $match['daxiaoqiu']['begin_rate'] = floatval("{$daxiaoqiu['begin_rate']}");
-            $match['daxiaoqiu']['begin_big_rate'] = floatval("{$daxiaoqiu['begin_big_rate']}");
-            $match['daxiaoqiu']['begin_small_rate'] = floatval("{$daxiaoqiu['begin_small_rate']}");
-            $match['daxiaoqiu']['change_rate'] = floatval("{$daxiaoqiu['change_rate']}");
-            $match['daxiaoqiu']['change_big_rate'] = floatval("{$daxiaoqiu['change_big_rate']}");
-            $match['daxiaoqiu']['change_small_rate'] = floatval("{$daxiaoqiu['change_small_rate']}");
+            $match['daxiaoqiu']['begin_rate'] = ("{$daxiaoqiu['begin_rate']}");
+            $match['daxiaoqiu']['begin_big_rate'] = ("{$daxiaoqiu['begin_big_rate']}");
+            $match['daxiaoqiu']['begin_small_rate'] = ("{$daxiaoqiu['begin_small_rate']}");
+            $match['daxiaoqiu']['change_rate'] = ("{$daxiaoqiu['change_rate']}");
+            $match['daxiaoqiu']['change_big_rate'] = ("{$daxiaoqiu['change_big_rate']}");
+            $match['daxiaoqiu']['change_small_rate'] = ("{$daxiaoqiu['change_small_rate']}");
 
             // 竟彩
             $jingcai = M('asia_daxiaoqiu')->where(array('match_id'=>$match['match_id']))->find();
-            $match['jingcai']['home_rate'] = floatval("{$jingcai['begin_rate']}");
-            $match['jingcai']['away_rate'] = floatval("{$jingcai['begin_big_rate']}");
-            $match['jingcai']['draw_rate'] = floatval("{$jingcai['begin_small_rate']}");
-            $match['jingcai']['home_win_rate'] = floatval("{$jingcai['change_rate']}");
-            $match['jingcai']['away_win_rate'] = floatval("{$jingcai['change_big_rate']}");
-            $match['jingcai']['draw_win_rate'] = floatval("{$jingcai['change_small_rate']}");
+            $match['jingcai']['home_rate'] = ("{$jingcai['begin_rate']}");
+            $match['jingcai']['away_rate'] = ("{$jingcai['begin_big_rate']}");
+            $match['jingcai']['draw_rate'] = ("{$jingcai['begin_small_rate']}");
+            $match['jingcai']['home_win_rate'] = ("{$jingcai['change_rate']}");
+            $match['jingcai']['away_win_rate'] = ("{$jingcai['change_big_rate']}");
+            $match['jingcai']['draw_win_rate'] = ("{$jingcai['change_small_rate']}");
 
             // 直播事件
             $event_list = M('event')->where(array('match_id'=>$match['match_id']))->order("time ASC")->select();
@@ -336,12 +345,12 @@ class MatchController extends BaseApiController {
             $tuijian['match_time'] = $match['time'];
             // 标准
             $baiou = M('asia_oupei')->where(array('match_id'=>$match['match_id']))->find();
-            $tuijian['begin_home_rate'] = floatval("{$baiou['begin_home_rate']}");
-            $tuijian['begin_draw_rate'] = floatval("{$baiou['begin_draw_rate']}");
-            $tuijian['begin_away_rate'] = floatval("{$baiou['begin_away_rate']}");
-            $tuijian['change_home_rate'] = floatval("{$baiou['change_home_rate']}");
-            $tuijian['change_draw_rate'] = floatval("{$baiou['change_draw_rate']}");
-            $tuijian['change_away_rate'] = floatval("{$baiou['change_away_rate']}");
+            $tuijian['begin_home_rate'] = ("{$baiou['begin_home_rate']}");
+            $tuijian['begin_draw_rate'] = ("{$baiou['begin_draw_rate']}");
+            $tuijian['begin_away_rate'] = ("{$baiou['begin_away_rate']}");
+            $tuijian['change_home_rate'] = ("{$baiou['change_home_rate']}");
+            $tuijian['change_draw_rate'] = ("{$baiou['change_draw_rate']}");
+            $tuijian['change_away_rate'] = ("{$baiou['change_away_rate']}");
 
             // 竞彩
             $tuijian['jingcai'] = ["rate_1"=>"0", "rate_2"=>"0", "rate_3"=>"0"];
