@@ -248,6 +248,7 @@ class UserController extends BaseApiController {
 
             $total_month_tuijian = M('tuijian')->where(array('user_id'=>$user_id))->count();
             $member['total_month_tuijian'] = $total_month_tuijian;
+            $member['share_id'] = base64_encode($member['id']);
 
             $json['data'] = $this->get_return_member($member, true);
 
