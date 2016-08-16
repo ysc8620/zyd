@@ -114,7 +114,6 @@ class MatchController extends BaseApiController {
 
                 // 标准
                 $biaozhun = get_rate($match['match_id'],'oupei',$match['state']);
-                $json['baozhun'] = $biaozhun;
                 $list[$i]['begin_home_rate'] = $biaozhun['begin_home_rate'];
                 $list[$i]['begin_draw_rate'] = $biaozhun['begin_draw_rate'];
                 $list[$i]['begin_away_rate'] = $biaozhun['begin_away_rate'];
