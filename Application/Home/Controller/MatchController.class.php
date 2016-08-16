@@ -89,7 +89,7 @@ class MatchController extends BaseApiController {
                 $list =  M()->table(C('DB_PREFIX').'match as m, '.C('DB_PREFIX').'match_follow as mf')->where("mf.user_id=$user_id AND m.match_id = mf.match_id ".$where)->field
                 ('m.match_id,m.time as match_time,m.league_id,m.league_name,m.kind,m.level,m.state,m.home_id,m.home_name,m.home_score,m.away_id,
                 m.away_name,m.away_score,m.home_red,m.away_red,m.home_yellow,m.away_yellow,m.match_round,m.address,m.weather_ico,m.weather,m.temperature,m.is_neutral,m.technic,m.total_collect'
-                )->where($where)->order("m.time DESC")->limit($Page->firstRow . ',' . $Page->listRows)->select();
+                )->order("m.time DESC")->limit($Page->firstRow . ',' . $Page->listRows)->select();
                 $json['sql'] = M()->getLastSql();
             }
 
