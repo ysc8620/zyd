@@ -54,7 +54,7 @@ class MatchController extends BaseApiController {
             $Page = new Page($total, $limit);
             $list = M('match')->field
                 ('match_id,time as match_time,league_id,league_name,kind,level,state,home_id,home_name,home_score,away_id,
-                away_name,away_score,home_red,away_red,home_yellow,away_yellow,match_round,address,weather_ico,weather,temperature,is_neutral,technic'
+                away_name,away_score,home_red,away_red,home_yellow,away_yellow,match_round,address,weather_ico,weather,temperature,is_neutral,technic,total_collect'
                 )
                 ->where($where)->order("level DESC, time ASC")->limit($Page->firstRow . ',' . $Page->listRows)->select();
 
@@ -219,7 +219,7 @@ class MatchController extends BaseApiController {
 
             $match = M('match')->field
             ('match_id,time as match_time,league_id,league_name,kind,level,state,home_id,home_name,home_score,away_id,
-                away_name,away_score,home_red,away_red,home_yellow,away_yellow,match_round,address,weather_ico,weather,temperature,is_neutral,technic'
+                away_name,away_score,home_red,away_red,home_yellow,away_yellow,match_round,address,weather_ico,weather,temperature,is_neutral,technic,total_collect'
             )
                 ->where(array('match_id'=>$match_id))->find();
 

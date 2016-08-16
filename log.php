@@ -62,7 +62,7 @@ function sign($data,$appsecret)
 echo "=\r\n";
 
 $data = [
-    'type' => '2',
+    'type' => '1',
     'tuijian_id' => 1
 ];
 
