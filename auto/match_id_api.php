@@ -86,9 +86,8 @@ do{
             $match_list3_ids = '-100';
         }
         $time = time();
-        M()->execute("UPDATE t_match SET update_last=$time WHERE match_id in({$match_list2_ids})");
-        M()->execute("UPDATE t_match SET state=99 WHERE match_id in({$match_list2_ids}) AND match_id not in({$match_list3_ids})");
-        echo "UPDATE t_match SET state=99 WHERE match_id in({$match_list2_ids}) AND match_id not in({$match_list3_ids})\r\n";
+        M()->execute("UPDATE t_match SET state=99,update_last=$time WHERE match_id in({$match_list2_ids}) AND match_id not in({$match_list3_ids})");
+        echo "UPDATE t_match SET state=99,update_last=$time WHERE match_id in({$match_list2_ids}) AND match_id not in({$match_list3_ids})\r\n";
         //M('match')->where(array('match_id'=>array('in', join(',',$match_list2)), 'match_id'=>array('not in'=>join(',',$match_list3))))->save(['state'=>99]);
         echo M()->getLastSql()."\r\n";
     }
