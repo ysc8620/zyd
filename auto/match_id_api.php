@@ -80,7 +80,14 @@ do{
         }
         print_r($match_list2);
         print_r($match_list3);
-        M('match')->where(array('match_id'=>array('in', join(',',$match_list2)), 'match_id'=>array('not in'=>join(',',$match_list3))))->save(['state'=>99]);
+        $match_list2_ids = join(',',$match_list2);
+        $match_list3_ids = join(',',$match_list3);
+        if(empty($match_list3_ids)){
+            $match_list3_ids = '-100';
+        }
+        M()->execute("UPDATE t_match SET state=99 WHERE match_id in({$match_list2_ids}) AND match_id not in({$match_list3_ids})");
+        echo "UPDATE t_match SET state=99 WHERE match_id in({$match_list2_ids}) AND match_id not in({$match_list3_ids})\r\n";
+        //M('match')->where(array('match_id'=>array('in', join(',',$match_list2)), 'match_id'=>array('not in'=>join(',',$match_list3))))->save(['state'=>99]);
         echo M()->getLastSql()."\r\n";
     }
 
