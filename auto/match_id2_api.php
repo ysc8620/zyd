@@ -18,8 +18,7 @@ echo date("Y-m-d H:i:s")."=match_api=\r\n";
 do{
 
     $match_list = M('match')->where(array('state'=>-1,'update_last'=>array('egt', 0)))->field("match_id")->limit(200)->order('update_last ASC')->select();
-    echo M()->getLastSql();
-    die();
+
     $match_list2 = [];
     $match_list3 = [];
     foreach($match_list as $match){
@@ -80,8 +79,7 @@ do{
             M('match')->where(array('match_id'=>$info['match_id']))->save($info);
 
         }
-        print_r($match_list2);
-        print_r($match_list3);
+
         $match_list2_ids = join(',',$match_list2);
         $match_list3_ids = join(',',$match_list3);
         if(empty($match_list3_ids)){
