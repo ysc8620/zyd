@@ -31,6 +31,7 @@ do{
             $data = json_decode(json_encode($obj), true);
 
             foreach($data['match'] as $item){
+                echo $item['a']."\r\n";
                 $home = explode(',',trim($item['h']));
                 $away = explode(',',trim($item['i']));
                 $league = explode(',', $item['c']);
