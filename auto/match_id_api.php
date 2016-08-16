@@ -80,7 +80,7 @@ do{
         }
         print_r($match_list2);
         print_r($match_list3);
-        M('match')->where(array('match_id'=>array('in', $match_list2), 'match_id'=>array('not in'=>$match_list3)))->save(['state'=>99]);
+        M('match')->where(array('match_id'=>array('in', join(',',$match_list2)), 'match_id'=>array('not in'=>join(',',$match_list3))))->save(['state'=>99]);
         echo M()->getLastSql()."\r\n";
     }
 
