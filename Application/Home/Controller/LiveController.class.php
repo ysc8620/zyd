@@ -11,6 +11,7 @@ class LiveController extends BaseApiController {
      * 返回直播赛事信息
     */
     public function index(){
+        $json = $this->simpleJson();
         $list = M("match")->where(array('state'=>array('in',[1,2,3,4])))->field("match_id,home_score,away_score,home_half_score,away_half_score,home_red,away_red,time,technic,state")->select();
         foreach($list as $i=>$item){
             //
@@ -29,6 +30,8 @@ class LiveController extends BaseApiController {
             $list[$i]['change_draw_rate'] = "{$baiou['change_draw_rate']}";
             $list[$i]['change_away_rate'] = "{$baiou['change_away_rate']}";
         }
+        $json['data'] = $list;
+        $this->ajaxReturn($json);
     }
 
     /**
