@@ -67,8 +67,9 @@ do{
                     'group' =>getValue($item['y']),
                     'is_neutral' => getValue($item['z']),
                     'update_time' => time(),
+                    'update_last' => time(),
                     'update_date' => date('Y-m-d H:i:s'),
-                    'last_update_event' => 'match'
+                    'last_update_event' => 'match_id_api'
                 ];
 
                     M('match')->where(array('match_id'=>$info['match_id']))->save($info);
