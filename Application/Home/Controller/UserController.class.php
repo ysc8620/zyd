@@ -26,12 +26,14 @@ class UserController extends BaseApiController {
         unset($member['wx_openid']);
         unset($member['qq_openid']);
 
+
         if(!$mysalf){
             if($member['mobile']){$member['mobile'] = substr_replace($member['mobile'],'*****',3,5);}
             if(is_mobile($member['nickname'])){
                 $member['nickname'] = substr_replace($member['nickname'],'*****',3,5);
             }
-
+            
+            unset($member['jiguang_id']);
             unset($member['ssid']);
             unset($member['credit']);
             unset($member['register_time']);
