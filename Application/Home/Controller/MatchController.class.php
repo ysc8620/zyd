@@ -66,58 +66,58 @@ class MatchController extends BaseApiController {
                 $technic = empty($match['technic'])?[]:json_decode($match['technic'], true);
                 $list[$i]['technic'] = [];
 
-                $list[$i]['technic']['id3']['home'] = isset($technic['id3'])?($technic['id3']['home']):0;
-                $list[$i]['technic']['id3']['away'] = isset($technic['id3'])?($technic['id3']['away']):0;
-                $list[$i]['technic']['id4']['home'] = isset($technic['id4'])?($technic['id4']['home']):0;
-                $list[$i]['technic']['id4']['away'] = isset($technic['id4'])?($technic['id4']['away']):0;
-                $list[$i]['technic']['id6']['home'] = isset($technic['id6'])?($technic['id6']['home']):0;
-                $list[$i]['technic']['id6']['away'] = isset($technic['id6'])?($technic['id6']['away']):0;
-                $list[$i]['technic']['id14']['home'] = isset($technic['id14'])?($technic['id14']['home']):0;
-                $list[$i]['technic']['id14']['away'] = isset($technic['id14'])?($technic['id14']['away']):0;
+                $list[$i]['technic']['id3']['home'] = isset($technic['id3'])?($technic['id3']['home']):"0";
+                $list[$i]['technic']['id3']['away'] = isset($technic['id3'])?($technic['id3']['away']):"0";
+                $list[$i]['technic']['id4']['home'] = isset($technic['id4'])?($technic['id4']['home']):"0";
+                $list[$i]['technic']['id4']['away'] = isset($technic['id4'])?($technic['id4']['away']):"0";
+                $list[$i]['technic']['id6']['home'] = isset($technic['id6'])?($technic['id6']['home']):"0";
+                $list[$i]['technic']['id6']['away'] = isset($technic['id6'])?($technic['id6']['away']):"0";
+                $list[$i]['technic']['id14']['home'] = isset($technic['id14'])?($technic['id14']['home']):"0";
+                $list[$i]['technic']['id14']['away'] = isset($technic['id14'])?($technic['id14']['away']):"0";
 
                 // 标准
                 $baiou = M('asia_oupei')->where(array('match_id'=>$match['match_id']))->find();
                 $list[$i]['begin_home_rate'] = $baiou['begin_home_rate']?$baiou['begin_home_rate']:"0";
-                $list[$i]['begin_draw_rate'] = $baiou['begin_draw_rate'];
-                $list[$i]['begin_away_rate'] = $baiou['begin_away_rate'];
-                $list[$i]['change_home_rate'] = $baiou['change_home_rate'];
-                $list[$i]['change_draw_rate'] = $baiou['change_draw_rate'];
-                $list[$i]['change_away_rate'] = $baiou['change_away_rate'];
+                $list[$i]['begin_draw_rate'] = $baiou['begin_draw_rate']?$baiou['begin_draw_rate']:"0";
+                $list[$i]['begin_away_rate'] = $baiou['begin_away_rate']?$baiou['begin_away_rate']:"0";
+                $list[$i]['change_home_rate'] = $baiou['change_home_rate']?$baiou['change_home_rate']:"0";
+                $list[$i]['change_draw_rate'] = $baiou['change_draw_rate']?$baiou['change_draw_rate']:"0";
+                $list[$i]['change_away_rate'] = $baiou['change_away_rate']?$baiou['change_away_rate']:"0";
 
                 // 欧赔
-                $list[$i]['oupei']['begin_home_rate'] = $baiou['begin_home_rate'];
-                $list[$i]['oupei']['begin_draw_rate'] = $baiou['begin_draw_rate'];
-                $list[$i]['oupei']['begin_away_rate'] = $baiou['begin_away_rate'];
-                $list[$i]['oupei']['change_home_rate'] = $baiou['change_home_rate'];
-                $list[$i]['oupei']['change_draw_rate'] = $baiou['change_draw_rate'];
-                $list[$i]['oupei']['change_away_rate'] = $baiou['change_away_rate'];
+                $list[$i]['oupei']['begin_home_rate'] = $list[$i]['begin_home_rate'];
+                $list[$i]['oupei']['begin_draw_rate'] = $list[$i]['begin_draw_rate'];
+                $list[$i]['oupei']['begin_away_rate'] = $list[$i]['begin_away_rate'];
+                $list[$i]['oupei']['change_home_rate'] = $list[$i]['change_home_rate'];
+                $list[$i]['oupei']['change_draw_rate'] = $list[$i]['change_draw_rate'];
+                $list[$i]['oupei']['change_away_rate'] = $list[$i]['change_away_rate'];
 
                 // 亚赔
                 $yapei = M('asia_yapei')->where(array('match_id'=>$match['match_id']))->find();
-                $list[$i]['yapei']['begin_rate'] = $yapei['begin_rate'];
-                $list[$i]['yapei']['begin_home_rate'] = $yapei['begin_home_rate'];
-                $list[$i]['yapei']['begin_away_rate'] = $yapei['begin_away_rate'];
-                $list[$i]['yapei']['change_rate'] = $yapei['change_rate'];
-                $list[$i]['yapei']['change_home_rate'] = $yapei['change_home_rate'];
-                $list[$i]['yapei']['change_away_rate'] = $yapei['change_away_rate'];
+                $list[$i]['yapei']['begin_rate'] = $yapei['begin_rate']?$yapei['begin_rate']:"0";
+                $list[$i]['yapei']['begin_home_rate'] = $yapei['begin_home_rate']?$yapei['begin_home_rate']:"0";
+                $list[$i]['yapei']['begin_away_rate'] = $yapei['begin_away_rate']?$yapei['begin_away_rate']:"0";
+                $list[$i]['yapei']['change_rate'] = $yapei['change_rate']?$yapei['change_rate']:"0";
+                $list[$i]['yapei']['change_home_rate'] = $yapei['change_home_rate']?$yapei['change_home_rate']:"0";
+                $list[$i]['yapei']['change_away_rate'] = $yapei['change_away_rate']?$yapei['change_away_rate']:"0";
 
                 // 大小球
                 $daxiaoqiu = M('asia_daxiaoqiu')->where(array('match_id'=>$match['match_id']))->find();
-                $list[$i]['daxiaoqiu']['begin_rate'] = $daxiaoqiu['begin_rate'];
-                $list[$i]['daxiaoqiu']['begin_big_rate'] = $daxiaoqiu['begin_big_rate'];
-                $list[$i]['daxiaoqiu']['begin_small_rate'] = $daxiaoqiu['begin_small_rate'];
-                $list[$i]['daxiaoqiu']['change_rate'] = $daxiaoqiu['change_rate'];
-                $list[$i]['daxiaoqiu']['change_big_rate'] = $daxiaoqiu['change_big_rate'];
-                $list[$i]['daxiaoqiu']['change_small_rate'] = $daxiaoqiu['change_small_rate'];
+                $list[$i]['daxiaoqiu']['begin_rate'] = $daxiaoqiu['begin_rate']?$daxiaoqiu['begin_rate']:"0";
+                $list[$i]['daxiaoqiu']['begin_big_rate'] = $daxiaoqiu['begin_big_rate']?$daxiaoqiu['begin_big_rate']:"0";
+                $list[$i]['daxiaoqiu']['begin_small_rate'] = $daxiaoqiu['begin_small_rate']?$daxiaoqiu['begin_small_rate']:"0";
+                $list[$i]['daxiaoqiu']['change_rate'] = $daxiaoqiu['change_rate']?$daxiaoqiu['change_rate']:"0";
+                $list[$i]['daxiaoqiu']['change_big_rate'] = $daxiaoqiu['change_big_rate']?$daxiaoqiu['change_big_rate']:"0";
+                $list[$i]['daxiaoqiu']['change_small_rate'] = $daxiaoqiu['change_small_rate']?$daxiaoqiu['change_small_rate']:"0";
 
                 // 竟彩
                 $jingcai = M('asia_daxiaoqiu')->where(array('match_id'=>$match['match_id']))->find();
-                $list[$i]['jingcai']['home_rate'] = $jingcai['begin_rate'];
-                $list[$i]['jingcai']['away_rate'] = $jingcai['begin_big_rate'];
-                $list[$i]['jingcai']['draw_rate'] = $jingcai['begin_small_rate'];
-                $list[$i]['jingcai']['home_win_rate'] = $jingcai['change_rate'];
-                $list[$i]['jingcai']['away_win_rate'] = $jingcai['change_big_rate'];
-                $list[$i]['jingcai']['draw_win_rate'] = $jingcai['change_small_rate'];
+                $list[$i]['jingcai']['home_rate'] = $jingcai['begin_rate']?$jingcai['begin_rate']:"0";
+                $list[$i]['jingcai']['away_rate'] = $jingcai['begin_big_rate']?$jingcai['begin_big_rate']:"0";
+                $list[$i]['jingcai']['draw_rate'] = $jingcai['begin_small_rate']?$jingcai['begin_small_rate']:"0";
+                $list[$i]['jingcai']['home_win_rate'] = $jingcai['change_rate']?$jingcai['change_rate']:"0";
+                $list[$i]['jingcai']['away_win_rate'] = $jingcai['change_big_rate']?$jingcai['change_big_rate']:"0";
+                $list[$i]['jingcai']['draw_win_rate'] = $jingcai['change_small_rate']?$jingcai['change_small_rate']:"0";
 
                 // 直播事件
                 $event_list = M('event')->where(array('match_id'=>$match['match_id'],'event_type'=>1))->order("time ASC")->select();
