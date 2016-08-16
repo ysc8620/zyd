@@ -17,11 +17,13 @@ echo date("Y-m-d H:i:s")."=match_api=\r\n";
 do{
 
     $match_list = M('match')->where(array('state'=>array('in',[0,1,2,3,4]),'update_last'=>array('lt', time()-600)))->field("match_id")->limit(200)->order('update_last ASC')->select();
-    var_dump($match_list);
-    $match_ids = join(',', $match_list);
-    if($match_ids){
+    $match_list2 = [];
+    foreach($match_list as $match){
+        $match_list2[] = $match['match_id'];
+    }
+    if($match_list2){
 
-
+        $match_ids = join(',',$match_list2);
 
             $postStr = file_get_contents("http://interface.win007.com/zq/BF_XMLByID.aspx?id={$match_ids}");
             $obj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
