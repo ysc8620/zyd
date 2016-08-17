@@ -46,7 +46,7 @@ class MatchController extends BaseApiController {
                 $list = M('match')->field
                 ('match_id,time as match_time,league_id,league_name,kind,level,state,home_id,home_name,home_score,away_id,
                 away_name,away_score,home_red,away_red,home_yellow,away_yellow,match_round,address,weather_ico,weather,temperature,is_neutral,technic,total_collect'
-                )->where($where)->order("time DESC")->select();
+                )->where($where)->order("time ASC")->select();
 
             }elseif($type == 2){
 
