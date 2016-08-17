@@ -92,14 +92,14 @@ class LiveController extends BaseApiController {
             $tuijian['daxiaoqiu'] = ["rate_1"=>$daxiaoqiu['change_big_rate'], "rate_2"=>$daxiaoqiu['change_rate'], "rate_3"=>$daxiaoqiu['change_small_rate']];
 
             $peilv = get_rate_list($match['match_id']);
-            $json['data']['live_oupei'] = $peilv['oupei'];
-            $json['data']['live_rangqiu'] = $peilv['rangqiu'];
-            $json['data']['live_daxiaoqiu'] = $peilv['daxiaoqiu'];
+            $tuijian['live_oupei'] = $peilv['oupei'];
+            $tuijian['live_rangqiu'] = $peilv['rangqiu'];
+            $tuijian['live_daxiaoqiu'] = $peilv['daxiaoqiu'];
 
             $peilv = get_half_rate_list($match['match_id']);
-            $json['data']['live_oupei_half'] = $peilv['oupei'];
-            $json['data']['live_rangqiu_half'] = $peilv['rangqiu'];
-            $json['data']['live_daxiaoqiu_half'] = $peilv['daxiaoqiu'];
+            $tuijian['live_oupei_half'] = $peilv['oupei'];
+            $tuijian['live_rangqiu_half'] = $peilv['rangqiu'];
+            $tuijian['live_daxiaoqiu_half'] = $peilv['daxiaoqiu'];
             $json['data'] = $tuijian;
         }while(false);
         $this->ajaxReturn($json);
