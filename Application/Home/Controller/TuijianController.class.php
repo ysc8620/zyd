@@ -51,7 +51,7 @@ class TuijianController extends BaseApiController {
             $total = M('tuijian')->where($where)->count();
             $Page = new Page($total, $limit);
             $list = M('tuijian')->where($where)->limit($Page->firstRow, $Page->listRows)->order("is_top DESC, weight DESC, id DESC")->
-                field('`id`, `match_id`, `is_expert`, `type`, `sub_type`, `guess_1`, `guess_2`, `is_fee`, `fee`, `user_id`, `is_top`, `is_win`, `remark`, `create_time`')->select();
+                field('*')->select();
 
             // 赛事
             foreach($list as $i=>$item){
@@ -139,7 +139,7 @@ class TuijianController extends BaseApiController {
             $total = M('tuijian')->where($where)->count();
             $Page = new Page($total, $limit);
             $list = M('tuijian')->where($where)->limit($Page->firstRow, $Page->listRows)->order("is_top DESC, weight DESC, id DESC")->
-            field('`id`, `match_id`, `is_expert`, `type`, `sub_type`, `guess_1`, `guess_2`, `is_fee`, `fee`, `user_id`, `is_top`, `is_win`, `remark`, `create_time`')->select();
+            field('*')->select();
 
             // 赛事
             foreach($list as $i=>$item){
@@ -299,14 +299,21 @@ class TuijianController extends BaseApiController {
             // 购买记录
             $has = M('tuijian_order')->where(array('user_id'=>$user_id, 'tuijian_id'=>$tuijian_id))->find();
             if($has){
+                $data = [
+                    'user_id' => $user_id,
+                    'tuijian_id' => $has['from_id'],
+                    'credit' => $has['credit'],
+                    'create_time' => time(),
+                    'id'=>$has['id']
+                ];
                 $json['msg'] = '你已经购买过';
-                $json['data']['id'] = $has['id'];
+                $json['data'] = $data;
                 break;
             }
             $user = M('users')->where(array('id'=>$user_id))->find();
             $tuijian = M('tuijian')->where(array('id'=>$tuijian_id))->find();
             if($user['credit'] < $tuijian['fee']){
-                $json['status'] = 111;
+                $json['status'] = 112;
                 $json['msg'] = '球币不足,请先充值';
                 break;
             }

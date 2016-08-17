@@ -26,12 +26,14 @@ class UserController extends BaseApiController {
         unset($member['wx_openid']);
         unset($member['qq_openid']);
 
+
         if(!$mysalf){
             if($member['mobile']){$member['mobile'] = substr_replace($member['mobile'],'*****',3,5);}
             if(is_mobile($member['nickname'])){
                 $member['nickname'] = substr_replace($member['nickname'],'*****',3,5);
             }
 
+            unset($member['jiguang_id']);
             unset($member['ssid']);
             unset($member['credit']);
             unset($member['register_time']);
@@ -248,6 +250,7 @@ class UserController extends BaseApiController {
 
             $total_month_tuijian = M('tuijian')->where(array('user_id'=>$user_id))->count();
             $member['total_month_tuijian'] = $total_month_tuijian;
+            $member['share_id'] = base64_encode($member['id']);
 
             $json['data'] = $this->get_return_member($member, true);
 
@@ -457,7 +460,8 @@ class UserController extends BaseApiController {
             $user_id = $this->user['id'];
             $nickname = I('request.nickname','','trim,strval,htmlspecialchars,strip_tags');
             $password = I('request.password','','trim,strval');
-            $type = I('request.type',1,'intval');
+            $type = I('request.type',0,'intval');
+            $jiguang_id = I('request.jiguang_id','','trim,strval');
 
             if(empty($nickname) || strlen($nickname) > 36){
                 $json['status'] = 110;
@@ -471,10 +475,18 @@ class UserController extends BaseApiController {
                 break;
             }
             $data = [
-                'nickname' => $nickname,
-                'type' => $type,
                 'update_time' => time()
             ];
+
+            if($nickname){
+                $data['nickname'] = $nickname;
+            }
+            if($type){
+                $data['type'] = $type;
+            }
+            if($jiguang_id){
+                $data['jiguang_id'] = $jiguang_id;
+            }
 
             if($password){
                 if( strlen($password) < 6 || strlen($password) > 26){
@@ -639,9 +651,16 @@ class UserController extends BaseApiController {
 
                 $list = M('users')->where("is_expert=1 AND status = 1")
                     ->field($this->field)
-                    ->limit($Page->firstRow . ',' . $Page->listRows)->order("total_follow_user DESC, total_rate DESC")->select();
+                    ->limit($Page->firstRow . ',' . $Page->listRows)->order("total_month_rate DESC, total_rate DESC")->select();
 
                 foreach($list as $i=>$item){
+                    $item['is_follow'] = 0;
+                    if($user_id){
+                        $res = M('users_follow')->where(array('user_id'=>$user_id, 'to_user_id'=>$item['id']))->find();
+                        if($res){
+                            $item['is_follow'] = 1;
+                        }
+                    }
                     $list[$i] = $this->get_return_member($item);
                 }
 
@@ -661,8 +680,15 @@ class UserController extends BaseApiController {
 
                 $list = M('users')->where("is_expert=1 AND status = 1")
                     ->field($this->field)
-                    ->limit($Page->firstRow . ',' . $Page->listRows)->order("total_month_rate DESC, total_rate DESC")->select();
+                    ->limit($Page->firstRow . ',' . $Page->listRows)->order("total_follow_user DESC,total_rate DESC")->select();
                 foreach($list as $i=>$item){
+                    $item['is_follow'] = 0;
+                    if($user_id){
+                        $res = M('users_follow')->where(array('user_id'=>$user_id, 'to_user_id'=>$item['id']))->find();
+                        if($res){
+                            $item['is_follow'] = 1;
+                        }
+                    }
                     $list[$i] = $this->get_return_member($item);
                 }
                 $json['data'] = [
@@ -686,6 +712,7 @@ class UserController extends BaseApiController {
                     ->limit($Page->firstRow . ',' . $Page->listRows)->order("uf.create_time DESC")->select();
 
                 foreach($list as $i=>$item){
+                    $item['is_follow'] = 1;
                     $list[$i] = $this->get_return_member($item);
                 }
 

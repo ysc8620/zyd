@@ -234,6 +234,378 @@ function get_value($value){
 }
 
 /**
+ * 获取商品
+ * @param $match_id
+ * @param string $type
+ * @company_id int 3,24,31,8
+ */
+function get_rate($match_id, $type='',$state=''){
+    if($type == 'oupei'){
+        $data = [
+            'begin_home_rate'  => 0,
+            'begin_draw_rate'  => 0,
+            'begin_away_rate'  => 0,
+            'change_home_rate' => 0,
+            'change_draw_rate' => 0,
+            'change_away_rate' => 0
+        ];
+        $oupei = M('asia_oupei')->where(array('match_id'=>$match_id, 'company_id'=>3))->order('id DESC')->field("begin_home_rate, begin_draw_rate, begin_away_rate, change_home_rate, change_draw_rate, change_away_rate")->find();
+        if($oupei){
+            $data = $oupei;
+        }else{
+            $oupei = M('asia_oupei')->where(array('match_id'=>$match_id, 'company_id'=>24))->order('id DESC')->field("begin_home_rate, begin_draw_rate, begin_away_rate, change_home_rate, change_draw_rate, change_away_rate")->find();
+            if($oupei){
+                $data = $oupei;
+            }else{
+                $oupei = M('asia_oupei')->where(array('match_id'=>$match_id, 'company_id'=>31))->order('id DESC')->field("begin_home_rate, begin_draw_rate, begin_away_rate, change_home_rate, change_draw_rate, change_away_rate")->find();
+                if($oupei){
+                    $data = $oupei;
+                }else{
+                    $oupei = M('asia_oupei')->where(array('match_id'=>$match_id, 'company_id'=>8))->order('id DESC')->field("begin_home_rate, begin_draw_rate, begin_away_rate, change_home_rate, change_draw_rate, change_away_rate")->find();
+                    if($oupei){
+                        $data = $oupei;
+                    }
+                }
+            }
+        }
+
+        $oupei = M('asia_oupei_change')->where(array('match_id'=>$match_id, 'company_id'=>3))->order('id DESC')->field("change_home_rate, change_draw_rate, change_away_rate")->find();
+        if($oupei){
+            $data = array_merge($data,$oupei);
+        }else{
+            $oupei = M('asia_oupei_change')->where(array('match_id'=>$match_id, 'company_id'=>24))->order('id DESC')->field("change_home_rate, change_draw_rate, change_away_rate")->find();
+            if($oupei){
+                $data = array_merge($data,$oupei);
+            }else{
+                $oupei = M('asia_oupei_change')->where(array('match_id'=>$match_id, 'company_id'=>31))->order('id DESC')->field("change_home_rate, change_draw_rate, change_away_rate")->find();
+                if($oupei){
+                    $data = array_merge($data,$oupei);
+                }else{
+                    $oupei = M('asia_oupei_change')->where(array('match_id'=>$match_id, 'company_id'=>8))->order('id DESC')->field("change_home_rate, change_draw_rate, change_away_rate")->find();
+                    if($oupei){
+                        $data = array_merge($data,$oupei);
+                    }
+                }
+            }
+        }
+
+        return $data;
+    }elseif($type == 'oupei_half'){
+        $data = [
+            'begin_home_rate'  => 0,
+            'begin_draw_rate'  => 0,
+            'begin_away_rate'  => 0,
+            'change_home_rate' => 0,
+            'change_draw_rate' => 0,
+            'change_away_rate' => 0
+        ];
+        $oupei = M('asia_half_oupei')->where(array('match_id'=>$match_id, 'company_id'=>3))->order('id DESC')->field("begin_home_rate, begin_draw_rate, begin_away_rate, change_home_rate, change_draw_rate, change_away_rate")->find();
+        if($oupei){
+            $data = $oupei;
+        }else{
+            $oupei = M('asia_half_oupei')->where(array('match_id'=>$match_id, 'company_id'=>24))->order('id DESC')->field("begin_home_rate, begin_draw_rate, begin_away_rate, change_home_rate, change_draw_rate, change_away_rate")->find();
+            if($oupei){
+                $data = $oupei;
+            }else{
+                $oupei = M('asia_half_oupei')->where(array('match_id'=>$match_id, 'company_id'=>31))->order('id DESC')->field("begin_home_rate, begin_draw_rate, begin_away_rate, change_home_rate, change_draw_rate, change_away_rate")->find();
+                if($oupei){
+                    $data = $oupei;
+                }else{
+                    $oupei = M('asia_half_oupei')->where(array('match_id'=>$match_id, 'company_id'=>8))->order('id DESC')->field("begin_home_rate, begin_draw_rate, begin_away_rate, change_home_rate, change_draw_rate, change_away_rate")->find();
+                    if($oupei){
+                        $data = $oupei;
+                    }
+                }
+            }
+        }
+        return $data;
+    }elseif($type == 'rangqiu'){
+        $data = [
+            'begin_rate'  => 0,
+            'begin_home_rate'  => 0,
+            'begin_away_rate'  => 0,
+            'change_rate' => 0,
+            'change_home_rate' => 0,
+            'change_away_rate' => 0
+        ];
+        $oupei = M('asia_yapei')->where(array('match_id'=>$match_id, 'company_id'=>3))->order('id DESC')->field("begin_rate, begin_home_rate, begin_away_rate, change_rate, change_home_rate, change_away_rate")->find();
+        if($oupei){
+            $data = $oupei;
+        }else{
+            $oupei = M('asia_yapei')->where(array('match_id'=>$match_id, 'company_id'=>24))->order('id DESC')->field("begin_rate, begin_home_rate, begin_away_rate, change_rate, change_home_rate, change_away_rate")->find();
+            if($oupei){
+                $data = $oupei;
+            }else{
+                $oupei = M('asia_yapei')->where(array('match_id'=>$match_id, 'company_id'=>31))->order('id DESC')->field("begin_rate, begin_home_rate, begin_away_rate, change_rate, change_home_rate, change_away_rate")->find();
+                if($oupei){
+                    $data = $oupei;
+                }else{
+                    $oupei = M('asia_yapei')->where(array('match_id'=>$match_id, 'company_id'=>8))->order('id DESC')->field("begin_rate, begin_home_rate, begin_away_rate, change_rate, change_home_rate, change_away_rate")->find();
+                    if($oupei){
+                        $data = $oupei;
+                    }
+                }
+            }
+        }
+
+        $oupei = M('asia_yapei_change')->where(array('match_id'=>$match_id, 'company_id'=>3))->order('id DESC')->field("change_rate, change_home_rate, change_away_rate")->find();
+        if($oupei){
+            $data = array_merge($data,$oupei);
+        }else{
+            $oupei = M('asia_yapei_change')->where(array('match_id'=>$match_id, 'company_id'=>24))->order('id DESC')->field("change_rate, change_home_rate, change_away_rate")->find();
+            if($oupei){
+                $data = array_merge($data,$oupei);
+            }else{
+                $oupei = M('asia_yapei_change')->where(array('match_id'=>$match_id, 'company_id'=>31))->order('id DESC')->field("change_rate, change_home_rate, change_away_rate")->find();
+                if($oupei){
+                    $data = array_merge($data,$oupei);
+                }else{
+                    $oupei = M('asia_yapei_change')->where(array('match_id'=>$match_id, 'company_id'=>8))->order('id DESC')->field("change_rate, change_home_rate, change_away_rate")->find();
+                    if($oupei){
+                        $data = array_merge($data,$oupei);
+                    }
+                }
+            }
+        }
+        return $data;
+    }elseif($type == 'rangqiu_half'){
+        $data = [
+            'begin_rate'  => 0,
+            'begin_home_rate'  => 0,
+            'begin_away_rate'  => 0,
+            'change_rate' => 0,
+            'change_home_rate' => 0,
+            'change_away_rate' => 0
+        ];
+        $oupei = M('asia_half')->where(array('match_id'=>$match_id, 'company_id'=>3))->order('id DESC')->field("begin_rate, begin_home_rate, begin_away_rate, change_rate, change_home_rate, change_away_rate")->find();
+        if($oupei){
+            $data = $oupei;
+        }else{
+            $oupei = M('asia_half')->where(array('match_id'=>$match_id, 'company_id'=>24))->order('id DESC')->field("begin_rate, begin_home_rate, begin_away_rate, change_rate, change_home_rate, change_away_rate")->find();
+            if($oupei){
+                $data = $oupei;
+            }else{
+                $oupei = M('asia_half')->where(array('match_id'=>$match_id, 'company_id'=>31))->order('id DESC')->field("begin_rate, begin_home_rate, begin_away_rate, change_rate, change_home_rate, change_away_rate")->find();
+                if($oupei){
+                    $data = $oupei;
+                }else{
+                    $oupei = M('asia_half')->where(array('match_id'=>$match_id, 'company_id'=>8))->order('id DESC')->field("begin_rate, begin_home_rate, begin_away_rate, change_rate, change_home_rate, change_away_rate")->find();
+                    if($oupei){
+                        $data = $oupei;
+                    }
+                }
+            }
+        }
+
+        $oupei = M('asia_half_change')->where(array('match_id'=>$match_id, 'company_id'=>3))->order('id DESC')->field("change_rate, change_home_rate, change_away_rate")->find();
+        if($oupei){
+            $data = array_merge($data,$oupei);
+        }else{
+            $oupei = M('asia_half_change')->where(array('match_id'=>$match_id, 'company_id'=>24))->order('id DESC')->field("change_rate, change_home_rate, change_away_rate")->find();
+            if($oupei){
+                $data = array_merge($data,$oupei);
+            }else{
+                $oupei = M('asia_half_change')->where(array('match_id'=>$match_id, 'company_id'=>31))->order('id DESC')->field("change_rate, change_home_rate, change_away_rate")->find();
+                if($oupei){
+                    $data = array_merge($data,$oupei);
+                }else{
+                    $oupei = M('asia_half_change')->where(array('match_id'=>$match_id, 'company_id'=>8))->order('id DESC')->field("change_rate, change_home_rate, change_away_rate")->find();
+                    if($oupei){
+                        $data = array_merge($data,$oupei);
+                    }
+                }
+            }
+        }
+        return $data;
+    }elseif($type == 'daxiaoqiu'){
+        $data = [
+            'begin_rate'  => 0,
+            'begin_big_rate'  => 0,
+            'begin_small_rate'  => 0,
+            'change_rate' => 0,
+            'change_big_rate' => 0,
+            'change_small_rate' => 0
+        ];
+        $oupei = M('asia_daxiaoqiu')->where(array('match_id'=>$match_id, 'company_id'=>3))->order('id DESC')->field("begin_rate, begin_big_rate, begin_small_rate, change_rate, change_big_rate, change_small_rate")->find();
+        if($oupei){
+            $data = $oupei;
+        }else{
+            $oupei = M('asia_daxiaoqiu')->where(array('match_id'=>$match_id, 'company_id'=>24))->order('id DESC')->field("begin_rate, begin_big_rate, begin_small_rate, change_rate, change_big_rate, change_small_rate")->find();
+            if($oupei){
+                $data = $oupei;
+            }else{
+                $oupei = M('asia_daxiaoqiu')->where(array('match_id'=>$match_id, 'company_id'=>31))->order('id DESC')->field("begin_rate, begin_big_rate, begin_small_rate, change_rate, change_big_rate, change_small_rate")->find();
+                if($oupei){
+                    $data = $oupei;
+                }else{
+                    $oupei = M('asia_daxiaoqiu')->where(array('match_id'=>$match_id, 'company_id'=>8))->order('id DESC')->field("begin_rate, begin_big_rate, begin_small_rate, change_rate, change_big_rate, change_small_rate")->find();
+                    if($oupei){
+                        $data = $oupei;
+                    }
+                }
+            }
+        }
+
+        $oupei = M('asia_daxiaoqiu_change')->where(array('match_id'=>$match_id, 'company_id'=>3))->order('id DESC')->field("change_rate, change_big_rate, change_small_rate")->find();
+        if($oupei){
+            $data = array_merge($data,$oupei);
+        }else{
+            $oupei = M('asia_daxiaoqiu_change')->where(array('match_id'=>$match_id, 'company_id'=>24))->order('id DESC')->field("change_rate, change_big_rate, change_small_rate")->find();
+            if($oupei){
+                $data = array_merge($data,$oupei);
+            }else{
+                $oupei = M('asia_daxiaoqiu_change')->where(array('match_id'=>$match_id, 'company_id'=>31))->order('id DESC')->field("change_rate, change_big_rate, change_small_rate")->find();
+                if($oupei){
+                    $data = array_merge($data,$oupei);
+                }else{
+                    $oupei = M('asia_daxiaoqiu_change')->where(array('match_id'=>$match_id, 'company_id'=>8))->order('id DESC')->field("change_rate, change_big_rate, change_small_rate")->find();
+                    if($oupei){
+                        $data = array_merge($data,$oupei);
+                    }
+                }
+            }
+        }
+        return $data;
+    }elseif($type == 'daxiaoqiu_half'){
+        $data = [
+            'begin_rate'  => 0,
+            'begin_big_rate'  => 0,
+            'begin_small_rate'  => 0,
+            'change_rate' => 0,
+            'change_big_rate' => 0,
+            'change_small_rate' => 0
+        ];
+        $oupei = M('asia_half_daxiaoqiu')->where(array('match_id'=>$match_id, 'company_id'=>3))->order('id DESC')->field("begin_rate, begin_big_rate, begin_small_rate, change_rate, change_big_rate, change_small_rate")->find();
+        if($oupei){
+            $data = $oupei;
+        }else{
+            $oupei = M('asia_half_daxiaoqiu')->where(array('match_id'=>$match_id, 'company_id'=>24))->order('id DESC')->field("begin_rate, begin_big_rate, begin_small_rate, change_rate, change_big_rate, change_small_rate")->find();
+            if($oupei){
+                $data = $oupei;
+            }else{
+                $oupei = M('asia_half_daxiaoqiu')->where(array('match_id'=>$match_id, 'company_id'=>31))->order('id DESC')->field("begin_rate, begin_big_rate, begin_small_rate, change_rate, change_big_rate, change_small_rate")->find();
+                if($oupei){
+                    $data = $oupei;
+                }else{
+                    $oupei = M('asia_half_daxiaoqiu')->where(array('match_id'=>$match_id, 'company_id'=>8))->order('id DESC')->field("begin_rate, begin_big_rate, begin_small_rate, change_rate, change_big_rate, change_small_rate")->find();
+                    if($oupei){
+                        $data = $oupei;
+                    }
+                }
+            }
+        }
+
+        $oupei = M('asia_half_daxiaoqiu_change')->where(array('match_id'=>$match_id, 'company_id'=>3))->order('id DESC')->field("change_rate, change_big_rate, change_small_rate")->find();
+        if($oupei){
+            $data = array_merge($data,$oupei);
+        }else{
+            $oupei = M('asia_half_daxiaoqiu_change')->where(array('match_id'=>$match_id, 'company_id'=>24))->order('id DESC')->field("change_rate, change_big_rate, change_small_rate")->find();
+            if($oupei){
+                $data = array_merge($data,$oupei);
+            }else{
+                $oupei = M('asia_half_daxiaoqiu_change')->where(array('match_id'=>$match_id, 'company_id'=>31))->order('id DESC')->field("change_rate, change_big_rate, change_small_rate")->find();
+                if($oupei){
+                    $data = array_merge($data,$oupei);
+                }else{
+                    $oupei = M('asia_half_daxiaoqiu_change')->where(array('match_id'=>$match_id, 'company_id'=>8))->order('id DESC')->field("change_rate, change_big_rate, change_small_rate")->find();
+                    if($oupei){
+                        $data = array_merge($data,$oupei);
+                    }
+                }
+            }
+        }
+        return $data;
+    }elseif($type == 'jingcai'){
+        $data = [
+            'home_rate'  => 0,
+            'away_rate'  => 0,
+            'draw_rate'  => 0,
+            'home_win_rate' => 0,
+            'away_win_rate' => 0,
+            'draw_win_rate' => 0
+        ];
+        $oupei = M('asia_oupei')->where(array('match_id'=>$match_id, 'company_id'=>3))->order('id DESC')->field("begin_home_rate as home_rate, begin_draw_rate as draw_rate, begin_away_rate as away_rate, change_home_rate as home_win_rate, change_draw_rate as draw_win_rate, change_away_rate as away_win_rate")->find();
+        if($oupei){
+            $data = $oupei;
+        }else{
+            $oupei = M('asia_oupei')->where(array('match_id'=>$match_id, 'company_id'=>24))->order('id DESC')->field("begin_home_rate as home_rate, begin_draw_rate as draw_rate, begin_away_rate as away_rate, change_home_rate as home_win_rate, change_draw_rate as draw_win_rate, change_away_rate as away_win_rate")->find();
+            if($oupei){
+                $data = $oupei;
+            }else{
+                $oupei = M('asia_oupei')->where(array('match_id'=>$match_id, 'company_id'=>31))->order('id DESC')->field("begin_home_rate as home_rate, begin_draw_rate as draw_rate, begin_away_rate as away_rate, change_home_rate as home_win_rate, change_draw_rate as draw_win_rate, change_away_rate as away_win_rate")->find();
+                if($oupei){
+                    $data = $oupei;
+                }else{
+                    $oupei = M('asia_oupei')->where(array('match_id'=>$match_id, 'company_id'=>8))->order('id DESC')->field("begin_home_rate as home_rate, begin_draw_rate as draw_rate, begin_away_rate as away_rate, change_home_rate as home_win_rate, change_draw_rate as draw_win_rate, change_away_rate as away_win_rate")->find();
+                    if($oupei){
+                        $data = $oupei;
+                    }
+                }
+            }
+        }
+
+        $oupei = M('asia_oupei_change')->where(array('match_id'=>$match_id, 'company_id'=>3))->order('id DESC')->field("change_home_rate as home_win_rate, change_draw_rate as draw_win_rate,change_away_rate as away_win_rate")->find();
+        if($oupei){
+            $data = array_merge($data,$oupei);
+        }else{
+            $oupei = M('asia_oupei_change')->where(array('match_id'=>$match_id, 'company_id'=>24))->order('id DESC')->field("change_home_rate as home_win_rate, change_draw_rate as draw_win_rate, change_away_rate as away_win_rate")->find();
+            if($oupei){
+                $data = array_merge($data,$oupei);
+            }else{
+                $oupei = M('asia_oupei_change')->where(array('match_id'=>$match_id, 'company_id'=>31))->order('id DESC')->field("change_home_rate as home_win_rate, change_draw_rate as draw_win_rate, change_away_rate as away_win_rate")->find();
+                if($oupei){
+                    $data = array_merge($data,$oupei);
+                }else{
+                    $oupei = M('asia_oupei_change')->where(array('match_id'=>$match_id, 'company_id'=>8))->order('id DESC')->field("change_home_rate as home_win_rate, change_draw_rate as draw_win_rate, change_away_rate as away_win_rate")->find();
+                    if($oupei){
+                        $data = array_merge($data,$oupei);
+                    }
+                }
+            }
+        }
+
+        return $data;
+    }elseif($type == 'jingcai_rangqiu'){
+        $data = [
+            'home_rate'  => 0,
+            'away_rate'  => 0,
+            'draw_rate'  => 0,
+            'home_win_rate' => 0,
+            'away_win_rate' => 0,
+            'draw_win_rate' => 0
+        ];
+        $oupei = M('asia_half_oupei')->where(array('match_id'=>$match_id, 'company_id'=>3))->order('id DESC')->field("begin_home_rate as home_rate, begin_draw_rate as draw_rate, begin_away_rate as away_rate, change_home_rate as home_win_rate, change_draw_rate as draw_win_rate, change_away_rate as away_win_rate")->find();
+        if($oupei){
+            $data = $oupei;
+        }else{
+            $oupei = M('asia_half_oupei')->where(array('match_id'=>$match_id, 'company_id'=>24))->order('id DESC')->field("begin_home_rate as home_rate, begin_draw_rate as draw_rate, begin_away_rate as away_rate, change_home_rate as home_win_rate, change_draw_rate as draw_win_rate, change_away_rate as away_win_rate")->find();
+            if($oupei){
+                $data = $oupei;
+            }else{
+                $oupei = M('asia_half_oupei')->where(array('match_id'=>$match_id, 'company_id'=>31))->order('id DESC')->field("begin_home_rate as home_rate, begin_draw_rate as draw_rate, begin_away_rate as away_rate, change_home_rate as home_win_rate, change_draw_rate as draw_win_rate, change_away_rate as away_win_rate")->find();
+                if($oupei){
+                    $data = $oupei;
+                }else{
+                    $oupei = M('asia_half_oupei')->where(array('match_id'=>$match_id, 'company_id'=>8))->order('id DESC')->field("begin_home_rate as home_rate, begin_draw_rate as draw_rate, begin_away_rate as away_rate, change_home_rate as home_win_rate, change_draw_rate as draw_win_rate, change_away_rate as away_win_rate")->find();
+                    if($oupei){
+                        $data = $oupei;
+                    }
+                }
+            }
+        }
+        return $data;
+    }
+    return [];
+}
+
+/**
+ * 三合一
+ */
+function get_zhibo_rate(){
+
+}
+
+/**
  * 获取区域信息
  * @param $area_id
  * @return string
@@ -488,7 +860,7 @@ function remove_xss($val) {
     $search = 'abcdefghijklmnopqrstuvwxyz';
     $search .= 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $search .= '1234567890!@#$%^&*()';
-    $search .= '~`";:?+/={}[]-_|\'\\';
+    $search .= '~";:?+/={}[]-_|\'\\';
     for ($i = 0; $i < strlen($search); $i++) {
         $val = preg_replace('/(&#[xX]0{0,8}'.dechex(ord($search[$i])).';?)/i', $search[$i], $val); // with a ;
         $val = preg_replace('/(&#0{0,8}'.ord($search[$i]).';?)/', $search[$i], $val); // with a ;

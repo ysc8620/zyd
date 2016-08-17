@@ -7,6 +7,7 @@
  */
 
 
+
 error_reporting(0);
 header("Content-type:text/html;charset=utf-8");
 // 发送请求
@@ -63,12 +64,12 @@ echo "=\r\n";
 
 $data = [
     'type' => '1',
-    'product_id' => 10006
+    'match_id' => 1215747
 ];
 
 
 //$data['apple_receipt'] = $apple_receipt;
-$result = httpPost("https://api.zydzuqiu.com/pay/get_apple_list.html", $data);
+$result = httpPost("https://api.zydzuqiu.com/live/index.html", $data);
 //var_dump($result);
 echo ($result);
 print_r(json_decode($result, true));
