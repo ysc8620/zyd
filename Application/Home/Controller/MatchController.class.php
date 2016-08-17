@@ -64,7 +64,6 @@ class MatchController extends BaseApiController {
                 )->where($where2)->order("time DESC")->limit($Page->firstRow . ',' . $Page->listRows)->select();
             }elseif($type == 3){
                 $where['state'] = 0;
-                $where['state'] = array('in',array(1,2,3,4));
                 if($league_ids){
                     $where['league_id'] = array('in', $league_ids);
                 }
