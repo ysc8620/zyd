@@ -215,6 +215,16 @@ class TuijianController extends BaseApiController {
             $data['remark'] = I('request.remark','','strval,trim,strip_tags,htmlspecialchars');
             $data['guess_1'] = I('request.guess_1',0,'intval');
             $data['guess_2'] = I('request.guess_2',0,'intval');
+            $data['tuijian_home_score'] = I('request.tuijian_home_score',0,'trim');
+            $data['tuijian_away_score'] = I('request.tuijian_away_score',0,'trim');
+            $data['rate_1'] = I('request.rate_1',0,'trim');
+            $data['rate_2'] = I('request.rate_2',0,'trim');
+            $data['rate_3'] = I('request.rate_3',0,'trim');
+            $data['rate_4'] = I('request.rate_4',0,'trim');
+            $data['rate_5'] = I('request.rate_5',0,'trim');
+            $data['rate_6'] = I('request.rate_6',0,'trim');
+            $data['left_ball'] = I('request.left_ball',0,'trim');
+
 
             if(empty($data['match_id'])){
                 $json['status'] = 110;
@@ -246,11 +256,25 @@ class TuijianController extends BaseApiController {
                 break;
             }
 
-
-            if(strlen($data['remark']) < 1 ){
-                $json['status'] = 110;
-                $json['msg'] = "请输入推荐理由";
+            $match = M('match')->where(array('match_id'=>$data['match_id']))->find();
+            if( ! $match ){
+                $json['status'] = 111;
+                $json['msg'] = "没找到赛事信息";
                 break;
+            }
+
+            // s
+            if(in_array($match['state'],[0,1,2,3,4])){
+                $json['status'] = 111;
+                $json['msg'] = "赛事已经完结不支持推荐";
+                break;
+            }
+
+            // 赛前 赛中
+            if($match['state'] == 0){
+                $data['tuijian_type'] = 1;
+            }else{
+                $data['tuijian_type'] = 2;
             }
 
             $data['create_time'] = time();
