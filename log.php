@@ -64,13 +64,13 @@ echo "=\r\n";
 
 $data = [
     'p'=>'3',
-    'type' => '1',
+    'type' => '2',
     'match_id' => 1215747
 ];
 
 
 //$data['apple_receipt'] = $apple_receipt;
-$result = httpPost("https://api.zydzuqiu.com/match/index.html", $data);
+$result = httpPost("https://api.zydzuqiu.com/live/match.html", $data);
 //var_dump($result);
 echo ($result);
 print_r(json_decode($result, true));

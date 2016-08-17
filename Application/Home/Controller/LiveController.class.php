@@ -42,7 +42,7 @@ class LiveController extends BaseApiController {
      */
     public function match(){
         $json = $this->simpleJson();
-        do{
+        do{ 
             $match_id = I('request.match_id',0,'intval');
             if(empty($match_id)){
                 $json['status'] = 100;
