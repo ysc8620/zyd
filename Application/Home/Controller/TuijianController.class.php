@@ -46,7 +46,7 @@ class TuijianController extends BaseApiController {
                 $this->check_login();
                 $user_id = $this->user['id'];
 
-                $where['id'] = array('exp', "in(SELECT to_user_id as user_id FROM ".C('DB_PREFIX')."users_follow WHERE from_user_id='{$user_id}')");
+                $where['user_id'] = array('exp', "in(SELECT to_user_id as user_id FROM ".C('DB_PREFIX')."users_follow WHERE from_user_id='{$user_id}')");
             }
             $total = M('tuijian')->where($where)->count();
             $Page = new Page($total, $limit);
@@ -139,7 +139,7 @@ class TuijianController extends BaseApiController {
                 $this->check_login();
                 $user_id = $this->user['id'];
 
-                $where['id'] = array('exp', "in(SELECT to_user_id as user_id FROM ".C('DB_PREFIX')."users_follow WHERE from_user_id='{$user_id}')");
+                $where['user_id'] = array('exp', "in(SELECT to_user_id as user_id FROM ".C('DB_PREFIX')."users_follow WHERE from_user_id='{$user_id}')");
             }
             $total = M('tuijian')->where($where)->count();
             $Page = new Page($total, $limit);
