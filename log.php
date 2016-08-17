@@ -63,6 +63,7 @@ function sign($data,$appsecret)
 echo "=\r\n";
 
 $data = [
+    'p'=>'3',
     'type' => '3',
     'match_id' => 1215747
 ];

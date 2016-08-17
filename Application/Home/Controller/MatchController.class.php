@@ -73,6 +73,7 @@ class MatchController extends BaseApiController {
                 ('match_id,time as match_time,league_id,league_name,kind,level,state,home_id,home_name,home_score,away_id,
                 away_name,away_score,home_red,away_red,home_yellow,away_yellow,match_round,address,weather_ico,weather,temperature,is_neutral,technic,total_collect'
                 )->where($where)->order("time DESC")->limit($Page->firstRow . ',' . $Page->listRows)->select();
+                $json['sql'] = M()->getLastSql();
 
             }else{
                 // 验证登录
