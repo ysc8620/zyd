@@ -100,6 +100,9 @@ class LiveController extends BaseApiController {
             $tuijian['live_oupei_half'] = $peilv['oupei'];
             $tuijian['live_rangqiu_half'] = $peilv['rangqiu'];
             $tuijian['live_daxiaoqiu_half'] = $peilv['daxiaoqiu'];
+
+            $event_list = M('event')->where(array('match_id'=>$match_id))->order("time ASC")->select();
+            $tuijian['events'] = (array)$event_list;
             $json['data'] = $tuijian;
         }while(false);
         $this->ajaxReturn($json);
