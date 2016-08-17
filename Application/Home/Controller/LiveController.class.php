@@ -42,7 +42,7 @@ class LiveController extends BaseApiController {
      */
     public function match(){
         $json = $this->simpleJson();
-        do{ 
+        do{
             $match_id = I('request.match_id',0,'intval');
             if(empty($match_id)){
                 $json['status'] = 100;
@@ -92,14 +92,14 @@ class LiveController extends BaseApiController {
             $tuijian['daxiaoqiu'] = ["rate_1"=>$daxiaoqiu['change_big_rate'], "rate_2"=>$daxiaoqiu['change_rate'], "rate_3"=>$daxiaoqiu['change_small_rate']];
 
             $peilv = get_rate_list($match['match_id']);
-            $json['data']['oupei'] = $peilv['oupei'];
-            $json['data']['rangqiu'] = $peilv['rangqiu'];
-            $json['data']['daxiaoqiu'] = $peilv['daxiaoqiu'];
+            $json['data']['live_oupei'] = $peilv['oupei'];
+            $json['data']['live_rangqiu'] = $peilv['rangqiu'];
+            $json['data']['live_daxiaoqiu'] = $peilv['daxiaoqiu'];
 
             $peilv = get_half_rate_list($match['match_id']);
-            $json['data']['oupei_half'] = $peilv['oupei'];
-            $json['data']['rangqiu_half'] = $peilv['rangqiu'];
-            $json['data']['daxiaoqiu_half'] = $peilv['daxiaoqiu'];
+            $json['data']['live_oupei_half'] = $peilv['oupei'];
+            $json['data']['live_rangqiu_half'] = $peilv['rangqiu'];
+            $json['data']['live_daxiaoqiu_half'] = $peilv['daxiaoqiu'];
             $json['data'] = $tuijian;
         }while(false);
         $this->ajaxReturn($json);
