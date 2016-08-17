@@ -810,6 +810,7 @@ function get_half_rate_list($match_id){
             }
         }
     }
+    return $json;
 }
 
 /**
