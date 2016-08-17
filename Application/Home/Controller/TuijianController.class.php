@@ -135,6 +135,11 @@ class TuijianController extends BaseApiController {
                 $user_id = $this->user['id'];
 
                 $where['id'] = array('exp', "in(SELECT tuijian_id FROM ".C('DB_PREFIX')."tuijian_order WHERE user_id='{$user_id}')");
+            }elseif($type == 6){
+                $this->check_login();
+                $user_id = $this->user['id'];
+
+                $where['id'] = array('exp', "in(SELECT to_user_id as user_id FROM ".C('DB_PREFIX')."users_follow WHERE from_user_id='{$user_id}')");
             }
             $total = M('tuijian')->where($where)->count();
             $Page = new Page($total, $limit);
