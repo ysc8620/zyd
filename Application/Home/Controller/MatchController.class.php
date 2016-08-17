@@ -163,7 +163,14 @@ class MatchController extends BaseApiController {
                 if($match['state'] == '0'){
                     $list[$i]['match_time2'] = '未开';
                 }elseif(in_array($match['state'],[1,2,3,4])){
-                    $list[$i]['match_time2'] = floor((time() - strtotime($match['match_time']))/60)."'";
+                    if($match['state'] == 1){
+                        $list[$i]['match_time2'] = floor((time() - strtotime($match['match_time']))/60)."'";
+                    }elseif($match['state'] == 2){
+                        $list[$i]['match_time2'] = "45'";
+                    }else{
+                        $list[$i]['match_time2'] = floor((time() - strtotime($match['match_time'])-900)/60)."'";
+                    }
+
                 }elseif($match['state'] == -1){
                     $list[$i]['match_time2'] = '完场';
                 }elseif($match['state'] == -10){
