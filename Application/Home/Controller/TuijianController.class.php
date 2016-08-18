@@ -267,6 +267,7 @@ class TuijianController extends BaseApiController {
             }
 
             $match = M('match')->where(array('match_id'=>$data['match_id']))->find();
+            $json['match'] = $match;
             if( ! $match ){
                 $json['status'] = 111;
                 $json['msg'] = "没找到赛事信息";
