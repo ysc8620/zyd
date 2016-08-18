@@ -97,7 +97,7 @@
         var index = parent.layer.load(1, {shade: [0.1,'#000']});
         $.ajax({
             type: "post",
-            url: "{:U('/sporttery/beidan_edit')}",
+            url: "{:U('sporttery/beidan_edit')}",
             data: {id:id, match_id:match_id},
             dataType: "json",
             success: function (data) {
