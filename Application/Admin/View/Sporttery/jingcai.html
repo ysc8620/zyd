@@ -99,7 +99,7 @@
     // 状态修改
     $('input[name="match_id"]').change(function(){
         var id = $(this).attr('data-id');
-        var status = $(this).val();
+        var match_id = $(this).val();
         var index = parent.layer.load(1, {shade: [0.1,'#000']});
         $.ajax({
             type: "post",
