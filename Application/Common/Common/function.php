@@ -607,19 +607,19 @@ function get_rate_list($match_id){
 
     $json['oupei'] = [];
     // 走地数据
-    $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>4, 'company_id'=>3))->order('id DESC')->field($field)->select();
+    $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>4, 'company_id'=>3))->order('zoudi_id DESC')->field($field)->select();
     if($oupei){
         $json['oupei'] = $oupei;
     }else{
-        $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>4, 'company_id'=>24))->order('id DESC')->field($field)->select();
+        $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>4, 'company_id'=>24))->order('zoudi_id DESC')->field($field)->select();
         if($oupei){
             $json['oupei'] = $oupei;
         }else{
-            $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>4, 'company_id'=>31))->order('id DESC')->field($field)->select();
+            $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>4, 'company_id'=>31))->order('zoudi_id DESC')->field($field)->select();
             if($oupei){
                 $json['oupei'] = $oupei;
             }else{
-                $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>4, 'company_id'=>8))->order('id DESC')->field($field)->select();
+                $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>4, 'company_id'=>8))->order('zoudi_id DESC')->field($field)->select();
                 if($oupei){
                     $json['oupei'] = $oupei;
                 }
@@ -636,15 +636,15 @@ function get_rate_list($match_id){
     if($oupei){
         $json['oupei'] = array_merge($json['oupei'],$oupei);
     }else{
-        $oupei = M('asia_oupei_change')->where(array('match_id'=>$match_id, 'company_id'=>24))->field($field2)->select();
+        $oupei = M('asia_oupei_change')->where(array('match_id'=>$match_id, 'company_id'=>24))->field($field2)->order('id DESC')->select();
         if($oupei){
             $json['oupei'] = array_merge($json['oupei'],$oupei);
         }else{
-            $oupei = M('asia_oupei_change')->where(array('match_id'=>$match_id,  'company_id'=>31))->field($field2)->select();
+            $oupei = M('asia_oupei_change')->where(array('match_id'=>$match_id,  'company_id'=>31))->field($field2)->order('id DESC')->select();
             if($oupei){
                 $json['oupei'] = array_merge($json['oupei'],$oupei);
             }else{
-                $oupei = M('asia_oupei_change')->where(array('match_id'=>$match_id,  'company_id'=>8))->field($field2)->select();
+                $oupei = M('asia_oupei_change')->where(array('match_id'=>$match_id,  'company_id'=>8))->field($field2)->order('id DESC')->select();
                 if($oupei){
                     $json['oupei'] = array_merge($json['oupei'],$oupei);
                 }
@@ -653,19 +653,19 @@ function get_rate_list($match_id){
     }
 
     $json['rangqiu'] = [];
-    $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>1, 'company_id'=>3))->field($field)->select();
+    $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>1, 'company_id'=>3))->order('zoudi_id DESC')->field($field)->select();
     if($oupei){
         $json['rangqiu'] = $oupei;
     }else{
-        $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>1, 'company_id'=>24))->field($field)->select();
+        $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>1, 'company_id'=>24))->order('zoudi_id DESC')->field($field)->select();
         if($oupei){
             $json['rangqiu'] = $oupei;
         }else{
-            $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>1, 'company_id'=>31))->field($field)->select();
+            $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>1, 'company_id'=>31))->order('zoudi_id DESC')->field($field)->select();
             if($oupei){
                 $json['rangqiu'] = $oupei;
             }else{
-                $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>1, 'company_id'=>8))->field($field)->select();
+                $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>1, 'company_id'=>8))->order('zoudi_id DESC')->field($field)->select();
                 if($oupei){
                     $json['rangqiu'] = $oupei;
                 }
@@ -682,15 +682,15 @@ function get_rate_list($match_id){
     if($oupei){
         $json['rangqiu'] = array_merge($json['rangqiu'],$oupei);
     }else{
-        $oupei = M('asia_yapei_change')->where(array('match_id'=>$match_id, 'company_id'=>24))->field($field2)->select();
+        $oupei = M('asia_yapei_change')->where(array('match_id'=>$match_id, 'company_id'=>24))->field($field2)->order('id DESC')->select();
         if($oupei){
             $json['rangqiu'] = array_merge($json['rangqiu'],$oupei);
         }else{
-            $oupei = M('asia_yapei_change')->where(array('match_id'=>$match_id,  'company_id'=>31))->field($field2)->select();
+            $oupei = M('asia_yapei_change')->where(array('match_id'=>$match_id,  'company_id'=>31))->field($field2)->order('id DESC')->select();
             if($oupei){
                 $json['rangqiu'] = array_merge($json['rangqiu'],$oupei);
             }else{
-                $oupei = M('asia_yapei_change')->where(array('match_id'=>$match_id,  'company_id'=>8))->field($field2)->select();
+                $oupei = M('asia_yapei_change')->where(array('match_id'=>$match_id,  'company_id'=>8))->field($field2)->order('id DESC')->select();
                 if($oupei){
                     $json['rangqiu'] = array_merge($json['rangqiu'],$oupei);
                 }
@@ -699,19 +699,19 @@ function get_rate_list($match_id){
     }
 
     $json['daxiaoqiu'] = [];
-    $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>2, 'company_id'=>3))->field($field)->select();
+    $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>2, 'company_id'=>3))->order('zoudi_id DESC')->field($field)->select();
     if($oupei){
         $json['daxiaoqiu'] = $oupei;
     }else{
-        $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>2, 'company_id'=>24))->field($field)->select();
+        $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>2, 'company_id'=>24))->order('zoudi_id DESC')->field($field)->select();
         if($oupei){
             $json['daxiaoqiu'] = $oupei;
         }else{
-            $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>2, 'company_id'=>31))->field($field)->select();
+            $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>2, 'company_id'=>31))->order('zoudi_id DESC')->field($field)->select();
             if($oupei){
                 $json['daxiaoqiu'] = $oupei;
             }else{
-                $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>2, 'company_id'=>8))->field($field)->select();
+                $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>2, 'company_id'=>8))->order('zoudi_id DESC')->field($field)->select();
                 if($oupei){
                     $json['daxiaoqiu'] = $oupei;
                 }
@@ -728,15 +728,15 @@ function get_rate_list($match_id){
     if($oupei){
         $json['daxiaoqiu'] = array_merge($json['daxiaoqiu'],$oupei);
     }else{
-        $oupei = M('asia_daxiaoqiu_change')->where(array('match_id'=>$match_id, 'company_id'=>24))->field($field2)->select();
+        $oupei = M('asia_daxiaoqiu_change')->where(array('match_id'=>$match_id, 'company_id'=>24))->field($field2)->order('id DESC')->select();
         if($oupei){
             $json['daxiaoqiu'] = array_merge($json['daxiaoqiu'],$oupei);
         }else{
-            $oupei = M('asia_daxiaoqiu_change')->where(array('match_id'=>$match_id,  'company_id'=>31))->field($field2)->select();
+            $oupei = M('asia_daxiaoqiu_change')->where(array('match_id'=>$match_id,  'company_id'=>31))->field($field2)->order('id DESC')->select();
             if($oupei){
                 $json['daxiaoqiu'] = array_merge($json['daxiaoqiu'],$oupei);
             }else{
-                $oupei = M('asia_daxiaoqiu_change')->where(array('match_id'=>$match_id,  'company_id'=>8))->field($field2)->select();
+                $oupei = M('asia_daxiaoqiu_change')->where(array('match_id'=>$match_id,  'company_id'=>8))->field($field2)->order('id DESC')->select();
                 if($oupei){
                     $json['daxiaoqiu'] = array_merge($json['daxiaoqiu'],$oupei);
                 }
@@ -758,15 +758,15 @@ function get_half_rate_list($match_id){
     if($oupei){
         $json['oupei'] = $oupei;
     }else{
-        $oupei = M('asia_half_oupei')->where(array('match_id'=>$match_id, 'company_id'=>24))->field($field2)->select();
+        $oupei = M('asia_half_oupei')->where(array('match_id'=>$match_id, 'company_id'=>24))->field($field2)->order('id DESC')->select();
         if($oupei){
             $json['oupei'] = $oupei;
         }else{
-            $oupei = M('asia_half_oupei')->where(array('match_id'=>$match_id,  'company_id'=>31))->field($field2)->select();
+            $oupei = M('asia_half_oupei')->where(array('match_id'=>$match_id,  'company_id'=>31))->field($field2)->order('id DESC')->select();
             if($oupei){
                 $json['oupei'] = $oupei;
             }else{
-                $oupei = M('asia_half_oupei')->where(array('match_id'=>$match_id,  'company_id'=>8))->field($field2)->select();
+                $oupei = M('asia_half_oupei')->where(array('match_id'=>$match_id,  'company_id'=>8))->field($field2)->order('id DESC')->select();
                 if($oupei){
                     $json['oupei'] = $oupei;
                 }
@@ -781,15 +781,15 @@ function get_half_rate_list($match_id){
     if($oupei){
         $json['rangqiu'] = $oupei;
     }else{
-        $oupei = M('asia_half')->where(array('match_id'=>$match_id, 'company_id'=>24))->field($field2)->select();
+        $oupei = M('asia_half')->where(array('match_id'=>$match_id, 'company_id'=>24))->field($field2)->order('id DESC')->select();
         if($oupei){
             $json['rangqiu'] = $oupei;
         }else{
-            $oupei = M('asia_half')->where(array('match_id'=>$match_id,  'company_id'=>31))->field($field2)->select();
+            $oupei = M('asia_half')->where(array('match_id'=>$match_id,  'company_id'=>31))->field($field2)->order('id DESC')->select();
             if($oupei){
                 $json['rangqiu'] = $oupei;
             }else{
-                $oupei = M('asia_half')->where(array('match_id'=>$match_id,  'company_id'=>8))->field($field2)->select();
+                $oupei = M('asia_half')->where(array('match_id'=>$match_id,  'company_id'=>8))->field($field2)->order('id DESC')->select();
                 if($oupei){
                     $json['rangqiu'] = $oupei;
                 }
@@ -804,15 +804,15 @@ function get_half_rate_list($match_id){
     if($oupei){
         $json['daxiaoqiu'] = $oupei;
     }else{
-        $oupei = M('asia_half_daxiaoqiu_change')->where(array('match_id'=>$match_id, 'company_id'=>24))->field($field2)->select();
+        $oupei = M('asia_half_daxiaoqiu_change')->where(array('match_id'=>$match_id, 'company_id'=>24))->field($field2)->order('id DESC')->select();
         if($oupei){
             $json['daxiaoqiu'] = $oupei;
         }else{
-            $oupei = M('asia_half_daxiaoqiu_change')->where(array('match_id'=>$match_id,  'company_id'=>31))->field($field2)->select();
+            $oupei = M('asia_half_daxiaoqiu_change')->where(array('match_id'=>$match_id,  'company_id'=>31))->field($field2)->order('id DESC')->select();
             if($oupei){
                 $json['daxiaoqiu'] = $oupei;
             }else{
-                $oupei = M('asia_half_daxiaoqiu_change')->where(array('match_id'=>$match_id,  'company_id'=>8))->field($field2)->select();
+                $oupei = M('asia_half_daxiaoqiu_change')->where(array('match_id'=>$match_id,  'company_id'=>8))->field($field2)->order('id DESC')->select();
                 if($oupei){
                     $json['daxiaoqiu'] = $oupei;
                 }
