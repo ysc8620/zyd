@@ -274,7 +274,7 @@ class TuijianController extends BaseApiController {
             }
 
             // s
-            if(in_array($match['state'],[0,1,2,3,4])){
+            if(in_array($match['state'],['0','1','2','3'])){
                 $json['status'] = 111;
                 $json['msg'] = "赛事已经完结不支持推荐";
                 break;
