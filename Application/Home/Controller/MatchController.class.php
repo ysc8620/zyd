@@ -110,23 +110,6 @@ class MatchController extends BaseApiController {
                 $list[$i]['technic']['id14']['home'] = isset($technic['id14'])?($technic['id14']['home']):"0";
                 $list[$i]['technic']['id14']['away'] = isset($technic['id14'])?($technic['id14']['away']):"0";
 
-                // 标准
-                $biaozhun = get_rate($match['match_id'],'oupei',$match['state']);
-                $list[$i]['begin_home_rate'] = $biaozhun['begin_home_rate'];
-                $list[$i]['begin_draw_rate'] = $biaozhun['begin_draw_rate'];
-                $list[$i]['begin_away_rate'] = $biaozhun['begin_away_rate'];
-                $list[$i]['change_home_rate'] = $biaozhun['change_home_rate'];
-                $list[$i]['change_draw_rate'] = $biaozhun['change_draw_rate'];
-                $list[$i]['change_away_rate'] = $biaozhun['change_away_rate'];
-
-                // 欧赔
-                $list[$i]['oupei']['begin_home_rate'] = $list[$i]['begin_home_rate'];
-                $list[$i]['oupei']['begin_draw_rate'] = $list[$i]['begin_draw_rate'];
-                $list[$i]['oupei']['begin_away_rate'] = $list[$i]['begin_away_rate'];
-                $list[$i]['oupei']['change_home_rate'] = $list[$i]['change_home_rate'];
-                $list[$i]['oupei']['change_draw_rate'] = $list[$i]['change_draw_rate'];
-                $list[$i]['oupei']['change_away_rate'] = $list[$i]['change_away_rate'];
-
                 // 亚赔
                 $yapei = get_rate($match['match_id'],'rangqiu',$match['state']);
                 $list[$i]['yapei']['begin_rate'] = $yapei['begin_rate'];
@@ -135,6 +118,25 @@ class MatchController extends BaseApiController {
                 $list[$i]['yapei']['change_rate'] = $yapei['change_rate'];
                 $list[$i]['yapei']['change_home_rate'] = $yapei['change_home_rate'];
                 $list[$i]['yapei']['change_away_rate'] = $yapei['change_away_rate'];
+
+                // 标准
+                $biaozhun = get_rate($match['match_id'],'oupei',$match['state']);
+                $list[$i]['begin_rate'] = $yapei['begin_rate'];
+                $list[$i]['begin_home_rate'] = $yapei['begin_home_rate'];
+                $list[$i]['begin_away_rate'] = $yapei['begin_away_rate'];
+                $list[$i]['change_rate'] = $yapei['change_rate'];
+                $list[$i]['change_home_rate'] = $yapei['change_home_rate'];
+                $list[$i]['change_away_rate'] = $yapei['change_away_rate'];
+
+                // 欧赔
+                $list[$i]['oupei']['begin_home_rate'] =  $biaozhun['begin_home_rate'];
+                $list[$i]['oupei']['begin_draw_rate'] = $biaozhun['begin_draw_rate'];
+                $list[$i]['oupei']['begin_away_rate'] = $biaozhun['begin_away_rate'];
+                $list[$i]['oupei']['change_home_rate'] = $biaozhun['change_home_rate'];
+                $list[$i]['oupei']['change_draw_rate'] = $biaozhun['change_draw_rate'];
+                $list[$i]['oupei']['change_away_rate'] = $biaozhun['change_away_rate'];
+
+
 
                 // 大小球
                 $daxiaoqiu = get_rate($match['match_id'],'daxiaoqiu',$match['state']);
@@ -276,21 +278,6 @@ class MatchController extends BaseApiController {
             $match['technic']['id14']['away'] = isset($technic['id14'])?($technic['id14']['away']):0;
 
             // 标准
-            $baiou = get_rate($match['match_id'],'oupei',$match['state']);
-            $match['begin_home_rate'] = $baiou['begin_home_rate'];
-            $match['begin_draw_rate'] = $baiou['begin_draw_rate'];
-            $match['begin_away_rate'] = $baiou['begin_away_rate'];
-            $match['change_home_rate'] = $baiou['change_home_rate'];
-            $match['change_draw_rate'] = $baiou['change_draw_rate'];
-            $match['change_away_rate'] = $baiou['change_away_rate'];
-
-            // 欧赔
-            $match['oupei']['begin_home_rate'] = $match['begin_home_rate'];
-            $match['oupei']['begin_draw_rate'] = $match['begin_draw_rate'];
-            $match['oupei']['begin_away_rate'] = $match['begin_away_rate'];
-            $match['oupei']['change_home_rate'] = $match['change_home_rate'];
-            $match['oupei']['change_draw_rate'] = $match['change_draw_rate'];
-            $match['oupei']['change_away_rate'] = $match['change_away_rate'];
 
             // 亚赔
             $yapei = get_rate($match['match_id'],'rangqiu',$match['state']);
@@ -300,6 +287,25 @@ class MatchController extends BaseApiController {
             $match['yapei']['change_rate'] = $yapei['change_rate'];
             $match['yapei']['change_home_rate'] = $yapei['change_home_rate'];
             $match['yapei']['change_away_rate'] = $yapei['change_away_rate'];
+
+
+            $match['begin_rate'] = $yapei['begin_rate'];
+            $match['begin_home_rate'] = $yapei['begin_home_rate'];
+            $match['begin_away_rate'] = $yapei['begin_away_rate'];
+
+            $match['change_rate'] = $yapei['change_rate'];
+            $match['change_home_rate'] = $yapei['change_home_rate'];
+            $match['change_away_rate'] = $yapei['change_away_rate'];
+
+            // 欧赔
+            $baiou = get_rate($match['match_id'],'oupei',$match['state']);
+            $match['oupei']['begin_home_rate'] = $baiou['begin_home_rate'];
+            $match['oupei']['begin_draw_rate'] = $baiou['begin_draw_rate'];
+            $match['oupei']['begin_away_rate'] = $baiou['begin_away_rate'];
+            $match['oupei']['change_home_rate'] = $baiou['change_home_rate'];
+            $match['oupei']['change_draw_rate'] = $baiou['change_draw_rate'];
+            $match['oupei']['change_away_rate'] = $baiou['change_away_rate'];
+
 
             // 大小球
             $daxiaoqiu = get_rate($match['match_id'],'daxiaoqiu',$match['state']);
@@ -387,11 +393,11 @@ class MatchController extends BaseApiController {
                 $tuijian['status'] = 0;
             }
             // 标准
-            $baiou = get_rate($match['match_id'],'oupei',$match['state']);
-            $tuijian['begin_home_rate'] = $baiou['begin_home_rate'];
+            $baiou = get_rate($match['match_id'],'rangqiu',$match['state']);
+            $tuijian['begin_rate'] = $baiou['begin_rate'];
             $tuijian['begin_draw_rate'] = $baiou['begin_draw_rate'];
             $tuijian['begin_away_rate'] = $baiou['begin_away_rate'];
-            $tuijian['change_home_rate'] = $baiou['change_home_rate'];
+            $tuijian['change_rate'] = $baiou['change_rate'];
             $tuijian['change_draw_rate'] = $baiou['change_draw_rate'];
             $tuijian['change_away_rate'] = $baiou['change_away_rate'];
 
