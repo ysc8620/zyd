@@ -22,12 +22,12 @@ class LiveController extends BaseApiController {
             unset($list[$i]['technic']);
 
             // 标准
-            $baiou = get_rate($item['match_id'],'oupei',$item['state']);
+            $baiou = get_rate($item['match_id'],'rangqiu',$item['state']);
             $list[$i]['begin_home_rate'] = "{$baiou['begin_home_rate']}";
-            $list[$i]['begin_draw_rate'] = "{$baiou['begin_draw_rate']}";
+            $list[$i]['begin_rate'] = "{$baiou['begin_rate']}";
             $list[$i]['begin_away_rate'] = "{$baiou['begin_away_rate']}";
             $list[$i]['change_home_rate'] = "{$baiou['change_home_rate']}";
-            $list[$i]['change_draw_rate'] = "{$baiou['change_draw_rate']}";
+            $list[$i]['change_rate'] = "{$baiou['change_rate']}";
             $list[$i]['change_away_rate'] = "{$baiou['change_away_rate']}";
 
             $event_list = M('event')->where(array('match_id'=>$item['match_id'], 'event_type'=>1))->order("time DESC")->select();
@@ -67,12 +67,12 @@ class LiveController extends BaseApiController {
                 $tuijian['status'] = 0;
             }
             // 标准
-            $baiou = get_rate($match['match_id'],'oupei',$match['state']);
+            $baiou = get_rate($match['match_id'],'rangqiu',$match['state']);
             $tuijian['begin_home_rate'] = $baiou['begin_home_rate'];
-            $tuijian['begin_draw_rate'] = $baiou['begin_draw_rate'];
+            $tuijian['begin_rate'] = $baiou['begin_rate'];
             $tuijian['begin_away_rate'] = $baiou['begin_away_rate'];
             $tuijian['change_home_rate'] = $baiou['change_home_rate'];
-            $tuijian['change_draw_rate'] = $baiou['change_draw_rate'];
+            $tuijian['change_rate'] = $baiou['change_rate'];
             $tuijian['change_away_rate'] = $baiou['change_away_rate'];
 
             // 竞彩
@@ -138,12 +138,12 @@ class LiveController extends BaseApiController {
                 $tuijian['status'] = 0;
             }
             // 标准
-            $baiou = get_rate($match['match_id'],'oupei',$match['state']);
+            $baiou = get_rate($match['match_id'],'rangqiu',$match['state']);
             $tuijian['begin_home_rate'] = $baiou['begin_home_rate'];
-            $tuijian['begin_draw_rate'] = $baiou['begin_draw_rate'];
+            $tuijian['begin_rate'] = $baiou['begin_rate'];
             $tuijian['begin_away_rate'] = $baiou['begin_away_rate'];
             $tuijian['change_home_rate'] = $baiou['change_home_rate'];
-            $tuijian['change_draw_rate'] = $baiou['change_draw_rate'];
+            $tuijian['change_rate'] = $baiou['change_rate'];
             $tuijian['change_away_rate'] = $baiou['change_away_rate'];
 
             // 竞彩
