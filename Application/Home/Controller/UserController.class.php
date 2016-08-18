@@ -53,7 +53,8 @@ class UserController extends BaseApiController {
         do{
             //
             $mobile = I('request.mobile','','strval');
-            $password = trim(I('request.password','','strval'));
+            $password = I('request.password','','strval,trim');
+            $share_id = I('request.share_id','','strval,trim');
             $code = I('request.code','','strval');
 
             if( ! is_mobile($mobile)){
@@ -100,6 +101,12 @@ class UserController extends BaseApiController {
                 $json['status'] = 111;
                 $json['msg'] = '该手机号已注册';
                 break;
+            }
+
+            if($share_id){
+                $share_user_id = intval(base64_decode($share_id));
+                $user['share_user_id'] = $share_user_id;
+
             }
             $user['register_time'] = time();
             $user['update_time'] = time();
@@ -314,6 +321,7 @@ class UserController extends BaseApiController {
             $openid = I('request.openid','','strval');
             $nickname = I('request.nickname','','strval');
             $pic = I('request.pic','','strval');
+            $share_id = I('request.share_id','','strval,trime');
 
             if(empty($openid)){
                 $json['status'] = 110;
@@ -361,6 +369,12 @@ class UserController extends BaseApiController {
                     'last_login_time' => time(),
                     'last_login_type' => 3
                 ];
+
+                if($share_id){
+                    $share_user_id = intval(base64_decode($share_id));
+                    $data['share_user_id'] = $share_user_id;
+
+                }
                 $res = M('users')->add($data);
                 if($res){
                     $member = M('users')->where(array('wx_openid'=>$openid))->field($this->field)->find();
