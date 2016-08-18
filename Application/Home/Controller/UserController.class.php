@@ -476,11 +476,12 @@ class UserController extends BaseApiController {
             $password = I('request.password','','trim,strval');
             $type = I('request.type',0,'intval');
             $jiguang_id = I('request.jiguang_id','','trim,strval');
+            $jiguang_type = I('request.jiguang_type','','trim,strval');
 
             if(empty($nickname) || strlen($nickname) > 36){
-                $json['status'] = 110;
-                $json['msg'] = '用户昵称在1-36个字符之间';
-                break;
+//                $json['status'] = 110;
+//                $json['msg'] = '用户昵称在1-36个字符之间';
+//                break;
             }
             $member = M('users')->where(array('id'=>$user_id))->field($this->field)->find();
             if(!$member){
@@ -500,6 +501,7 @@ class UserController extends BaseApiController {
             }
             if($jiguang_id){
                 $data['jiguang_id'] = $jiguang_id;
+                $data['jiguang_type'] = $jiguang_type;
             }
 
             if($password){
