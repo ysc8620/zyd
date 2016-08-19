@@ -431,8 +431,8 @@ class TuijianController extends BaseApiController {
                 $is_buy = 0;
                 if($tuijian['is_fee']){
                     if(!empty($this->user)){
-                        if($this->user['id'] != $item['user_id']){
-                            $buy = M('tuijian_order')->where(array('tuijian_id'=>$item['id'],'user_id'=>$this->user['id']))->find();
+                        if($this->user['id'] != $tuijian['user_id']){
+                            $buy = M('tuijian_order')->where(array('tuijian_id'=>$tuijian['id'],'user_id'=>$this->user['id']))->find();
                             if($buy){
                                 $is_buy = 1;
                             }
