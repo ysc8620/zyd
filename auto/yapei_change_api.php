@@ -36,9 +36,9 @@ do{
                 $data = [
                     'match_id' => intval($info[0]),
                     'company_id' => intval($info[1]),
-                    'change_rate' => floatval($info[2]),
-                    'change_home_rate' => floatval($info[3]),
-                    'change_away_rate' => floatval($info[4]),
+                    'change_rate' => ($info[2]),
+                    'change_home_rate' => ($info[3]),
+                    'change_away_rate' => ($info[4]),
                     'is_inclose' => strval($info[5]),
                     'is_walk' => strval($info[6]),
                     'update_time' => time()
@@ -68,9 +68,9 @@ do{
                 $data = [
                     'match_id' => intval($info[0]),
                     'company_id' => intval($info[1]),
-                    'change_home_rate' => floatval($info[2]),
-                    'change_draw_rate' => floatval($info[3]),
-                    'change_away_rate' => floatval($info[4]),
+                    'change_home_rate' => ($info[2]),
+                    'change_draw_rate' => ($info[3]),
+                    'change_away_rate' => ($info[4]),
                     'update_time' => time()
                 ];
 
@@ -98,9 +98,9 @@ do{
                 $data = [
                     'match_id' => intval($info[0]),
                     'company_id' => intval($info[1]),
-                    'change_rate' => floatval($info[2]),
-                    'change_big_rate' => floatval($info[3]),
-                    'change_small_rate' => floatval($info[4]),
+                    'change_rate' => ($info[2]),
+                    'change_big_rate' => ($info[3]),
+                    'change_small_rate' => ($info[4]),
                     'update_time' => time()
                 ];
 
@@ -129,9 +129,9 @@ do{
                 $data = [
                     'match_id' => intval($info[0]),
                     'company_id' => intval($info[1]),
-                    'change_rate' => floatval($info[2]),
-                    'change_home_rate' => floatval($info[3]),
-                    'change_away_rate' => floatval($info[4]),
+                    'change_rate' => ($info[2]),
+                    'change_home_rate' => ($info[3]),
+                    'change_away_rate' => ($info[4]),
                     'update_time' => time()
                 ];
 
@@ -161,9 +161,9 @@ do{
                 $data = [
                     'match_id' => intval($info[0]),
                     'company_id' => intval($info[1]),
-                    'change_rate' => floatval($info[2]),
-                    'change_big_rate' => floatval($info[3]),
-                    'change_small_rate' => floatval($info[4]),
+                    'change_rate' => ($info[2]),
+                    'change_big_rate' => ($info[3]),
+                    'change_small_rate' => ($info[4]),
                     'update_time' => time()
                 ];
 
