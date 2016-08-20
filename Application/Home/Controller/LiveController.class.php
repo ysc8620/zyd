@@ -61,6 +61,42 @@ class LiveController extends BaseApiController {
             $tuijian['home_score'] = $match['home_score'];
             $tuijian['away_score'] = $match['away_score'];
             $tuijian['state'] = $match['state'];
+
+            // 赛事统计
+            $technic = empty($match['technic'])?[]:json_decode($match['technic'], true);
+            $tuijian['technic'] = [];
+            $tuijian['technic']['id3']['home'] = isset($technic['id3'])?($technic['id3']['home']):0;
+            $tuijian['technic']['id3']['away'] = isset($technic['id3'])?($technic['id3']['away']):0;
+            $tuijian['technic']['id4']['home'] = isset($technic['id4'])?($technic['id4']['home']):0;
+            $tuijian['technic']['id4']['away'] = isset($technic['id4'])?($technic['id4']['away']):0;
+            $tuijian['technic']['id6']['home'] = isset($technic['id6'])?($technic['id6']['home']):0;
+            $tuijian['technic']['id6']['away'] = isset($technic['id6'])?($technic['id6']['away']):0;
+            $tuijian['technic']['id14']['home'] = isset($technic['id14'])?($technic['id14']['home']):0;
+            $tuijian['technic']['id14']['away'] = isset($technic['id14'])?($technic['id14']['away']):0;
+
+
+            if($match['state'] == '0'){
+                $tuijian['match_time2'] = '未开';
+            }elseif(in_array($match['state'],[1,2,3,4])){
+//                $match['match_time2'] = floor(time() - strtotime($match['match_time'])/60);
+                $zoudi = M('zoudi')->where(array('match_id'=>$match['match_id']))->order("id DESC")->find();
+                $zoudi['time'] = str_replace('分','',$zoudi['time']);
+                $tuijian['match_time2'] = is_numeric($zoudi['time'])?$zoudi['time']."'":$zoudi['time'];
+            }elseif($match['state'] == -1){
+                $tuijian['match_time2'] = '完场';
+            }elseif($match['state'] == -10){
+                $tuijian['match_time2'] = '取消';
+            }elseif($match['state'] == -13){
+                $tuijian['match_time2'] = '中断';
+            }elseif($match['state'] == -12){
+                $tuijian['match_time2'] = '腰斩';
+            }elseif($match['state'] == -11){
+                $tuijian['match_time2'] = '待定';
+            }
+
+            $tuijian['state_name'] = getMatchStatus($match['state']);
+
+
             if(in_array($tuijian['state'],[0,1,2,3,4])){
                 $tuijian['status'] = 1;
             }else{
