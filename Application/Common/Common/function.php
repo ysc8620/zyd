@@ -670,7 +670,7 @@ function get_rate($match_id, $type='',$state=''){
             'left_ball' => 0
         ];
         //
-        $oupei = M('jingca')->where(array('match_id'=>$match_id))->order('id DESC')->field("`home_rate`, `tie_rate` as draw_rate, `away_rate`, `win_rate` as home_win_rate, `draw_rate` as draw_win_rate, `lose_rate` away_win_rate, `home_concede` as left_ball")->find();
+        $oupei = M('jingcai')->where(array('match_id'=>$match_id))->order('id DESC')->field("`home_rate`, `tie_rate` as draw_rate, `away_rate`, `win_rate` as home_win_rate, `draw_rate` as draw_win_rate, `lose_rate` away_win_rate, `home_concede` as left_ball")->find();
         if($oupei){
             $data = $oupei;
         }
