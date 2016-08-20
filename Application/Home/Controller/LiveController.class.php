@@ -91,7 +91,7 @@ class LiveController extends BaseApiController {
             $daxiaoqiu = get_rate($match['match_id'],'daxiaoqiu',$match['state']);//`change_rate`, `change_big_rate`, `change_small_rate`
             $tuijian['daxiaoqiu'] = ["rate_1"=>$daxiaoqiu['change_big_rate'], "rate_2"=>$daxiaoqiu['change_rate'], "rate_3"=>$daxiaoqiu['change_small_rate']];
 
-            $peilv = get_rate_list($match['match_id']);
+            $peilv = get_rate_list($match['match_id'],$match['time']);
             $tuijian['live_oupei'] = $peilv['oupei'];
             $tuijian['live_rangqiu'] = $peilv['rangqiu'];
             $tuijian['live_daxiaoqiu'] = $peilv['daxiaoqiu'];

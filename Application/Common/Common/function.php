@@ -601,7 +601,8 @@ function get_rate($match_id, $type='',$state=''){
 /**
  * 三合一
  */
-function get_rate_list($match_id){
+function get_rate_list($match_id,$match_time){
+    $match_time = strtotime($match_time);
     $json = [];
     $field = ' `match_id`, `time`, `home_score`, `away_score`, `company_id`, `rate_1`, `rate_2`, `rate_3`, `change_date`';
 
@@ -630,21 +631,22 @@ function get_rate_list($match_id){
         $json['oupei'][$i]['change_date'] = date("H:i",strtotime($item['change_date']));
     }
 
+
     // 变盘数据
     $field2 = " `match_id`, '' as time, '' as home_score, '' as away_score, `company_id`, change_home_rate as  rate_1, change_draw_rate as rate_2, change_away_rate as rate_3, '' as change_date";
-    $oupei = M('asia_oupei_change')->where(array('match_id'=>$match_id, 'company_id'=>3))->field($field2)->order('id DESC')->select();
+    $oupei = M('asia_oupei_change')->where(array('match_id'=>$match_id, 'company_id'=>3,'update_time'=>array('gt',$match_time)))->field($field2)->order('id DESC')->select();
     if($oupei){
         $json['oupei'] = array_merge($json['oupei'],$oupei);
     }else{
-        $oupei = M('asia_oupei_change')->where(array('match_id'=>$match_id, 'company_id'=>24))->field($field2)->order('id DESC')->select();
+        $oupei = M('asia_oupei_change')->where(array('match_id'=>$match_id, 'company_id'=>24,'update_time'=>array('gt',$match_time)))->field($field2)->order('id DESC')->select();
         if($oupei){
             $json['oupei'] = array_merge($json['oupei'],$oupei);
         }else{
-            $oupei = M('asia_oupei_change')->where(array('match_id'=>$match_id,  'company_id'=>31))->field($field2)->order('id DESC')->select();
+            $oupei = M('asia_oupei_change')->where(array('match_id'=>$match_id,  'company_id'=>31,'update_time'=>array('gt',$match_time)))->field($field2)->order('id DESC')->select();
             if($oupei){
                 $json['oupei'] = array_merge($json['oupei'],$oupei);
             }else{
-                $oupei = M('asia_oupei_change')->where(array('match_id'=>$match_id,  'company_id'=>8))->field($field2)->order('id DESC')->select();
+                $oupei = M('asia_oupei_change')->where(array('match_id'=>$match_id,  'company_id'=>8,'update_time'=>array('gt',$match_time)))->field($field2)->order('id DESC')->select();
                 if($oupei){
                     $json['oupei'] = array_merge($json['oupei'],$oupei);
                 }
@@ -678,15 +680,15 @@ function get_rate_list($match_id){
 
     // 变盘数据
     $field2 = " `match_id`, '' as time, '' as home_score, '' as away_score, `company_id`, change_home_rate as  rate_1, change_rate as rate_2, change_away_rate as rate_3, '' as change_date";
-    $oupei = M('asia_yapei_change')->where(array('match_id'=>$match_id, 'company_id'=>3))->field($field2)->order('id DESC')->select();
+    $oupei = M('asia_yapei_change')->where(array('match_id'=>$match_id, 'company_id'=>3,'update_time'=>array('gt',$match_time)))->field($field2)->order('id DESC')->select();
     if($oupei){
         $json['rangqiu'] = array_merge($json['rangqiu'],$oupei);
     }else{
-        $oupei = M('asia_yapei_change')->where(array('match_id'=>$match_id, 'company_id'=>24))->field($field2)->order('id DESC')->select();
+        $oupei = M('asia_yapei_change')->where(array('match_id'=>$match_id, 'company_id'=>24,'update_time'=>array('gt',$match_time)))->field($field2)->order('id DESC')->select();
         if($oupei){
             $json['rangqiu'] = array_merge($json['rangqiu'],$oupei);
         }else{
-            $oupei = M('asia_yapei_change')->where(array('match_id'=>$match_id,  'company_id'=>31))->field($field2)->order('id DESC')->select();
+            $oupei = M('asia_yapei_change')->where(array('match_id'=>$match_id,  'company_id'=>31,'update_time'=>array('gt',$match_time)))->field($field2)->order('id DESC')->select();
             if($oupei){
                 $json['rangqiu'] = array_merge($json['rangqiu'],$oupei);
             }else{
@@ -724,19 +726,19 @@ function get_rate_list($match_id){
 
     // 变盘数据
     $field2 = "`match_id`, '' as time, '' as home_score, '' as away_score, `company_id`, change_big_rate as  rate_1, change_rate as rate_2, change_small_rate as rate_3, '' as change_date";
-    $oupei = M('asia_daxiaoqiu_change')->where(array('match_id'=>$match_id, 'company_id'=>3))->field($field2)->order('id DESC')->select();
+    $oupei = M('asia_daxiaoqiu_change')->where(array('match_id'=>$match_id, 'company_id'=>3,'update_time'=>array('gt',$match_time)))->field($field2)->order('id DESC')->select();
     if($oupei){
         $json['daxiaoqiu'] = array_merge($json['daxiaoqiu'],$oupei);
     }else{
-        $oupei = M('asia_daxiaoqiu_change')->where(array('match_id'=>$match_id, 'company_id'=>24))->field($field2)->order('id DESC')->select();
+        $oupei = M('asia_daxiaoqiu_change')->where(array('match_id'=>$match_id, 'company_id'=>24,'update_time'=>array('gt',$match_time)))->field($field2)->order('id DESC')->select();
         if($oupei){
             $json['daxiaoqiu'] = array_merge($json['daxiaoqiu'],$oupei);
         }else{
-            $oupei = M('asia_daxiaoqiu_change')->where(array('match_id'=>$match_id,  'company_id'=>31))->field($field2)->order('id DESC')->select();
+            $oupei = M('asia_daxiaoqiu_change')->where(array('match_id'=>$match_id,  'company_id'=>31,'update_time'=>array('gt',$match_time)))->field($field2)->order('id DESC')->select();
             if($oupei){
                 $json['daxiaoqiu'] = array_merge($json['daxiaoqiu'],$oupei);
             }else{
-                $oupei = M('asia_daxiaoqiu_change')->where(array('match_id'=>$match_id,  'company_id'=>8))->field($field2)->order('id DESC')->select();
+                $oupei = M('asia_daxiaoqiu_change')->where(array('match_id'=>$match_id,  'company_id'=>8,'update_time'=>array('gt',$match_time)))->field($field2)->order('id DESC')->select();
                 if($oupei){
                     $json['daxiaoqiu'] = array_merge($json['daxiaoqiu'],$oupei);
                 }
