@@ -61,6 +61,7 @@ class TuijianController extends BaseApiController {
                 $item['home_name'] = $match['home_name'];
                 $item['away_name'] = $match['away_name'];
                 $item['match_time'] = $match['time'];
+                $item['match_state'] = $match['state'];
                 #
                 $user = M('users')->where(array('id'=>$item['user_id']))->find();
                 $item['user_name'] = $user['nickname'];
@@ -70,9 +71,14 @@ class TuijianController extends BaseApiController {
                 # 是否购买
                 $is_buy = 0;
                 if($item['is_fee']){
+
                     if(!empty($this->user)){
-                        $buy = M('tuijian_order')->where(array('tuijian_id'=>$item['id'],'user_id'=>$this->user['id']))->find();
-                        if($buy){
+                        if($this->user['id'] != $item['user_id']){
+                            $buy = M('tuijian_order')->where(array('tuijian_id'=>$item['id'],'user_id'=>$this->user['id']))->find();
+                            if($buy){
+                                $is_buy = 1;
+                            }
+                        }else{
                             $is_buy = 1;
                         }
                     }
@@ -154,6 +160,7 @@ class TuijianController extends BaseApiController {
                 $item['home_name'] = $match['home_name'];
                 $item['away_name'] = $match['away_name'];
                 $item['match_time'] = $match['time'];
+                $item['match_state'] = $match['state'];
                 #
                 $user = M('users')->where(array('id'=>$item['user_id']))->find();
                 $item['user_name'] = $user['nickname'];
@@ -164,8 +171,12 @@ class TuijianController extends BaseApiController {
                 $is_buy = 0;
                 if($item['is_fee']){
                     if(!empty($this->user)){
-                        $buy = M('tuijian_order')->where(array('tuijian_id'=>$item['id'],'user_id'=>$this->user['id']))->find();
-                        if($buy){
+                        if($this->user['id'] != $item['user_id']){
+                            $buy = M('tuijian_order')->where(array('tuijian_id'=>$item['id'],'user_id'=>$this->user['id']))->find();
+                            if($buy){
+                                $is_buy = 1;
+                            }
+                        }else{
                             $is_buy = 1;
                         }
                     }
@@ -403,6 +414,7 @@ class TuijianController extends BaseApiController {
                 $tuijian['home_name'] = $match['home_name'];
                 $tuijian['away_name'] = $match['away_name'];
                 $tuijian['match_time'] = $match['time'];
+                $tuijian['match_state'] = $match['state'];
 
                 $tuijian['home_score'] = $match['home_score'];
                 $tuijian['away_score'] = $match['away_score'];
@@ -419,8 +431,12 @@ class TuijianController extends BaseApiController {
                 $is_buy = 0;
                 if($tuijian['is_fee']){
                     if(!empty($this->user)){
-                        $buy = M('tuijian_order')->where(array('tuijian_id'=>$tuijian['id'],'user_id'=>$this->user['id']))->find();
-                        if($buy){
+                        if($this->user['id'] != $tuijian['user_id']){
+                            $buy = M('tuijian_order')->where(array('tuijian_id'=>$tuijian['id'],'user_id'=>$this->user['id']))->find();
+                            if($buy){
+                                $is_buy = 1;
+                            }
+                        }else{
                             $is_buy = 1;
                         }
                     }
