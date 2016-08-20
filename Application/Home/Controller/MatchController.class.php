@@ -166,6 +166,9 @@ class MatchController extends BaseApiController {
                     $list[$i]['match_time2'] = '未开';
                 }elseif(in_array($match['state'],[1,2,3,4])){
                     $zoudi = M('zoudi')->where(array('match_id'=>$match['match_id']))->order("id DESC")->find();
+                    if(!$zoudi){
+                        unset($list[$i]);
+                    }
                     $zoudi['time'] = str_replace('分','',$zoudi['time']);
                     $list[$i]['match_time2'] = is_numeric($zoudi['time'])?$zoudi['time']."'":$zoudi['time'];
 //                    if($match['state'] == 1){
