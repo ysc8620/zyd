@@ -43,6 +43,7 @@ do{
                     'is_walk' => strval($info[6]),
                     'update_time' => time()
                 ];
+                $data['change_rate'] = $data['change_rate']>0?"-{$data['change_rate']}":"+{$data['change_rate']}";
                 $match = M('asia_yapei_change')->where(array('match_id'=>$match_id,'company_id'=>$data['company_id']))->order("id DESC")->find();
                 if($match){
                     if($match['change_rate'] != $data['change_rate']
@@ -133,6 +134,8 @@ do{
                     'change_away_rate' => floatval($info[4]),
                     'update_time' => time()
                 ];
+
+                $data['change_rate'] = $data['change_rate']>0?"-{$data['change_rate']}":"+{$data['change_rate']}";
 
                 $match = M('asia_half_change')->where(array('match_id'=>$match_id,'company_id'=>$data['company_id']))->order("id DESC")->find();
                 if($match){
