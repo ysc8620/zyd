@@ -820,21 +820,21 @@ function get_half_rate_list($match_id){
     $json['rangqiu'] = [];
     // 变盘数据
     $field2 = "0 as zoudi_id, `match_id`, '' as time, '' as home_score, '' as away_score, `company_id`, change_home_rate as  rate_1, change_rate as rate_2, change_away_rate as rate_3, update_time as change_date";
-    $oupei = M('asia_half')->where(array('match_id'=>$match_id, 'company_id'=>3))->field($field2)->order('id DESC')->select();
+    $oupei = M('asia_half_change')->where(array('match_id'=>$match_id, 'company_id'=>3))->field($field2)->order('id DESC')->select();
     if($oupei){
         foreach($oupei as $i=>$item){
             $oupei[$i]['change_date'] = date("H:i",$item['change_date']);
         }
         $json['rangqiu'] = $oupei;
     }else{
-        $oupei = M('asia_half')->where(array('match_id'=>$match_id, 'company_id'=>24))->field($field2)->order('id DESC')->select();
+        $oupei = M('asia_half_change')->where(array('match_id'=>$match_id, 'company_id'=>24))->field($field2)->order('id DESC')->select();
         if($oupei){
             foreach($oupei as $i=>$item){
                 $oupei[$i]['change_date'] = date("H:i",$item['change_date']);
             }
             $json['rangqiu'] = $oupei;
         }else{
-            $oupei = M('asia_half')->where(array('match_id'=>$match_id,  'company_id'=>31))->field($field2)->order('id DESC')->select();
+            $oupei = M('asia_half_change')->where(array('match_id'=>$match_id,  'company_id'=>31))->field($field2)->order('id DESC')->select();
             if($oupei){
                 foreach($oupei as $i=>$item){
                     $oupei[$i]['change_date'] = date("H:i",$item['change_date']);
