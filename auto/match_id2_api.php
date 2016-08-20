@@ -16,18 +16,14 @@ echo date("Y-m-d H:i:s")."=match_api=\r\n";
 //mongodb://admin_miss:miss@localhost:27017/test
 
 do{
-
     $match_list = M('match')->where(array('state'=>-1,'update_last'=>array('egt', 0)))->field("match_id")->limit(300)->order('update_last ASC')->select();
-
     $match_list2 = [];
     $match_list3 = [];
     foreach($match_list as $match){
         $match_list2[] = $match['match_id'];
     }
     if($match_list2){
-
         $match_ids = join(',',$match_list2);
-
         $postStr = file_get_contents("http://interface.win007.com/zq/BF_XMLByID.aspx?id={$match_ids}");
         $obj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
         $data = json_decode(json_encode($obj), true);
@@ -85,8 +81,6 @@ do{
         if(empty($match_list3_ids)){
             $match_list3_ids = '-100';
         }
-        print_r($match_list2);
-        print_r($match_list3);
 
         M()->execute("UPDATE t_match SET state=99,update_last=-9 WHERE match_id in({$match_list2_ids}) AND match_id not in({$match_list3_ids})");
 

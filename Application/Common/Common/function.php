@@ -6,6 +6,27 @@
  * Time: 11:20
  */
 
+function getWeekName($date){
+    $week = date("w",strtotime($date));
+    switch($week){
+        case 0:
+            return '周天';
+        case 1:
+            return '周一';
+        case 2:
+            return '周二';
+        case 3:
+            return '周三';
+        case 4:
+            return '周四';
+        case 5:
+            return '周五';
+        case 6:
+            return '六';
+    }
+    return '';
+}
+
 function Getzimu($str)
 {
     $str= iconv("UTF-8","gb2312", $str);//如果程序是gbk的，此行就要注释掉

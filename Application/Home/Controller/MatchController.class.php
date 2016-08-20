@@ -159,7 +159,12 @@ class MatchController extends BaseApiController {
                 // 直播事件
                 $event_list = M('event')->where(array('match_id'=>$match['match_id'], 'event_type'=>1))->order("time DESC")->select();
                 $list[$i]['events'] = (array)$event_list;
-                $list[$i]['match_name'] = $match['league_name'];
+                $jingcai_info = M('jingcai')->where(array('match_id'=>$match['match_id']))->find();
+                $match_name = "";
+                if($jingcai_info){
+                    $match_name = getWeekName($jingcai_info['date']).$jingcai_info['match_no'];
+                }
+                $list[$i]['match_name'] = $match_name;
 
                 // 比赛状态 0:未开,1:上半场,2:中场,3:下半场,4,加时，-11:待定,-12:腰斩,-13:中断,-14:推迟,-1:完场，-10取消
                 if($match['state'] == '0'){
@@ -334,7 +339,12 @@ class MatchController extends BaseApiController {
             // 直播事件
             $event_list = M('event')->where(array('match_id'=>$match['match_id']))->order("time ASC")->select();
             $match['events'] = (array)$event_list;
-            $match['match_name'] = $match['league_name'];
+            $jingcai_info = M('jingcai')->where(array('match_id'=>$match['match_id']))->find();
+            $match_name = "";
+            if($jingcai_info){
+                $match_name = getWeekName($jingcai_info['date']).$jingcai_info['match_no'];
+            }
+            $match['match_name'] = $match_name;
 
             if($match['state'] == '0'){
                 $match['match_time2'] = '未开';
