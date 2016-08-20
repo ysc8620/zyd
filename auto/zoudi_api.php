@@ -13,12 +13,7 @@ namespace auto;
 // 检测PHP环境
 require_once __DIR__ .'/config.php';
 echo date("Y-m-d H:i:s")."=zoudi_api=\r\n";
-//mongodb://admin_miss:miss@localhost:27017/test
 do{
-//    global $mongo;
-//    $curr = $mongo->zyd->yapei;
-//    $curr_league = $mongo->zyd->league;
-//    $curr_match = $mongo->zyd->match;
     $postStr = file_get_contents("http://interface.win007.com/zq/Odds_Running.aspx");
 
     $obj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
