@@ -166,6 +166,7 @@ class MatchController extends BaseApiController {
                     $list[$i]['match_time2'] = '未开';
                 }elseif(in_array($match['state'],[1,2,3,4])){
                     $zoudi = M('zoudi')->where(array('match_id'=>$match['match_id']))->order("id DESC")->find();
+                    $zoudi['time'] = str_replace('分','',$zoudi['time']);
                     $list[$i]['match_time2'] = is_numeric($zoudi['time'])?$zoudi['time']."'":$zoudi['time'];
 //                    if($match['state'] == 1){
 //                        $list[$i]['match_time2'] = floor((time() - strtotime($match['match_time']))/60)."'";
@@ -337,6 +338,7 @@ class MatchController extends BaseApiController {
             }elseif(in_array($match['state'],[1,2,3,4])){
 //                $match['match_time2'] = floor(time() - strtotime($match['match_time'])/60);
                 $zoudi = M('zoudi')->where(array('match_id'=>$match['match_id']))->order("id DESC")->find();
+                $zoudi['time'] = str_replace('分','',$zoudi['time']);
                 $match['match_time2'] = is_numeric($zoudi['time'])?$zoudi['time']."'":$zoudi['time'];
             }elseif($match['state'] == -1){
                 $match['match_time2'] = '完场';
