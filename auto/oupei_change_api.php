@@ -26,7 +26,7 @@ do{
     foreach($list['h'] as $match){
         if(is_array($match['odds']['o'])){
             echo '22';
-            print_r($match['odds']);
+            //print_r($match['odds']);
             foreach($match['odds']['o'] as $rate){
                 $item = explode(',',$rate);
                 //`match_id`, `company_id`, `begin_home_rate`, `begin_draw_rate`, `begin_away_rate`, `change_home_rate`,
