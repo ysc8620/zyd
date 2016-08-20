@@ -813,14 +813,6 @@ function get_half_rate_list($match_id){
                     $oupei[$i]['change_date'] = date("H:i",$item['change_date']);
                 }
                 $json['oupei'] = $oupei;
-            }else{
-                $oupei = M('asia_half_oupei')->where(array('match_id'=>$match_id,  'company_id'=>8))->field($field2)->order('id DESC')->select();
-                if($oupei){
-                    foreach($oupei as $i=>$item){
-                        $oupei[$i]['change_date'] = date("H:i",$item['change_date']);
-                    }
-                    $json['oupei'] = $oupei;
-                }
             }
         }
     }
@@ -848,14 +840,6 @@ function get_half_rate_list($match_id){
                     $oupei[$i]['change_date'] = date("H:i",$item['change_date']);
                 }
                 $json['rangqiu'] = $oupei;
-            }else{
-                $oupei = M('asia_half')->where(array('match_id'=>$match_id,  'company_id'=>8))->field($field2)->order('id DESC')->select();
-                if($oupei){
-                    foreach($oupei as $i=>$item){
-                        $oupei[$i]['change_date'] = date("H:i",$item['change_date']);
-                    }
-                    $json['rangqiu'] = $oupei;
-                }
             }
         }
     }
@@ -883,14 +867,6 @@ function get_half_rate_list($match_id){
                     $oupei[$i]['change_date'] = date("H:i",$item['change_date']);
                 }
                 $json['daxiaoqiu'] = $oupei;
-            }else{
-                $oupei = M('asia_half_daxiaoqiu_change')->where(array('match_id'=>$match_id,  'company_id'=>8))->field($field2)->order('id DESC')->select();
-                if($oupei){
-                    foreach($oupei as $i=>$item){
-                        $oupei[$i]['change_date'] = date("H:i",$item['change_date']);
-                    }
-                    $json['daxiaoqiu'] = $oupei;
-                }
             }
         }
     }
