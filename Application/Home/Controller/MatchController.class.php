@@ -210,10 +210,17 @@ class MatchController extends BaseApiController {
 
             $data = [];
             foreach($list as $match){
-                $data[$match['league_id']]['league_id'] = $match['league_id'];
-                $data[$match['league_id']]['league_name'] = $match['league_name'];
-                $data[$match['league_id']]['league_ico'] = C('BASE_URL').'Public/static/noimg.png';
-                $data[$match['league_id']]['list'][] = $match;
+                if($type == 1){
+                    $data[$match['league_id']]['league_id'] = $match['league_id'];
+                    $data[$match['league_id']]['league_name'] = $match['league_name'];
+                    $data[$match['league_id']]['league_ico'] = C('BASE_URL').'Public/static/noimg.png';
+                    $data[$match['league_id'].date("dHi",strtotime($match['match_time']))]['list'][] = $match;
+                }else{
+                    $data[$match['league_id']]['league_id'] = $match['league_id'];
+                    $data[$match['league_id']]['league_name'] = $match['league_name'];
+                    $data[$match['league_id']]['league_ico'] = C('BASE_URL').'Public/static/noimg.png';
+                    $data[$match['league_id']]['list'][] = $match;
+                }
             }
             $newdata = [];
             foreach($data as $item){
