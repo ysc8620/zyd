@@ -666,26 +666,13 @@ function get_rate($match_id, $type='',$state=''){
             'draw_rate'  => 0,
             'home_win_rate' => 0,
             'away_win_rate' => 0,
-            'draw_win_rate' => 0
+            'draw_win_rate' => 0,
+            'left_ball' => 0
         ];
-        $oupei = M('asia_half_oupei')->where(array('match_id'=>$match_id, 'company_id'=>3))->order('id DESC')->field("begin_home_rate as home_rate, begin_draw_rate as draw_rate, begin_away_rate as away_rate, change_home_rate as home_win_rate, change_draw_rate as draw_win_rate, change_away_rate as away_win_rate")->find();
+        //
+        $oupei = M('jingca')->where(array('match_id'=>$match_id))->order('id DESC')->field("`home_rate`, `tie_rate` as draw_rate, `away_rate`, `win_rate` as home_win_rate, `draw_rate` as draw_win_rate, `lose_rate` away_win_rate, `home_concede` as left_ball")->find();
         if($oupei){
             $data = $oupei;
-        }else{
-            $oupei = M('asia_half_oupei')->where(array('match_id'=>$match_id, 'company_id'=>24))->order('id DESC')->field("begin_home_rate as home_rate, begin_draw_rate as draw_rate, begin_away_rate as away_rate, change_home_rate as home_win_rate, change_draw_rate as draw_win_rate, change_away_rate as away_win_rate")->find();
-            if($oupei){
-                $data = $oupei;
-            }else{
-                $oupei = M('asia_half_oupei')->where(array('match_id'=>$match_id, 'company_id'=>31))->order('id DESC')->field("begin_home_rate as home_rate, begin_draw_rate as draw_rate, begin_away_rate as away_rate, change_home_rate as home_win_rate, change_draw_rate as draw_win_rate, change_away_rate as away_win_rate")->find();
-                if($oupei){
-                    $data = $oupei;
-                }else{
-                    $oupei = M('asia_half_oupei')->where(array('match_id'=>$match_id, 'company_id'=>8))->order('id DESC')->field("begin_home_rate as home_rate, begin_draw_rate as draw_rate, begin_away_rate as away_rate, change_home_rate as home_win_rate, change_draw_rate as draw_win_rate, change_away_rate as away_win_rate")->find();
-                    if($oupei){
-                        $data = $oupei;
-                    }
-                }
-            }
         }
         return $data;
     }
