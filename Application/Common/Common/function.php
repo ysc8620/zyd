@@ -635,7 +635,6 @@ function get_rate_list($match_id,$match_time){
     // 变盘数据
     $field2 = " `match_id`, '' as time, '' as home_score, '' as away_score, `company_id`, change_home_rate as  rate_1, change_draw_rate as rate_2, change_away_rate as rate_3, '' as change_date";
     $oupei = M('asia_oupei_change')->where(array('match_id'=>$match_id, 'company_id'=>3,'update_time'=>array('gt',$match_time)))->field($field2)->order('id DESC')->select();
-    echo M()->getLastSql();die();
     if($oupei){
         $json['oupei'] = array_merge($json['oupei'],$oupei);
     }else{
@@ -693,7 +692,7 @@ function get_rate_list($match_id,$match_time){
             if($oupei){
                 $json['rangqiu'] = array_merge($json['rangqiu'],$oupei);
             }else{
-                $oupei = M('asia_yapei_change')->where(array('match_id'=>$match_id,  'company_id'=>8))->field($field2)->order('id DESC')->select();
+                $oupei = M('asia_yapei_change')->where(array('match_id'=>$match_id,  'company_id'=>8,'update_time'=>array('gt',$match_time)))->field($field2)->order('id DESC')->select();
                 if($oupei){
                     $json['rangqiu'] = array_merge($json['rangqiu'],$oupei);
                 }
