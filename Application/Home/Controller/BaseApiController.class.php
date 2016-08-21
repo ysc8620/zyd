@@ -37,7 +37,7 @@ class BaseApiController extends BaseController {
                 $json['msg'] = '权限no2';
                 $this->ajaxReturn($json);
             }
-
+            \Org\Util\File::write_file(APP_PATH.'/logs/post.log',date("Y-m-d H:i:s")."=url=".$_SERVER['REQUEST_URI']."&".http_build_query($_REQUEST),"a+");
             // 用户登录
             $user_ssid = $header['ssid'];
             $this->ssid = $user_ssid;

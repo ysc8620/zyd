@@ -65,12 +65,12 @@ echo "=\r\n";
 $data = [
     'p'=>'1',
     'type' => '4',
-    'match_id' => 1214324
+    'match_id' => 1300533
 ];
 
 
 //$data['apple_receipt'] = $apple_receipt;
-$result = httpPost("https://api.zydzuqiu.com/tuijian/index2.html", $data);
+$result = httpPost("https://api.zydzuqiu.com/live/tuijian.html", $data);
 //var_dump($result);
 echo ($result);
 print_r(json_decode($result, true));
