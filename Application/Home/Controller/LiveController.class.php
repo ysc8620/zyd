@@ -12,7 +12,7 @@ class LiveController extends BaseApiController {
     */
     public function index(){
         $json = $this->simpleJson();
-        $list = M("match")->where(array('state'=>array('in',[1,2,3,4])))->field("match_id,home_score,away_score,home_half_score,away_half_score,home_red,away_red,time,technic,state")->select();
+        $list = M("match")->where(array('state'=>array('in',[1,2,3,4])))->field("match_id,home_score,away_score,home_half_score,away_half_score,home_red,away_red,time,technic,state,total_collect,total_tuijian")->select();
         foreach($list as $i=>$item){
             //
             $list[$i]['match_time2'] = floor((time()-strtotime($item['time']))/60);
@@ -60,6 +60,8 @@ class LiveController extends BaseApiController {
             $tuijian['match_time'] = $match['time'];
             $tuijian['home_score'] = $match['home_score'];
             $tuijian['away_score'] = $match['away_score'];
+            $tuijian['total_collect'] = $match['total_collect'];
+            $tuijian['total_tuijian'] = $match['total_tuijian'];
             $tuijian['state'] = $match['state'];
 
             // 赛事统计
@@ -167,6 +169,9 @@ class LiveController extends BaseApiController {
             $tuijian['match_time'] = $match['time'];
             $tuijian['home_score'] = $match['home_score'];
             $tuijian['away_score'] = $match['away_score'];
+            $tuijian['total_collect'] = $match['total_collect'];
+            $tuijian['total_tuijian'] = $match['total_tuijian'];
+
             $tuijian['state'] = $match['state'];
             if(in_array($tuijian['state'],[0,1,2,3,4])){
                 $tuijian['status'] = 1;

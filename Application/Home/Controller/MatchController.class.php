@@ -45,7 +45,7 @@ class MatchController extends BaseApiController {
                 $total = M('match')->where($where)->count();
                 $list = M('match')->field
                 ('match_id,time as match_time,league_id,league_name,kind,level,state,home_id,home_name,home_score,away_id,
-                away_name,away_score,home_red,away_red,home_yellow,away_yellow,match_round,address,weather_ico,weather,temperature,is_neutral,technic,total_collect'
+                away_name,away_score,home_red,away_red,home_yellow,away_yellow,match_round,address,weather_ico,weather,temperature,is_neutral,technic,total_collect,total_tuijian'
                 )->where($where)->order("time ASC")->select();
 
             }elseif($type == 2){
@@ -59,7 +59,7 @@ class MatchController extends BaseApiController {
                 $Page = new Page($total, $limit);
                 $list = M('match')->field
                 ('match_id,time as match_time,league_id,league_name,kind,level,state,home_id,home_name,home_score,away_id,
-                away_name,away_score,home_red,away_red,home_yellow,away_yellow,match_round,address,weather_ico,weather,temperature,is_neutral,technic,total_collect'
+                away_name,away_score,home_red,away_red,home_yellow,away_yellow,match_round,address,weather_ico,weather,temperature,is_neutral,technic,total_collect,total_tuijian'
                 )->where($where2)->order("time DESC")->limit($Page->firstRow . ',' . $Page->listRows)->select();
             }elseif($type == 3){
                 $where['state'] = 0;
@@ -70,7 +70,7 @@ class MatchController extends BaseApiController {
                 $Page = new Page($total, $limit);
                 $list = M('match')->field
                 ('match_id,time as match_time,league_id,league_name,kind,level,state,home_id,home_name,home_score,away_id,
-                away_name,away_score,home_red,away_red,home_yellow,away_yellow,match_round,address,weather_ico,weather,temperature,is_neutral,technic,total_collect'
+                away_name,away_score,home_red,away_red,home_yellow,away_yellow,match_round,address,weather_ico,weather,temperature,is_neutral,technic,total_collect,total_tuijian'
                 )->where($where)->order("time ASC")->limit($Page->firstRow . ',' . $Page->listRows)->select();
                 #$json['sql'] = M()->getLastSql();
 
@@ -88,7 +88,7 @@ class MatchController extends BaseApiController {
                 $Page = new Page($total, $limit);
                 $list =  M()->table(C('DB_PREFIX').'match as m, '.C('DB_PREFIX').'match_follow as mf')->where("mf.user_id=$user_id AND m.match_id = mf.match_id ".$where)->field
                 ('m.match_id,m.time as match_time,m.league_id,m.league_name,m.kind,m.level,m.state,m.home_id,m.home_name,m.home_score,m.away_id,
-                m.away_name,m.away_score,m.home_red,m.away_red,m.home_yellow,m.away_yellow,m.match_round,m.address,m.weather_ico,m.weather,m.temperature,m.is_neutral,m.technic,m.total_collect'
+                m.away_name,m.away_score,m.home_red,m.away_red,m.home_yellow,m.away_yellow,m.match_round,m.address,m.weather_ico,m.weather,m.temperature,m.is_neutral,m.technic,m.total_collect,total_tuijian'
                 )->order("m.time DESC")->limit($Page->firstRow . ',' . $Page->listRows)->select();
             }
 
@@ -279,7 +279,7 @@ class MatchController extends BaseApiController {
 
             $match = M('match')->field
             ('match_id,time as match_time,league_id,league_name,kind,level,state,home_id,home_name,home_score,away_id,
-                away_name,away_score,home_red,away_red,home_yellow,away_yellow,match_round,address,weather_ico,weather,temperature,is_neutral,technic,total_collect'
+                away_name,away_score,home_red,away_red,home_yellow,away_yellow,match_round,address,weather_ico,weather,temperature,is_neutral,technic,total_collect,total_tuijian'
             )
                 ->where(array('match_id'=>$match_id))->find();
 
