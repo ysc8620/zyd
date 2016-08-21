@@ -78,9 +78,9 @@ class MatchController extends BaseApiController {
                 // 验证登录
                 $this->check_login();
                 //
-                $where = "";
+                $where = "m.state < 99";
                 if($league_ids){
-                    $where = "m.league_id in($league_ids)";
+                    $where = "AND m.league_id in($league_ids)";
                 }
 
                 $total = M()->table(C('DB_PREFIX').'match as m, '.C('DB_PREFIX').'match_follow as mf')->where("mf.user_id=$user_id AND m.match_id = mf.match_id ".$where)->count();
@@ -178,7 +178,7 @@ class MatchController extends BaseApiController {
 
                     $list[$i]['match_time2'] = is_numeric($zoudi['time'])?$zoudi['time']."'":$zoudi['time'];
                     if($zoudi['time'] == '全场'){
-                        $zoudi['time'] = -1;
+                        $list[$i]['match_time2'] = -1;
                     }
 //                    if($match['state'] == 1){
 //                        $list[$i]['match_time2'] = floor((time() - strtotime($match['match_time']))/60)."'";
@@ -371,7 +371,11 @@ class MatchController extends BaseApiController {
 //                $match['match_time2'] = floor(time() - strtotime($match['match_time'])/60);
                 $zoudi = M('zoudi')->where(array('match_id'=>$match['match_id']))->order("id DESC")->find();
                 $zoudi['time'] = str_replace('分','',$zoudi['time']);
+
                 $match['match_time2'] = is_numeric($zoudi['time'])?$zoudi['time']."'":$zoudi['time'];
+                if($zoudi['time'] == '全场'){
+                    $match['match_time2'] = -1;
+                }
             }elseif($match['state'] == -1){
                 $match['match_time2'] = '完场';
             }elseif($match['state'] == -10){
