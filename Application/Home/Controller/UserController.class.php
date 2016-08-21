@@ -26,7 +26,6 @@ class UserController extends BaseApiController {
         unset($member['wx_openid']);
         unset($member['qq_openid']);
 
-
         if(!$mysalf){
             if($member['mobile']){$member['mobile'] = substr_replace($member['mobile'],'*****',3,5);}
             if(is_mobile($member['nickname'])){
@@ -500,6 +499,11 @@ class UserController extends BaseApiController {
             }
             if($type){
                 $data['type'] = $type;
+                if($type == 2){
+                    $data['is_expert'] = 1;
+                }else{
+                    $data['is_expert'] = 0;
+                }
             }
             if($jiguang_id){
                 $data['jiguang_id'] = $jiguang_id;

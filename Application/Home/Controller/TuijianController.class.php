@@ -205,7 +205,6 @@ class TuijianController extends BaseApiController {
                 $new[$item['match_id']]['home_name'] = $item['home_name'];
                 $new[$item['match_id']]['away_name'] = $item['away_name'];
                 $new[$item['match_id']]['match_time'] = $item['match_time'];
-        
                 $new[$item['match_id']]['list'][] = $item;
             }
 
@@ -213,9 +212,7 @@ class TuijianController extends BaseApiController {
             foreach($new as $item){
                 $new_list[] = $item;
             }
-            #$list = $new_list;
-
-            $json['data']['list'] = (array)$new_list;
+            $json['data']['list'] = $new_list;
             $json['data']['total'] = $total;
             $json['data']['page'] = $p;
             $json['data']['total_page'] = ceil($total/$limit);
