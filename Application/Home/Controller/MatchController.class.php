@@ -222,6 +222,7 @@ class MatchController extends BaseApiController {
                     $data[$match['league_id']]['list'][] = $match;
                 }
             }
+            $json['ngss'] = $data;
             $newdata = [];
             foreach($data as $item){
                 $newdata[] = $item;
