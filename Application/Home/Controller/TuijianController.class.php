@@ -10,6 +10,7 @@ class TuijianController extends BaseApiController {
         do{
             //
             $type = I('request.type', 1, 'intval'); // 1 某赛事的推荐, 2 我发布的推荐, 3 指定用户发布的推荐, 4,最新推荐, 5 我购买过的,6 我关注的专家发布的推荐
+            $sub_type = I('request.sub_type', 0, 'intval');
             $match_id = I('request.match_id', 0,'intval');
             $user_id = I('request.user_id',0,'intval');
             $limit = I('request.limit', 10, 'intval');
@@ -24,6 +25,9 @@ class TuijianController extends BaseApiController {
                     break;
                 }
                 $where['match_id'] = $match_id;
+                if($sub_type){
+                    $where['type'] = $type;
+                }
             }elseif($type == 2){
                 $this->check_login();
                 $user_id = $this->user['id'];
@@ -97,6 +101,7 @@ class TuijianController extends BaseApiController {
             $json['data']['limit'] = $limit;
             $json['data']['user_id'] = $user_id;
             $json['data']['match_id'] = $match_id;
+            $json['data']['sub_type'] = $sub_type;
         }while(false);
         $this->ajaxReturn($json);
     }
@@ -109,6 +114,7 @@ class TuijianController extends BaseApiController {
         do{
             //
             $type = I('request.type', 1, 'intval'); // 1 某赛事的推荐, 2 我发布的推荐, 3 指定用户发布的推荐, 4,最新推荐, 5 我购买过的
+            $sub_type = I('request.sub_type',0,'intval');
             $match_id = I('request.match_id', 0,'intval');
             $user_id = I('request.user_id',0,'intval');
             $limit = I('request.limit', 10, 'intval');
@@ -123,6 +129,9 @@ class TuijianController extends BaseApiController {
                     break;
                 }
                 $where['match_id'] = $match_id;
+                if($sub_type){
+                    $where['type'] = $sub_type;
+                }
             }elseif($type == 2){
                 $this->check_login();
                 $user_id = $this->user['id'];
@@ -214,6 +223,7 @@ class TuijianController extends BaseApiController {
             $json['data']['limit'] = $limit;
             $json['data']['user_id'] = $user_id;
             $json['data']['match_id'] = $match_id;
+            $json['data']['sub_type'] = $sub_type;
         }while(false);
         $this->ajaxReturn($json);
     }
