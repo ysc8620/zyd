@@ -161,7 +161,7 @@ class TuijianController extends BaseApiController {
             $list = M('tuijian')->where($where)->limit($Page->firstRow, $Page->listRows)->order("is_top DESC, weight DESC, id DESC")->
             field('*')->select();
             $json['tt'] = M()->getLastSql();
-
+            $json['dd'] = $list;
             // 赛事
             foreach($list as $i=>$item){
                 $match = M('match')->where(array('match_id'=>$item['match_id']))->find();
