@@ -352,6 +352,11 @@ class MatchController extends BaseApiController {
 
             // 直播事件
             $event_list = M('event')->where(array('match_id'=>$match['match_id']))->order("time ASC")->select();
+            foreach($event_list as $i=>$item){
+                if(!in_array($item['event_type'],[1,2,3,7,8])){
+                    unset($event_list[$i]);
+                }
+            }
             $match['events'] = (array)$event_list;
             $jingcai_info = M('jingcai')->where(array('match_id'=>$match['match_id']))->find();
             $match_name = "";
