@@ -171,6 +171,7 @@ class TuijianController extends BaseApiController {
                 $item['away_name'] = $match['away_name'];
                 $item['match_time'] = $match['time'];
                 $item['match_state'] = $match['state'];
+                $item['match_id'] = $match['match_id'];
                 #
                 $user = M('users')->where(array('id'=>$item['user_id']))->find();
                 $item['user_name'] = $user['nickname'];
@@ -214,9 +215,9 @@ class TuijianController extends BaseApiController {
             foreach($new as $l=>$item){
                 $new_list[] = $item;
             }
-            $list = $new_list;
+            #$list = $new_list;
 
-            $json['data']['list'] = (array)$list;
+            $json['data']['list'] = (array)$new_list;
             $json['data']['total'] = $total;
             $json['data']['page'] = $p;
             $json['data']['total_page'] = ceil($total/$limit);
