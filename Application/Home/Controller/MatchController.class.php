@@ -78,7 +78,7 @@ class MatchController extends BaseApiController {
                 // 验证登录
                 $this->check_login();
                 //
-                $where = "m.state < 99";
+                $where = " AND m.state < 99";
                 if($league_ids){
                     $where = "AND m.league_id in($league_ids)";
                 }
