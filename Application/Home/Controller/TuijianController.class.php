@@ -36,7 +36,7 @@ class TuijianController extends BaseApiController {
                 }
                 $where['user_id'] = $user_id;
             }elseif($type == 4){
-                $where['is_expert'] = 1;
+                //$where['is_expert'] = 1;
             }elseif($type == 5){
                 $this->check_login();
                 $user_id = $this->user['id'];
