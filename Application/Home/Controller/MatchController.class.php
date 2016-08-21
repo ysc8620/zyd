@@ -134,8 +134,6 @@ class MatchController extends BaseApiController {
                 $list[$i]['oupei']['change_draw_rate'] = $biaozhun['change_draw_rate'];
                 $list[$i]['oupei']['change_away_rate'] = $biaozhun['change_away_rate'];
 
-
-
                 // 大小球
                 $daxiaoqiu = get_rate($match['match_id'],'daxiaoqiu',$match['state']);
                 $list[$i]['daxiaoqiu']['begin_rate'] = $daxiaoqiu['begin_rate'];
@@ -355,7 +353,12 @@ class MatchController extends BaseApiController {
                     unset($event_list[$i]);
                 }
             }
-            $match['events'] = (array)$event_list;
+            $event_list = (array)$event_list;
+            $new_event_list = [];
+            foreach($event_list as $i=>$item){
+                $new_event_list[] = $item;
+            }
+            $match['events'] = $new_event_list;
             $jingcai_info = M('jingcai')->where(array('match_id'=>$match['match_id']))->find();
             $match_name = "";
             if($jingcai_info){

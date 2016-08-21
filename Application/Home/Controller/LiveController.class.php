@@ -145,7 +145,12 @@ class LiveController extends BaseApiController {
                     unset($event_list[$i]);
                 }
             }
-            $tuijian['events'] = (array)$event_list;
+            $event_list = (array)$event_list;
+            $new_event_list = [];
+            foreach($event_list as $i=>$item){
+                $new_event_list[] = $item;
+            }
+            $tuijian['events'] = $new_event_list;
             $json['data'] = $tuijian;
         }while(false);
         $this->ajaxReturn($json);
