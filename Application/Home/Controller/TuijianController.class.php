@@ -307,7 +307,8 @@ class TuijianController extends BaseApiController {
 
             $tuijian = M('tuijian')->where(array('user_id'=>$user_id, 'match_id'=>$data['match_id'],'type'=>$data['type'],'sub_type'=>$data['sub_type']))->order("id DESC")->find();
             if($tuijian){
-                if($tuijian['tuijian_home_score'] == $data['tuijian_home_score'] && $tuijian['tuijian_away_score'] == $data['tuijian_away_score']){
+                if($tuijian['tuijian_home_score'] == $data['tuijian_home_score']
+                    && $tuijian['tuijian_away_score'] == $data['tuijian_away_score']){
                     $json['status'] = 111;
                     $json['msg'] = "请不要重复推荐";
                     break;
