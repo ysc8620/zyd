@@ -231,7 +231,7 @@ class TuijianController extends BaseApiController {
         $json = $this->simpleJson();
         do{
             $this->check_login();
-
+            $user_id = $this->user['id'];
             $data = [];
             $data['user_id'] = $this->user['id'];
             $data['match_id'] = I('request.match_id',0,'intval');
@@ -251,7 +251,6 @@ class TuijianController extends BaseApiController {
             $data['rate_5'] = I('request.rate_5',0,'trim');
             $data['rate_6'] = I('request.rate_6',0,'trim');
             $data['left_ball'] = I('request.left_ball',0,'trim');
-
 
             if(empty($data['match_id'])){
                 $json['status'] = 110;
@@ -297,13 +296,23 @@ class TuijianController extends BaseApiController {
                 break;
             }
 
-            // s
+            // 状态处理
             if(!in_array($match['state'],['0','1','2','3'])){
                 $json['status'] = 111;
                 $json['msg'] = "赛事已经完结不支持推荐";
                 break;
             }
 
+            // 重复提交处理
+
+            $tuijian = M('tuijian')->where(array('user_id'=>$user_id, 'match_id'=>$data['match_id'],'type'=>$data['type'],'sub_type'=>$data['sub_type']))->order("id DESC")->find();
+            if($tuijian){
+                if($tuijian['tuijian_home_score'] == $data['tuijian_home_score'] && $tuijian['tuijian_away_score'] == $data['tuijian_away_score']){
+                    $json['status'] = 111;
+                    $json['msg'] = "请不要重复推荐";
+                    break;
+                }
+            }
             // 赛前 赛中
             if($match['state'] == 0){
                 $data['tuijian_type'] = 1;
