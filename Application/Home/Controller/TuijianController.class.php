@@ -265,6 +265,12 @@ class TuijianController extends BaseApiController {
                 break;
             }
 
+            if(empty($data['sub_type'])){
+                $json['status'] = 110;
+                $json['msg'] = "请选择推荐子类型";
+                break;
+            }
+
             if(empty($data['user_id'])){
                 $json['status'] = 110;
                 $json['msg'] = "发布用户不能为空";
