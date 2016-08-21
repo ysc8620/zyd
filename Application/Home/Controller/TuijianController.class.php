@@ -199,17 +199,16 @@ class TuijianController extends BaseApiController {
 
             $new = [];
             foreach($list as $i=>$item){
-                $new[$item['match_id']] = [
-                    'league_id' => $item['league_id'],
-                    'league_name' => $item['league_name'],
-                    'match_id' =>$item['match_id'],
-                    'home_name' => $item['home_name'],
-                    'away_name' => $item['away_name'],
-                    'match_time' => $item['match_time']
-                ];
+                $new[$item['match_id']]['league_id'] = $item['league_id'];
+                $new[$item['match_id']]['league_name'] = $item['league_name'];
+                $new[$item['match_id']]['match_id'] =$item['match_id'];
+                $new[$item['match_id']]['home_name'] = $item['home_name'];
+                $new[$item['match_id']]['away_name'] = $item['away_name'];
+                $new[$item['match_id']]['match_time'] = $item['match_time'];
+        
                 $new[$item['match_id']]['list'][] = $item;
             }
-            $json['dd'] = $new;
+
             $new_list = [];
             foreach($new as $item){
                 $new_list[] = $item;
