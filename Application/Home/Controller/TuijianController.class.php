@@ -56,7 +56,7 @@ class TuijianController extends BaseApiController {
             $Page = new Page($total, $limit);
             $list = M('tuijian')->where($where)->limit($Page->firstRow, $Page->listRows)->order("is_top DESC, weight DESC, id DESC")->
                 field('*')->select();
-
+            $json['tt'] = M()->getLastSql();
             // 赛事
             foreach($list as $i=>$item){
                 $match = M('match')->where(array('match_id'=>$item['match_id']))->find();
@@ -160,6 +160,7 @@ class TuijianController extends BaseApiController {
             $Page = new Page($total, $limit);
             $list = M('tuijian')->where($where)->limit($Page->firstRow, $Page->listRows)->order("is_top DESC, weight DESC, id DESC")->
             field('*')->select();
+            $json['tt'] = M()->getLastSql();
 
             // 赛事
             foreach($list as $i=>$item){
