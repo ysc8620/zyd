@@ -494,7 +494,9 @@ class UserController extends BaseApiController {
             ];
 
             if($nickname){
-                $data['nickname'] = $nickname;
+                if($member['is_edit'] == '0'){
+                    $data['nickname'] = $nickname;
+                }
             }
             if($type){
                 $data['type'] = $type;
