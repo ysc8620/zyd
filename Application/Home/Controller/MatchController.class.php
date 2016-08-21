@@ -92,8 +92,6 @@ class MatchController extends BaseApiController {
                 )->order("m.time DESC")->limit($Page->firstRow . ',' . $Page->listRows)->select();
             }
 
-
-
             foreach($list as $i=>$match){
                 //
                 //$list[$i]['technic'] = empty($match['technic'])?[]:json_decode($match['technic'], true);
