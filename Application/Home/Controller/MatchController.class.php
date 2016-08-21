@@ -175,7 +175,11 @@ class MatchController extends BaseApiController {
                         unset($list[$i]);
                     }
                     $zoudi['time'] = str_replace('分','',$zoudi['time']);
+
                     $list[$i]['match_time2'] = is_numeric($zoudi['time'])?$zoudi['time']."'":$zoudi['time'];
+                    if($zoudi['time'] == '全场'){
+                        $zoudi['time'] = -1;
+                    }
 //                    if($match['state'] == 1){
 //                        $list[$i]['match_time2'] = floor((time() - strtotime($match['match_time']))/60)."'";
 //                    }elseif($match['state'] == 2){
@@ -211,6 +215,7 @@ class MatchController extends BaseApiController {
             $data = [];
             foreach($list as $match){
                 if($type == 1){
+                    if(empty($match)){continue;}
                     $key = 'i'.date("dHi",strtotime($match['match_time'])).$match['league_id'];
                     $data[$key]['league_id'] = $match['league_id'];
                     $data[$key]['league_name'] = $match['league_name'];
