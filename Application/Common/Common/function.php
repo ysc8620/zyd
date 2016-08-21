@@ -10,7 +10,7 @@ function getWeekName($date){
     $week = date("w",strtotime($date));
     switch($week){
         case 0:
-            return '周天';
+            return '周日';
         case 1:
             return '周一';
         case 2:
@@ -22,7 +22,7 @@ function getWeekName($date){
         case 5:
             return '周五';
         case 6:
-            return '六';
+            return '周六';
     }
     return '';
 }
