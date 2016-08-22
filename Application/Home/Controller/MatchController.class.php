@@ -93,7 +93,7 @@ class MatchController extends BaseApiController {
                 m.away_name,m.away_score,m.home_red,m.away_red,m.home_yellow,m.away_yellow,m.match_round,m.address,m.weather_ico,m.weather,m.temperature,m.is_neutral,m.technic,m.total_collect,total_tuijian'
                 )->order("m.time DESC")->limit($Page->firstRow . ',' . $Page->listRows)->select();
             }
-
+            $json['list2'] = $list;
             foreach($list as $i=>$match){
                 //
                 //$list[$i]['technic'] = empty($match['technic'])?[]:json_decode($match['technic'], true);
