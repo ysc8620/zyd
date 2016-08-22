@@ -211,6 +211,7 @@ class MatchController extends BaseApiController {
             }
 
             $data = [];
+            $json['list'] = $list;
             foreach($list as $match){
                 if($type == 1){
                     if(empty($match)){continue;}
@@ -219,6 +220,7 @@ class MatchController extends BaseApiController {
                     $data[$key]['league_name'] = $match['league_name'];
                     $data[$key]['league_ico'] = C('BASE_URL').'Public/static/noimg.png';
                     $data[$key]['list'][] = $match;
+                    $json['match'] = $match;
                 }else{
                     $data[$match['league_id']]['league_id'] = $match['league_id'];
                     $data[$match['league_id']]['league_name'] = $match['league_name'];
