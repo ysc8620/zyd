@@ -38,7 +38,7 @@ do{
                 'update_time' => time(),
             ];
             if($data['type'] == 1){
-                $data['rate_2'] = $data['rate_2']>0?"-{$data['rate_2']}":"+{$data['rate_2']}";
+                $data['rate_2'] = -$data['rate_2'];
             }
             $has = M('zoudi')->where(array('zoudi_id'=>$data['zoudi_id']))->find();
             if(!$has){

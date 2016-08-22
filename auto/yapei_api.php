@@ -79,8 +79,8 @@ do{
             'is_walk' => strval($info[9]),
             'update_time' => time()
         ];
-        $data['begin_rate'] = $data['begin_rate']>0?"-{$data['begin_rate']}":"+{$data['begin_rate']}";
-        $data['change_rate'] = $data['change_rate']>0?"-{$data['change_rate']}":"+{$data['change_rate']}";
+        $data['begin_rate'] = -$data['begin_rate'];
+        $data['change_rate'] = -$data['change_rate'];
         $match = M('asia_yapei')->where(array('match_id'=>$match_id,'company_id'=>$data['company_id']))->find();
         if($match){
             M('asia_yapei')->where(array('id'=>$match['id']))->save($data);
@@ -158,8 +158,8 @@ do{
             'change_away_rate' => ($info[7]),
             'update_time' => time()
         ];
-        $data['begin_rate'] = $data['begin_rate']>0?"-{$data['begin_rate']}":"+{$data['begin_rate']}";
-        $data['change_rate'] = $data['change_rate']>0?"-{$data['change_rate']}":"+{$data['change_rate']}";
+        $data['begin_rate'] = -$data['begin_rate'];
+        $data['change_rate'] = -$data['change_rate'];
 
         $match = M('asia_half')->where(array('match_id'=>$match_id,'company_id'=>$data['company_id']))->find();
         if($match){
