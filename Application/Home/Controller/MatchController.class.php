@@ -48,6 +48,8 @@ class MatchController extends BaseApiController {
                 away_name,away_score,home_red,away_red,home_yellow,away_yellow,match_round,address,weather_ico,weather,temperature,is_neutral,technic,total_collect,total_tuijian'
                 )->where($where)->order("time ASC")->select();
 
+                $json['ddt'] = M()->getLastSql();
+
             }elseif($type == 2){
 
                 if($date){
@@ -240,10 +242,7 @@ class MatchController extends BaseApiController {
             }elseif($type == 2){
                 $league_list = [];
             }elseif($type == 3){
-                $league_list = M()->table(C('DB_PREFIX').'league as l, '.C('DB_PREFIX').'match as m')->where("l.league_id = m.league_id AND m.state =0")
-                    ->field('l.league_id,l.color,l.cn_short,l.cn_name,l.type,l.sum_round,l.curr_round,l.curr_match_season,l.country_name,l.is_hot,count(*) as total_match')
-                    ->group('m.league_id')
-                    ->order("is_hot DESC, weight DESC")->select();
+                $league_list = [];
             }else{
                 $league_list = [];
             }
