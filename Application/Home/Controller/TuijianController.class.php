@@ -313,6 +313,16 @@ class TuijianController extends BaseApiController {
                     $json['msg'] = "请不要重复推荐";
                     break;
                 }
+                if($tuijian['rate_1'] == $data['rate_1'] &&
+                    $tuijian['rate_2'] == $data['rate_2'] &&
+                    $tuijian['rate_3'] == $data['rate_3'] &&
+                    $tuijian['rate_4'] == $data['rate_4'] &&
+                    $tuijian['rate_5'] == $data['rate_5'] &&
+                    $tuijian['rate_6'] == $data['rate_6'] ){
+                    $json['status'] = 111;
+                    $json['msg'] = "请不要重复推荐";
+                    break;
+                }
             }
             // 赛前 赛中
             if($match['state'] == 0){

@@ -4,8 +4,6 @@ use Weixin\MyWechat;
 use Home\Model\UsersModel;
 use Redis\MyRedis;
 
-
-
 class LiveController extends BaseApiController {
     public function index2(){
         $json = $this->simpleJson();
