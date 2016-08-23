@@ -45,6 +45,13 @@ class LiveController extends BaseApiController {
 
             $event_list = M('event')->where(array('match_id'=>$item['match_id'], 'event_type'=>1))->order("time DESC")->select();
             $list[$i]['events'] = (array)$event_list;
+
+            $jingcai_info = M('jingcai')->where(array('match_id'=>$item['match_id']))->find();
+            $match_name = "";
+            if($jingcai_info){
+                $match_name = getWeekName($jingcai_info['date']).$jingcai_info['match_no'];
+            }
+            $list[$i]['match_name'] = $match_name;
         }
         $json['data'] = $list;
         $this->ajaxReturn($json);
