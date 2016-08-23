@@ -324,7 +324,13 @@ class TuijianController extends BaseApiController {
             $data['create_time'] = time();
             $data['update_time'] = time();
             $res = M('tuijian')->add($data);
+
             if($res){
+                // 更新赛事推荐总数
+                M('match')->where(array('match_id'=>$data['match_id']))->setInc('total_tuijian',1);
+                // 更新用户发布总数
+                M('users')->where(array('id'=>$data['user_id']))->setInc('total_send_info',1);
+
                 $data['id'] = $res;
                 $json['msg'] = '发布成功';
                 $json['data'] = $data;
@@ -375,6 +381,24 @@ class TuijianController extends BaseApiController {
             }
             $user = M('users')->where(array('id'=>$user_id))->find();
             $tuijian = M('tuijian')->where(array('id'=>$tuijian_id))->find();
+
+            if(empty($tuijian)){
+                $json['status'] = 111;
+                $json['msg'] = '请选择购买推荐';
+                break;
+            }
+            if($tuijian['user_id'] == $user_id){
+                $data = [
+                    'user_id' => $user_id,
+                    'tuijian_id' => $tuijian['id'],
+                    'credit' => $tuijian['fee'],
+                    'create_time' => time(),
+                    'id'=>0
+                ];
+                $json['msg'] = '购买成功';
+                $json['data'] = $data;
+                break;
+            }
             if($user['credit'] < $tuijian['fee']){
                 $json['status'] = 112;
                 $json['msg'] = '球币不足,请先充值';
@@ -402,6 +426,10 @@ class TuijianController extends BaseApiController {
             $res3 = M('credit_log')->add($credit_log);
             if($res && $res2 && $res3){
                 M()->commit();
+                // 更新用户购买总数
+                M('users')->where(array('id'=>$user_id))->setInc('total_buy_info',1);
+                // 更新销售总数
+                M('users')->where(array('id'=>$tuijian['user_id']))->setInc('total_seller_info',1);
                 $data['id'] = $res;
                 $json['msg'] = '购买成功';
                 $json['data'] = $data;
