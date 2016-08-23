@@ -12,7 +12,8 @@ class LiveController extends BaseApiController {
     */
     public function index(){
         $json = $this->simpleJson();
-        $list = M("match")->where(array('state'=>array('in',[1,2,3,4])))->field("match_id,home_score,away_score,home_half_score,away_half_score,home_red,away_red,time,technic,state,total_collect,total_tuijian")->select();
+        $list = M("match")->where(array('state'=>array('in',[1,2,3,4])))->field("match_id,league_id,league_name,home_id,home_name,home_score,away_id,away_name,home_score,away_score,home_half_score,away_half_score,home_red,away_red,time,technic,state,total_collect,total_tuijian")->select();
+        $user_id = intval($this->user['id']);
         foreach($list as $i=>$item){
             //
             $list[$i]['match_time2'] = floor((time()-strtotime($item['time']))/60);
@@ -29,6 +30,17 @@ class LiveController extends BaseApiController {
             $list[$i]['change_home_rate'] = "{$baiou['change_home_rate']}";
             $list[$i]['change_rate'] = "{$baiou['change_rate']}";
             $list[$i]['change_away_rate'] = "{$baiou['change_away_rate']}";
+
+            $list[$i]['state_name'] = getMatchStatus($item['state']);
+
+            //
+            $list[$i]['is_collect'] = 0;
+            if($user_id){
+                $collect = M('match_follow')->where(array('user_id'=>$user_id, 'match_id'=>$item['match_id']))->find();
+                if($collect){
+                    $list[$i]['is_collect'] = 1;
+                }
+            }
 
             $event_list = M('event')->where(array('match_id'=>$item['match_id'], 'event_type'=>1))->order("time DESC")->select();
             $list[$i]['events'] = (array)$event_list;
