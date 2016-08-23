@@ -115,8 +115,6 @@ class UserController extends BaseApiController {
             if($user_id){
                 $member = M('users')->where(array('id'=>$user_id))->field($this->field)->find();
 
-                $total_month_tuijian = M('tuijian')->where(array('user_id'=>$member['id']))->count();
-                $member['total_month_tuijian'] = $total_month_tuijian;
                 $json['msg'] = '用户注册成功';
                 $json['data'] = $this->get_return_member($member, true);
             }else{
@@ -162,9 +160,6 @@ class UserController extends BaseApiController {
                     break;
                 }
 
-                $total_month_tuijian = M('tuijian')->where(array('user_id'=>$member['id']))->count();
-                $member['total_month_tuijian'] = $total_month_tuijian;
-
                 # 更新登录ssid
                 $member['ssid'] = get_login_ssid();
                 $save = [];
@@ -198,9 +193,6 @@ class UserController extends BaseApiController {
                     $json['msg'] = '登录密码错误';
                     break;
                 }
-
-                $total_month_tuijian = M('tuijian')->where(array('user_id'=>$member['id']))->count();
-                $member['total_month_tuijian'] = $total_month_tuijian;
 
                 # 更新登录ssid
                 $member['ssid'] = get_login_ssid();
@@ -254,8 +246,6 @@ class UserController extends BaseApiController {
                 break;
             }
 
-            $total_month_tuijian = M('tuijian')->where(array('user_id'=>$user_id))->count();
-            $member['total_month_tuijian'] = $total_month_tuijian;
             $member['share_id'] = base64_encode($member['id']);
 
             $json['data'] = $this->get_return_member($member, true);
@@ -300,9 +290,6 @@ class UserController extends BaseApiController {
                     $member['is_follow'] = 1;
                 }
             }
-
-            $total_month_tuijian = M('tuijian')->where(array('user_id'=>$user_id))->count();
-            $member['total_month_tuijian'] = $total_month_tuijian;
 
             $json['data'] = $this->get_return_member($member);
 
