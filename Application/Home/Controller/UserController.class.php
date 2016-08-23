@@ -495,6 +495,7 @@ class UserController extends BaseApiController {
             if($nickname){
                 if($member['is_edit'] == '0'){
                     $data['nickname'] = $nickname;
+                    $data['is_edit'] = 1;
                 }
             }
             if($type){
@@ -563,7 +564,9 @@ class UserController extends BaseApiController {
                     'create_time' => time()
                 ];
                 $res = M('users_follow')->add($data);
+                // 增加用户收藏总数
                 M('users')->where(array('id'=>$user_id))->setInc('total_collect_user', 1);
+                // 增加用户粉丝总数
                 M('users')->where(array('id'=>$to_user_id))->setInc('total_follow_user', 1);
                 if($res){
                     $json['msg'] = '关注成功';
@@ -600,7 +603,9 @@ class UserController extends BaseApiController {
             $follow = M('users_follow')->where(array('from_user_id'=>$user_id,'to_user_id'=>$to_user_id))->find();
             if($follow){
                 M('users_follow')->where(array('id'=>$follow['id']))->delete();
+                // 减少用户收藏总数
                 M('users')->where(array('id'=>$user_id))->setDec('total_collect_user', 1);
+                // 减少用户粉丝总数
                 M('users')->where(array('id'=>$to_user_id))->setDec('total_follow_user', 1);
                 $json['msg'] = '取消关注成功';
                 $json['data']['user_id'] = $user_id;

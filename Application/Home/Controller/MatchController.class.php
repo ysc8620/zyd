@@ -504,7 +504,9 @@ class MatchController extends BaseApiController {
                     'create_time' => time()
                 ];
                 $res = M('match_follow')->add($data);
+                // 增加赛事收藏统计
                 M('match')->where(array('match_id'=>$match_id))->setInc('total_collect', 1);
+                // 增加用户收藏总计
                 M('users')->where(array('id'=>$user_id))->setInc('total_collect_match', 1);
                 if($res){
                     $json['msg'] = '赛事关注成功';
@@ -539,7 +541,9 @@ class MatchController extends BaseApiController {
             $follow = M('match_follow')->where(array('user_id'=>$user_id, 'match_id'=>$match_id))->find();
             if($follow){
                 M('match_follow')->where(array('id'=>$follow['id']))->delete();
+                // 减少赛事收藏总数
                 M('match')->where(array('match_id'=>$match_id))->setDec('total_collect', 1);
+                // 减少用户收藏总数
                 M('users')->where(array('id'=>$user_id))->setDec('total_collect_match', 1);
                 $json['msg'] = '取消关注成功';
                 $json['data']['match_id'] = $match_id;
