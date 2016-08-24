@@ -183,7 +183,7 @@ class ResponseController extends BaseController {
             }
             ////////////////////////////////////////////////短信验证
             $user = M('users')->where(array('mobile'=>$mobile))->find();
-            if(!$user){
+            if($user){
                 $json['status'] = 111;
                 $json['msg'] = '该手机号已被注册';
                 break;
