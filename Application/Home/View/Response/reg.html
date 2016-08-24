@@ -39,7 +39,7 @@
     <div class="from">
         <form action="/response/doreg.html" method="post" name="theForm" id="theForm" onsubmit="return false" >
             <input type="hidden" name="sign" value="{$sign}" />
-            <input type="hidden" name="share_id" value="{$share_id}" />
+            <input type="hidden" name="share_id" id="share_id" value="{$share_id}" />
             <ul>
                 <div class="row" >
                     <input class="fl color_999 tl text" style="width: 100%;" name="mobile" maxlength="11"  id="mobile"  value="" placeholder="输入您的手机" />
@@ -129,10 +129,10 @@
      * @return bool
      */
     function is_mobile(mobile){
-        if(/^1(3|4|5|7|8)[0-9]\d{9}$/.test(mobile)){
-            return true;
-        }else{
+        if(!(/^1[3|4|5|7|8]\d{9}$/.test(mobile))){
             return false;
+        }else{
+            return true;
         }
     }
 
