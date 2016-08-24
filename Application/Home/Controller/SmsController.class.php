@@ -38,6 +38,12 @@ class SmsController extends BaseApiController {
                 // 注册【章鱼帝】您的验证码是
                 case 1:
                     $data['log'] = "【章鱼帝】您的验证码是{$data['msg']}";
+                    $member = M('users')->where(array('mobile'=>$mobile))->find();
+                    if($member){
+                        $json['status'] = 111;
+                        $json['msg'] = '该手机号已被注册';
+                        break;
+                    }
                     break;
                 case 2:
                     $member = M('users')->where(array('mobile'=>$mobile))->find();
