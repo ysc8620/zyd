@@ -142,7 +142,7 @@ class ResponseController extends BaseController {
     /**
      * 提交注册
      */
-    public function doreg(){
+    public function dored(){
         $json = $this->simpleJson();
         do{
             $mobile = trim($_POST['mobile']);
