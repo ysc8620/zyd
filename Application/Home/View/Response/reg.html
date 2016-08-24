@@ -99,7 +99,7 @@
         });
         $.ajax({
             type: "POST",
-            url: "/response/send.html",
+            url: "/response/dored.html",
             data: {"mobile":mobile},
             async: false,
             dataType: "json",
@@ -179,7 +179,7 @@
             return true;
         }
         long_time--;
-        setTimeout("setClock", 1000);
+        setTimeout("setClock()", 1000);
     }
 </script>
 </body>
