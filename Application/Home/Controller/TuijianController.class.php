@@ -67,7 +67,7 @@ class TuijianController extends BaseApiController {
                 $item['match_state'] = $match['state'];
                 #
                 $user = M('users')->where(array('id'=>$item['user_id']))->find();
-                $item['user_name'] = $user['nickname'];
+                $item['user_name'] = getNickName($user['nickname']);
                 $item['user_pic'] = pic_url($user['pic']);
                 $item['user_follow'] = $user['total_follow_user'];
                 $item['user_rate'] = $user['total_rate'];
@@ -171,7 +171,7 @@ class TuijianController extends BaseApiController {
                 $item['match_id'] = $match['match_id'];
                 #
                 $user = M('users')->where(array('id'=>$item['user_id']))->find();
-                $item['user_name'] = $user['nickname'];
+                $item['user_name'] = getNickName($user['nickname']);
                 $item['user_pic'] = pic_url($user['pic']);
                 $item['user_follow'] = $user['total_follow_user'];
                 $item['user_rate'] = $user['total_rate'];
@@ -486,7 +486,7 @@ class TuijianController extends BaseApiController {
                 $tuijian['away_half_score'] = $match['away_half_score'];
                 #
                 $user = M('users')->where(array('id'=>$tuijian['user_id']))->find();
-                $tuijian['user_name'] = $user['nickname'];
+                $tuijian['user_name'] = getNickName($user['nickname']);
                 $tuijian['user_pic'] = pic_url($user['pic']);
                 $tuijian['user_follow'] = $user['total_follow_user'];
                 $tuijian['user_rate'] = $user['total_rate'];
@@ -538,7 +538,7 @@ class TuijianController extends BaseApiController {
             $list = M('tuijian_order')->where(array('tuijian_id'=>$tuijian_id))->limit($Page->firstRow, $Page->listRows)->order("create_time DESC")->select();
             foreach($list as $i=>$item){
                 $user = M('users')->where(array('id'=>$item['user_id']))->find();
-                $item['nickname'] = $user['nickname'];
+                $item['nickname'] = getNickName($user['nickname']);
                 $item['pic'] = pic_url($user['pic']);
                 $list[$i] = $item;
             }

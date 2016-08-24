@@ -279,7 +279,6 @@ class LiveController extends BaseApiController {
 
             $tuijian['state_name'] = getMatchStatus($match['state']);
 
-
             if(in_array($tuijian['state'],[0,1,2,3,4])){
                 $tuijian['status'] = 1;
             }else{

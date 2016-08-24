@@ -27,6 +27,14 @@ function getWeekName($date){
     return '';
 }
 
+function getNickName($nickname){
+    if(is_mobile($nickname)){
+        return substr_replace($nickname,'*****',3,5);
+    }else{
+        return $nickname;
+    }
+}
+
 function Getzimu($str)
 {
     $str= iconv("UTF-8","gb2312", $str);//如果程序是gbk的，此行就要注释掉
