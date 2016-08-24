@@ -345,6 +345,17 @@ class MatchController extends BaseApiController {
             $match['jingcai']['away_win_rate'] = $jingcai['away_win_rate'];
             $match['jingcai']['draw_win_rate'] = $jingcai['draw_win_rate'];
 
+
+            $peilv = get_rate_list($match['match_id'],$match['time']);
+            $match['live_oupei'] = $peilv['oupei'];
+            $match['live_rangqiu'] = $peilv['rangqiu'];
+            $match['live_daxiaoqiu'] = $peilv['daxiaoqiu'];
+
+            $peilv = get_half_rate_list($match['match_id']);
+            $match['live_oupei_half'] = $peilv['oupei'];
+            $match['live_rangqiu_half'] = $peilv['rangqiu'];
+            $match['live_daxiaoqiu_half'] = $peilv['daxiaoqiu'];
+
             // 直播事件
             $event_list = M('event')->where(array('match_id'=>$match['match_id']))->order("time ASC")->select();
             foreach($event_list as $i=>$item){
