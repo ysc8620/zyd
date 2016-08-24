@@ -62,8 +62,8 @@ echo "=\r\n";
 
 $data = [
     'p'=>'1',
-    'type' => '1',
-    'match_id' => 1300421
+    'type' => '2',
+    'match_id' => 1268631
 ];
 
 //$data['apple_receipt'] = $apple_receipt;
