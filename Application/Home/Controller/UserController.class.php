@@ -105,7 +105,6 @@ class UserController extends BaseApiController {
             if($share_id){
                 $share_user_id = intval(base64_decode($share_id));
                 $user['share_user_id'] = $share_user_id;
-
             }
             $user['register_time'] = time();
             $user['update_time'] = time();

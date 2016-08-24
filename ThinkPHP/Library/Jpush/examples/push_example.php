@@ -3,31 +3,38 @@
 require 'conf.php';
 
 // 简单推送示例
+/*
+ type=0 推送赛事信息 from_id=赛事id
+type=1 推送专家或用户信息 from_id=用户id
+type=2 推送推荐信息 from_id=推荐id
+
+这几种类型的推送 点击 进入到各自的详情页
+*/
 
 $push_payload = $client->push()
     ->setPlatform('all')
    //->addRegistrationId('141fe1da9ead0b3ce9a')
    //    ->addTag("NBA")
    ->addAllAudience()
-    ->setNotificationAlert('hello')
-    ->iosNotification('Hello IOS', array(
+    ->setNotificationAlert('hello zhuanjia')
+    ->iosNotification('Hello test zhuanjia', array(
         'sound' => 'default',
         'badge' => 1,
         #'content-available' => true,
        # 'category' => 'jiguang',
         'extras' => array(
-            'type' => '0',
-            'from_id'=>'1300494'
+            'type' => '1',
+            'from_id'=>'10017'
         ),
     ))
-    ->androidNotification('Hello Android', array(
-        'title' => 'hello jpush',
-        'build_id' => 2,
-        'extras' => array(
-            'type' => '0',
-            'from_id'=>'1300494'
-        ),
-    ))
+//    ->androidNotification('Hello Android', array(
+//        'title' => 'hello jpush',
+//        'build_id' => 2,
+//        'extras' => array(
+//            'type' => '0',
+//            'from_id'=>'1300494'
+//        ),
+//    ))
 ;
 try {
     $response = $push_payload->send();

@@ -278,6 +278,8 @@ function get_rate($match_id, $type='',$state=''){
             'change_draw_rate' => 0,
             'change_away_rate' => 0
         ];
+
+
         $oupei = M('asia_oupei')->where(array('match_id'=>$match_id, 'company_id'=>3))->order('id DESC')->field("begin_home_rate, begin_draw_rate, begin_away_rate")->find();
         if($oupei){
             $data = $oupei;

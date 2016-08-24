@@ -1,0 +1,182 @@
+<include file="layer:header" xmlns="http://www.w3.org/1999/html"/>
+<script type="text/javascript" src="/Public/js/utils.js"></script>
+<script type="text/javascript">
+    onload = function() {
+        if (!document.all)
+        {
+           //  document.forms['theForm'].reset();
+        }
+    }
+
+</script>
+<style type="text/css">
+    pre{
+        white-space: pre-wrap;
+        white-space: -moz-pre-wrap;
+        white-space: -pre-wrap;
+        white-space: -o-pre-wrap;
+        word-wrap: break-word;
+    }
+    .from {
+        margin: 12px auto;
+        width: 100%;
+    }
+    input, button, textarea {
+        border: #E6E4E4 solid 1px;
+        font-size: 13px;
+        height: 56px;
+        line-height: 20px;
+        margin-right: 24px;
+        padding: 0 4px;
+        text-align: right;
+        width: 100%;
+    }
+    .code{position: absolute; cursor: pointer; font-weight: normal; right: 0; border: #E5E3E3 solid 1px; z-index: 10; line-height: 56px; text-align: center; font-size:2em;color: #4A4A4A; display: inline-block; width: 180px; margin-top: 1px; height: 54px; background: #F2F2F2}
+    .code:hover{background: #E7E7E7;}
+</style>
+<div class="container">
+    <div><img src="/Public/static/head.jpg" /></div>
+    <div class="from">
+        <form action="/response/doreg.html" method="post" name="theForm" id="theForm" onsubmit="return false" >
+            <input type="hidden" name="sign" value="{$sign}" />
+            <input type="hidden" name="share_id" value="{$share_id}" />
+            <ul>
+                <div class="row" >
+                    <input class="fl color_999 tl text" style="width: 100%;" name="mobile" maxlength="11"  id="mobile"  value="" placeholder="输入您的手机" />
+                </div>
+            </ul>
+            <ul>
+                <div class="row" style="position: relative">
+                    <input class="fl color_999 tl text"  style="width: 100%;"  name="code" maxlength="6"  id="code"  value=""  placeholder="输入验证码" />
+                    <div class="code" id="get_code">
+                        获取验证码
+                    </div>
+                </div>
+            </ul>
+            <ul class="cl mt10" style="margin-top: 50px;">
+                <div class="tit ">
+                    <div class=" mc">
+                        <img onclick="dored()" src="/Public/static/reg1.png" id="btn" style=" cursor: pointer; height: 46px" />
+                    </div>
+                    <div class="w90 mc tc f12 ptop6" style="color: #494949; margin-top: 12px; display: none;">深圳一窝蜂网络提供技术支持</div>
+                </div>
+            </ul>
+            <div style="height: 100px;">&nbsp;</div>
+        </form>
+    </div>
+
+</div>
+</div>
+<div class="footer">
+    <ul style="background: #EAE9E9">
+        <span>
+     <img src="/Public/static/down.png" style="height: 76px;" />
+            </span><span><img src="/Public/static/btn1.png" id="down_btn" style="height: 46px; cursor: pointer; margin-bottom: 12px;" /></span>
+    </ul>
+</div>
+<div style="display: none"><img src="/Public/static/btn2.png" /></div>
+<include file="layer:foot" />
+<script type="text/javascript">
+    $('#down_btn').hover(function(){$(this).attr('src','/Public/static/btn2.png');}, function(){$(this).attr('src','/Public/static/btn1.png');});
+    $('#btn').hover(function(){$(this).attr('src','/Public/static/reg2.png');}, function(){$(this).attr('src','/Public/static/reg1.png');});
+
+    function dored(){
+        var mobile = $.trim($('#mobile').val());
+        if(!is_mobile(mobile)){
+            layer.msg("请正确输入手机号", function(){});
+            return false;
+        }
+
+        var code = $.trim($('#code').val());
+        if(code.length != 6 && is_number(code)){
+            layer.msg("请正确输入验证码", function(){});
+            return false;
+        }
+
+        var share_id = $.trim($('#share_id').val());
+        var index = layer.load();
+        $.ajax({
+            type: "POST",
+            url: "/response/send.html",
+            data: {"mobile":mobile},
+            async: false,
+            dataType: "json",
+            success: function(data){
+                layer.close(index);
+                if(data.status != 100){
+                    layer.msg(data.msg,function(){});
+                    return false;
+                }else{
+                    layer.msg("注册成功~",function(){});
+                    return false;
+                }
+            }
+        });
+
+    }
+
+    function is_number(num){
+        if(/^\d{6}$/.test(num)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     * 验证手机号
+     * @param $mobile
+     * @return bool
+     */
+    function is_mobile(mobile){
+        if(/^1(3|4|5|7|8)[0-9]\d{9}$/.test(mobile)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    // 获取验证码
+    $('#get_code').click(function(){
+        var text = $.trim($(this).text());
+        if(text != '获取验证码'){return true;}
+        var mobile = $("#mobile").val();
+        if(!is_mobile(mobile)){
+            layer.msg("请正确输入手机号", function(){});
+            return false;
+            //alert('请输入正确手机号');
+        }
+        var index = layer.load();
+        $.ajax({
+            type: "POST",
+            url: "/response/send.html",
+            data: {"mobile":mobile},
+            async: false,
+            dataType: "json",
+            success: function(data){
+                layer.close(index);
+                if(data.status != 100){
+                    layer.msg(data.msg,function(){});
+                    return false;
+                }
+                setClock();
+
+            }
+        });
+    });
+    var long_time = 60;
+
+    function setClock(){
+        if(long_time>0){
+            $('#get_code').text("剩余"+long_time+"秒");
+        }else{
+            long_time = 60;
+            $('#get_code').text("获取验证码");
+            return true;
+        }
+        long_time--;
+        setTimeout("setClock", 1000);
+    }
+</script>
+</body>
+</html>

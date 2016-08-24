@@ -239,7 +239,7 @@ class PayController extends BaseApiController {
 
                     //print_r($alipay_config);die();
 
-                    // $data = 'partner="2088211317861588"&out_trade_no="0616152240-7392"&subject="测试的商品"&seller_id="chenyin@qjy168.com"&
+                    //$data = 'partner="2088211317861588"&out_trade_no="0616152240-7392"&subject="测试的商品"&seller_id="chenyin@qjy168.com"&
                     //body="该测试商品的详细描述"&total_fee="0.01"&notify_url="http://notify.msp.hk/notify.htm"&service="mobile.securitypay.pay"&payment_type="1"&_input_charset="utf-8"';
 
                     $order = [

@@ -276,3 +276,11 @@ input.jia{margin:0!important;height:36px; vertical-align:middle; line-height:30p
 .nav_fixed {background-color:#fff;height:50px;width:100%;font-size:13px;text-align:center;top:0;max-width:640px}
 .fixed_nav_item {height:50px;line-height:50px;width:25%;float:left;display:block;box-sizing:border-box;border-right:1px solid #ccc;border-bottom:1px solid #ccc}
 .nav_cur {border-bottom:2px solid #DF2127;color:red; font-weight:bold;}
+
+.footer {width:100%;max-width:640px;height:76px;position:fixed; background: #EAE9E9; bottom:-1px;left:50%;-webkit-transform:translate3d(-50%,0,0);transform:translate3d(-50%,0,0);overflow:hidden;background-color:#fff;border-top:#eceded;-webkit-box-shadow:0 0 4px rgba(0,0,0,.2);box-shadow:0 0 4px rgba(0,0,0,.2);z-index:99999;}
+.footer li {float:left;width:25%;text-align:center;height:100%}
+.footer a {color:#777;font-size:13px}
+.footer a:hover,.footer a:focus {color:#777;font-size:13px}
+.footer a.active {color:#DF2127}
+.footer .nav-controller {position:relative;height:100%;display:block;padding-top:10px}
+.footer .nav-controller i {display:block;font-size:1.5em;margin-bottom:3px}
