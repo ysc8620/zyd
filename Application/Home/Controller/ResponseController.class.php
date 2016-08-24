@@ -132,8 +132,6 @@ class ResponseController extends BaseController {
             M('sms_log')->add($data);
             $res = send_sms($mobile, $data['log']);
             $json['data'] = [
-                'code' => $data['msg'],
-                'send_time' => $data['send_time'],
                 'mobile' => $mobile,
                 'res' => $res
             ];

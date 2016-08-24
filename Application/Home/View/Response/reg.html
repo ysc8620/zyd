@@ -94,7 +94,9 @@
         }
 
         var share_id = $.trim($('#share_id').val());
-        var index = layer.load();
+        var index = layer.load(1, {
+            shade: [0.5,'#000'] //0.1透明度的白色背景
+        });
         $.ajax({
             type: "POST",
             url: "/response/send.html",
@@ -146,7 +148,9 @@
             return false;
             //alert('请输入正确手机号');
         }
-        var index = layer.load();
+        var index = layer.load(1, {
+            shade: [0.5,'#000'] //0.1透明度的白色背景
+        });
         $.ajax({
             type: "POST",
             url: "/response/send.html",
