@@ -22,10 +22,10 @@ function send_tuisong($jiguang_alias,$jiguang_id,$title,$remark,$type,$from_id){
     $app_key = "30b1dce198d525524980af61";
     $master_secret = "c1281a437204064c2190979f";
     $client = new JPush($app_key, $master_secret);
-
+    $ret = [];
     if($jiguang_alias ){
         //您关注的比赛（赛事名 主队名 VS 客队名）即将开始
-        $client->push()
+        $ret['jiguang_alias'] = $client->push()
             ->setPlatform('all')
             ->addAlias($jiguang_alias)
             ->addAllAudience()
@@ -54,7 +54,7 @@ function send_tuisong($jiguang_alias,$jiguang_id,$title,$remark,$type,$from_id){
 
     if($jiguang_id){
         //您关注的比赛（赛事名 主队名 VS 客队名）即将开始
-        $client->push()
+        $ret['jiguang_id'] = $client->push()
             ->setPlatform('all')
             ->addRegistrationId($jiguang_id)
             ->addAllAudience()
@@ -80,7 +80,7 @@ function send_tuisong($jiguang_alias,$jiguang_id,$title,$remark,$type,$from_id){
             ))
         ;
     }
-    return true;
+    return $ret;
 }
 
 function getWeekName($date){

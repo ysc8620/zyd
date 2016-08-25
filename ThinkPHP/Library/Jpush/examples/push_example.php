@@ -1,5 +1,7 @@
 <?php
 
+
+
 require 'conf.php';
 
 // 简单推送示例
