@@ -378,7 +378,6 @@ class LiveController extends BaseApiController {
             $tuijian['change_away_rate'] = $yapei['change_away_rate'];
 
             //
-
             $jingcai_info = M('jingcai')->where(array('match_id'=>$match_id))->find();
             $jingcai_state = 1;
 

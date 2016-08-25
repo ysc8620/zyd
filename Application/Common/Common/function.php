@@ -279,7 +279,6 @@ function get_rate($match_id, $type='',$state=''){
             'change_away_rate' => 0
         ];
 
-
         $oupei = M('asia_oupei')->where(array('match_id'=>$match_id, 'company_id'=>3))->order('id DESC')->field("begin_home_rate, begin_draw_rate, begin_away_rate")->find();
         if($oupei){
             $data = $oupei;
@@ -300,44 +299,48 @@ function get_rate($match_id, $type='',$state=''){
             }
         }
 
-        // 即时盘数据
-        $oupei = M('asia_oupei_change')->where(array('match_id'=>$match_id, 'company_id'=>3))->order('id DESC')->field("change_home_rate, change_draw_rate, change_away_rate")->find();
-        if($oupei){
-            $data = array_merge($data,$oupei);
-        }else{
-            $oupei = M('asia_oupei_change')->where(array('match_id'=>$match_id, 'company_id'=>24))->order('id DESC')->field("change_home_rate, change_draw_rate, change_away_rate")->find();
+        if($state == '0' || $state == '1'){
+            // 即时盘数据
+            $oupei = M('asia_oupei_change')->where(array('match_id'=>$match_id, 'company_id'=>3))->order('id DESC')->field("change_home_rate, change_draw_rate, change_away_rate")->find();
             if($oupei){
                 $data = array_merge($data,$oupei);
-            }else {
-                $oupei = M('asia_oupei_change')->where(array('match_id' => $match_id, 'company_id' => 31))->order('id DESC')->field("change_home_rate, change_draw_rate, change_away_rate")->find();
-                if ($oupei) {
-                    $data = array_merge($data, $oupei);
-                } else {
-                    $oupei = M('asia_oupei_change')->where(array('match_id' => $match_id, 'company_id' => 8))->order('id DESC')->field("change_home_rate, change_draw_rate, change_away_rate")->find();
+            }else{
+                $oupei = M('asia_oupei_change')->where(array('match_id'=>$match_id, 'company_id'=>24))->order('id DESC')->field("change_home_rate, change_draw_rate, change_away_rate")->find();
+                if($oupei){
+                    $data = array_merge($data,$oupei);
+                }else {
+                    $oupei = M('asia_oupei_change')->where(array('match_id' => $match_id, 'company_id' => 31))->order('id DESC')->field("change_home_rate, change_draw_rate, change_away_rate")->find();
                     if ($oupei) {
                         $data = array_merge($data, $oupei);
+                    } else {
+                        $oupei = M('asia_oupei_change')->where(array('match_id' => $match_id, 'company_id' => 8))->order('id DESC')->field("change_home_rate, change_draw_rate, change_away_rate")->find();
+                        if ($oupei) {
+                            $data = array_merge($data, $oupei);
+                        }
                     }
                 }
             }
         }
 
-        $field = ' `rate_1` as change_home_rate, `rate_2` as change_draw_rate, `rate_3` as change_away_rate';
-        // 走地数据
-        $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>4, 'company_id'=>3))->order('zoudi_id DESC')->field($field)->find();
-        if($oupei){
-            $data = array_merge($data,$oupei);
-        }else{
-            $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>4, 'company_id'=>24))->order('zoudi_id DESC')->field($field)->find();
+        if($state == '2' || $state == '3' || $state =='4'){
+            $field = ' `rate_1` as change_home_rate, `rate_2` as change_draw_rate, `rate_3` as change_away_rate';
+            // 走地数据
+            $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>4, 'company_id'=>3))->order('zoudi_id DESC')->field($field)->find();
             if($oupei){
                 $data = array_merge($data,$oupei);
             }else{
-                $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>4, 'company_id'=>31))->order('zoudi_id DESC')->field($field)->select();
+                $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>4, 'company_id'=>24))->order('zoudi_id DESC')->field($field)->find();
                 if($oupei){
                     $data = array_merge($data,$oupei);
                 }else{
-                    $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>4, 'company_id'=>8))->order('zoudi_id DESC')->field($field)->find();
+                    $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>4, 'company_id'=>31))->order('zoudi_id DESC')->field($field)->select();
                     if($oupei){
                         $data = array_merge($data,$oupei);
+                    }else{
+                        $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>4, 'company_id'=>8))->order('zoudi_id DESC')->field($field)->find();
+                        if($oupei){
+                            $data = array_merge($data,$oupei);
+                        }
                     }
                 }
             }
@@ -401,46 +404,48 @@ function get_rate($match_id, $type='',$state=''){
                 }
             }
         }
-
-        // 即时盘数据
-        $oupei = M('asia_yapei_change')->where(array('match_id'=>$match_id, 'company_id'=>3))->order('id DESC')->field("change_rate, change_home_rate, change_away_rate")->find();
-        if($oupei){
-            $data = array_merge($data,$oupei);
-        }else{
-            $oupei = M('asia_yapei_change')->where(array('match_id'=>$match_id, 'company_id'=>24))->order('id DESC')->field("change_rate, change_home_rate, change_away_rate")->find();
+        if($state == '0' || $state == '1'){
+            // 即时盘数据
+            $oupei = M('asia_yapei_change')->where(array('match_id'=>$match_id, 'company_id'=>3))->order('id DESC')->field("change_rate, change_home_rate, change_away_rate")->find();
             if($oupei){
                 $data = array_merge($data,$oupei);
             }else{
-                $oupei = M('asia_yapei_change')->where(array('match_id'=>$match_id, 'company_id'=>31))->order('id DESC')->field("change_rate, change_home_rate, change_away_rate")->find();
+                $oupei = M('asia_yapei_change')->where(array('match_id'=>$match_id, 'company_id'=>24))->order('id DESC')->field("change_rate, change_home_rate, change_away_rate")->find();
                 if($oupei){
                     $data = array_merge($data,$oupei);
                 }else{
-                    $oupei = M('asia_yapei_change')->where(array('match_id'=>$match_id, 'company_id'=>8))->order('id DESC')->field("change_rate, change_home_rate, change_away_rate")->find();
+                    $oupei = M('asia_yapei_change')->where(array('match_id'=>$match_id, 'company_id'=>31))->order('id DESC')->field("change_rate, change_home_rate, change_away_rate")->find();
                     if($oupei){
                         $data = array_merge($data,$oupei);
+                    }else{
+                        $oupei = M('asia_yapei_change')->where(array('match_id'=>$match_id, 'company_id'=>8))->order('id DESC')->field("change_rate, change_home_rate, change_away_rate")->find();
+                        if($oupei){
+                            $data = array_merge($data,$oupei);
+                        }
                     }
                 }
             }
         }
-
-        // 走地盘数据
-        $field = ' `rate_1` as change_home_rate, `rate_2` as change_rate, `rate_3` as change_away_rate';
-        // 走地数据
-        $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>1, 'company_id'=>3))->order('zoudi_id DESC')->field($field)->find();
-        if($oupei){
-            $data = array_merge($data,$oupei);
-        }else{
-            $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>1, 'company_id'=>24))->order('zoudi_id DESC')->field($field)->find();
+        if($state == '2' || $state == '3' || $state =='4'){
+            // 走地盘数据
+            $field = ' `rate_1` as change_home_rate, `rate_2` as change_rate, `rate_3` as change_away_rate';
+            // 走地数据
+            $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>1, 'company_id'=>3))->order('zoudi_id DESC')->field($field)->find();
             if($oupei){
                 $data = array_merge($data,$oupei);
             }else{
-                $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>1, 'company_id'=>31))->order('zoudi_id DESC')->field($field)->select();
+                $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>1, 'company_id'=>24))->order('zoudi_id DESC')->field($field)->find();
                 if($oupei){
                     $data = array_merge($data,$oupei);
                 }else{
-                    $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>1, 'company_id'=>8))->order('zoudi_id DESC')->field($field)->find();
+                    $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>1, 'company_id'=>31))->order('zoudi_id DESC')->field($field)->select();
                     if($oupei){
                         $data = array_merge($data,$oupei);
+                    }else{
+                        $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>1, 'company_id'=>8))->order('zoudi_id DESC')->field($field)->find();
+                        if($oupei){
+                            $data = array_merge($data,$oupei);
+                        }
                     }
                 }
             }
@@ -524,51 +529,55 @@ function get_rate($match_id, $type='',$state=''){
                 }
             }
         }
-
-        // 即时盘盘口
-        $oupei = M('asia_daxiaoqiu_change')->where(array('match_id'=>$match_id, 'company_id'=>3))->order('id DESC')->field("change_rate, change_big_rate, change_small_rate")->find();
-        if($oupei){
-            $data = array_merge($data,$oupei);
-        }else{
-            $oupei = M('asia_daxiaoqiu_change')->where(array('match_id'=>$match_id, 'company_id'=>24))->order('id DESC')->field("change_rate, change_big_rate, change_small_rate")->find();
+        if($state == '0' || $state == '1'){
+            // 即时盘盘口
+            $oupei = M('asia_daxiaoqiu_change')->where(array('match_id'=>$match_id, 'company_id'=>3))->order('id DESC')->field("change_rate, change_big_rate, change_small_rate")->find();
             if($oupei){
                 $data = array_merge($data,$oupei);
             }else{
-                $oupei = M('asia_daxiaoqiu_change')->where(array('match_id'=>$match_id, 'company_id'=>31))->order('id DESC')->field("change_rate, change_big_rate, change_small_rate")->find();
+                $oupei = M('asia_daxiaoqiu_change')->where(array('match_id'=>$match_id, 'company_id'=>24))->order('id DESC')->field("change_rate, change_big_rate, change_small_rate")->find();
                 if($oupei){
                     $data = array_merge($data,$oupei);
                 }else{
-                    $oupei = M('asia_daxiaoqiu_change')->where(array('match_id'=>$match_id, 'company_id'=>8))->order('id DESC')->field("change_rate, change_big_rate, change_small_rate")->find();
+                    $oupei = M('asia_daxiaoqiu_change')->where(array('match_id'=>$match_id, 'company_id'=>31))->order('id DESC')->field("change_rate, change_big_rate, change_small_rate")->find();
                     if($oupei){
                         $data = array_merge($data,$oupei);
+                    }else{
+                        $oupei = M('asia_daxiaoqiu_change')->where(array('match_id'=>$match_id, 'company_id'=>8))->order('id DESC')->field("change_rate, change_big_rate, change_small_rate")->find();
+                        if($oupei){
+                            $data = array_merge($data,$oupei);
+                        }
+                    }
+                }
+            }
+
+        }
+
+        if($state == 2 || $state ==3 || $state==4){
+            // 走地盘盘口
+            $field = ' `rate_1` as change_big_rate, `rate_2` as change_rate, `rate_3` as change_small_rate';
+            // 走地数据
+            $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>2, 'company_id'=>3))->order('zoudi_id DESC')->field($field)->find();
+            if($oupei){
+                $data = array_merge($data,$oupei);
+            }else{
+                $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>2, 'company_id'=>24))->order('zoudi_id DESC')->field($field)->find();
+                if($oupei){
+                    $data = array_merge($data,$oupei);
+                }else{
+                    $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>2, 'company_id'=>31))->order('zoudi_id DESC')->field($field)->select();
+                    if($oupei){
+                        $data = array_merge($data,$oupei);
+                    }else{
+                        $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>2, 'company_id'=>8))->order('zoudi_id DESC')->field($field)->find();
+                        if($oupei){
+                            $data = array_merge($data,$oupei);
+                        }
                     }
                 }
             }
         }
 
-        // 走地盘盘口
-        // 走地盘数据
-        $field = ' `rate_1` as change_big_rate, `rate_2` as change_rate, `rate_3` as change_small_rate';
-        // 走地数据
-        $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>2, 'company_id'=>3))->order('zoudi_id DESC')->field($field)->find();
-        if($oupei){
-            $data = array_merge($data,$oupei);
-        }else{
-            $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>2, 'company_id'=>24))->order('zoudi_id DESC')->field($field)->find();
-            if($oupei){
-                $data = array_merge($data,$oupei);
-            }else{
-                $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>2, 'company_id'=>31))->order('zoudi_id DESC')->field($field)->select();
-                if($oupei){
-                    $data = array_merge($data,$oupei);
-                }else{
-                    $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>2, 'company_id'=>8))->order('zoudi_id DESC')->field($field)->find();
-                    if($oupei){
-                        $data = array_merge($data,$oupei);
-                    }
-                }
-            }
-        }
         return $data;
     }elseif($type == 'daxiaoqiu_half'){
         $data = [
@@ -648,21 +657,48 @@ function get_rate($match_id, $type='',$state=''){
             }
         }
 
-        $oupei = M('asia_oupei_change')->where(array('match_id'=>$match_id, 'company_id'=>3))->order('id DESC')->field("change_home_rate as home_win_rate, change_draw_rate as draw_win_rate,change_away_rate as away_win_rate")->find();
-        if($oupei){
-            $data = array_merge($data,$oupei);
-        }else{
-            $oupei = M('asia_oupei_change')->where(array('match_id'=>$match_id, 'company_id'=>24))->order('id DESC')->field("change_home_rate as home_win_rate, change_draw_rate as draw_win_rate, change_away_rate as away_win_rate")->find();
+        if($state == '0' || $state == '1'){
+            // 即时盘数据
+            $oupei = M('asia_oupei_change')->where(array('match_id'=>$match_id, 'company_id'=>3))->order('id DESC')->field("change_home_rate, change_draw_rate, change_away_rate")->find();
             if($oupei){
                 $data = array_merge($data,$oupei);
             }else{
-                $oupei = M('asia_oupei_change')->where(array('match_id'=>$match_id, 'company_id'=>31))->order('id DESC')->field("change_home_rate as home_win_rate, change_draw_rate as draw_win_rate, change_away_rate as away_win_rate")->find();
+                $oupei = M('asia_oupei_change')->where(array('match_id'=>$match_id, 'company_id'=>24))->order('id DESC')->field("change_home_rate, change_draw_rate, change_away_rate")->find();
+                if($oupei){
+                    $data = array_merge($data,$oupei);
+                }else {
+                    $oupei = M('asia_oupei_change')->where(array('match_id' => $match_id, 'company_id' => 31))->order('id DESC')->field("change_home_rate, change_draw_rate, change_away_rate")->find();
+                    if ($oupei) {
+                        $data = array_merge($data, $oupei);
+                    } else {
+                        $oupei = M('asia_oupei_change')->where(array('match_id' => $match_id, 'company_id' => 8))->order('id DESC')->field("change_home_rate, change_draw_rate, change_away_rate")->find();
+                        if ($oupei) {
+                            $data = array_merge($data, $oupei);
+                        }
+                    }
+                }
+            }
+        }
+
+        if($state == '2' || $state == '3' || $state =='4'){
+            $field = ' `rate_1` as change_home_rate, `rate_2` as change_draw_rate, `rate_3` as change_away_rate';
+            // 走地数据
+            $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>4, 'company_id'=>3))->order('zoudi_id DESC')->field($field)->find();
+            if($oupei){
+                $data = array_merge($data,$oupei);
+            }else{
+                $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>4, 'company_id'=>24))->order('zoudi_id DESC')->field($field)->find();
                 if($oupei){
                     $data = array_merge($data,$oupei);
                 }else{
-                    $oupei = M('asia_oupei_change')->where(array('match_id'=>$match_id, 'company_id'=>8))->order('id DESC')->field("change_home_rate as home_win_rate, change_draw_rate as draw_win_rate, change_away_rate as away_win_rate")->find();
+                    $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>4, 'company_id'=>31))->order('zoudi_id DESC')->field($field)->select();
                     if($oupei){
                         $data = array_merge($data,$oupei);
+                    }else{
+                        $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>4, 'company_id'=>8))->order('zoudi_id DESC')->field($field)->find();
+                        if($oupei){
+                            $data = array_merge($data,$oupei);
+                        }
                     }
                 }
             }
