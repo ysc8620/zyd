@@ -370,7 +370,7 @@ class LiveController extends BaseApiController {
             }
 
             // 一分钟内有进球 禁止发布推荐
-            $event = M('events')->where(array('match_id'=>$match['match_id'], 'event_type'=>1))->order("id DESC")->find();
+            $event = M('event')->where(array('match_id'=>$match['match_id'], 'event_type'=>1))->order("id DESC")->find();
             if($event['create_time'] > time()-60){
                 $tuijian['status'] = 0;
             }
