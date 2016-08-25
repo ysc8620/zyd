@@ -11,7 +11,7 @@ class ConfigController extends BaseApiController {
         $json['data'] = (object)array();
         do{
             //
-            $json['load_pic'] = 'http://';
+            $json['data']['share_url'] = 'http://api2.zydzuqiu.com/response/reg.html?share_id=';
         }while(false);
         $this->ajaxReturn($json);
     }

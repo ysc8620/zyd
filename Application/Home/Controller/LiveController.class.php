@@ -431,7 +431,7 @@ class LiveController extends BaseApiController {
             if($yapei['change_home_rate'] == '0' &&$yapei['change_rate'] == '0' &&$yapei['change_away_rate'] == '0'){
                 $yapei_half_state = 0;
             }
-            if($match['state'] != '0' || $match['state'] != 1){
+            if($match['state'] != '0' && $match['state'] != 1){
                 $yapei_half_state = 0;
             }
 
@@ -451,7 +451,7 @@ class LiveController extends BaseApiController {
             if($baiou['change_home_rate'] == '0' &&$baiou['change_draw_rate'] == '0' &&$baiou['change_away_rate'] == '0'){
                 $oupei_half_state = 0;
             }
-            if($match['state'] != '0' || $match['state'] != 1){
+            if($match['state'] != '0' && $match['state'] != 1){
                 $oupei_half_state = 0;
             }
             $tuijian['oupei_half'] = ["rate_4"=>$baiou['change_home_rate'], "rate_5"=>$baiou['change_draw_rate'], "rate_6"=>$baiou['change_away_rate'],"status"=>$oupei_half_state];
@@ -470,7 +470,7 @@ class LiveController extends BaseApiController {
             if($daxiaoqiu['change_big_rate'] == '0' &&$daxiaoqiu['change_rate'] == '0' &&$daxiaoqiu['change_small_rate'] == '0'){
                 $daxiaoqiu_half_state = 0;
             }
-            if($match['state'] != '0' || $match['state'] != 1){
+            if($match['state'] != '0' && $match['state'] != 1){
                 $daxiaoqiu_half_state = 0;
             }
             $tuijian['daxiaoqiu_half'] = ["rate_4"=>$daxiaoqiu['change_big_rate'], "rate_5"=>$daxiaoqiu['change_rate'], "rate_6"=>$daxiaoqiu['change_small_rate'],"status"=>$daxiaoqiu_half_state];
