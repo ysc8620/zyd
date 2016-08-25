@@ -368,6 +368,19 @@ class LiveController extends BaseApiController {
             }else{
                 $tuijian['status'] = 0;
             }
+
+            // 一分钟内有进球 禁止发布推荐
+            $event = M('events')->where(array('match_id'=>$match['match_id'], 'event_type'=>1))->order("id DESC")->find();
+            if($event['create_time'] > time()-60){
+                $tuijian['status'] = 0;
+            }
+
+            // 走地封盘
+            $zoudi = M('zoudi')->where(array('match_id'=>$match['match_id']))->order("id DESC")->find();
+            if($zoudi['type']  == 3){
+                $tuijian['status'] = 0;
+            }
+
             // 标准
             $yapei = get_rate($match['match_id'],'rangqiu',$match['state']);
             $tuijian['begin_home_rate'] = $yapei['begin_home_rate'];
@@ -393,11 +406,16 @@ class LiveController extends BaseApiController {
 
             // 竞彩
             $jingcai = get_rate($match['match_id'],'jingcai',$match['state']);
+            $jingcai2 = get_rate($match['match_id'],'jingcai_rangqiu',$match['state']);
+
+            if($jingcai2['home_win_rate'] == '0' && $jingcai2['draw_win_rate'] == '0' && $jingcai2['away_win_rate'] == '0'){
+                $jingcai_state = 0;
+            }
             $tuijian['jingcai'] = ["rate_4"=>$jingcai['home_win_rate'], "rate_5"=>$jingcai['draw_win_rate'], "rate_6"=>$jingcai['away_win_rate'],"status"=>$jingcai_state];
 
             // 竞彩让球
-            $jingcai = get_rate($match['match_id'],'jingcai_rangqiu',$match['state']);
-            $tuijian['jingcai_rangqiu'] = ["rate_1"=>$jingcai['home_win_rate'], "rate_2"=>$jingcai['draw_win_rate'], "rate_3"=>$jingcai['away_win_rate'],"left_ball"=>$jingcai['left_ball'],"status"=>$jingcai_state];
+
+            $tuijian['jingcai_rangqiu'] = ["rate_1"=>$jingcai2['home_win_rate'], "rate_2"=>$jingcai2['draw_win_rate'], "rate_3"=>$jingcai2['away_win_rate'],"left_ball"=>$jingcai['left_ball'],"status"=>$jingcai_state];
 
             $yapei_state = 1;
             // 亚赔
@@ -448,7 +466,14 @@ class LiveController extends BaseApiController {
 
             // 大小球半场
             $daxiaoqiu = get_rate($match['match_id'],'daxiaoqiu_half',$match['state']);
-            $tuijian['daxiaoqiu_half'] = ["rate_4"=>$daxiaoqiu['change_big_rate'], "rate_5"=>$daxiaoqiu['change_rate'], "rate_6"=>$daxiaoqiu['change_small_rate'],"status"=>1];
+            $daxiaoqiu_half_state = 1;
+            if($daxiaoqiu['change_big_rate'] == '0' &&$daxiaoqiu['change_rate'] == '0' &&$daxiaoqiu['change_small_rate'] == '0'){
+                $daxiaoqiu_half_state = 0;
+            }
+            if($match['state'] != '0' || $match['state'] != 1){
+                $daxiaoqiu_half_state = 0;
+            }
+            $tuijian['daxiaoqiu_half'] = ["rate_4"=>$daxiaoqiu['change_big_rate'], "rate_5"=>$daxiaoqiu['change_rate'], "rate_6"=>$daxiaoqiu['change_small_rate'],"status"=>$daxiaoqiu_half_state];
 
             $json['data'] = $tuijian;
         }while(false);
