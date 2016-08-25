@@ -286,7 +286,7 @@ class UserController extends BaseApiController {
 
             $member['is_follow'] = 0;
             if($user_id){
-                $res = M('users_follow')->where(array('from_user_id'=>$user_id, 'to_user_id'=>$member['id']))->find();
+                $res = M('users_follow')->where(array('from_user_id'=>$member['id'], 'to_user_id'=>$user_id))->find();
                 if($res){
                     $member['is_follow'] = 1;
                 }
