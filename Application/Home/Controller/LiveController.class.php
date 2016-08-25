@@ -295,19 +295,19 @@ class LiveController extends BaseApiController {
 
             // 竞彩
             $jingcai = get_rate($match['match_id'],'jingcai',$match['state']);
-            $tuijian['jingcai'] = ["rate_1"=>$jingcai['home_win_rate'], "rate_2"=>$jingcai['draw_win_rate'], "rate_3"=>$jingcai['away_win_rate']];
+            $tuijian['jingcai'] = ["rate_1"=>$jingcai['home_rate'], "rate_2"=>$jingcai['draw_rate'], "rate_3"=>$jingcai['away_rate']];
             // 竞彩让球
 
             // 亚赔
-            $tuijian['rangqiu'] = ["rate_1"=>$yapei['change_home_rate'], "rate_2"=>$yapei['change_rate'], "rate_3"=>$yapei['change_away_rate']];
+            $tuijian['rangqiu'] = ["rate_1"=>$yapei['begin_home_rate'], "rate_2"=>$yapei['begin_rate'], "rate_3"=>$yapei['begin_away_rate']];
 
             // 欧赔
             $baiou = get_rate($match['match_id'],'oupei',$match['state']);//`change_rate`, `change_home_rate`, `change_away_rate`
-            $tuijian['oupei'] = ["rate_1"=>$baiou['change_home_rate'], "rate_2"=>$baiou['change_draw_rate'], "rate_3"=>$baiou['change_away_rate']];
+            $tuijian['oupei'] = ["rate_1"=>$baiou['begin_home_rate'], "rate_2"=>$baiou['begin_draw_rate'], "rate_3"=>$baiou['begin_away_rate']];
 
             // 大小球
             $daxiaoqiu = get_rate($match['match_id'],'daxiaoqiu',$match['state']);//`change_rate`, `change_big_rate`, `change_small_rate`
-            $tuijian['daxiaoqiu'] = ["rate_1"=>$daxiaoqiu['change_big_rate'], "rate_2"=>$daxiaoqiu['change_rate'], "rate_3"=>$daxiaoqiu['change_small_rate']];
+            $tuijian['daxiaoqiu'] = ["rate_1"=>$daxiaoqiu['begin_big_rate'], "rate_2"=>$daxiaoqiu['begin_rate'], "rate_3"=>$daxiaoqiu['begin_small_rate']];
 
             $peilv = get_rate_list($match['match_id'],$match['time']);
             $tuijian['live_oupei'] = $peilv['oupei'];
@@ -411,11 +411,11 @@ class LiveController extends BaseApiController {
             if($jingcai2['home_win_rate'] == '0' && $jingcai2['draw_win_rate'] == '0' && $jingcai2['away_win_rate'] == '0'){
                 $jingcai_state = 0;
             }
-            $tuijian['jingcai'] = ["rate_4"=>$jingcai['home_win_rate'], "rate_5"=>$jingcai['draw_win_rate'], "rate_6"=>$jingcai['away_win_rate'],"status"=>$jingcai_state];
+            $tuijian['jingcai'] = ["rate_1"=>$jingcai['home_win_rate'], "rate_2"=>$jingcai['draw_win_rate'], "rate_3"=>$jingcai['away_win_rate'],"status"=>$jingcai_state];
 
             // 竞彩让球
 
-            $tuijian['jingcai_rangqiu'] = ["rate_1"=>$jingcai2['home_win_rate'], "rate_2"=>$jingcai2['draw_win_rate'], "rate_3"=>$jingcai2['away_win_rate'],"left_ball"=>$jingcai['left_ball'],"status"=>$jingcai_state];
+            $tuijian['jingcai_rangqiu'] = ["rate_4"=>$jingcai2['home_win_rate'], "rate_5"=>$jingcai2['draw_win_rate'], "rate_6"=>$jingcai2['away_win_rate'],"left_ball"=>$jingcai['left_ball'],"status"=>$jingcai_state];
 
             $yapei_state = 1;
             // 亚赔
