@@ -19,8 +19,9 @@ $app_key = "30b1dce198d525524980af61";
 $master_secret = "c1281a437204064c2190979f";
 $registration_id = "1a1018970aa0c6a908c";
 $client = new JPush($app_key, $master_secret);
-$start_time = date("Y-m-d H:i", time()-330);//
-$match_list = M('match')->where(array('is_send_start'=>0,'time'=>array('gt', $start_time)))->field("id,match_id,time")->select();
+$start_time = date("Y-m-d H:i", time()+200);//
+$end_time  = date("Y-m-d H:i", time()+400);//
+$match_list = M('match')->where(array('is_send_start'=>0,'time'=>array('between', array($start_time,$end_time))))->field("id,match_id,time")->select();
 echo M()->getLastSql();
 foreach($match_list as $match){
     echo $match['match_id'].$match['time']."\r\n";
