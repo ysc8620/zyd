@@ -78,6 +78,6 @@ do{
     }
 
     M('event')->where(array('match_id'=>array('in',$match_ids), 'update_time'=>array('neq', $update_time)))->find();
-    M()->getLastSql();
+    echo M()->getLastSql();
 
 }while(false);
