@@ -113,7 +113,7 @@ class UserController extends BaseApiController {
             $user_id = M('users')->add($user);
             if($user_id){
                 $member = M('users')->where(array('id'=>$user_id))->field($this->field)->find();
-
+                $member['share_id'] = base64_encode($member['id']);
                 $json['msg'] = '用户注册成功';
                 $json['data'] = $this->get_return_member($member, true);
             }else{
@@ -168,6 +168,7 @@ class UserController extends BaseApiController {
                 $save['update_time'] = time();
                 M('users')->where(array('id'=>$member['id']))->save($save);
                 $json['msg'] = '用户登录成功';
+                $member['share_id'] = base64_encode($member['id']);
                 $json['data'] = $this->get_return_member($member, true);
 
             // 密码登陆
@@ -204,6 +205,7 @@ class UserController extends BaseApiController {
 
                 M('users')->where(array('id'=>$member['id']))->save($save);
                 $json['msg'] = '用户登录成功';
+                $member['share_id'] = base64_encode($member['id']);
                 $json['data'] = $this->get_return_member($member, true);
             }else{
                 $json['status'] = 111;
@@ -332,7 +334,7 @@ class UserController extends BaseApiController {
                     $wx_user['ssid'] = $data['ssid'];
                     $wx_user['update_time'] = $data['update_time'];
                     $json['msg'] = '微信登录成功';
-
+                    $wx_user['share_id'] = base64_encode($wx_user['id']);
                     $json['data'] = $this->get_return_member($wx_user, true);
                     break;
                 }else{
@@ -364,6 +366,7 @@ class UserController extends BaseApiController {
                 if($res){
                     $member = M('users')->where(array('wx_openid'=>$openid))->field($this->field)->find();
                     $json['msg'] = '微信登录成功';
+                    $member['share_id'] = base64_encode($member['id']);
                     $json['data'] = $this->get_return_member($member, true);
                     break;
                 }else{

@@ -325,19 +325,19 @@ function get_rate($match_id, $type='',$state=''){
         if($state == '2' || $state == '3' || $state =='4'){
             $field = ' `rate_1` as change_home_rate, `rate_2` as change_draw_rate, `rate_3` as change_away_rate';
             // 走地数据
-            $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>4, 'company_id'=>3))->order('zoudi_id DESC')->field($field)->find();
+            $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>array('in', [4,5]), 'company_id'=>3))->order('zoudi_id DESC')->field($field)->find();
             if($oupei){
                 $data = array_merge($data,$oupei);
             }else{
-                $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>4, 'company_id'=>24))->order('zoudi_id DESC')->field($field)->find();
+                $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>array('in', [4,5]), 'company_id'=>24))->order('zoudi_id DESC')->field($field)->find();
                 if($oupei){
                     $data = array_merge($data,$oupei);
                 }else{
-                    $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>4, 'company_id'=>31))->order('zoudi_id DESC')->field($field)->select();
+                    $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>array('in', [4,5]), 'company_id'=>31))->order('zoudi_id DESC')->field($field)->select();
                     if($oupei){
                         $data = array_merge($data,$oupei);
                     }else{
-                        $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>4, 'company_id'=>8))->order('zoudi_id DESC')->field($field)->find();
+                        $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>array('in', [4,5]), 'company_id'=>8))->order('zoudi_id DESC')->field($field)->find();
                         if($oupei){
                             $data = array_merge($data,$oupei);
                         }
@@ -430,19 +430,19 @@ function get_rate($match_id, $type='',$state=''){
             // 走地盘数据
             $field = ' `rate_1` as change_home_rate, `rate_2` as change_rate, `rate_3` as change_away_rate';
             // 走地数据
-            $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>1, 'company_id'=>3))->order('zoudi_id DESC')->field($field)->find();
+            $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>array('in', [1,6]), 'company_id'=>3))->order('zoudi_id DESC')->field($field)->find();
             if($oupei){
                 $data = array_merge($data,$oupei);
             }else{
-                $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>1, 'company_id'=>24))->order('zoudi_id DESC')->field($field)->find();
+                $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>array('in', [1,6]), 'company_id'=>24))->order('zoudi_id DESC')->field($field)->find();
                 if($oupei){
                     $data = array_merge($data,$oupei);
                 }else{
-                    $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>1, 'company_id'=>31))->order('zoudi_id DESC')->field($field)->select();
+                    $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>array('in', [1,6]), 'company_id'=>31))->order('zoudi_id DESC')->field($field)->select();
                     if($oupei){
                         $data = array_merge($data,$oupei);
                     }else{
-                        $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>1, 'company_id'=>8))->order('zoudi_id DESC')->field($field)->find();
+                        $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>array('in', [1,6]), 'company_id'=>8))->order('zoudi_id DESC')->field($field)->find();
                         if($oupei){
                             $data = array_merge($data,$oupei);
                         }
@@ -557,19 +557,19 @@ function get_rate($match_id, $type='',$state=''){
             // 走地盘盘口
             $field = ' `rate_1` as change_big_rate, `rate_2` as change_rate, `rate_3` as change_small_rate';
             // 走地数据
-            $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>2, 'company_id'=>3))->order('zoudi_id DESC')->field($field)->find();
+            $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>array('in', [2,7]), 'company_id'=>3))->order('zoudi_id DESC')->field($field)->find();
             if($oupei){
                 $data = array_merge($data,$oupei);
             }else{
-                $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>2, 'company_id'=>24))->order('zoudi_id DESC')->field($field)->find();
+                $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>array('in', [2,7]), 'company_id'=>24))->order('zoudi_id DESC')->field($field)->find();
                 if($oupei){
                     $data = array_merge($data,$oupei);
                 }else{
-                    $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>2, 'company_id'=>31))->order('zoudi_id DESC')->field($field)->select();
+                    $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>array('in', [2,7]), 'company_id'=>31))->order('zoudi_id DESC')->field($field)->select();
                     if($oupei){
                         $data = array_merge($data,$oupei);
                     }else{
-                        $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>2, 'company_id'=>8))->order('zoudi_id DESC')->field($field)->find();
+                        $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>array('in', [2,7]), 'company_id'=>8))->order('zoudi_id DESC')->field($field)->find();
                         if($oupei){
                             $data = array_merge($data,$oupei);
                         }
@@ -683,19 +683,19 @@ function get_rate($match_id, $type='',$state=''){
         if($state == '2' || $state == '3' || $state =='4'){
             $field = ' `rate_1` as change_home_rate, `rate_2` as change_draw_rate, `rate_3` as change_away_rate';
             // 走地数据
-            $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>4, 'company_id'=>3))->order('zoudi_id DESC')->field($field)->find();
+            $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>array('in', [4,5]), 'company_id'=>3))->order('zoudi_id DESC')->field($field)->find();
             if($oupei){
                 $data = array_merge($data,$oupei);
             }else{
-                $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>4, 'company_id'=>24))->order('zoudi_id DESC')->field($field)->find();
+                $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>array('in', [4,5]), 'company_id'=>24))->order('zoudi_id DESC')->field($field)->find();
                 if($oupei){
                     $data = array_merge($data,$oupei);
                 }else{
-                    $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>4, 'company_id'=>31))->order('zoudi_id DESC')->field($field)->select();
+                    $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>array('in', [4,5]), 'company_id'=>31))->order('zoudi_id DESC')->field($field)->select();
                     if($oupei){
                         $data = array_merge($data,$oupei);
                     }else{
-                        $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>4, 'company_id'=>8))->order('zoudi_id DESC')->field($field)->find();
+                        $oupei = M('zoudi')->where(array('match_id'=>$match_id, 'type'=>array('in', [4,5]), 'company_id'=>8))->order('zoudi_id DESC')->field($field)->find();
                         if($oupei){
                             $data = array_merge($data,$oupei);
                         }
