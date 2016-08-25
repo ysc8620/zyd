@@ -77,7 +77,7 @@ do{
         }
     }
 
-    M('event')->where(array('match_id'=>array('in',$match_ids), 'update_time'=>array('neq', $update_time)))->find();
-    echo M()->getLastSql();
+    M('event')->where(array('match_id'=>array('in',$match_ids), 'update_time'=>array('neq', $update_time)))->delete();
+    // echo M()->getLastSql();
 
 }while(false);
