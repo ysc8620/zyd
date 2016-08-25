@@ -48,8 +48,6 @@ class MatchController extends BaseApiController {
                 away_name,away_score,home_red,away_red,home_yellow,away_yellow,match_round,address,weather_ico,weather,temperature,is_neutral,technic,total_collect,total_tuijian'
                 )->where($where)->order("time ASC")->select();
 
-                $json['ddt'] = M()->getLastSql();
-
             }elseif($type == 2){
 
                 if($date){
@@ -76,14 +74,13 @@ class MatchController extends BaseApiController {
                 $list = M('match')->field
                 ('match_id,time as match_time,league_id,league_name,kind,level,state,home_id,home_name,home_score,away_id,
                 away_name,away_score,home_red,away_red,home_yellow,away_yellow,match_round,address,weather_ico,weather,temperature,is_neutral,technic,total_collect,total_tuijian'
-                )->where($where)->order("time ASC")->limit($Page->firstRow . ',' . $Page->listRows)->select();
+                )->where($where2)->order("time ASC")->limit($Page->firstRow . ',' . $Page->listRows)->select();
                 #$json['sql'] = M()->getLastSql();
 
             }else{
                 // 验证登录
                 $this->check_login();
                 //
-                $where2 = "";
                 if($date){
                     $where2 = " AND m.state < 99 AND date(m.time) = '{$date}'";
                 }else{
