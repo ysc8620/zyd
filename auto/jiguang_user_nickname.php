@@ -20,11 +20,15 @@ $master_secret = "c1281a437204064c2190979f";
 $registration_id = "1a1018970aa0c6a908c";
 $client = new JPush($app_key, $master_secret);
 
-$user_list = M('users')->where(array('jiguang_id'=>array('neq',''),'jiguang_alias'=>''))->select();
-print_r($user_list);
-die();
-$response = $client->device()->updateAlias($registration_id, 'U10007');
-print_r($response);
+$user_list = M('users')->where(array('jiguang_id'=>array('neq',''),'jiguang_alias'=>''))->field("id,jiguang_id,jiguang_type")->select();
+foreach($user_list as $user){
+    echo $user['id']."\r\n";
+    $response = $client->device()->updateAlias($registration_id, 'U'.$user['id']);
+    if($response['http_code'] == 200){
+        M('users')->where(array('id'=>$user['id']))->save(['jiguang_alias'=>'U'.$user['id']]);
+    }
+}
+echo "ok\r\n";
 
 return;
 
