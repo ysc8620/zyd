@@ -263,6 +263,7 @@ class MatchController extends BaseApiController {
             $json['data']['total_page'] = ceil($total/$limit);
             $json['data']['type'] = $type;
             $json['data']['limit'] = $limit;
+            $json['data']['date'] = $date;
             $json['data']['league_ids'] = $league_idsstr;
 
         }while(false);
