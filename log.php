@@ -59,8 +59,7 @@ function sign($data,$appsecret)
 echo "=\r\n";
 $data = [
     'p'=>'1',
-    "date"=>"2016-08-27",
-    'type' => '3',
+    'type' => '4',
     'match_id' => 1214334
 ];
 
