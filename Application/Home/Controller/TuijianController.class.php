@@ -409,6 +409,7 @@ class TuijianController extends BaseApiController {
                     'create_time' => time(),
                     'id'=>0
                 ];
+
                 $json['msg'] = '购买成功';
                 $json['data'] = $data;
                 break;
@@ -426,20 +427,36 @@ class TuijianController extends BaseApiController {
             ];
             $credit_log = [
                 'type' => 2,
-                'credit' => $tuijian['fee'],
+                'credit' => -$tuijian['fee'],
                 'from_id' => 0,
                 'remark' => "用户购买推荐",
                 'create_time' => time(),
                 'user_id' => $user_id,
                 'status' => 0
             ];
+
+
             M()->startTrans();
             $res = M('tuijian_order')->add($data);
             $res2 = M()->execute("UPDATE ".C('DB_PREFIX')."users SET credit=credit-'{$tuijian['fee']}' WHERE id='{$user_id}' AND credit>='{$tuijian['fee']}'");
             $credit_log['from_id'] = $res;
             $res3 = M('credit_log')->add($credit_log);
+
+
             if($res && $res2 && $res3){
                 M()->commit();
+
+                $credit_log2 = [
+                    'type' => 3,
+                    'credit' => $tuijian['fee'],
+                    'from_id' => 0,
+                    'remark' => "用户销售推荐",
+                    'create_time' => time(),
+                    'user_id' => $tuijian['user_id'],
+                    'status' => 0
+                ];
+                $credit_log2['from_id'] = $res;
+                M('credit_log')->add($credit_log2);
                 // 更新用户购买总数
                 M('users')->where(array('id'=>$user_id))->setInc('total_buy_info',1);
                 // 更新销售总数

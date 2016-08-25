@@ -35,6 +35,18 @@ class PayNotifyCallBack extends WxPayNotify
 
 				if($res1 && $res2 && $res3){
 					M()->commit();
+
+					$credit_log2 = [
+							'type' => 1,
+							'credit' => $info['credit'],
+							'from_id' => 0,
+							'remark' => "用户充值",
+							'create_time' => time(),
+							'user_id' => $info['user_id'],
+							'status' => 0,
+							'from_id'=>$info['id']
+					];
+					M('credit_log')->add($credit_log2);
 				}else{
 					M()->rollback();
 				}
