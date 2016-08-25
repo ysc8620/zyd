@@ -628,11 +628,11 @@ class UserController extends BaseApiController {
                 $json['msg'] = '用户ID不能为空';
                 break;
             }
-            $total = M()->table(C('DB_PREFIX').'users as u, '.C('DB_PREFIX').'users_follow as uf')->where("u.status = 1 AND uf.from_user_id=$user_id AND u.id = uf.from_user_id")->count();
+            $total = M()->table(C('DB_PREFIX').'users as u, '.C('DB_PREFIX').'users_follow as uf')->where("u.status = 1 AND uf.from_user_id=$user_id AND u.id = uf.to_user_id")->count();
             $Page = new \Think\Page($total, $limit); // 实例化分页类 传入总记录数和每页显示的记录数(25)
             $Page->show();
 
-            $list = M()->table(C('DB_PREFIX').'users as u, '.C('DB_PREFIX').'users_follow as uf')->where("u.status = 1 AND uf.from_user_id=$user_id AND u.id = uf.from_user_id")
+            $list = M()->table(C('DB_PREFIX').'users as u, '.C('DB_PREFIX').'users_follow as uf')->where("u.status = 1 AND uf.from_user_id=$user_id AND u.id = uf.to_user_id")
                 ->field($this->getField('u'))
                 ->limit($Page->firstRow . ',' . $Page->listRows)->order("uf.create_time DESC")->select();
 
