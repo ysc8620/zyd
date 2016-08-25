@@ -19,7 +19,7 @@ function httpPost($url, $data = null)
         'systemVersion' => '9.3.2',
         'model' => 'iPhone 6S Plus',
         'imei' => '3580865021934706',
-        'ssid'=>'7904cc584c92eb7b3d93eda9192a3434'//1a02be1c9d62843b8bf973b98c2180a9
+        'ssid'=>'e3984e504c2279a5bba570e0bb8e8b73'//1a02be1c9d62843b8bf973b98c2180a9
 
     ];
     $param['sign'] = sign($param,'b8e586b6eb3530f1c5efad7ea3f1359e');
@@ -59,12 +59,12 @@ function sign($data,$appsecret)
 echo "=\r\n";
 $data = [
     'p'=>'1',
-    'to_user_id' => '10019',
+    'user_id' => '10000',
     'match_id' =>1304538 //1304513
 ];
 
 //$data['apple_receipt'] = $apple_receipt;
-$result = httpPost("https://api.zydzuqiu.com/live/tuijian.html?show=yeis", $data);
+$result = httpPost("https://api.zydzuqiu.com/user/info.html?show=yeis", $data);
 //var_dump($result);
 echo ($result);
 print_r(json_decode($result, true));

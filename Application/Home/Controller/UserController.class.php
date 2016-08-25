@@ -261,6 +261,8 @@ class UserController extends BaseApiController {
     public function info(){
         $json = $this->simpleJson();
         do {
+
+            $from_user_id = intval($this->user['id']);
             // 1 注册, 2登录, 3,找回密码
             $user_id = I('request.user_id', 0, 'intval');
             if(!$user_id){
@@ -285,8 +287,8 @@ class UserController extends BaseApiController {
             }
 
             $member['is_follow'] = 0;
-            if($user_id){
-                $res = M('users_follow')->where(array('from_user_id'=>$member['id'], 'to_user_id'=>$user_id))->find();
+            if($from_user_id){
+                $res = M('users_follow')->where(array('from_user_id'=>$from_user_id, 'to_user_id'=>$user_id))->find();
                 if($res){
                     $member['is_follow'] = 1;
                 }
