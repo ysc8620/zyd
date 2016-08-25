@@ -32,7 +32,6 @@ class PayNotifyCallBack extends WxPayNotify
 				$res2 = M('users')->where(array('id'=>$info['user_id']))->setInc("credit", $info['credit']);
 				$res3 = M('users')->where(array('id'=>$info['user_id']))->setInc("total_top_credit", $info['credit']);
 
-
 				if($res1 && $res2 && $res3){
 					M()->commit();
 

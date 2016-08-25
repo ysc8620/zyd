@@ -286,7 +286,7 @@ class UserController extends BaseApiController {
 
             $member['is_follow'] = 0;
             if($user_id){
-                $res = M('users_follow')->where(array('user_id'=>$user_id, 'to_user_id'=>$member['id']))->find();
+                $res = M('users_follow')->where(array('from_user_id'=>$user_id, 'to_user_id'=>$member['id']))->find();
                 if($res){
                     $member['is_follow'] = 1;
                 }
@@ -672,7 +672,7 @@ class UserController extends BaseApiController {
                 foreach($list as $i=>$item){
                     $item['is_follow'] = 0;
                     if($user_id){
-                        $res = M('users_follow')->where(array('user_id'=>$user_id, 'to_user_id'=>$item['id']))->find();
+                        $res = M('users_follow')->where(array('from_user_id'=>$user_id, 'to_user_id'=>$item['id']))->find();
                         if($res){
                             $item['is_follow'] = 1;
                         }
@@ -700,7 +700,7 @@ class UserController extends BaseApiController {
                 foreach($list as $i=>$item){
                     $item['is_follow'] = 0;
                     if($user_id){
-                        $res = M('users_follow')->where(array('user_id'=>$user_id, 'to_user_id'=>$item['id']))->find();
+                        $res = M('users_follow')->where(array('from_user_id'=>$user_id, 'to_user_id'=>$item['id']))->find();
                         if($res){
                             $item['is_follow'] = 1;
                         }
