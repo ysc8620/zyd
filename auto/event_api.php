@@ -20,12 +20,15 @@ do{
 //    $curr_match = $mongo->zyd->match;
     $postStr = file_get_contents("http://interface.win007.com/zq/detail.aspx");
     $data = explode("\r\n", $postStr);
+    $update_time = time();
+    $match_ids = [];
     foreach ($data as $item) {
         if(strpos($item,'rq[') !== false){
             preg_match_all("/\"(.*?)\"/i", $item, $res);
             if($res[0]){
                 if($res[1][0]){
                     $row = explode('^', $res[1][0]);
+                    $match_ids[intval($row[0])] = intval($row[0]);
                     $info = [
                         'match_id' => intval($row[0]),
                         'is_home_away' => intval($row[1]),
@@ -34,12 +37,12 @@ do{
                         'player' => getValue($row[4]),
                         'player_id' => getValue($row[5]),
                         'player_name' => getValue($row[6]),
-                        'update_time' => time(),
+                        'update_time' => $update_time,
                         'update_date' => date('Y-m-d H:i:s')
                     ];
                     $event = M('event')->where(array('match_id'=>$info['match_id'], 'time'=>$info['time']))->find();
                     if($event){
-                        M('event')->where(array('id'=>$event['_id']))->save($info);
+                        M('event')->where(array('id'=>$event['id']))->save($info);
                     }else{
                         M('event')->add($info);
                     }
@@ -73,5 +76,8 @@ do{
 
         }
     }
+
+    M('event')->where(array('match_id'=>array('in',$match_ids), 'update_time'=>array('neq', $update_time)))->find();
+    M()->getLastSql();
 
 }while(false);
