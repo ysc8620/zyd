@@ -24,11 +24,98 @@ $end_time  = date("Y-m-d H:i", time()+400);//
 $match_list = M('match')->where(array('is_send_start'=>0,'time'=>array('between', array($start_time,$end_time))))->field("id,match_id,time")->select();
 echo M()->getLastSql();
 foreach($match_list as $match){
-    echo $match['match_id'].$match['time']."\r\n";
-    $user_list = M()->table("t_match_follow as m, t_users as u")->where("m.id='{$match['match_id']}' AND m.user_id = u.id")->field('u.id, u.jiguang_id, u.jiguang_alias')->select();
-    echo M()->getLastSql();
-    print_r($user_list);
-    die();
+    // 直接关注比赛
+    $user_list = M()->table("t_match_follow as m, t_users as u")->where("m.match_id='{$match['match_id']}' AND m.user_id = u.id")->field('u.id, u.jiguang_id, u.jiguang_alias')->select();
+    $jiguang_alias = [];
+    $jiguang_id = [];
+    foreach($user_list as $user){
+        if($user['jiguang_alias']){
+            $jiguang_alias[$user['jiguang_alias']] = $user['jiguang_alias'];
+        }elseif($user['jiguang_id']){
+            $jiguang_id[$user['jiguang_id']] = $user['jiguang_id'];
+        }
+    }
+
+//    // 关注的用户发布推荐
+    //SELECT u.id, u.jiguang_id,u.jiguang_alias FROM t_users u, t_users_follow uf, t_tuijian t WHERE
+    //t.match_id='123' AND uf.to_user_id=t.user_id AND u.id=uf.from_user_id
+    $user_list = M()->table("t_users u, t_users_follow uf, t_tuijian t")->where("t.match_id='{$match['match_id']}' AND uf.to_user_id = t.user_id AND u.id=uf.from_user_id")
+        ->field('u.id, u.jiguang_id, u.jiguang_alias')->select();
+    $jiguang_alias = [];
+    $jiguang_id = [];
+    foreach($user_list as $user){
+        if($user['jiguang_alias']){
+            $jiguang_alias[$user['jiguang_alias']] = $user['jiguang_alias'];
+        }elseif($user['jiguang_id']){
+            $jiguang_id[$user['jiguang_id']] = $user['jiguang_id'];
+        }
+    }
+    $jingcai_info = M('jingcai')->where(array('match_id'=>$match['match_id']))->find();
+    $match_name = "";
+    if($jingcai_info){
+        $match_name = getWeekName($jingcai_info['date']).$jingcai_info['match_no']." ";
+    }
+
+    $match_title = "您关注的比赛（{$match_name}{$match['home_name']} VS {{$match['away_name']}}）即将开始";
+    if($jiguang_alias ){
+        //您关注的比赛（赛事名 主队名 VS 客队名）即将开始
+        $push_payload = $client->push()
+            ->setPlatform('all')
+            ->addAlias($jiguang_alias)
+            ->addAllAudience()
+            ->setNotificationAlert('比赛即将开始')
+
+            ->iosNotification($match_title, array(
+                'sound' => 'default',
+                'badge' => 1,
+                #'content-available' => true,
+                # 'category' => 'jiguang',
+                'extras' => array(
+                    'type' => '0',
+                    'from_id'=>$match['match_id']
+                ),
+            ))
+            ->androidNotification('比赛即将开始', array(
+                'title' => $match_title,
+                'build_id' => 2,
+                'extras' => array(
+                    'type' => '0',
+                    'from_id'=>$match['match_id']
+                ),
+            ))
+        ;
+    }
+
+    if($jiguang_id){
+        //您关注的比赛（赛事名 主队名 VS 客队名）即将开始
+        $push_payload = $client->push()
+            ->setPlatform('all')
+            ->addAlias($jiguang_alias)
+            ->addAllAudience()
+            ->setNotificationAlert('比赛即将开始')
+
+            ->iosNotification($match_title, array(
+                'sound' => 'default',
+                'badge' => 1,
+                #'content-available' => true,
+                # 'category' => 'jiguang',
+                'extras' => array(
+                    'type' => '0',
+                    'from_id'=>$match['match_id']
+                ),
+            ))
+            ->androidNotification('比赛即将开始', array(
+                'title' => $match_title,
+                'build_id' => 2,
+                'extras' => array(
+                    'type' => '0',
+                    'from_id'=>$match['match_id']
+                ),
+            ))
+        ;
+    }
+
+    M('match')->where(array('id'=>$match['id']))->save(['is_send_start'=>1,'send_start_time'=>time()]);
 }
 echo "ok\r\n";
 
