@@ -98,7 +98,7 @@ class LiveController extends BaseApiController {
                 }
                 $list[$i]['match_name'] = $match_name;
 
-                $zoudi = M('zoudi')->where(array('match_id'=>$match['match_id']))->order("id DESC")->find();
+                $zoudi = M('zoudi')->where(array('match_id'=>$match['match_id']))->order("zoudi_id DESC")->find();
                 if(!$zoudi){
                     unset($list[$i]);
                     continue;
@@ -167,7 +167,7 @@ class LiveController extends BaseApiController {
 
         foreach($list as $i=>$item){
             //
-            $zoudi = M('zoudi')->where(array('match_id'=>$item['match_id']))->order("id DESC")->find();
+            $zoudi = M('zoudi')->where(array('match_id'=>$item['match_id']))->order("zoudi_id DESC")->find();
             if(!$zoudi){
                 unset($list[$i]);
                 continue;
@@ -262,7 +262,7 @@ class LiveController extends BaseApiController {
                 $tuijian['match_time2'] = '未开';
             }elseif(in_array($match['state'],[1,2,3,4])){
 //                $match['match_time2'] = floor(time() - strtotime($match['match_time'])/60);
-                $zoudi = M('zoudi')->where(array('match_id'=>$match['match_id']))->order("id DESC")->find();
+                $zoudi = M('zoudi')->where(array('match_id'=>$match['match_id']))->order("zoudi_id DESC")->find();
                 $zoudi['time'] = str_replace('分','',$zoudi['time']);
                 $tuijian['match_time2'] = is_numeric($zoudi['time'])?$zoudi['time']."'":$zoudi['time'];
             }elseif($match['state'] == -1){
@@ -376,7 +376,7 @@ class LiveController extends BaseApiController {
             }
 
             // 走地封盘
-            $zoudi = M('zoudi')->where(array('match_id'=>$match['match_id']))->order("id DESC")->find();
+            $zoudi = M('zoudi')->where(array('match_id'=>$match['match_id']))->order("zoudi_id DESC")->find();
             if($zoudi['type']  == 3){
                 $tuijian['status'] = 0;
             }
