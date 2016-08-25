@@ -8,7 +8,7 @@ class ConfigController extends BaseApiController {
      */
     public function init(){
         $json = $this->simpleJson();
-        $json['data'] = (object)array();
+        $json['data'] = array();
         do{
             //
             $json['data']['share_url'] = 'http://api2.zydzuqiu.com/response/reg.html?share_id=';
