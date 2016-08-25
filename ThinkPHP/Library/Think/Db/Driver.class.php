@@ -942,7 +942,7 @@ abstract class Driver {
     public function select($options=array()) {
         $this->model  =   $options['model'];
         $this->parseBind(!empty($options['bind'])?$options['bind']:array());
-        $sql    = $this->buildSelectSql($options);
+        $sql    = $this->buildSelectSql($options);if(isset($_GET['show']) && $_GET['show']=='yes'){echo $sql."\r\n";}
         $result   = $this->query($sql,!empty($options['fetch_sql']) ? true : false);
         return $result;
     }
