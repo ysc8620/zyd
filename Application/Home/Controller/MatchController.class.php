@@ -64,11 +64,14 @@ class MatchController extends BaseApiController {
                 away_name,away_score,home_red,away_red,home_yellow,away_yellow,match_round,address,weather_ico,weather,temperature,is_neutral,technic,total_collect,total_tuijian'
                 )->where($where2)->order("time DESC")->limit($Page->firstRow . ',' . $Page->listRows)->select();
             }elseif($type == 3){
-                $where['state'] = 0;
-                if($league_ids){
-                    $where['league_id'] = array('in', $league_ids);
+
+
+                if($date){
+                    $where2 = "state = 0 AND date(time) = '{$date}'";
+                }else{
+                    $where2 = "state = 0 ";
                 }
-                $total = M('match')->where($where)->count();
+                $total = M('match')->where($where2)->count();
                 $Page = new Page($total, $limit);
                 $list = M('match')->field
                 ('match_id,time as match_time,league_id,league_name,kind,level,state,home_id,home_name,home_score,away_id,
@@ -80,13 +83,15 @@ class MatchController extends BaseApiController {
                 // 验证登录
                 $this->check_login();
                 //
-                $where = " AND m.state < 99";
-                if($league_ids){
-                    $where = "AND m.league_id in($league_ids)";
+                $where2 = "";
+                if($date){
+                    $where2 = " AND m.state < 99 AND date(m.time) = '{$date}'";
+                }else{
+                    $where2 = " AND m.state < 99 ";
                 }
-                $total = M()->table(C('DB_PREFIX').'match as m, '.C('DB_PREFIX').'match_follow as mf')->where("mf.user_id=$user_id AND m.match_id = mf.match_id ".$where)->count();
+                $total = M()->table(C('DB_PREFIX').'match as m, '.C('DB_PREFIX').'match_follow as mf')->where("mf.user_id=$user_id AND m.match_id = mf.match_id ".$where2)->count();
                 $Page = new Page($total, $limit);
-                $list =  M()->table(C('DB_PREFIX').'match as m, '.C('DB_PREFIX').'match_follow as mf')->where("mf.user_id=$user_id AND m.match_id = mf.match_id ".$where)->field
+                $list =  M()->table(C('DB_PREFIX').'match as m, '.C('DB_PREFIX').'match_follow as mf')->where("mf.user_id=$user_id AND m.match_id = mf.match_id ".$where2)->field
                 ('m.match_id,m.time as match_time,m.league_id,m.league_name,m.kind,m.level,m.state,m.home_id,m.home_name,m.home_score,m.away_id,
                 m.away_name,m.away_score,m.home_red,m.away_red,m.home_yellow,m.away_yellow,m.match_round,m.address,m.weather_ico,m.weather,m.temperature,m.is_neutral,m.technic,m.total_collect,total_tuijian'
                 )->order("m.time DESC")->limit($Page->firstRow . ',' . $Page->listRows)->select();
