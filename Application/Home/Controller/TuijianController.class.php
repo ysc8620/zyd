@@ -1,6 +1,11 @@
 <?php
 namespace Home\Controller;
 use Think\Page;
+
+require __DIR__ . '/../../../ThinkPHP/Library/Jpush/autoload.php';
+
+use JPush\Client as JPush;
+
 class TuijianController extends BaseApiController {
     /**
      * 推荐列表
@@ -232,6 +237,7 @@ class TuijianController extends BaseApiController {
         do{
             $this->check_login();
             $user_id = $this->user['id'];
+            $user_name = $this->user['nickname'];
             $data = [];
             $data['user_id'] = $this->user['id'];
             $data['match_id'] = I('request.match_id',0,'intval');
@@ -355,6 +361,42 @@ class TuijianController extends BaseApiController {
                     ];
                     M('match_follow')->add($folow_data);
                 }
+
+                // 发布推送
+                /*
+                 第4类消息推送
+                标题：发布竞猜
+                文案：您关注的XX发布了新的（初盘、滚球）竞猜
+                触发条件：用户关注的专家发布新的竞猜的时候
+                链接：链接到专家个人主页
+                */
+                $title = "发布竞彩";
+                $stae = $match['state'] == '0'?'初盘':"滚球";
+                $remark = "您关注的{$user_name}发布了新的{$stae}竞猜";
+                $user_list = $user_list = M()->table("t_users_follow as f, t_users as u")->where("f.to_user_id='{$user_id}' AND u.id = f.from_user_id")->field('u.id, u.jiguang_id, u.jiguang_alias')->select();
+
+                $jiguang_alias = [];
+                $jiguang_id = [];
+                foreach($user_list as $user){
+                    if($user['jiguang_alias']){
+                        $jiguang_alias[$user['jiguang_alias']] = $user['jiguang_alias'];
+                    }elseif($user['jiguang_id']){
+                        $jiguang_id[$user['jiguang_id']] = $user['jiguang_id'];
+                    }
+                }
+
+                // 关注的用户发布推荐
+
+                $jingcai_info = M('jingcai')->where(array('match_id'=>$match['match_id']))->find();
+                $match_name = "";
+                if($jingcai_info){
+                    $match_name = getWeekName($jingcai_info['date']).$jingcai_info['match_no']." ";
+                }
+
+                $match_title = "您关注的比赛（{$match_name}{$match['home_name']} VS {{$match['away_name']}}）即将开始";
+
+                send_tuisong($jiguang_alias, $jiguang_id,'发布竞猜',$match_title,1,$user_id);
+
                 $data['id'] = $res;
                 $json['msg'] = '发布成功';
                 $json['data'] = $data;

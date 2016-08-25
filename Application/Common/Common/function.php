@@ -5,6 +5,83 @@
  * Date: 2016/6/6
  * Time: 11:20
  */
+require __DIR__ . '/../../../ThinkPHP/Library/Jpush/autoload.php';
+
+use JPush\Client as JPush;
+
+/**
+ * @param $jiguang_alias
+ * @param $jiguang_id
+ * @param $title
+ * @param $remark
+ * @param $type
+ * @param $from_id
+ * @return bool
+ */
+function send_tuisong($jiguang_alias,$jiguang_id,$title,$remark,$type,$from_id){
+    $app_key = "30b1dce198d525524980af61";
+    $master_secret = "c1281a437204064c2190979f";
+    $client = new JPush($app_key, $master_secret);
+
+    if($jiguang_alias ){
+        //您关注的比赛（赛事名 主队名 VS 客队名）即将开始
+        $client->push()
+            ->setPlatform('all')
+            ->addAlias($jiguang_alias)
+            ->addAllAudience()
+            ->setNotificationAlert($title)
+
+            ->iosNotification($remark, array(
+                'sound' => 'default',
+                'badge' => 1,
+                #'content-available' => true,
+                # 'category' => 'jiguang',
+                'extras' => array(
+                    'type' => $type,
+                    'from_id'=>$from_id
+                ),
+            ))
+            ->androidNotification($remark, array(
+                    'title' => $title,
+                    'build_id' => 2,
+                    'extras' => array(
+                    'type' => $type,
+                    'from_id'=>$from_id
+                ),
+            ))
+        ;
+    }
+
+    if($jiguang_id){
+        //您关注的比赛（赛事名 主队名 VS 客队名）即将开始
+        $client->push()
+            ->setPlatform('all')
+            ->addRegistrationId($jiguang_id)
+            ->addAllAudience()
+            ->setNotificationAlert($title)
+
+            ->iosNotification($remark, array(
+                'sound' => 'default',
+                'badge' => 1,
+                #'content-available' => true,
+                # 'category' => 'jiguang',
+                'extras' => array(
+                    'type' => $type,
+                    'from_id'=>$from_id
+                ),
+            ))
+            ->androidNotification($remark, array(
+                'title' => $title,
+                'build_id' => 2,
+                'extras' => array(
+                    'type' => $type,
+                    'from_id'=>$from_id
+                ),
+            ))
+        ;
+    }
+    return true;
+}
 
 function getWeekName($date){
     $week = date("w",strtotime($date));
