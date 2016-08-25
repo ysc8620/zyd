@@ -20,7 +20,8 @@ $master_secret = "c1281a437204064c2190979f";
 $registration_id = "1a1018970aa0c6a908c";
 $client = new JPush($app_key, $master_secret);
 $start_time = date("Y-m-d H:i", time()-330);//
-$match_list = M('match')->where(array('is_send_start'=>0,'time'=>array('lg', $start_time)))->field("id,match_id")->select();
+$match_list = M('match')->where(array('is_send_start'=>0,'time'=>array('lt', $start_time)))->field("id,match_id")->select();
+echo M()->getLastSql();
 foreach($match_list as $match){
     echo $match['match_id']."\r\n";
     $user_list = M()->table("t_match_follow as m, t_users as u")->where("m.id='{$match['match_id']}' AND m.user_id = u.id")->field('u.id, u.jiguang_id, u.jiguang_alias')->select();
