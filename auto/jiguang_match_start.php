@@ -36,20 +36,8 @@ foreach($match_list as $match){
         }
     }
 
-//    // 关注的用户发布推荐
-    //SELECT u.id, u.jiguang_id,u.jiguang_alias FROM t_users u, t_users_follow uf, t_tuijian t WHERE
-    //t.match_id='123' AND uf.to_user_id=t.user_id AND u.id=uf.from_user_id
-    $user_list = M()->table("t_users u, t_users_follow uf, t_tuijian t")->where("t.match_id='{$match['match_id']}' AND uf.to_user_id = t.user_id AND u.id=uf.from_user_id")
-        ->field('u.id, u.jiguang_id, u.jiguang_alias')->select();
-    $jiguang_alias = [];
-    $jiguang_id = [];
-    foreach($user_list as $user){
-        if($user['jiguang_alias']){
-            $jiguang_alias[$user['jiguang_alias']] = $user['jiguang_alias'];
-        }elseif($user['jiguang_id']){
-            $jiguang_id[$user['jiguang_id']] = $user['jiguang_id'];
-        }
-    }
+    // 关注的用户发布推荐
+
     $jingcai_info = M('jingcai')->where(array('match_id'=>$match['match_id']))->find();
     $match_name = "";
     if($jingcai_info){
