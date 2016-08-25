@@ -20,6 +20,14 @@ $master_secret = "c1281a437204064c2190979f";
 $registration_id = "1a1018970aa0c6a908c";
 $client = new JPush($app_key, $master_secret);
 
+$user_list = M('users')->where(array('jiguang_id'=>array('neq',''),'jiguang_alias'=>''))->select();
+print_r($user_list);
+die();
+$response = $client->device()->updateAlias($registration_id, 'U10007');
+print_r($response);
+
+return;
+
 $push_payload = $client->push()
     ->setPlatform('all')
     //->addRegistrationId('141fe1da9ead0b3ce9a')
