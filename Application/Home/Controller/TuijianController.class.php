@@ -233,7 +233,7 @@ class TuijianController extends BaseApiController {
         do{
             $this->check_login();
             $user_id = $this->user['id'];
-            $user_name = $this->user['nickname'];
+            $user_name = getNickName($this->user['nickname']);
             $data = [];
             $data['user_id'] = $this->user['id'];
             $data['match_id'] = I('request.match_id',0,'intval');
