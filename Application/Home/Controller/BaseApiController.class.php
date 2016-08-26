@@ -37,7 +37,7 @@ class BaseApiController extends BaseController {
                 $json['msg'] = '权限no2';
                 $this->ajaxReturn($json);
             }
-            \Org\Util\File::write_file(APP_PATH.'/logs/post.log',date("Y-m-d H:i:s")."=url=".$_SERVER['REQUEST_URI']."&".http_build_query($_REQUEST)."\r\n","a+");
+            //\Org\Util\File::write_file(APP_PATH.'/logs/post.log',date("Y-m-d H:i:s")."=url=".$_SERVER['REQUEST_URI']."&".http_build_query($_REQUEST)."\r\n","a+");
             // 用户登录
             $user_ssid = $header['ssid'];
             $this->ssid = $user_ssid;
@@ -139,7 +139,7 @@ class BaseApiController extends BaseController {
             case 'JSON' :
                 // 返回JSON数据格式到客户端 包含状态信息
                 header('Content-Type:application/json; charset=utf-8');
-                \Org\Util\File::write_file(APP_PATH.'/logs/postreturn.log',date("Y-m-d H:i:s")."=url=".$_SERVER['REQUEST_URI']."&".http_build_query($_REQUEST)."&data=".json_encode($data)."\r\n","a+");
+               // \Org\Util\File::write_file(APP_PATH.'/logs/postreturn.log',date("Y-m-d H:i:s")."=url=".$_SERVER['REQUEST_URI']."&".http_build_query($_REQUEST)."&data=".json_encode($data)."\r\n","a+");
                 exit(json_encode($data,$json_option));
             case 'XML'  :
                 // 返回xml格式数据
