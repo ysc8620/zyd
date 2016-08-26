@@ -25,7 +25,7 @@ function send_tuisong($jiguang_alias,$jiguang_id,$title,$remark,$type,$from_id){
     $ret = [];
     if($jiguang_alias ){
         //您关注的比赛（赛事名 主队名 VS 客队名）即将开始
-        $ret['jiguang_alias'] = $client->push()
+        $push_payload = $client->push()
             ->setPlatform('all')
             ->addAlias($jiguang_alias)
             ->addAllAudience()
@@ -50,11 +50,21 @@ function send_tuisong($jiguang_alias,$jiguang_id,$title,$remark,$type,$from_id){
                 ),
             ))
         ;
+
+        try {
+            $ret['jiguang_alias'] = $push_payload->send();
+        }catch (\JPush\Exceptions\APIConnectionException $e) {
+            // try something here
+            $ret['jiguang_alias'] = $e;
+        } catch (\JPush\Exceptions\APIRequestException $e) {
+            // try something here
+            $ret['jiguang_alias'] = $e;
+        }
     }
 
     if($jiguang_id){
         //您关注的比赛（赛事名 主队名 VS 客队名）即将开始
-        $ret['jiguang_id'] = $client->push()
+        $push_payload = $client->push()
             ->setPlatform('all')
             ->addRegistrationId($jiguang_id)
             ->addAllAudience()
@@ -79,6 +89,16 @@ function send_tuisong($jiguang_alias,$jiguang_id,$title,$remark,$type,$from_id){
                 ),
             ))
         ;
+
+        try {
+            $ret['jiguang_id'] = $push_payload->send();
+        }catch (\JPush\Exceptions\APIConnectionException $e) {
+            // try something here
+            $ret['jiguang_id'] = $e;
+        } catch (\JPush\Exceptions\APIRequestException $e) {
+            // try something here
+            $ret['jiguang_id'] = $e;
+        }
     }
     return $ret;
 }
