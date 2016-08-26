@@ -20,7 +20,7 @@ $master_secret = "c1281a437204064c2190979f";
 $registration_id = "1a1018970aa0c6a908c";
 $client = new JPush($app_key, $master_secret);
 $start_time = date("Y-m-d H:i", time()+200);//
-$match_list = M('match')->where(array('is_send_start'=>0,'time'=>array('between', array($start_time,$end_time))))->field("id,match_id,time")->select();
+$match_list = M('match')->where(array('is_send_end'=>0,'state'=>"-1"))->field("id,match_id,time")->select();
 echo M()->getLastSql();
 foreach($match_list as $match){
     // 直接关注比赛
@@ -28,9 +28,7 @@ foreach($match_list as $match){
     $jiguang_alias = [];
     $jiguang_id = [];
     foreach($user_list as $user){
-        if($user['jiguang_alias']){
-            $jiguang_alias[$user['jiguang_alias']] = $user['jiguang_alias'];
-        }elseif($user['jiguang_id']){
+        if($user['jiguang_id']){
             $jiguang_id[$user['jiguang_id']] = $user['jiguang_id'];
         }
     }
@@ -43,66 +41,9 @@ foreach($match_list as $match){
         $match_name = getWeekName($jingcai_info['date']).$jingcai_info['match_no']." ";
     }
 
-    $match_title = "您关注的比赛（{$match_name}{$match['home_name']} VS {{$match['away_name']}}）即将开始";
-    if($jiguang_alias ){
-        //您关注的比赛（赛事名 主队名 VS 客队名）即将开始
-        $push_payload = $client->push()
-            ->setPlatform('all')
-            ->addAlias($jiguang_alias)
-            ->addAllAudience()
-            ->setNotificationAlert('比赛即将开始')
-
-            ->iosNotification($match_title, array(
-                'sound' => 'default',
-                'badge' => 1,
-                #'content-available' => true,
-                # 'category' => 'jiguang',
-                'extras' => array(
-                    'type' => '0',
-                    'from_id'=>$match['match_id']
-                ),
-            ))
-            ->androidNotification('比赛即将开始', array(
-                'title' => $match_title,
-                'build_id' => 2,
-                'extras' => array(
-                    'type' => '0',
-                    'from_id'=>$match['match_id']
-                ),
-            ))
-        ;
-    }
-
-    if($jiguang_id){
-        //您关注的比赛（赛事名 主队名 VS 客队名）即将开始
-        $push_payload = $client->push()
-            ->setPlatform('all')
-            ->addAlias($jiguang_alias)
-            ->addAllAudience()
-            ->setNotificationAlert('比赛即将开始')
-
-            ->iosNotification($match_title, array(
-                'sound' => 'default',
-                'badge' => 1,
-                #'content-available' => true,
-                # 'category' => 'jiguang',
-                'extras' => array(
-                    'type' => '0',
-                    'from_id'=>$match['match_id']
-                ),
-            ))
-            ->androidNotification('比赛即将开始', array(
-                'title' => $match_title,
-                'build_id' => 2,
-                'extras' => array(
-                    'type' => '0',
-                    'from_id'=>$match['match_id']
-                ),
-            ))
-        ;
-    }
-
-    M('match')->where(array('id'=>$match['id']))->save(['is_send_start'=>1,'send_start_time'=>time()]);
+    $match_title = "您关注的比赛（{$match_name}{$match['home_name']} VS {{$match['away_name']}}）已结束，比分是{$match['home_score']}：{$match['away_score']}";
+    send_tuisong($jiguang_alias, $jiguang_id,'比赛结束',$match_title,0,$match['match_id']);
+    M('match')->where(array('id'=>$match['id']))->save(['is_send_end'=>1,'send_end_time'=>time()]);
 }
 echo "ok\r\n";
 

@@ -309,9 +309,10 @@ class TuijianController extends BaseApiController {
 
             $tuijian = M('tuijian')->where(array('user_id'=>$user_id, 'match_id'=>$data['match_id'],'type'=>$data['type'],'sub_type'=>$data['sub_type']))->order("id DESC")->find();
             if($tuijian){
-                if($tuijian['tuijian_home_score'] == $data['tuijian_home_score']
-                    && $tuijian['tuijian_away_score'] == $data['tuijian_away_score']
-                &&$tuijian['rate_1'] == $data['rate_1'] &&
+                if(
+                    $tuijian['tuijian_home_score'] == $data['tuijian_home_score'] &&
+                    $tuijian['tuijian_away_score'] == $data['tuijian_away_score'] &&
+                    $tuijian['rate_1'] == $data['rate_1'] &&
                     $tuijian['rate_2'] == $data['rate_2'] &&
                     $tuijian['rate_3'] == $data['rate_3'] &&
                     $tuijian['rate_4'] == $data['rate_4'] &&
