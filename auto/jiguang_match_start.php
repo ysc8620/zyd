@@ -21,9 +21,7 @@ foreach($match_list as $match){
     $jiguang_alias = [];
     $jiguang_id = [];
     foreach($user_list as $user){
-        if($user['jiguang_alias']){
-            $jiguang_alias[$user['jiguang_alias']] = $user['jiguang_alias'];
-        }elseif($user['jiguang_id']){
+        if($user['jiguang_id']){
             $jiguang_id[$user['jiguang_id']] = $user['jiguang_id'];
         }
     }
