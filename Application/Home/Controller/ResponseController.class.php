@@ -228,4 +228,16 @@ class ResponseController extends BaseController {
         }while(false);
         $this->ajaxReturn($json);
     }
+
+    // 推送测试
+    public function test(){
+        echo date("Y-m-d H:i:s");
+        $jiguang_alias = [
+            'U10016','U10007','U10008','U10009','U10010'
+        ];
+        $jiguang_id = [];
+        $match_title = "测试比赛推送:收到在群里@下";
+        $res = send_tuisong($jiguang_alias, $jiguang_id,'比赛即将开始:收到在群里@下',$match_title,0,1305590);
+        var_dump($res);
+    }
 }
