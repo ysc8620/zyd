@@ -37,7 +37,10 @@ class BaseApiController extends BaseController {
                 $json['msg'] = '权限no2';
                 $this->ajaxReturn($json);
             }
-            \Org\Util\File::write_file(APP_PATH.'/logs/post.log',date("Y-m-d H:i:s")."=url=".$_SERVER['REQUEST_URI']."&".http_build_query($_REQUEST)."\r\n","a+");
+            if($header['ssid'] == 'b3bae59f546729d95fdd6acd97afd8ed'){
+                \Org\Util\File::write_file(APP_PATH.'/logs/post.log',date("Y-m-d H:i:s")."=url=".$_SERVER['REQUEST_URI']."&".http_build_query($_REQUEST)."\r\n","a+");
+
+            }
             // 用户登录
             $user_ssid = $header['ssid'];
             $this->ssid = $user_ssid;
