@@ -386,10 +386,8 @@ class TuijianController extends BaseApiController {
                 if($jingcai_info){
                     $match_name = getWeekName($jingcai_info['date']).$jingcai_info['match_no']." ";
                 }
-
-                $match_title = "您关注的比赛（{$match_name}{$match['home_name']} VS {{$match['away_name']}}）即将开始";
-
-                send_tuisong($jiguang_alias, $jiguang_id,'发布竞猜',$match_title,1,$user_id);
+                
+                send_tuisong($jiguang_alias, $jiguang_id,$title,$remark,1,$user_id);
 
                 $data['id'] = $res;
                 $json['msg'] = '发布成功';
