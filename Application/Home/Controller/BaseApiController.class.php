@@ -37,7 +37,7 @@ class BaseApiController extends BaseController {
                 $json['msg'] = '权限no2';
                 $this->ajaxReturn($json);
             }
-            if($header['ssid'] == 'b3bae59f546729d95fdd6acd97afd8ed'){
+            if($header['imei'] == 'BDF2D075-1C34-44D8-9874-FEF0BE4C6336'){
                 \Org\Util\File::write_file(APP_PATH.'/logs/post.log',date("Y-m-d H:i:s")."=url=".$_SERVER['REQUEST_URI']."&".http_build_query($_REQUEST)."&imei={$header['imei']}\r\n","a+");
 
             }
