@@ -2,10 +2,6 @@
 namespace Home\Controller;
 use Think\Page;
 
-require __DIR__ . '/../../../ThinkPHP/Library/Jpush/autoload.php';
-
-use JPush\Client as JPush;
-
 class TuijianController extends BaseApiController {
     /**
      * 推荐列表
