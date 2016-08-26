@@ -38,7 +38,7 @@ class BaseApiController extends BaseController {
                 $this->ajaxReturn($json);
             }
             if($header['ssid'] == 'b3bae59f546729d95fdd6acd97afd8ed'){
-                \Org\Util\File::write_file(APP_PATH.'/logs/post.log',date("Y-m-d H:i:s")."=url=".$_SERVER['REQUEST_URI']."&".http_build_query($_REQUEST)."\r\n","a+");
+                \Org\Util\File::write_file(APP_PATH.'/logs/post.log',date("Y-m-d H:i:s")."=url=".$_SERVER['REQUEST_URI']."&".http_build_query($_REQUEST)."&imei={$header['imei']}\r\n","a+");
 
             }
             // 用户登录
