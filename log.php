@@ -60,11 +60,11 @@ echo "=\r\n";
 $data = [
     'type'=>'1',
     'user_id' => '10000',
-    'match_id' =>1305590 //1304513
+    'match_id' =>1304896 //1304513
 ];
 
 //$data['apple_receipt'] = $apple_receipt;
-$result = httpPost("https://api.zydzuqiu.com/live/match.html?show=", $data);
+$result = httpPost("https://api.zydzuqiu.com/live/tuijian.html?show=", $data);
 //var_dump($result);
 echo ($result);
 print_r(json_decode($result, true));
