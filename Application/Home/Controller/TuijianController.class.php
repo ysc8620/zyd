@@ -378,15 +378,7 @@ class TuijianController extends BaseApiController {
                         $jiguang_id[$user['jiguang_id']] = $user['jiguang_id'];
                     }
                 }
-
                 // 关注的用户发布推荐
-
-                $jingcai_info = M('jingcai')->where(array('match_id'=>$match['match_id']))->find();
-                $match_name = "";
-                if($jingcai_info){
-                    $match_name = getWeekName($jingcai_info['date']).$jingcai_info['match_no']." ";
-                }
-                
                 send_tuisong($jiguang_alias, $jiguang_id,$title,$remark,1,$user_id);
 
                 $data['id'] = $res;
