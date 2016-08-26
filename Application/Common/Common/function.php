@@ -28,7 +28,7 @@ function send_tuisong($jiguang_alias,$jiguang_id,$title,$remark,$type,$from_id){
         $push_payload = $client->push()
             ->setPlatform('all')
             ->addAlias($jiguang_alias)
-            ->addAllAudience()
+            //->addAllAudience()
             ->setNotificationAlert($title)
 
             ->iosNotification($remark, array(
@@ -67,7 +67,7 @@ function send_tuisong($jiguang_alias,$jiguang_id,$title,$remark,$type,$from_id){
         $push_payload = $client->push()
             ->setPlatform('all')
             ->addRegistrationId($jiguang_id)
-            ->addAllAudience()
+            //->addAllAudience()
             ->setNotificationAlert($title)
 
             ->iosNotification($remark, array(
