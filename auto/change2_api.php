@@ -40,9 +40,9 @@ do{
             'update_date' => date('Y-m-d H:i:s'),
             'last_update_event' => 'chnage2'
         ];
-        $match_info = M('match')->where(array('match_id'=>$match['match_id']))->find();
+        $match_info = M('match')->where(array('match_id'=>$match['match_id']))->field('id,match_id')->find();
         if($match_info){
-            M('match')->where(array('match_id'=>$match['match_id']))->save($match);
+            M('match')->where(array('id'=>$match['id']))->save($match);
         }
     }
 }while(false);

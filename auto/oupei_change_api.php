@@ -43,7 +43,7 @@ do{
                     'change_date'=>$item[8],
                     'update_time'=>time()
                 ];
-                $has = M('asia_half_oupei')->where(array('match_id'=>$data['match_id'],'company_id'=>$data['company_id'],'change_date'=>$data['change_date']))->find();
+                $has = M('asia_half_oupei')->where(array('match_id'=>$data['match_id'],'company_id'=>$data['company_id'],'change_date'=>$data['change_date']))->field('id')->find();
                 if(!$has){
                     M('asia_half_oupei')->add($data);
                 }

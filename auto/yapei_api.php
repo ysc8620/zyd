@@ -81,7 +81,7 @@ do{
         ];
         $data['begin_rate'] = -$data['begin_rate'];
         $data['change_rate'] = -$data['change_rate'];
-        $match = M('asia_yapei')->where(array('match_id'=>$match_id,'company_id'=>$data['company_id']))->find();
+        $match = M('asia_yapei')->where(array('match_id'=>$match_id,'company_id'=>$data['company_id']))->field('id')->find();
         if($match){
             M('asia_yapei')->where(array('id'=>$match['id']))->save($data);
         }else{
@@ -107,7 +107,7 @@ do{
             'update_time' => time()
         ];
 
-        $match = M('asia_oupei')->where(array('match_id'=>$match_id,'company_id'=>$data['company_id']))->find();
+        $match = M('asia_oupei')->where(array('match_id'=>$match_id,'company_id'=>$data['company_id']))->field('id')->find();
         if($match){
             M('asia_oupei')->where(array('id'=>$match['id']))->save($data);
         }else{
@@ -133,7 +133,7 @@ do{
             'update_time' => time()
         ];
 
-        $match = M('asia_daxiaoqiu')->where(array('match_id'=>$match_id,'company_id'=>$data['company_id']))->find();
+        $match = M('asia_daxiaoqiu')->where(array('match_id'=>$match_id,'company_id'=>$data['company_id']))->field('id')->find();
         if($match){
             M('asia_daxiaoqiu')->where(array('id'=>$match['id']))->save($data);
         }else{
@@ -161,7 +161,7 @@ do{
         $data['begin_rate'] = -$data['begin_rate'];
         $data['change_rate'] = -$data['change_rate'];
 
-        $match = M('asia_half')->where(array('match_id'=>$match_id,'company_id'=>$data['company_id']))->find();
+        $match = M('asia_half')->where(array('match_id'=>$match_id,'company_id'=>$data['company_id']))->field('id')->find();
         if($match){
             M('asia_half')->where(array('id'=>$match['id']))->save($data);
         }else{
@@ -187,7 +187,7 @@ do{
             'update_time' => time()
         ];
 
-        $match = M('asia_half_daxiaoqiu')->where(array('match_id'=>$match_id,'company_id'=>$data['company_id']))->find();
+        $match = M('asia_half_daxiaoqiu')->where(array('match_id'=>$match_id,'company_id'=>$data['company_id']))->field('id')->find();
         if($match){
             M('asia_half_daxiaoqiu')->where(array('id'=>$match['id']))->save($data);
         }else{

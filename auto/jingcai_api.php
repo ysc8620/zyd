@@ -38,7 +38,7 @@ do{
                 'update_time' => time()
             ];
 
-            $match_info = M('jingcai')->where(array('date'=>$info['date'], 'match_no'=>$info['match_no']))->find();
+            $match_info = M('jingcai')->where(array('date'=>$info['date'], 'match_no'=>$info['match_no']))->field('id')->find();
             if($match_info){
                 M('jingcai')->where(array('id'=>$match_info['id']))->save($info);
             }else{

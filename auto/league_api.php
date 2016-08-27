@@ -41,7 +41,7 @@ do{
             'update_time' => time(),
             'update_date' => date('Y-m-d H:i:s')
         ];
-        $team = M('league')->where(array('league_id'=>$info['league_id']))->find();
+        $team = M('league')->where(array('league_id'=>$info['league_id']))->field('id,league_id')->find();
         if($team){
             M('league')->where(array('league_id'=>$info['league_id']))->save($info);
         }else{

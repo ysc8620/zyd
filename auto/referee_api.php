@@ -35,7 +35,7 @@ do{
             'update_time' => time(),
             'update_date' => date('Y-m-d H:i:s')
         ];
-        $referee = M('referee')->where(array('referee_id'=>$info['referee_id']))->find();
+        $referee = M('referee')->where(array('referee_id'=>$info['referee_id']))->field('id')->find();
         if($referee){
             M('referee')->where(array('referee_id'=>$info['referee_id']))->save($info);
         }else{

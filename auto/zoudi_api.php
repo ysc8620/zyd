@@ -40,7 +40,7 @@ do{
             if($data['type'] == 1){
                 $data['rate_2'] = -$data['rate_2'];
             }
-            $has = M('zoudi')->where(array('zoudi_id'=>$data['zoudi_id']))->find();
+            $has = M('zoudi')->where(array('zoudi_id'=>$data['zoudi_id']))->field('id')->find();
             if(!$has){
                 M('zoudi')->add($data);
             }

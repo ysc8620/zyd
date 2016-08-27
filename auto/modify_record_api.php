@@ -32,7 +32,7 @@ do{
         }elseif($match['type'] == 'delete'){
             $info['state'] = -10;
         }
-        $team = M('match')->where(array('match_id'=>$info['match_id']))->find();
+        $team = M('match')->where(array('match_id'=>$info['match_id']))->field('id,match_id')->find();
         if($team){
             M('match')->where(array('match_id'=>$info['match_id']))->save($info);
         }

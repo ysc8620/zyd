@@ -44,7 +44,7 @@ do{
             'update_time' => time(),
             'update_date' => date('Y-m-d H:i:s')
         ];
-        $player = M('player')->where(array('player_id'=>$info['player_id']))->find();
+        $player = M('player')->where(array('player_id'=>$info['player_id']))->field('id')->find();
         if($player){
             M('player')->where(array('player_id'=>$info['player_id']))->save($info);
         }else{
