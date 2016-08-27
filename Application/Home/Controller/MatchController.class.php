@@ -45,7 +45,7 @@ class MatchController extends BaseApiController {
                 $total = M('match')->where($where)->count();
                 $list = M('match')->field
                 ('match_id,time as match_time,league_id,league_name,kind,level,state,home_id,home_name,home_score,away_id,
-                away_name,away_score,home_red,away_red,home_yellow,away_yellow,match_round,address,weather_ico,weather,temperature,is_neutral,technic,total_collect,total_tuijian'
+                away_name,away_score,home_red,away_red,home_yellow,away_yellow,match_round,technic,total_collect,total_tuijian'
                 )->where($where)->order("time ASC")->select();
 
             }elseif($type == 2){
@@ -59,7 +59,7 @@ class MatchController extends BaseApiController {
                 $Page = new Page($total, $limit);
                 $list = M('match')->field
                 ('match_id,time as match_time,league_id,league_name,kind,level,state,home_id,home_name,home_score,away_id,
-                away_name,away_score,home_red,away_red,home_yellow,away_yellow,match_round,address,weather_ico,weather,temperature,is_neutral,technic,total_collect,total_tuijian'
+                away_name,away_score,home_red,away_red,home_yellow,away_yellow,match_round,technic,total_collect,total_tuijian'
                 )->where($where2)->order("time DESC")->limit($Page->firstRow . ',' . $Page->listRows)->select();
             }elseif($type == 3){
 
@@ -73,7 +73,7 @@ class MatchController extends BaseApiController {
                 $Page = new Page($total, $limit);
                 $list = M('match')->field
                 ('match_id,time as match_time,league_id,league_name,kind,level,state,home_id,home_name,home_score,away_id,
-                away_name,away_score,home_red,away_red,home_yellow,away_yellow,match_round,address,weather_ico,weather,temperature,is_neutral,technic,total_collect,total_tuijian'
+                away_name,away_score,home_red,away_red,home_yellow,away_yellow,match_round,technic,total_collect,total_tuijian'
                 )->where($where2)->order("time ASC")->limit($Page->firstRow . ',' . $Page->listRows)->select();
                 #$json['sql'] = M()->getLastSql();
 
@@ -90,7 +90,7 @@ class MatchController extends BaseApiController {
                 $Page = new Page($total, $limit);
                 $list =  M()->table(C('DB_PREFIX').'match as m, '.C('DB_PREFIX').'match_follow as mf')->where("mf.user_id=$user_id AND m.match_id = mf.match_id ".$where2)->field
                 ('m.match_id,m.time as match_time,m.league_id,m.league_name,m.kind,m.level,m.state,m.home_id,m.home_name,m.home_score,m.away_id,
-                m.away_name,m.away_score,m.home_red,m.away_red,m.home_yellow,m.away_yellow,m.match_round,m.address,m.weather_ico,m.weather,m.temperature,m.is_neutral,m.technic,m.total_collect,total_tuijian'
+                m.away_name,m.away_score,m.home_red,m.away_red,m.home_yellow,m.away_yellow,m.match_round,m.technic,m.total_collect,total_tuijian'
                 )->order("m.time DESC")->limit($Page->firstRow . ',' . $Page->listRows)->select();
             }
 
@@ -155,7 +155,7 @@ class MatchController extends BaseApiController {
                 $list[$i]['jingcai']['draw_win_rate'] = $jingcai['draw_win_rate'];
 
                 // 直播事件
-                $event_list = M('event')->where(array('match_id'=>$match['match_id'], 'event_type'=>1))->order("time DESC")->select();
+                $event_list = M('event')->where(array('match_id'=>$match['match_id'], 'event_type'=>1))->field('id, match_id, is_home_away, event_type, time')->order("time DESC")->select();
                 $list[$i]['events'] = (array)$event_list;
                 $jingcai_info = M('jingcai')->where(array('match_id'=>$match['match_id']))->find();
                 $match_name = "";
@@ -168,7 +168,7 @@ class MatchController extends BaseApiController {
                 if($match['state'] == '0'){
                     $list[$i]['match_time2'] = '未开';
                 }elseif(in_array($match['state'],[1,2,3,4])){
-                    $zoudi = M('zoudi')->where(array('match_id'=>$match['match_id']))->order("zoudi_id DESC")->find();
+                    $zoudi = M('zoudi')->where(array('match_id'=>$match['match_id']))->field('id,time')->order("zoudi_id DESC")->find();
                     if(!$zoudi){
                         unset($list[$i]);
                         continue;
@@ -204,7 +204,7 @@ class MatchController extends BaseApiController {
                 //
                 $list[$i]['is_collect'] = 0;
                 if($user_id){
-                    $collect = M('match_follow')->where(array('user_id'=>$user_id, 'match_id'=>$match['match_id']))->find();
+                    $collect = M('match_follow')->where(array('user_id'=>$user_id, 'match_id'=>$match['match_id']))->field('id')->find();
                     if($collect){
                         $list[$i]['is_collect'] = 1;
                     }
@@ -238,7 +238,7 @@ class MatchController extends BaseApiController {
             // if($page)
             if($type == 1){
                 $league_list = M()->table(C('DB_PREFIX').'league as l, '.C('DB_PREFIX').'match as m')->where("l.league_id = m.league_id AND m.state in(1,2,3,4)")
-                    ->field('l.league_id,l.color,l.cn_short,l.cn_name,l.type,l.sum_round,l.curr_round,l.curr_match_season,l.country_name,l.is_hot,count(*) as total_match')
+                    ->field('l.league_id,l.cn_short,l.cn_name,l.type,l.is_hot,count(*) as total_match')
                     ->group('m.league_id')
                     ->order("is_hot DESC, weight DESC")->select();
             }elseif($type == 2){
@@ -284,7 +284,7 @@ class MatchController extends BaseApiController {
 
             $match = M('match')->field
             ('match_id,time as match_time,league_id,league_name,kind,level,state,home_id,home_name,home_score,away_id,
-                away_name,away_score,home_red,away_red,home_yellow,away_yellow,match_round,address,weather_ico,weather,temperature,is_neutral,technic,total_collect,total_tuijian'
+                away_name,away_score,home_red,away_red,home_yellow,away_yellow,match_round,technic,total_collect,total_tuijian'
             )
                 ->where(array('match_id'=>$match_id))->find();
 
@@ -310,7 +310,6 @@ class MatchController extends BaseApiController {
             $match['yapei']['change_rate'] = $yapei['change_rate'];
             $match['yapei']['change_home_rate'] = $yapei['change_home_rate'];
             $match['yapei']['change_away_rate'] = $yapei['change_away_rate'];
-
 
             $match['begin_rate'] = $yapei['begin_rate'];
             $match['begin_home_rate'] = $yapei['begin_home_rate'];
@@ -360,7 +359,7 @@ class MatchController extends BaseApiController {
             $match['live_daxiaoqiu_half'] = $peilv['daxiaoqiu'];
 
             // 直播事件
-            $event_list = M('event')->where(array('match_id'=>$match['match_id']))->order("time ASC")->select();
+            $event_list = M('event')->where(array('match_id'=>$match['match_id']))->field('id, match_id, is_home_away, event_type, time')->order("time ASC")->select();
             foreach($event_list as $i=>$item){
                 if(!in_array($item['event_type'],[1,2,3,7,8])){
                     unset($event_list[$i]);
@@ -383,7 +382,7 @@ class MatchController extends BaseApiController {
                 $match['match_time2'] = '未开';
             }elseif(in_array($match['state'],[1,2,3,4])){
 //                $match['match_time2'] = floor(time() - strtotime($match['match_time'])/60);
-                $zoudi = M('zoudi')->where(array('match_id'=>$match['match_id']))->order("zoudi_id DESC")->find();
+                $zoudi = M('zoudi')->where(array('match_id'=>$match['match_id']))->field('id,time')->order("zoudi_id DESC")->find();
                 $zoudi['time'] = str_replace('分','',$zoudi['time']);
 
                 $match['match_time2'] = is_numeric($zoudi['time'])?$zoudi['time']."'":$zoudi['time'];
@@ -407,7 +406,7 @@ class MatchController extends BaseApiController {
 
             $match['is_collect'] = 0;
             if($user_id){
-                $collect = M('match_follow')->where(array('user_id'=>$user_id, 'match_id'=>$match['match_id']))->find();
+                $collect = M('match_follow')->where(array('user_id'=>$user_id, 'match_id'=>$match['match_id']))->field('id')->find();
                 if($collect){
                     $match['is_collect'] = 1;
                 }
@@ -504,7 +503,7 @@ class MatchController extends BaseApiController {
                 $json['msg'] = '请输入关注赛事';
                 break;
             }
-            $follow = M('match_follow')->where(array('user_id'=>$user_id, 'match_id'=>$match_id))->find();
+            $follow = M('match_follow')->where(array('user_id'=>$user_id, 'match_id'=>$match_id))->field('id')->find();
             if($follow){
                 $json['msg'] = '赛事关注成功';
                 $json['data']['id'] = $follow['id'];
@@ -552,7 +551,7 @@ class MatchController extends BaseApiController {
                 $json['msg'] = '请输入关注赛事';
                 break;
             }
-            $follow = M('match_follow')->where(array('user_id'=>$user_id, 'match_id'=>$match_id))->find();
+            $follow = M('match_follow')->where(array('user_id'=>$user_id, 'match_id'=>$match_id))->field('id')->find();
             if($follow){
                 M('match_follow')->where(array('id'=>$follow['id']))->delete();
                 // 减少赛事收藏总数
@@ -584,7 +583,7 @@ class MatchController extends BaseApiController {
                 $json['msg'] = "请选择赛事";
                 break;
             }
-            $event_list = M('event')->where(array('match_id'=>$match_id))->order("time ASC")->select();
+            $event_list = M('event')->where(array('match_id'=>$match_id))->field('id, match_id, is_home_away, event_type, time')->order("time ASC")->select();
             $json['data']['list'] = (array)$event_list;
         }while(false);
         $this->ajaxReturn($json);
