@@ -89,7 +89,7 @@ class LiveController extends BaseApiController {
                 $list[$i]['jingcai']['draw_win_rate'] = $jingcai['draw_win_rate'];
 
                 // 直播事件
-                $event_list = M('event')->where(array('match_id'=>$match['match_id'], 'event_type'=>1))->field('id, match_id, is_home_away, event_type, time')->order("time DESC")->select();
+                $event_list = M('event')->where(array('match_id'=>$match['match_id'], 'event_type'=>1,'status'=>1))->field('id, match_id, is_home_away, event_type, time')->order("time DESC")->select();
                 $list[$i]['events'] = (array)$event_list;
                 $jingcai_info = M('jingcai')->where(array('match_id'=>$match['match_id']))->field('id,date,match_no')->find();
                 $match_name = "";
@@ -204,7 +204,7 @@ class LiveController extends BaseApiController {
                 }
             }
 
-            $event_list = M('event')->where(array('match_id'=>$item['match_id'], 'event_type'=>1))->field('id, match_id, is_home_away, event_type, time')->order("time DESC")->select();
+            $event_list = M('event')->where(array('match_id'=>$item['match_id'], 'event_type'=>1,'status'=>1))->field('id, match_id, is_home_away, event_type, time')->order("time DESC")->select();
             $list[$i]['events'] = (array)$event_list;
 
             $jingcai_info = M('jingcai')->where(array('match_id'=>$item['match_id']))->field('id,match_id,match_no')->find();
@@ -320,7 +320,7 @@ class LiveController extends BaseApiController {
             $tuijian['live_rangqiu_half'] = $peilv['rangqiu'];
             $tuijian['live_daxiaoqiu_half'] = $peilv['daxiaoqiu'];
 
-            $event_list = M('event')->where(array('match_id'=>$match_id))->field('id, match_id, is_home_away, event_type, time')->order("time ASC")->select();
+            $event_list = M('event')->where(array('match_id'=>$match_id,'status'=>1))->field('id, match_id, is_home_away, event_type, time')->order("time ASC")->select();
             foreach($event_list as $i=>$item){
                 if(!in_array($item['event_type'],[1,2,3,7,8])){
                     unset($event_list[$i]);

@@ -42,6 +42,7 @@ do{
                     ];
                     $event = M('event')->where(array('match_id'=>$info['match_id'], 'time'=>$info['time']))->find();
                     if($event){
+                        unset($info['update_date']);
                         M('event')->where(array('id'=>$event['id']))->save($info);
                     }else{
                         M('event')->add($info);
@@ -76,9 +77,9 @@ do{
         }
     }
 
-    M('event')->where(array('match_id'=>array('in',$match_ids), 'update_time'=>array('lt', $update_time)))->delete();
+    M('event')->where(array('match_id'=>array('in',$match_ids), 'update_time'=>array('lt', $update_time)))->save(['status'=>0]);
     // echo M()->getLastSql();
-    $list = M('event')->where(array('event_type'=>1 , 'is_send_tuisong'=>0))->field("id,is_home_away,event_type,match_id")->select();
+    $list = M('event')->where(array('event_type'=>1 , 'is_send_tuisong'=>0,'status'=>1))->field("id,is_home_away,event_type,match_id")->select();
     //
     foreach($list as $item){
         echo "send {$item['id']}-{$item['match_id']}";
