@@ -82,13 +82,9 @@ do{
     //
     foreach($list as $item){
         echo "send {$item['id']}-{$item['match_id']}";
-        $match = M('match')->where(array('match_id'=>$item['match_id']))->field('home_name,away_name,match_id,home_score,away_score')->find();
+        $match = M('match')->where(array('match_id'=>$item['match_id']))->field('id,league_id,league_name,home_name,away_name,match_id,home_score,away_score')->find();
         // 关注的用户发布推荐
-        $jingcai_info = M('jingcai')->where(array('match_id'=>$item['match_id']))->find();
-        $match_name = "";
-        if($jingcai_info){
-            $match_name = getWeekName($jingcai_info['date']).$jingcai_info['match_no']." - ";
-        }
+        $match_name = $match['league_name'];
 
         // 直接关注比赛
         $user_list = M()->table("t_match_follow as m, t_users as u")->where("m.match_id='{$match['match_id']}' AND u.id = m.user_id")->field('u.id, u.jiguang_id, u.jiguang_alias')->select();

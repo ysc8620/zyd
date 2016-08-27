@@ -11,7 +11,7 @@ namespace auto;
 require_once __DIR__ .'/config.php';
 echo date("Y-m-d H:i:s")."=match_api=\r\n";
 
-$match_list = M('match')->where(array('is_send_end'=>0,'state'=>"-1"))->field("id,match_id,time,home_name,away_name,home_score,away_score")->select();
+$match_list = M('match')->where(array('is_send_end'=>0,'state'=>"-1"))->field("id,match_id,league_id,league_name,time,home_name,away_name,home_score,away_score")->select();
 echo M()->getLastSql();
 foreach($match_list as $match){
     // 直接关注比赛
@@ -25,12 +25,7 @@ foreach($match_list as $match){
     }
 
     // 关注的用户发布推荐
-
-    $jingcai_info = M('jingcai')->where(array('match_id'=>$match['match_id']))->find();
-    $match_name = "";
-    if($jingcai_info){
-        $match_name = getWeekName($jingcai_info['date']).$jingcai_info['match_no']." ";
-    }
+    $match_name = "{$match['league_name']}";
 
     $match_title = "您关注的比赛（{$match_name}{$match['home_name']} VS {$match['away_name']}）已结束，比分是{$match['home_score']}：{$match['away_score']}";
     send_tuisong($jiguang_alias, $jiguang_id,'比赛结束',$match_title,0,$match['match_id']);
