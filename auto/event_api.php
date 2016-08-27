@@ -82,8 +82,29 @@ do{
     $list = M('event')->where(array('event_type'=>1 , 'is_send_tuisong'=>0))->field("id,is_home_away,event_type,match_id")->select();
     //
     foreach($list as $item){
-        echo "send {$item['id']}-{$item['match_id']}";
+        echo "send {$item['id']}-{$item['match_id']}\r\n";
         $match = M('match')->where(array('match_id'=>$item['match_id']))->field('id,league_id,league_name,home_name,away_name,match_id,home_score,away_score')->find();
+        // 判断比分变化情况
+        $event_log = M('event_tuisong')->where(array('match_id'=>$item['match_id']))->find();
+        if($event_log
+            && $event_log['home_score'] == $match['home_score']
+            && $event_log['away_score'] == $match['away_score']){
+            // 如果当前比分没有变化 则忽略推送
+            M('event')->where(array('id'=>$item['id']))->save(['is_send_tuisong'=>1]);
+            continue;
+        }
+        // 推送日志
+        $log = [
+            'match_id'=>$item['match_id'],
+            'home_score'=>$match['home_score'],
+            'away_score'=>$match['away_score']
+        ];
+        // 增加推送日志
+        if($event_log){
+            M('event_tuisong')->where(array('id'=>$event_log['id']))->save($log);
+        }else{
+            M('event_tuisong')->add($log);
+        }
         // 关注的用户发布推荐
         $match_name = $match['league_name'];
 
