@@ -84,6 +84,7 @@ do{
     foreach($list as $item){
         echo "send {$item['id']}-{$item['match_id']}\r\n";
         $match = M('match')->where(array('match_id'=>$item['match_id']))->field('id,league_id,league_name,home_name,away_name,match_id,home_score,away_score')->find();
+        if($match['home_score'] == '0' || $match['away_score'] == '0'){continue;}
         // 判断比分变化情况
         $event_log = M('event_tuisong')->where(array('match_id'=>$item['match_id']))->find();
         if($event_log
