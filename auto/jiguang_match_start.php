@@ -13,7 +13,7 @@ echo date("Y-m-d H:i:s")."=match_api=\r\n";
 
 $start_time = date("Y-m-d H:i", time()+200);//
 $end_time  = date("Y-m-d H:i", time()+400);//
-$match_list = M('match')->where(array('is_send_start'=>0,'state'=>0, 'time'=>array('between', array($start_time,$end_time))))->field("id,match_id,time")->select();
+$match_list = M('match')->where(array('is_send_start'=>0,'state'=>0, 'time'=>array('between', array($start_time,$end_time))))->field("id,match_id,time,home_name,away_name")->select();
 echo M()->getLastSql();
 foreach($match_list as $match){
     // 直接关注比赛

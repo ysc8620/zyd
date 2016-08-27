@@ -79,10 +79,10 @@ do{
 
     M('event')->where(array('match_id'=>array('in',$match_ids), 'update_time'=>array('lt', $update_time)))->delete();
     // echo M()->getLastSql();
-    $list = M('event')->where(array('event_type'=>1 , 'is_send_tuisong'=>0))->select();
+    $list = M('event')->where(array('event_type'=>1 , 'is_send_tuisong'=>0))->field("id,is_home_away,event_type,match_id")->select();
     //
     foreach($list as $item){
-        $match = M('match')->where(array('match_id'=>$item['match_id']))->field('home_name,away_name,match_id')->find();
+        $match = M('match')->where(array('match_id'=>$item['match_id']))->field('home_name,away_name,match_id,home_score,away_score')->find();
         // 关注的用户发布推荐
         $jingcai_info = M('jingcai')->where(array('match_id'=>$item['match_id']))->find();
         $match_name = "";
@@ -100,7 +100,6 @@ do{
             }
         }
 
-        $match_title = "您关注的比赛（{$match_name}{$match['home_name']} VS {$match['away_name']}）即将开始";
         $home_str = "";
         $away_str = "";
         if($item['is_home_away']){
@@ -108,7 +107,7 @@ do{
         }else{
             $away_str = "（进球）";
         }
-        $match_title = "{$match_name}{$match['home_name']}{$home_str} 比分 {$match['away_name']}{$away_str}";
+        $match_title = "{$match_name}{$match['home_name']}{$home_str} {$match['home_score']}-{$match['away_score']} {$match['away_name']}{$away_str}";
         send_tuisong($jiguang_alias, $jiguang_id,'比赛进球',$match_title,0,$match['match_id']);
 
         M('event')->where(array('id'=>$item['id']))->save(['is_send_tuisong'=>1]);

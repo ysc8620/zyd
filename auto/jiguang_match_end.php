@@ -11,7 +11,7 @@ namespace auto;
 require_once __DIR__ .'/config.php';
 echo date("Y-m-d H:i:s")."=match_api=\r\n";
 
-$match_list = M('match')->where(array('is_send_end'=>0,'state'=>"-1"))->field("id,match_id,time")->select();
+$match_list = M('match')->where(array('is_send_end'=>0,'state'=>"-1"))->field("id,match_id,time,home_name,away_name,home_score,away_score")->select();
 echo M()->getLastSql();
 foreach($match_list as $match){
     // 直接关注比赛
