@@ -54,8 +54,7 @@ do{
                 if($res[1][0]){
                     $info = explode('^', $res[1][0]);
                     $match_id = $info[0];
-//                    $match_info = $curr_match->findOne(array('match_id'=>$match_id));
-                    $match_info = M('match')->where(array('match_id'=>$match_id))->find();
+                    $match_info = M('match')->where(array('match_id'=>$match_id))->field("technic,id,match_id")->find();
                     if($match_info){
                         $technic = empty($match_info['technic'])?[]:json_decode($match_info['technic'],true);
                         $info = explode(';', trim($info[1]));
@@ -69,7 +68,7 @@ do{
                                 'away' => $list[2]
                             ];
                         }
-                        M('match')->where(array('match_id'=>$match_id))->save(array('technic' =>json_encode($technic)));
+                        M('match')->where(array('id'=>$match_info['id']))->save(array('technic' =>json_encode($technic)));
                     }
                 }
             }
@@ -82,6 +81,7 @@ do{
     $list = M('event')->where(array('event_type'=>1 , 'is_send_tuisong'=>0))->field("id,is_home_away,event_type,match_id")->select();
     //
     foreach($list as $item){
+        echo "send {$item['id']}-{$item['match_id']}";
         $match = M('match')->where(array('match_id'=>$item['match_id']))->field('home_name,away_name,match_id,home_score,away_score')->find();
         // 关注的用户发布推荐
         $jingcai_info = M('jingcai')->where(array('match_id'=>$item['match_id']))->find();
