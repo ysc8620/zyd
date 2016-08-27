@@ -33,7 +33,7 @@ foreach($match_list as $match){
         $match_name = getWeekName($jingcai_info['date']).$jingcai_info['match_no']." ";
     }
 
-    $match_title = "您关注的比赛（{$match_name}{$match['home_name']} VS {{$match['away_name']}}）即将开始";
+    $match_title = "您关注的比赛（{$match_name}{$match['home_name']} VS {$match['away_name']}）即将开始";
     send_tuisong($jiguang_alias, $jiguang_id,'比赛即将开始',$match_title,0,$match['match_id']);
 
     M('match')->where(array('id'=>$match['id']))->save(['is_send_start'=>1,'send_start_time'=>time()]);
