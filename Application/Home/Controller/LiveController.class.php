@@ -420,7 +420,7 @@ class LiveController extends BaseApiController {
 
             $rangqiu_state = 1;
             // 亚赔
-            if($rangqiu['change_home_rate'] == '0' && $rangqiu['change_rate'] == '0' && $rangqiu['change_away_rate'] == '0'){
+            if($rangqiu['change_home_rate'] == '0' || $rangqiu['change_away_rate'] == '0'){
                 $rangqiu_state = 0;
             }
             $tuijian['rangqiu'] = ["rate_1"=>$rangqiu['change_home_rate'], "rate_2"=>$rangqiu['change_rate'], "rate_3"=>$rangqiu['change_away_rate'],"status"=>$rangqiu_state];
@@ -429,7 +429,7 @@ class LiveController extends BaseApiController {
             // 亚赔半场
             $rangqiu_half = get_rate($match['match_id'],'rangqiu_half',$match['state']);
             $rangqiu_half_state = 1;
-            if($rangqiu_half['change_home_rate'] == '0' && $rangqiu_half['change_rate'] == '0' && $rangqiu_half['change_away_rate'] == '0'){
+            if($rangqiu_half['change_home_rate'] == '0' || $rangqiu_half['change_away_rate'] == '0'){
                 $rangqiu_half_state = 0;
             }
             if($match['state'] != '0' && $match['state'] != 1){
@@ -441,7 +441,7 @@ class LiveController extends BaseApiController {
             // 欧赔
             $oupei = get_rate($match['match_id'],'oupei',$match['state']);
             $oupe_state = 1;
-            if($oupei['change_home_rate'] == '0' && $oupei['change_draw_rate'] == '0' || $oupei['change_away_rate'] == '0'){
+            if($oupei['change_home_rate'] == '0' || $oupei['change_draw_rate'] == '0' || $oupei['change_away_rate'] == '0'){
                 $oupe_state = 0;
             }
             $tuijian['oupei'] = ["rate_1"=>$oupei['change_home_rate'], "rate_2"=>$oupei['change_draw_rate'], "rate_3"=>$oupei['change_away_rate'],"status"=>$oupe_state];
@@ -449,7 +449,7 @@ class LiveController extends BaseApiController {
             // 欧赔半场
             $oupei_half = get_rate($match['match_id'],'oupei_half',$match['state']);
             $oupei_half_state = 1;
-            if($oupei_half['change_home_rate'] == '0' && $oupei_half['change_draw_rate'] == '0' && $oupei_half['change_away_rate'] == '0'){
+            if($oupei_half['change_home_rate'] == '0' || $oupei_half['change_draw_rate'] == '0' || $oupei_half['change_away_rate'] == '0'){
                 $oupei_half_state = 0;
             }
             if($match['state'] != '0' && $match['state'] != 1){
@@ -460,7 +460,7 @@ class LiveController extends BaseApiController {
             // 大小球
             $daxiaoqiu = get_rate($match['match_id'],'daxiaoqiu',$match['state']);//`change_rate`, `change_big_rate`, `change_small_rate`
             $daxiaqiu_state = 1;
-            if($daxiaoqiu['change_big_rate'] == '0' && $daxiaoqiu['change_rate'] == '0' || $daxiaoqiu['change_small_rate'] == '0'){
+            if( $daxiaoqiu['change_rate'] == '0'){
                 $daxiaqiu_state = 0;
             }
             $tuijian['daxiaoqiu'] = ["rate_1"=>$daxiaoqiu['change_big_rate'], "rate_2"=>$daxiaoqiu['change_rate'], "rate_3"=>$daxiaoqiu['change_small_rate'],"status"=>$daxiaqiu_state];
@@ -468,7 +468,7 @@ class LiveController extends BaseApiController {
             // 大小球半场
             $daxiaoqiu_half = get_rate($match['match_id'],'daxiaoqiu_half',$match['state']);
             $daxiaoqiu_half_state = 1;
-            if($daxiaoqiu_half['change_big_rate'] == '0' && $daxiaoqiu_half['change_rate'] == '0' && $daxiaoqiu_half['change_small_rate'] == '0'){
+            if( $daxiaoqiu_half['change_rate'] == '0' ){
                 $daxiaoqiu_half_state = 0;
             }
             if($match['state'] != '0' && $match['state'] != 1){
