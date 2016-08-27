@@ -27,7 +27,7 @@ class TuijianController extends BaseApiController {
                 }
                 $where['match_id'] = $match_id;
                 if($sub_type){
-                    $where['type'] = $type;
+                    $where['type'] = $sub_type;
                 }
             }elseif($type == 2){
                 $this->check_login();
