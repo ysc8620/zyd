@@ -11,15 +11,6 @@ namespace auto;
 require_once __DIR__ .'/config.php';
 echo date("Y-m-d H:i:s")."=match_api=\r\n";
 
-require __DIR__ . '/../ThinkPHP/Library/Jpush/autoload.php';
-
-use JPush\Client as JPush;
-
-$app_key = "30b1dce198d525524980af61";
-$master_secret = "c1281a437204064c2190979f";
-$registration_id = "1a1018970aa0c6a908c";
-$client = new JPush($app_key, $master_secret);
-$start_time = date("Y-m-d H:i", time()+200);//
 $match_list = M('match')->where(array('is_send_end'=>0,'state'=>"-1"))->field("id,match_id,time")->select();
 echo M()->getLastSql();
 foreach($match_list as $match){
