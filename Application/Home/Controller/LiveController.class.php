@@ -89,16 +89,16 @@ class LiveController extends BaseApiController {
                 $list[$i]['jingcai']['draw_win_rate'] = $jingcai['draw_win_rate'];
 
                 // 直播事件
-                $event_list = M('event')->where(array('match_id'=>$match['match_id'], 'event_type'=>1))->order("time DESC")->select();
+                $event_list = M('event')->where(array('match_id'=>$match['match_id'], 'event_type'=>1))->field('id, match_id, is_home_away, event_type, time')->order("time DESC")->select();
                 $list[$i]['events'] = (array)$event_list;
-                $jingcai_info = M('jingcai')->where(array('match_id'=>$match['match_id']))->find();
+                $jingcai_info = M('jingcai')->where(array('match_id'=>$match['match_id']))->field('id,date,match_no')->find();
                 $match_name = "";
                 if($jingcai_info){
                     $match_name = getWeekName($jingcai_info['date']).$jingcai_info['match_no'];
                 }
                 $list[$i]['match_name'] = $match_name;
 
-                $zoudi = M('zoudi')->where(array('match_id'=>$match['match_id']))->order("zoudi_id DESC")->find();
+                $zoudi = M('zoudi')->where(array('match_id'=>$match['match_id']))->field('id,time')->order("zoudi_id DESC")->find();
                 if(!$zoudi){
                     unset($list[$i]);
                     continue;
@@ -115,7 +115,7 @@ class LiveController extends BaseApiController {
                 //
                 $list[$i]['is_collect'] = 0;
                 if($user_id){
-                    $collect = M('match_follow')->where(array('user_id'=>$user_id, 'match_id'=>$match['match_id']))->find();
+                    $collect = M('match_follow')->where(array('user_id'=>$user_id, 'match_id'=>$match['match_id']))->field('id')->find();
                     if($collect){
                         $list[$i]['is_collect'] = 1;
                     }
@@ -167,7 +167,7 @@ class LiveController extends BaseApiController {
 
         foreach($list as $i=>$item){
             //
-            $zoudi = M('zoudi')->where(array('match_id'=>$item['match_id']))->order("zoudi_id DESC")->find();
+            $zoudi = M('zoudi')->where(array('match_id'=>$item['match_id']))->field('id,time')->order("zoudi_id DESC")->find();
             if(!$zoudi){
                 unset($list[$i]);
                 continue;
@@ -198,16 +198,16 @@ class LiveController extends BaseApiController {
             //
             $list[$i]['is_collect'] = 0;
             if($user_id){
-                $collect = M('match_follow')->where(array('user_id'=>$user_id, 'match_id'=>$item['match_id']))->find();
+                $collect = M('match_follow')->where(array('user_id'=>$user_id, 'match_id'=>$item['match_id']))->field('id')->find();
                 if($collect){
                     $list[$i]['is_collect'] = 1;
                 }
             }
 
-            $event_list = M('event')->where(array('match_id'=>$item['match_id'], 'event_type'=>1))->order("time DESC")->select();
+            $event_list = M('event')->where(array('match_id'=>$item['match_id'], 'event_type'=>1))->field('id, match_id, is_home_away, event_type, time')->order("time DESC")->select();
             $list[$i]['events'] = (array)$event_list;
 
-            $jingcai_info = M('jingcai')->where(array('match_id'=>$item['match_id']))->find();
+            $jingcai_info = M('jingcai')->where(array('match_id'=>$item['match_id']))->field('id,match_id,match_no')->find();
             $match_name = "";
             if($jingcai_info){
                 $match_name = getWeekName($jingcai_info['date']).$jingcai_info['match_no'];
@@ -232,7 +232,8 @@ class LiveController extends BaseApiController {
             }
             // 验证登陆
            // $this->check_login();
-            $match = M('match')->where(array('match_id'=>$match_id))->find();
+            $match = M('match')->where(array('match_id'=>$match_id))->field('id,match_id,league_id,league_name,home_name,away_name,time,home_score,away_score,
+            total_collect,total_tuijian,state,technic')->find();
             $tuijian['match_id'] = $match_id;
             $tuijian['league_id'] = $match['league_id'];
             $tuijian['league_name'] = $match['league_name'];
@@ -262,7 +263,7 @@ class LiveController extends BaseApiController {
                 $tuijian['match_time2'] = '未开';
             }elseif(in_array($match['state'],[1,2,3,4])){
 //                $match['match_time2'] = floor(time() - strtotime($match['match_time'])/60);
-                $zoudi = M('zoudi')->where(array('match_id'=>$match['match_id']))->order("zoudi_id DESC")->find();
+                $zoudi = M('zoudi')->where(array('match_id'=>$match['match_id']))->field('id,time')->order("zoudi_id DESC")->find();
                 $zoudi['time'] = str_replace('分','',$zoudi['time']);
                 $tuijian['match_time2'] = is_numeric($zoudi['time'])?$zoudi['time']."'":$zoudi['time'];
             }elseif($match['state'] == -1){
@@ -319,7 +320,7 @@ class LiveController extends BaseApiController {
             $tuijian['live_rangqiu_half'] = $peilv['rangqiu'];
             $tuijian['live_daxiaoqiu_half'] = $peilv['daxiaoqiu'];
 
-            $event_list = M('event')->where(array('match_id'=>$match_id))->order("time ASC")->select();
+            $event_list = M('event')->where(array('match_id'=>$match_id))->field('id, match_id, is_home_away, event_type, time')->order("time ASC")->select();
             foreach($event_list as $i=>$item){
                 if(!in_array($item['event_type'],[1,2,3,7,8])){
                     unset($event_list[$i]);
@@ -350,7 +351,8 @@ class LiveController extends BaseApiController {
             }
             // 验证登陆
             $this->check_login();
-            $match = M('match')->where(array('match_id'=>$match_id))->find();
+            $match = M('match')->where(array('match_id'=>$match_id))->field('id,match_id,league_id,league_name,home_name,away_name,time,home_score,
+            away_score,total_collect,total_tuijian,state')->find();
             $tuijian['match_id'] = $match_id;
             $tuijian['league_id'] = $match['league_id'];
             $tuijian['league_name'] = $match['league_name'];
@@ -376,7 +378,7 @@ class LiveController extends BaseApiController {
 //            }
 
             // 走地封盘
-            $zoudi = M('zoudi')->where(array('match_id'=>$match['match_id']))->order("zoudi_id DESC")->find();
+            $zoudi = M('zoudi')->where(array('match_id'=>$match['match_id']))->field('id,type')->order("zoudi_id DESC")->find();
             if($zoudi['type']  == 3){
                 $tuijian['status'] = 0;
             }
@@ -391,7 +393,7 @@ class LiveController extends BaseApiController {
             $tuijian['change_away_rate'] = $rangqiu['change_away_rate'];
 
             // 是否有竞彩数据， 有就开竞彩
-            $jingcai_info = M('jingcai')->where(array('match_id'=>$match_id))->find();
+            $jingcai_info = M('jingcai')->where(array('match_id'=>$match_id))->field('id')->find();
             $jingcai_state = 1;
 
             // 只有对应的竞彩才能发布

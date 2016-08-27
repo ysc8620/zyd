@@ -55,11 +55,10 @@ class TuijianController extends BaseApiController {
             }
             $total = M('tuijian')->where($where)->count();
             $Page = new Page($total, $limit);
-            $list = M('tuijian')->where($where)->limit($Page->firstRow, $Page->listRows)->order("id DESC")->
-                field('*')->select();
+            $list = M('tuijian')->where($where)->limit($Page->firstRow, $Page->listRows)->order("id DESC")->select();
             // 赛事
             foreach($list as $i=>$item){
-                $match = M('match')->where(array('match_id'=>$item['match_id']))->find();
+                $match = M('match')->where(array('match_id'=>$item['match_id']))->field('id,match_id,league_id,league_name,home_name,away_name,time,state')->find();
                 $item['league_id'] = $match['league_id'];
                 $item['league_name'] = $match['league_name'];
                 $item['home_name'] = $match['home_name'];
@@ -67,7 +66,7 @@ class TuijianController extends BaseApiController {
                 $item['match_time'] = $match['time'];
                 $item['match_state'] = $match['state'];
                 #
-                $user = M('users')->where(array('id'=>$item['user_id']))->find();
+                $user = M('users')->where(array('id'=>$item['user_id']))->field('id,nickname,pic,total_follow_user,total_rate')->find();
                 $item['user_name'] = getNickName($user['nickname']);
                 $item['user_pic'] = pic_url($user['pic']);
                 $item['user_follow'] = $user['total_follow_user'];
@@ -78,7 +77,7 @@ class TuijianController extends BaseApiController {
 
                     if(!empty($this->user)){
                         if($this->user['id'] != $item['user_id']){
-                            $buy = M('tuijian_order')->where(array('tuijian_id'=>$item['id'],'user_id'=>$this->user['id']))->find();
+                            $buy = M('tuijian_order')->where(array('tuijian_id'=>$item['id'],'user_id'=>$this->user['id']))->field('id')->find();
                             if($buy){
                                 $is_buy = 1;
                             }
@@ -162,7 +161,7 @@ class TuijianController extends BaseApiController {
             field('*')->select();
             // 赛事
             foreach($list as $i=>$item){
-                $match = M('match')->where(array('match_id'=>$item['match_id']))->find();
+                $match = M('match')->where(array('match_id'=>$item['match_id']))->field('id,match_id,league_id,league_name,home_name,away_name,time,state')->find();
                 $item['league_id'] = $match['league_id'];
                 $item['league_name'] = $match['league_name'];
                 $item['home_name'] = $match['home_name'];
@@ -171,7 +170,7 @@ class TuijianController extends BaseApiController {
                 $item['match_state'] = $match['state'];
                 $item['match_id'] = $match['match_id'];
                 #
-                $user = M('users')->where(array('id'=>$item['user_id']))->find();
+                $user = M('users')->where(array('id'=>$item['user_id']))->field('id,nickname,pic,total_follow_user,total_rate')->find();
                 $item['user_name'] = getNickName($user['nickname']);
                 $item['user_pic'] = pic_url($user['pic']);
                 $item['user_follow'] = $user['total_follow_user'];
@@ -181,7 +180,7 @@ class TuijianController extends BaseApiController {
                 if($item['is_fee']){
                     if(!empty($this->user)){
                         if($this->user['id'] != $item['user_id']){
-                            $buy = M('tuijian_order')->where(array('tuijian_id'=>$item['id'],'user_id'=>$this->user['id']))->find();
+                            $buy = M('tuijian_order')->where(array('tuijian_id'=>$item['id'],'user_id'=>$this->user['id']))->field('id')->find();
                             if($buy){
                                 $is_buy = 1;
                             }
@@ -290,7 +289,7 @@ class TuijianController extends BaseApiController {
                 break;
             }
 
-            $match = M('match')->where(array('match_id'=>$data['match_id']))->find();
+            $match = M('match')->where(array('match_id'=>$data['match_id']))->field('id,match_id,state')->find();
             $json['match'] = $match;
             if( ! $match ){
                 $json['status'] = 111;
@@ -345,7 +344,7 @@ class TuijianController extends BaseApiController {
                 M('users')->where(array('id'=>$data['user_id']))->save(array('total_month_tuijian'=>$total_month_tuijian));
 
                 // 用户关注该比赛 `user_id`, `match_id`
-                $follow = M('match_follow')->where(array('user_id'=>$user_id, 'match_id'=>$data['match_id']))->find();
+                $follow = M('match_follow')->where(array('user_id'=>$user_id, 'match_id'=>$data['match_id']))->field('id')->find();
                 if(!$follow){
                     $folow_data = [
                         'user_id' =>$user_id,
@@ -522,7 +521,8 @@ class TuijianController extends BaseApiController {
             $tuijian = M('tuijian')->where(array('id'=>$tuijian_id, 'status'=>1))->find();
             if($tuijian){
 
-                $match = M('match')->where(array('match_id'=>$tuijian['match_id']))->find();
+                $match = M('match')->where(array('match_id'=>$tuijian['match_id']))->field('id,match_id,league_id,
+                league_name,home_name,away_name,time,state,home_score,away_score,home_half_score,away_half_score')->find();
                 $tuijian['league_id'] = $match['league_id'];
                 $tuijian['league_name'] = $match['league_name'];
                 $tuijian['home_name'] = $match['home_name'];
@@ -535,7 +535,7 @@ class TuijianController extends BaseApiController {
                 $tuijian['home_half_score'] = $match['home_half_score'];
                 $tuijian['away_half_score'] = $match['away_half_score'];
                 #
-                $user = M('users')->where(array('id'=>$tuijian['user_id']))->find();
+                $user = M('users')->where(array('id'=>$tuijian['user_id']))->field('id,nickname,pic,total_follow_user,total_rate')->find();
                 $tuijian['user_name'] = getNickName($user['nickname']);
                 $tuijian['user_pic'] = pic_url($user['pic']);
                 $tuijian['user_follow'] = $user['total_follow_user'];
@@ -546,7 +546,7 @@ class TuijianController extends BaseApiController {
                 if($tuijian['is_fee']){
                     if(!empty($this->user)){
                         if($this->user['id'] != $tuijian['user_id']){
-                            $buy = M('tuijian_order')->where(array('tuijian_id'=>$tuijian['id'],'user_id'=>$this->user['id']))->find();
+                            $buy = M('tuijian_order')->where(array('tuijian_id'=>$tuijian['id'],'user_id'=>$this->user['id']))->field('id')->find();
                             if($buy){
                                 $is_buy = 1;
                             }
@@ -587,7 +587,7 @@ class TuijianController extends BaseApiController {
             $Page = new Page($total, $limit);
             $list = M('tuijian_order')->where(array('tuijian_id'=>$tuijian_id))->limit($Page->firstRow, $Page->listRows)->order("create_time DESC")->select();
             foreach($list as $i=>$item){
-                $user = M('users')->where(array('id'=>$item['user_id']))->find();
+                $user = M('users')->where(array('id'=>$item['user_id']))->field('id,nickname,pic')->find();
                 $item['nickname'] = getNickName($user['nickname']);
                 $item['pic'] = pic_url($user['pic']);
                 $list[$i] = $item;
