@@ -59,7 +59,8 @@ function sign($data,$appsecret)
 echo "=\r\n";
 $data = [
     'type'=>'1',
-    'user_id' => '10000',
+    'sub_type'=>'2',
+    //'user_id' => '10000',
     'match_id' =>1304441 //1304513
 ];
 
