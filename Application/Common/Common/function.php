@@ -5,7 +5,7 @@
  * Date: 2016/6/6
  * Time: 11:20
  */
-require __DIR__ . '/../../../ThinkPHP/Library/Jpush/autoload.php';
+require APP_PATH . '/../ThinkPHP/Library/Jpush/autoload.php';
 
 use JPush\Client as JPush;
 
