@@ -77,9 +77,9 @@ do{
         }
     }
 
-    M('event')->where(array('match_id'=>array('in',$match_ids), 'update_time'=>array('lt', $update_time)))->save(['status'=>0]);
+    M('event')->where(array('match_id'=>array('in',$match_ids), 'update_time'=>array('lt', $update_time)))->delete();
     // echo M()->getLastSql();
-    $list = M('event')->where(array('event_type'=>1 , 'is_send_tuisong'=>0,'status'=>1))->field("id,is_home_away,event_type,match_id")->select();
+    $list = M('event')->where(array('event_type'=>1 , 'is_send_tuisong'=>0))->field("id,is_home_away,event_type,match_id")->select();
     //
     foreach($list as $item){
         echo "send {$item['id']}-{$item['match_id']}";

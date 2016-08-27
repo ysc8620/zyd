@@ -583,7 +583,7 @@ class MatchController extends BaseApiController {
                 $json['msg'] = "请选择赛事";
                 break;
             }
-            $event_list = M('event')->where(array('match_id'=>$match_id,'status'=>1))->field('id, match_id, is_home_away, event_type, time')->order("time ASC")->select();
+            $event_list = M('event')->where(array('match_id'=>$match_id))->field('id, match_id, is_home_away, event_type, time')->order("time ASC")->select();
             $json['data']['list'] = (array)$event_list;
         }while(false);
         $this->ajaxReturn($json);
