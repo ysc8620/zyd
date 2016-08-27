@@ -20,7 +20,7 @@ use JPush\Client as JPush;
  */
 function send_tuisong($jiguang_alias,$jiguang_id,$title,$remark,$type,$from_id){
     $data = date("Y-m-d H:i:s=")."type={$type}&from_id={$from_id}&jiguang_id=".
-        join(',',$jiguang_id)."&alias=".join(',',$jiguang_alias."&title={$title}&remark={$remark}\r\n");
+        join(',',$jiguang_id)."&alias=".join(',',$jiguang_alias)."&title={$title}&remark={$remark}\r\n");
     \Org\Util\File::write_file(APP_PATH."/logs/jiguang.log",$data,"a+");
     $app_key = "30b1dce198d525524980af61";
     $master_secret = "c1281a437204064c2190979f";
