@@ -18,7 +18,7 @@ class TuijianController extends BaseApiController {
             $p = I('request.p',1,'intval');
 
             $where = [];
-            #$where['status'] = 1;
+            $where['tuijian_status'] = 1;
             if($type == 1){
                 if(empty($match_id)){
                     $json['status'] = 110;
@@ -120,7 +120,7 @@ class TuijianController extends BaseApiController {
             $p = I('request.p',1,'intval');
 
             $where = [];
-            $where['status'] = 1;
+            $where['tuijian_status'] = 1;
             if($type == 1){
                 if(empty($match_id)){
                     $json['status'] = 110;
@@ -518,7 +518,7 @@ class TuijianController extends BaseApiController {
                 $json['msg'] = '请选择查看竞猜';
                 break;
             }
-            $tuijian = M('tuijian')->where(array('id'=>$tuijian_id, 'status'=>1))->find();
+            $tuijian = M('tuijian')->where(array('id'=>$tuijian_id, 'tuijian_status'=>1))->find();
             if($tuijian){
 
                 $match = M('match')->where(array('match_id'=>$tuijian['match_id']))->field('id,match_id,league_id,
