@@ -48,7 +48,7 @@
                                     <th>是否竞猜</th>
                                     <th>是否收费</th>
                                     <th>收费球币</th>
-                                    <th>状态</th>
+                                    <th>竞彩结果</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>
@@ -67,7 +67,9 @@
                                         <td><if condition="$item.is_top eq 1"><font color="red">竞猜</font><else/>普通</if></td>
                                         <td><if condition="$item.is_fee eq 1"><font color="red">收费</font><else/>免费</if></td>
                                         <td>{$item.fee}</td>
-                                        <td><if condition="$item[status] eq 1">正常<else/>隐藏</if></td>
+                                        <td><if condition="$item[status] eq '0'">等待结果<elseif condition="$item[status] eq 1" />赢<elseif condition="$item[status] eq 2" />输
+                                            <elseif condition="$item[status] eq 3" />赢半<elseif condition="$item[status] eq 4" />输半<elseif condition="$item[status] eq 5" />走
+                                            <else/>取消</if></td>
                                         <td class="center">
                                             <a href="{:U('tuijian/edit', ['id' => $item['id']])}"><i class="fa fa-check text-navy"></i>编辑</a>
                                         </td>
