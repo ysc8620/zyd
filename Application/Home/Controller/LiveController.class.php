@@ -376,11 +376,14 @@ class LiveController extends BaseApiController {
 //            if($event['create_time'] > time()-60){
 //                $tuijian['status'] = 0;
 //            }
-
+            $tuijian['tuijian_match_time'] = '';
             // 走地封盘
-            $zoudi = M('zoudi')->where(array('match_id'=>$match['match_id']))->field('id,type')->order("zoudi_id DESC")->find();
+            $zoudi = M('zoudi')->where(array('match_id'=>$match['match_id']))->field('id,type,time')->order("zoudi_id DESC")->find();
             if($zoudi['type']  == 3){
                 $tuijian['status'] = 0;
+            }
+            if($zoudi){
+                $tuijian['tuijian_match_time'] = $zoudi['time'];
             }
 
             // 标准

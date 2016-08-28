@@ -30,8 +30,8 @@ $push_payload = $client->push()
         'title' => 'hello jpush',
         'build_id' => 2,
         'extras' => array(
-            'type' => '1',
-            'from_id'=>'10016'
+            'type' => '0',
+            'from_id'=>'1306224'
         ),
     ))
 ;
