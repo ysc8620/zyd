@@ -363,8 +363,8 @@ class TuijianController extends BaseApiController {
                 链接：链接到专家个人主页
                 */
                 $title = "发布竞彩";
-                $stae = $match['state'] == '0'?'初盘':"滚球";
-                $remark = "您关注的{$user_name}发布了新的{$stae}竞猜";
+                $state = $match['state'] == '0'?'初盘':"滚球";
+                $remark = "您关注的{$user_name}发布了新的{$state}竞猜";
                 $user_list = $user_list = M()->table("t_users_follow as f, t_users as u")->where("f.to_user_id='{$user_id}' AND u.id = f.from_user_id")->field('u.id, u.jiguang_id, u.jiguang_alias')->select();
 
                 $jiguang_alias = [];

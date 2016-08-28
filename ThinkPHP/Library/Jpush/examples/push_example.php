@@ -1,7 +1,4 @@
 <?php
-
-
-
 require 'conf.php';
 
 // 简单推送示例
@@ -14,30 +11,31 @@ type=2 推送竞猜信息 from_id=竞猜id
 */
 
 $push_payload = $client->push()
-    ->setPlatform('all')
+    ->setPlatform('android')
    //->addRegistrationId('141fe1da9ead0b3ce9a')
    //    ->addTag("NBA")
    ->addAllAudience()
     ->setNotificationAlert('hello zhuanjia')
-    ->iosNotification('Hello test zhuanjia', array(
-        'sound' => 'default',
-        'badge' => 1,
-        #'content-available' => true,
-       # 'category' => 'jiguang',
-        'extras' => array(
-            'type' => '1',
-            'from_id'=>'10017'
-        ),
-    ))
-//    ->androidNotification('Hello Android', array(
-//        'title' => 'hello jpush',
-//        'build_id' => 2,
+//    ->iosNotification('Hello test zhuanjia', array(
+//        'sound' => 'default',
+//        'badge' => 1,
+//        #'content-available' => true,
+//       # 'category' => 'jiguang',
 //        'extras' => array(
-//            'type' => '0',
-//            'from_id'=>'1300494'
+//            'type' => '1',
+//            'from_id'=>'10017'
 //        ),
 //    ))
+    ->androidNotification('Hello Android', array(
+        'title' => 'hello jpush',
+        'build_id' => 2,
+        'extras' => array(
+            'type' => '0',
+            'from_id'=>'1300494'
+        ),
+    ))
 ;
+
 try {
     $response = $push_payload->send();
 }catch (\JPush\Exceptions\APIConnectionException $e) {

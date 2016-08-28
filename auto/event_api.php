@@ -126,7 +126,7 @@ do{
         }else{
             $away_str = "（进球）";
         }
-        $match_title = "{$match_name}{$match['home_name']}{$home_str} {$match['home_score']}-{$match['away_score']} {$match['away_name']}{$away_str}";
+        $match_title = "{$match_name} {$match['home_name']}{$home_str} {$match['home_score']}-{$match['away_score']} {$match['away_name']}{$away_str}";
         send_tuisong($jiguang_alias, $jiguang_id,'比赛进球',$match_title,0,$match['match_id']);
 
         M('event')->where(array('id'=>$item['id']))->save(['is_send_tuisong'=>1]);

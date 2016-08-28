@@ -12,7 +12,7 @@ require_once __DIR__ .'/config.php';
 echo date("Y-m-d H:i:s")."=match_api=\r\n";
 // 0 等待结果， 1 赢， 2输，3赢半,4输半,5走
 // 计算半场竞猜输赢
-$match_list = M("match")->where(array('state'=>array('in',[2,3]), 'is_half_count'=>0))->field('id,match_id,home_score,away_score,home_half_score,away_half_score')->select();
+$match_list = M("match")->where(array('state'=>array('in',[2,3,-1]), 'is_half_count'=>0))->field('id,match_id,home_score,away_score,home_half_score,away_half_score')->select();
 foreach($match_list as $match){
     // 获取所有竞猜信息
     $tuijian_list = M('tuijian')->where(array('match_id'=>$match['match_id'],  'is_win'=>0))->select();
@@ -132,6 +132,7 @@ foreach($match_list as $match){
             }
         }
     }
+    M('match')->where(['id'=>$match['id']])->save(['is_half_count'=>1, 'half_count_time'=>time()]);
 }
 
 // 计算全场竞猜输赢
@@ -307,5 +308,6 @@ foreach($match_list as $match){
             }
         }
     }
+    M('match')->where(['id'=>$match['id']])->save(['is_full_count'=>1, 'full_count_time'=>time()]);
 }
 // 通过竞猜计算
