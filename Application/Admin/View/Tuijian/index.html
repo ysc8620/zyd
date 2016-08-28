@@ -68,18 +68,18 @@
                                                 <if condition="$item.sub_type eq 1">半场</if>让球<else/>角球</if>
                                         </td>
                                         <td><if condition="$item.type eq 1">
-                                            <if condition="($item.guess_1 eq 1) OR ($item.guess_1 eq 4)" />主胜<elseif condition="($item.guess_1 eq 2) OR ($item.guess_1 eq 5)" />和局<elseif condition="($item.guess_1 eq 3) OR ($item.guess_1 eq 6)" />客胜<else/></if>
-                                            <if condition="($item.guess_2 eq 1) OR ($item.guess_2 eq 4)" />/主胜<elseif condition="($item.guess_2 eq 2) OR ($item.guess_2 eq 5)" />/和局<elseif condition="($item.guess_2 eq 3) OR ($item.guess_2 eq 6)" />/客胜<else/></if>
+                                            <if condition="($item.guess_1 eq 1) OR ($item.guess_1 eq 4)">主胜<elseif condition="($item.guess_1 eq 2) OR ($item.guess_1 eq 5)" />和局<elseif condition="($item.guess_1 eq 3) OR ($item.guess_1 eq 6)" />客胜<else/></if>
+                                            <if condition="($item.guess_2 eq 1) OR ($item.guess_2 eq 4)">/主胜<elseif condition="($item.guess_2 eq 2) OR ($item.guess_2 eq 5)" />/和局<elseif condition="($item.guess_2 eq 3) OR ($item.guess_2 eq 6)" />/客胜<else/></if>
 
                                             </if>
                                             <if condition="$item.type eq 2">
-                                                <if condition="($item.guess_1 eq 1) OR ($item.guess_1 eq 4)"/>主胜<elseif condition="($item.guess_1 eq 2) OR ($item.guess_1 eq 5)"/>和局<elseif condition="$item.guess_1 eq 3 OR  $item.guess_1 eq 6"/>客胜<else/></if>
+                                                <if condition="($item.guess_1 eq 1) OR ($item.guess_1 eq 4)">主胜<elseif condition="($item.guess_1 eq 2) OR ($item.guess_1 eq 5)"/>和局<elseif condition="$item.guess_1 eq 3 OR  $item.guess_1 eq 6"/>客胜<else/></if>
                                             </if>
                                             <if condition="$item.type eq 3">
-                                                <if condition="($item.guess_1 eq 1) OR ($item.guess_1 eq 4)"/>大球<elseif condition="($item.guess_1 eq 3) OR ($item.guess_1 eq 6)"/>小球<else/></if>
+                                                <if condition="($item.guess_1 eq 1) OR ($item.guess_1 eq 4)">大球<elseif condition="($item.guess_1 eq 3) OR ($item.guess_1 eq 6)"/>小球<else/></if>
                                             </if>
                                             <if condition="$item.type eq 4">
-                                                <if condition="($item.guess_1 eq 1) OR ($item.guess_1 eq 4)"/>主胜<elseif condition="($item.guess_1 eq 3) OR ($item.guess_1 eq 6")/>客胜<else/></if>
+                                                <if condition="($item.guess_1 eq 1) OR ($item.guess_1 eq 4)">主胜<elseif condition="($item.guess_1 eq 3) OR ($item.guess_1 eq 6")/>客胜<else/></if>
                                             </if>
                                         </td>
                                         <td><if condition="$item.is_fee eq 1"><font color="red">收费</font><else/>免费</if></td>
