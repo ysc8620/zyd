@@ -166,7 +166,7 @@ foreach($match_list as $match){
                 }elseif($result < 0){
                     $status = 2;
                 }else{
-                    $status
+                    // $status
                 }
             // 竞彩
             }elseif($tuijian['sub_type'] == 2){
