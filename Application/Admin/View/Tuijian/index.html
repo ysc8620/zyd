@@ -84,8 +84,8 @@
                                         </td>
                                         <td><if condition="$item.is_fee eq 1"><font color="red">收费</font><else/>免费</if></td>
                                         <td>{$item.fee}</td>
-                                        <td><if condition="$item[status] eq '0'">等待结果<elseif condition="$item[status] eq 1" />赢<elseif condition="$item[status] eq 2" />输
-                                            <elseif condition="$item[status] eq 3" />赢半<elseif condition="$item[status] eq 4" />输半<elseif condition="$item[status] eq 5" />走
+                                        <td><if condition="$item[status] eq '0'">等待结果<elseif condition="$item[status] eq 1" /><font color="green">赢</font><elseif condition="$item[status] eq 2" /><font color="red" >输</font>
+                                            <elseif condition="$item[status] eq 3" /><font color="blue">赢半</font><elseif condition="$item[status] eq 4" /><font color="#a52a2a" >输半</font><elseif condition="$item[status] eq 5" /><font color="yellow" >走</font>
                                             <else/>取消</if></td>
                                         <td class="center">
                                             <a href="{:U('tuijian/edit', ['id' => $item['id']])}"><i class="fa fa-check text-navy"></i>编辑</a>
