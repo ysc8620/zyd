@@ -142,35 +142,57 @@ foreach($match_list as $match){
     foreach($tuijian_list as $tuijian){
         // 竞彩
         if($tuijian['type'] == 1){
-            $status = 0;
             // 让球竞彩
             if($tuijian['sub_type'] == 1){
                 $result = $match['home_score'] + $tuijian['rate_2'] - $match['away_score'];//主队进球数+让球盘口-客队进球数
-                $status = 0;
+                // 主胜
                 if($result > 0){
-                    if($tuijian['guess_1'] == 1){
+                    if($tuijian['guess_1'] == 1 || $tuijian['guess_2'] == 1){
                         $status = 1;
-                    }elseif($tuijian['guess_1'] == 2){
-                        $status = 2;
-                    }elseif($tuijian['guess_1'] == 3){
+                    }else{
                         $status = 2;
                     }
-
-                    if($tuijian['guess_2'] == 1){
-
-                    }elseif($tuijian['guess_2'] == 2){
-
-                    }elseif($tuijian['guess_2'] == 3){
-
+                // 和局
+                }elseif($result<0){
+                    if($tuijian['guess_1'] == 3 || $tuijian['guess_2'] == 3){
+                        $status = 1;
+                    }else{
+                        $status = 2;
                     }
-                }elseif($result < 0){
-                    $status = 2;
+                // 客胜
                 }else{
-                    // $status
+                    if($tuijian['guess_1'] == 2 || $tuijian['guess_2'] == 2){
+                        $status = 1;
+                    }else{
+                        $status = 2;
+                    }
                 }
+                M('tuijian')->where(array('id'=>$tuijian['id']))->save(['is_win'=>$status, 'status'=>$status,'count_time'=>time()]);
             // 竞彩
             }elseif($tuijian['sub_type'] == 2){
-
+                // 主胜
+                if($match['home_score'] > $match['away_score']){
+                    if($tuijian['guess_1'] == 4 || $tuijian['guess_2'] == 4){
+                        $status = 1;
+                    }else{
+                        $status = 2;
+                    }
+                // 客胜
+                }elseif($match['home_score'] > $match['away_score']){
+                    if($tuijian['guess_1'] == 6 || $tuijian['guess_2'] == 6){
+                        $status = 1;
+                    }else{
+                        $status = 2;
+                    }
+                // 和局
+                }else{
+                    if($tuijian['guess_1'] == 5 || $tuijian['guess_2'] == 5){
+                        $status = 1;
+                    }else{
+                        $status = 2;
+                    }
+                }
+                M('tuijian')->where(array('id'=>$tuijian['id']))->save(['is_win'=>$status, 'status'=>$status,'count_time'=>time()]);
             }
         } // 欧赔
         elseif($tuijian['type'] == 2){
@@ -248,7 +270,6 @@ foreach($match_list as $match){
                 // 主队赢
                 if($tuijian['guess_1'] == 4){
                     // 最终主队进球数-最终客队进球数+竞猜时的盘口-（竞猜时的主队进球数-竞猜时的客队进球数）
-                    $status = 0;
                     $result = $match['home_score'] - $match['away_score'] + $tuijian['rate_5'] - ($tuijian['tuijian_home_score'] - $tuijian['tuijian_away_score']);
                     if($result >= 0.5){
                         $status = 1;
@@ -266,7 +287,6 @@ foreach($match_list as $match){
                     // 客队赢
                 }elseif($tuijian['guess_1'] == 6){
                     // 最终主队进球数-最终客队进球数+竞猜时的盘口-（竞猜时的主队进球数-竞猜时的客队进球数）
-                    $status = 0;
                     $result = $match['away_score'] - $match['home_score'] - $tuijian['rate_5'] - ($tuijian['tuijian_away_score'] - $tuijian['tuijian_home_score']);
                     if($result >= 0.5){
                         $status = 1;
