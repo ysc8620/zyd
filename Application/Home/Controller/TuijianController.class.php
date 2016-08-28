@@ -18,7 +18,7 @@ class TuijianController extends BaseApiController {
             $p = I('request.p',1,'intval');
 
             $where = [];
-            $where['status'] = 1;
+            #$where['status'] = 1;
             if($type == 1){
                 if(empty($match_id)){
                     $json['status'] = 110;
