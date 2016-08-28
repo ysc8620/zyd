@@ -25,21 +25,21 @@ foreach($match_list as $match){
             if($tuijian['sub_type'] == 1){
                 $status = 0;
                 // 主胜
-                if($tuijian['guess_1'] == 1){
+                if($tuijian['guess_1'] == 4){
                     if($match['home_half_score'] > $match['away_half_score']){
                         $status = 1;
                     }else{
                         $status = 2;
                     }
                 // 和局
-                }elseif($tuijian['guess_1'] == 2){
+                }elseif($tuijian['guess_1'] == 5){
                     if($match['home_half_score'] == $match['away_half_score']){
                         $status = 1;
                     }else{
                         $status = 2;
                     }
                 // 客胜
-                }elseif($tuijian['guess_1'] == 3){
+                }elseif($tuijian['guess_1'] == 6){
                     if($match['home_half_score'] < $match['away_half_score']){
                         $status = 1;
                     }else{
@@ -51,10 +51,10 @@ foreach($match_list as $match){
             }
         }elseif($tuijian['type'] == 3){
             // 半场大小球
-            if($tuijian['sub_type'] == 1){
+            if($tuijian['sub_type'] == 4){
                 $status = 0;
                 // 大球计算
-                if($tuijian['guess_1'] == 1){
+                if($tuijian['guess_1'] == 4){
                     $result = $match['home_half_score'] + $match['away_half_score'] - $tuijian['rate_5'];
                     if($result >= 0.5){
                         $status = 1;
@@ -70,8 +70,8 @@ foreach($match_list as $match){
                         $status = 9;
                     }
                 // 小球计算
-                }elseif($tuijian['guess_1'] == 3){
-                    $result = $tuijian['rate_2'] -( $match['home_half_score'] + $match['away_half_score']);
+                }elseif($tuijian['guess_1'] == 6){
+                    $result = $tuijian['rate_5'] -( $match['home_half_score'] + $match['away_half_score']);
                     if($result >= 0.5){
                         $status = 1;
                     }elseif($result == 0.25){
@@ -92,10 +92,9 @@ foreach($match_list as $match){
             // 半场让球
             if($tuijian['sub_type'] == 1){
                 // 主队赢
-                if($tuijian['guess_1'] == 1){
+                if($tuijian['guess_1'] == 4){
                     // 最终主队进球数-最终客队进球数+竞猜时的盘口-（竞猜时的主队进球数-竞猜时的客队进球数）
-                    $status = 0;
-                    $result = $match['home_half_score'] - $match['away_half_score'] + $tuijian['rate_2'] - ($tuijian['tuijian_home_score'] - $tuijian['tuijian_away_score']);
+                    $result = $match['home_half_score'] - $match['away_half_score'] + $tuijian['rate_5'] - ($tuijian['tuijian_home_score'] - $tuijian['tuijian_away_score']);
                     if($result >= 0.5){
                         $status = 1;
                     }elseif($result == 0.25){
@@ -110,10 +109,10 @@ foreach($match_list as $match){
                         $status = 9;
                     }
                 // 客队赢
-                }elseif($tuijian['guess_1'] == 3){
+                }elseif($tuijian['guess_1'] == 6){
                     // 最终主队进球数-最终客队进球数+竞猜时的盘口-（竞猜时的主队进球数-竞猜时的客队进球数）
                     $status = 0;
-                    $result = $match['away_half_score'] - $match['home_half_score'] - $tuijian['rate_2'] - ($tuijian['tuijian_away_score'] - $tuijian['tuijian_home_score']);
+                    $result = $match['away_half_score'] - $match['home_half_score'] - $tuijian['rate_5'] - ($tuijian['tuijian_away_score'] - $tuijian['tuijian_home_score']);
                     if($result >= 0.5){
                         $status = 1;
                     }elseif($result == 0.25){
@@ -175,21 +174,21 @@ foreach($match_list as $match){
             }elseif($tuijian['sub_type'] == 2){
                 // 主胜
                 if($match['home_score'] > $match['away_score']){
-                    if($tuijian['guess_1'] == 4 || $tuijian['guess_2'] == 4){
+                    if($tuijian['guess_1'] == 1 || $tuijian['guess_2'] == 1){
                         $status = 1;
                     }else{
                         $status = 2;
                     }
                 // 客胜
                 }elseif($match['home_score'] > $match['away_score']){
-                    if($tuijian['guess_1'] == 6 || $tuijian['guess_2'] == 6){
+                    if($tuijian['guess_1'] == 3 || $tuijian['guess_2'] == 3){
                         $status = 1;
                     }else{
                         $status = 2;
                     }
                 // 和局
                 }else{
-                    if($tuijian['guess_1'] == 5 || $tuijian['guess_2'] == 5){
+                    if($tuijian['guess_1'] == 2 || $tuijian['guess_2'] == 2){
                         $status = 1;
                     }else{
                         $status = 2;
@@ -204,21 +203,21 @@ foreach($match_list as $match){
             if($tuijian['sub_type'] == 2){
                 $status = 0;
                 // 主胜
-                if($tuijian['guess_1'] == 4){
+                if($tuijian['guess_1'] == 1){
                     if($match['home_score'] > $match['away_score']){
                         $status = 1;
                     }else{
                         $status = 2;
                     }
                     // 和局
-                }elseif($tuijian['guess_1'] == 5){
+                }elseif($tuijian['guess_1'] == 2){
                     if($match['home_score'] == $match['away_score']){
                         $status = 1;
                     }else{
                         $status = 2;
                     }
                     // 客胜
-                }elseif($tuijian['guess_1'] == 6){
+                }elseif($tuijian['guess_1'] == 3){
                     if($match['home_score'] < $match['away_score']){
                         $status = 1;
                     }else{
@@ -233,8 +232,8 @@ foreach($match_list as $match){
             if($tuijian['sub_type'] == 2){
                 $status = 0;
                 // 大球计算
-                if($tuijian['guess_1'] == 4){
-                    $result = $match['home_score'] + $match['away_score'] - $tuijian['rate_5'];
+                if($tuijian['guess_1'] == 1){
+                    $result = $match['home_score'] + $match['away_score'] - $tuijian['rate_2'];
                     if($result >= 0.5){
                         $status = 1;
                     }elseif($result == 0.25){
@@ -249,8 +248,8 @@ foreach($match_list as $match){
                         $status = 9;
                     }
                     // 小球计算
-                }elseif($tuijian['guess_1'] == 6){
-                    $result = $tuijian['rate_5'] -( $match['home_score'] + $match['away_score']);
+                }elseif($tuijian['guess_1'] == 3){
+                    $result = $tuijian['rate_2'] -( $match['home_score'] + $match['away_score']);
                     if($result >= 0.5){
                         $status = 1;
                     }elseif($result == 0.25){
@@ -271,9 +270,9 @@ foreach($match_list as $match){
             // 半场让球
             if($tuijian['sub_type'] == 2){
                 // 主队赢
-                if($tuijian['guess_1'] == 4){
+                if($tuijian['guess_1'] == 1){
                     // 最终主队进球数-最终客队进球数+竞猜时的盘口-（竞猜时的主队进球数-竞猜时的客队进球数）
-                    $result = $match['home_score'] - $match['away_score'] + $tuijian['rate_5'] - ($tuijian['tuijian_home_score'] - $tuijian['tuijian_away_score']);
+                    $result = $match['home_score'] - $match['away_score'] + $tuijian['rate_2'] - ($tuijian['tuijian_home_score'] - $tuijian['tuijian_away_score']);
                     if($result >= 0.5){
                         $status = 1;
                     }elseif($result == 0.25){
@@ -288,9 +287,9 @@ foreach($match_list as $match){
                         $status = 9;
                     }
                     // 客队赢
-                }elseif($tuijian['guess_1'] == 6){
+                }elseif($tuijian['guess_1'] == 3){
                     // 最终主队进球数-最终客队进球数+竞猜时的盘口-（竞猜时的主队进球数-竞猜时的客队进球数）
-                    $result = $match['away_score'] - $match['home_score'] - $tuijian['rate_5'] - ($tuijian['tuijian_away_score'] - $tuijian['tuijian_home_score']);
+                    $result = $match['away_score'] - $match['home_score'] - $tuijian['rate_2'] - ($tuijian['tuijian_away_score'] - $tuijian['tuijian_home_score']);
                     if($result >= 0.5){
                         $status = 1;
                     }elseif($result == 0.25){
