@@ -161,7 +161,7 @@ class LiveController extends BaseApiController {
     */
     public function index(){
         $json = $this->simpleJson();
-        $list = M("match")->where(array('state'=>array('in',[1,2,3,4])))->order("asc")->field("match_id,league_id,league_name,home_id,home_name,home_score,away_id,away_name,home_score,away_score,home_half_score,away_half_score,home_red,away_red,time,time as match_time,technic,state,total_collect,total_tuijian")->select();
+        $list = M("match")->where(array('state'=>array('in',[1,2,3,4])))->order("time asc")->field("match_id,league_id,league_name,home_id,home_name,home_score,away_id,away_name,home_score,away_score,home_half_score,away_half_score,home_red,away_red,time,time as match_time,technic,state,total_collect,total_tuijian")->select();
 
         $user_id = intval($this->user['id']);
 
