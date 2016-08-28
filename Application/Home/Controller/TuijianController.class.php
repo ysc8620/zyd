@@ -4,13 +4,13 @@ use Think\Page;
 
 class TuijianController extends BaseApiController {
     /**
-     * 推荐列表
+     * 竞猜列表
      */
     public function index(){
         $json = $this->simpleJson();
         do{
             //
-            $type = I('request.type', 1, 'intval'); // 1 某赛事的推荐, 2 我发布的推荐, 3 指定用户发布的推荐, 4,最新推荐, 5 我购买过的,6 我关注的专家发布的推荐
+            $type = I('request.type', 1, 'intval'); // 1 某赛事的竞猜, 2 我发布的竞猜, 3 指定用户发布的竞猜, 4,最新竞猜, 5 我购买过的,6 我关注的专家发布的竞猜
             $sub_type = I('request.sub_type', 0, 'intval');
             $match_id = I('request.match_id', 0,'intval');
             $user_id = I('request.user_id',0,'intval');
@@ -106,13 +106,13 @@ class TuijianController extends BaseApiController {
     }
 
     /**
-     * 推荐列表
+     * 竞猜列表
      */
     public function index2(){
         $json = $this->simpleJson();
         do{
             //
-            $type = I('request.type', 1, 'intval'); // 1 某赛事的推荐, 2 我发布的推荐, 3 指定用户发布的推荐, 4,最新推荐, 5 我购买过的
+            $type = I('request.type', 1, 'intval'); // 1 某赛事的竞猜, 2 我发布的竞猜, 3 指定用户发布的竞猜, 4,最新竞猜, 5 我购买过的
             $sub_type = I('request.sub_type',0,'intval');
             $match_id = I('request.match_id', 0,'intval');
             $user_id = I('request.user_id',0,'intval');
@@ -225,7 +225,7 @@ class TuijianController extends BaseApiController {
     }
 
     /**
-     * 发布推荐
+     * 发布竞猜
      */
     public function post(){
         $json = $this->simpleJson();
@@ -255,19 +255,19 @@ class TuijianController extends BaseApiController {
 
             if(empty($data['match_id'])){
                 $json['status'] = 110;
-                $json['msg'] = "请选择推荐赛事";
+                $json['msg'] = "请选择竞猜赛事";
                 break;
             }
 
             if(empty($data['type'])){
                 $json['status'] = 110;
-                $json['msg'] = "请选择推荐类型";
+                $json['msg'] = "请选择竞猜类型";
                 break;
             }
 
             if(empty($data['sub_type'])){
                 $json['status'] = 110;
-                $json['msg'] = "请选择推荐子类型";
+                $json['msg'] = "请选择竞猜子类型";
                 break;
             }
 
@@ -300,7 +300,7 @@ class TuijianController extends BaseApiController {
             // 状态处理
             if(!in_array($match['state'],['0','1','2','3'])){
                 $json['status'] = 111;
-                $json['msg'] = "赛事已经完结不支持推荐";
+                $json['msg'] = "赛事已经完结不支持竞猜";
                 break;
             }
 
@@ -318,7 +318,7 @@ class TuijianController extends BaseApiController {
                     $tuijian['rate_5'] == $data['rate_5'] &&
                     $tuijian['rate_6'] == $data['rate_6'] ){
                     $json['status'] = 111;
-                    $json['msg'] = "请不要重复推荐";
+                    $json['msg'] = "请不要重复竞猜";
                     break;
                 }
             }
@@ -334,7 +334,7 @@ class TuijianController extends BaseApiController {
             $res = M('tuijian')->add($data);
 
             if($res){
-                // 更新赛事推荐总数
+                // 更新赛事竞猜总数
                 M('match')->where(array('match_id'=>$data['match_id']))->setInc('total_tuijian',1);
                 // 更新用户发布总数
                 M('users')->where(array('id'=>$data['user_id']))->setInc('total_send_info',1);
@@ -374,7 +374,7 @@ class TuijianController extends BaseApiController {
                         $jiguang_id[$user['jiguang_id']] = $user['jiguang_id'];
                     }
                 }
-                // 关注的用户发布推荐
+                // 关注的用户发布竞猜
                 send_tuisong($jiguang_alias, $jiguang_id,$title,$remark,1,$user_id);
 
                 $data['id'] = $res;
@@ -391,7 +391,7 @@ class TuijianController extends BaseApiController {
     }
 
     /**
-     * 推荐购买
+     * 竞猜购买
      */
     public function pay(){
         $json = $this->simpleJson();
@@ -408,7 +408,7 @@ class TuijianController extends BaseApiController {
 
             if(empty($tuijian_id)){
                 $json['status'] = 110;
-                $json['msg'] = '请选择购买推荐';
+                $json['msg'] = '请选择购买竞猜';
                 break;
             }
             // 购买记录
@@ -430,7 +430,7 @@ class TuijianController extends BaseApiController {
 
             if(empty($tuijian)){
                 $json['status'] = 111;
-                $json['msg'] = '请选择购买推荐';
+                $json['msg'] = '请选择购买竞猜';
                 break;
             }
             if($tuijian['user_id'] == $user_id){
@@ -461,7 +461,7 @@ class TuijianController extends BaseApiController {
                 'type' => 2,
                 'credit' => -$tuijian['fee'],
                 'from_id' => 0,
-                'remark' => "用户购买推荐",
+                'remark' => "用户购买竞猜",
                 'create_time' => time(),
                 'user_id' => $user_id,
                 'status' => 0
@@ -482,7 +482,7 @@ class TuijianController extends BaseApiController {
                     'type' => 3,
                     'credit' => $tuijian['fee'],
                     'from_id' => 0,
-                    'remark' => "用户销售推荐",
+                    'remark' => "用户销售竞猜",
                     'create_time' => time(),
                     'user_id' => $tuijian['user_id'],
                     'status' => 0
@@ -506,7 +506,7 @@ class TuijianController extends BaseApiController {
     }
 
     /**
-     * 推荐详情
+     * 竞猜详情
      */
     public function info(){
         $json = $this->simpleJson();
@@ -515,7 +515,7 @@ class TuijianController extends BaseApiController {
 
             if (empty($tuijian_id)) {
                 $json['status'] = 110;
-                $json['msg'] = '请选择查看推荐';
+                $json['msg'] = '请选择查看竞猜';
                 break;
             }
             $tuijian = M('tuijian')->where(array('id'=>$tuijian_id, 'status'=>1))->find();
@@ -562,14 +562,14 @@ class TuijianController extends BaseApiController {
                 $json['data'] = $tuijian;
             }else{
                 $json['status'] = 111;
-                $json['msg'] = '找不到推荐信息或者推荐已关闭';
+                $json['msg'] = '找不到竞猜信息或者竞猜已关闭';
             }
         }while(false);
         $this->ajaxReturn($json);
     }
 
     /**
-     * 获取推荐购买用户列表
+     * 获取竞猜购买用户列表
      */
     public function get_user_list(){
         $json = $this->simpleJson();

@@ -8,7 +8,7 @@ require 'conf.php';
 /*
  type=0 推送赛事信息 from_id=赛事id
 type=1 推送专家或用户信息 from_id=用户id
-type=2 推送推荐信息 from_id=推荐id
+type=2 推送竞猜信息 from_id=竞猜id
 
 这几种类型的推送 点击 进入到各自的详情页
 */

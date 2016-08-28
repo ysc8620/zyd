@@ -419,7 +419,7 @@ class MatchController extends BaseApiController {
 
 
     /**
-     * 获取赛事推荐
+     * 获取赛事竞猜
      */
     public function tuijian(){
         $json = $this->simpleJson();

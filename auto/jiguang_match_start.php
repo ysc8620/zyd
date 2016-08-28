@@ -26,7 +26,7 @@ foreach($match_list as $match){
         }
     }
 
-    // 关注的用户发布推荐
+    // 关注的用户发布竞猜
     $match_name = "{$match['league_name']}";
 
     $match_title = "您关注的比赛（{$match_name}{$match['home_name']} VS {$match['away_name']}）即将开始";

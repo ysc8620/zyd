@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>推荐管理-后台系统</title>
-    <meta name="keywords" content="推荐管理">
-    <meta name="description" content="推荐管理">
+    <title>竞猜管理-后台系统</title>
+    <meta name="keywords" content="竞猜管理">
+    <meta name="description" content="竞猜管理">
     <link rel="shortcut icon" href="favicon.ico">
     <link href="__PUBLIC__/admin/css/bootstrap.min.css?v=3.3.5" rel="stylesheet">
     <link href="__PUBLIC__/admin/css/font-awesome.css?v=4.4.0" rel="stylesheet">
@@ -21,7 +21,7 @@
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>推荐管理</h5>
+                    <h5>竞猜管理</h5>
                     <!--
                     <div class="ibox-tools"> <a class="collapse-link"> <i class="fa fa-chevron-up"></i> </a> <a class="dropdown-toggle" data-toggle="dropdown" href="table_data_tables.html#"> <i class="fa fa-wrench"></i> </a>
                       <ul class="dropdown-menu dropdown-user">
@@ -41,11 +41,11 @@
                                     <th>参与球队</th>
                                     <th>比赛时间</th>
                                     <th>比分情况</th>
-                                    <th>推荐用户</th>
+                                    <th>竞猜用户</th>
                                     <th>是否专家</th>
-                                    <th>推荐类型</th>
-                                    <th>推荐详情</th>
-                                    <th>是否推荐</th>
+                                    <th>竞猜类型</th>
+                                    <th>竞猜详情</th>
+                                    <th>是否竞猜</th>
                                     <th>是否收费</th>
                                     <th>收费球币</th>
                                     <th>状态</th>
@@ -64,7 +64,7 @@
                                         <td><if condition="$item.user.is_expert eq 1">专家<else/>普通用户</if></td>
                                         <td>{$item.type}</td>
                                         <td>{$item.guess_1}, {$item.guess_2}</td>
-                                        <td><if condition="$item.is_top eq 1"><font color="red">推荐</font><else/>普通</if></td>
+                                        <td><if condition="$item.is_top eq 1"><font color="red">竞猜</font><else/>普通</if></td>
                                         <td><if condition="$item.is_fee eq 1"><font color="red">收费</font><else/>免费</if></td>
                                         <td>{$item.fee}</td>
                                         <td><if condition="$item[status] eq 1">正常<else/>隐藏</if></td>

@@ -338,7 +338,7 @@ class LiveController extends BaseApiController {
     }
 
     /**
-     * 赛事直播推荐
+     * 赛事直播竞猜
      */
     public function tuijian(){
         $json = $this->simpleJson();
@@ -371,7 +371,7 @@ class LiveController extends BaseApiController {
                 $tuijian['status'] = 0;
             }
 
-            // 一分钟内有进球 禁止发布推荐
+            // 一分钟内有进球 禁止发布竞猜
 //            $event = M('event')->where(array('match_id'=>$match['match_id'], 'event_type'=>1))->order("id DESC")->find();
 //            if($event['create_time'] > time()-60){
 //                $tuijian['status'] = 0;
@@ -401,7 +401,7 @@ class LiveController extends BaseApiController {
                 $jingcai_state = 0;
             }
 
-            // 竞彩只能赛前推荐
+            // 竞彩只能赛前竞猜
             if($match['state'] != '0'){
                 $jingcai_state = 0;
             }

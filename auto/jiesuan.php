@@ -11,10 +11,10 @@ namespace auto;
 require_once __DIR__ .'/config.php';
 echo date("Y-m-d H:i:s")."=match_api=\r\n";
 // 0 等待结果， 1 赢， 2输，3赢半,4输半,5走
-// 计算半场推荐输赢
+// 计算半场竞猜输赢
 $match_list = M("match")->where(array('state'=>array('in',[2,3]), 'is_half_count'=>0))->field('id,match_id,home_score,away_score,home_half_score,away_half_score')->select();
 foreach($match_list as $match){
-    // 获取所有推荐信息
+    // 获取所有竞猜信息
     $tuijian_list = M('tuijian')->where(array('match_id'=>$match['match_id'],  'is_win'=>0))->select();
     foreach($tuijian_list as $tuijian){
         // 欧赔
@@ -92,7 +92,7 @@ foreach($match_list as $match){
             if($tuijian['sub_type'] == 1){
                 // 主队赢
                 if($tuijian['guess_1'] == 1){
-                    // 最终主队进球数-最终客队进球数+推荐时的盘口-（推荐时的主队进球数-推荐时的客队进球数）
+                    // 最终主队进球数-最终客队进球数+竞猜时的盘口-（竞猜时的主队进球数-竞猜时的客队进球数）
                     $status = 0;
                     $result = $match['home_half_score'] - $match['away_half_score'] + $tuijian['rate_2'] - ($tuijian['tuijian_home_score'] - $tuijian['tuijian_away_score']);
                     if($result >= 0.5){
@@ -110,7 +110,7 @@ foreach($match_list as $match){
                     }
                 // 客队赢
                 }elseif($tuijian['guess_1'] == 3){
-                    // 最终主队进球数-最终客队进球数+推荐时的盘口-（推荐时的主队进球数-推荐时的客队进球数）
+                    // 最终主队进球数-最终客队进球数+竞猜时的盘口-（竞猜时的主队进球数-竞猜时的客队进球数）
                     $status = 0;
                     $result = $match['away_half_score'] - $match['home_half_score'] - $tuijian['rate_2'] - ($tuijian['tuijian_away_score'] - $tuijian['tuijian_home_score']);
                     if($result >= 0.5){
@@ -134,10 +134,10 @@ foreach($match_list as $match){
     }
 }
 
-// 计算全场推荐输赢
+// 计算全场竞猜输赢
 $match_list = M("match")->where(array('state'=>"-1", 'is_full_count'=>0))->field('id,match_id,home_score,away_score,home_half_score,away_half_score')->select();
 foreach($match_list as $match){
-    // 获取所有推荐信息
+    // 获取所有竞猜信息
     $tuijian_list = M('tuijian')->where(array('match_id'=>$match['match_id'], 'is_win'=>0))->select();
     foreach($tuijian_list as $tuijian){
         // 竞彩
@@ -157,7 +157,7 @@ foreach($match_list as $match){
                     }
 
                     if($tuijian['guess_2'] == 1){
-                        
+
                     }elseif($tuijian['guess_2'] == 2){
 
                     }elseif($tuijian['guess_2'] == 3){
@@ -191,4 +191,4 @@ foreach($match_list as $match){
         }
     }
 }
-// 通过推荐计算
+// 通过竞猜计算

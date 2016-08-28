@@ -106,7 +106,7 @@ do{
         }else{
             M('event_tuisong')->add($log);
         }
-        // 关注的用户发布推荐
+        // 关注的用户发布竞猜
         $match_name = $match['league_name'];
 
         // 直接关注比赛
