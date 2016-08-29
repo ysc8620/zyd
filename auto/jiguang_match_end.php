@@ -18,16 +18,30 @@ foreach($match_list as $match){
     $user_list = M()->table("t_match_follow as m, t_users as u")->where("m.match_id='{$match['match_id']}' AND m.user_id = u.id")->field('u.id, u.jiguang_id, u.jiguang_alias')->select();
     $jiguang_alias = [];
     $jiguang_id = [];
-    foreach($user_list as $user){
-        if($user['jiguang_id']){
-            $jiguang_id[$user['jiguang_id']] = $user['jiguang_id'];
-        }
-    }
 
     // 关注的用户发布竞猜
     $match_name = "{$match['league_name']}";
 
     $match_title = "您关注的比赛{$match_name} {$match['home_name']} VS {$match['away_name']}已结束，比分是{$match['home_score']}：{$match['away_score']}";
+
+    foreach($user_list as $user){
+        if($user['jiguang_id']){
+            $jiguang_id[$user['jiguang_id']] = $user['jiguang_id'];
+        }
+
+        // 消息通知
+        $notice = [
+            'notice_type'=>1,
+            'from_id'=>$match['match_id'],
+            'to_id'=>$user['id'],
+            'notice_title'=>'比赛结束',
+            'notice_msg'=>$match_title,
+            'create_time'=>time()
+        ];
+        M('notice_info')->add($notice);
+    }
+
+
     send_tuisong($jiguang_alias, $jiguang_id,'比赛结束',$match_title,0,$match['match_id']);
     M('match')->where(array('id'=>$match['id']))->save(['is_send_end'=>1,'send_end_time'=>time()]);
 }

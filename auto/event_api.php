@@ -113,12 +113,6 @@ do{
         $user_list = M()->table("t_match_follow as m, t_users as u")->where("m.match_id='{$match['match_id']}' AND u.id = m.user_id")->field('u.id, u.jiguang_id, u.jiguang_alias')->select();
         $jiguang_alias = [];
         $jiguang_id = [];
-        foreach($user_list as $user){
-            if($user['jiguang_id']){
-                $jiguang_id[$user['jiguang_id']] = $user['jiguang_id'];
-            }
-        }
-
         $home_str = "";
         $away_str = "";
         if($item['is_home_away']){
@@ -127,6 +121,28 @@ do{
             $away_str = "（进球）";
         }
         $match_title = "{$match_name} {$match['home_name']}{$home_str} {$match['home_score']}-{$match['away_score']} {$match['away_name']}{$away_str}";
+        foreach($user_list as $user){
+            if($user['jiguang_id']){
+                $jiguang_id[$user['jiguang_id']] = $user['jiguang_id'];
+            }
+
+            // 消息通知
+            $notice = [
+                'notice_type'=>1,
+                'from_id'=>$match['match_id'],
+                'to_id'=>$user['id'],
+                'notice_title'=>'比赛进球',
+                'notice_msg'=>$match_title,
+                'create_time'=>time()
+            ];
+            M('notice_info')->add($notice);
+        }
+
+
+
+
+
+
         send_tuisong($jiguang_alias, $jiguang_id,'比赛进球',$match_title,0,$match['match_id']);
 
         M('event')->where(array('id'=>$item['id']))->save(['is_send_tuisong'=>1]);
