@@ -149,21 +149,21 @@ foreach($match_list as $match){
                 $result = $match['home_score'] + $tuijian['rate_2'] - $match['away_score'];//主队进球数+让球盘口-客队进球数
                 // 主胜
                 if($result > 0){
-                    if($tuijian['guess_1'] == 1 || $tuijian['guess_2'] == 1){
+                    if($tuijian['guess_1'] == 4 || $tuijian['guess_2'] == 4){
                         $status = 1;
                     }else{
                         $status = 2;
                     }
                 // 和局
                 }elseif($result<0){
-                    if($tuijian['guess_1'] == 3 || $tuijian['guess_2'] == 3){
+                    if($tuijian['guess_1'] == 6 || $tuijian['guess_2'] == 6){
                         $status = 1;
                     }else{
                         $status = 2;
                     }
                 // 客胜
                 }else{
-                    if($tuijian['guess_1'] == 2 || $tuijian['guess_2'] == 2){
+                    if($tuijian['guess_1'] == 5 || $tuijian['guess_2'] == 5){
                         $status = 1;
                     }else{
                         $status = 2;
@@ -228,7 +228,7 @@ foreach($match_list as $match){
                 M('tuijian')->where(array('id'=>$tuijian['id']))->save(['is_win'=>$status, 'status'=>$status,'count_time'=>time()]);
             }
         }elseif($tuijian['type'] == 3){
-            // 半场大小球
+            // 全场大小球
             if($tuijian['sub_type'] == 2){
                 $status = 0;
                 // 大球计算
