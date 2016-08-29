@@ -891,6 +891,7 @@ class UserController extends BaseApiController {
         $json = $this->simpleJson();
         do{
             $page = I('request.p',1,'intval');
+            $limit = I('request.limit',10,'intval');
             $type = I('request.type', 1,'intval');// type=1 获取自己的流水记录，需要验证登陆, type=2获取指定用户流水
             $user_id = I('request.user_id',0,'intval'); // user_id 用户编号, 只有状态type=2时需要
             if($type == 1){
@@ -904,9 +905,16 @@ class UserController extends BaseApiController {
                 }
             }
             $total = M('users_record')->where(['user_id'=>$user_id])->count();
-            $list = M()->where(['user_id'=>$user_id])->select();
+            $pagevo = new Page($total, $limit);
+            $list = M('users_record')->where(['user_id'=>$user_id])->order('id DESC')->limit($pagevo->firstRow . ',' . $pagevo->listRows)->select();
 
+            $json['data']['list'] = $list;
+            $json['data']['total'] = $total;
             $json['data']['page'] = $page;
+            $json['data']['total_page'] = ceil($total/$limit);
+            $json['data']['type'] = $type;
+            $json['data']['limit'] = $limit;
+            $json['data']['user_id'] = $user_id;
 
         }while(false);
         $this->ajaxReturn($json);
