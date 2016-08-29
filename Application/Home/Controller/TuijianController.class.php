@@ -385,7 +385,6 @@ class TuijianController extends BaseApiController {
                     M('notice_info')->add($notice);
                 }
 
-
                 // 关注的用户发布竞猜
                 send_tuisong($jiguang_alias, $jiguang_id,$title,$remark,1,$user_id);
 

@@ -145,7 +145,7 @@ foreach($match_list as $match){
         // 竞彩
         if($tuijian['type'] == 1){
             // 让球竞彩
-            if($tuijian['sub_type'] == 2){
+            if($tuijian['sub_type'] == 1){
                 $result = $match['home_score'] + $tuijian['rate_2'] - $match['away_score'];//主队进球数+让球盘口-客队进球数
                 // 主胜
                 if($result > 0){

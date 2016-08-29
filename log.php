@@ -62,11 +62,11 @@ $data = [
     'p'=>2,
 //    'sub_type'=>'2',
 //    //'user_id' => '10000',
-    'match_id' =>1304441 //1304513
+    'match_id' =>1260063 //1304513
 ];
 
 //$data['apple_receipt'] = $apple_receipt;
-$result = httpPost("https://api.zydzuqiu.com/tuijian/index2.html?show=", $data);
+$result = httpPost("https://api.zydzuqiu.com/live/match.html?show=", $data);
 //var_dump($result);
 echo ($result);
 print_r(json_decode($result, true));

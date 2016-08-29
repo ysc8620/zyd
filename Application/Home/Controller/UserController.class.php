@@ -884,4 +884,32 @@ class UserController extends BaseApiController {
         $this->ajaxReturn($json);
     }
 
+    /**
+     * 获取用户流水
+     */
+    public function get_record_list(){
+        $json = $this->simpleJson();
+        do{
+            $page = I('request.p',1,'intval');
+            $type = I('request.type', 1,'intval');// type=1 获取自己的流水记录，需要验证登陆, type=2获取指定用户流水
+            $user_id = I('request.user_id',0,'intval'); // user_id 用户编号, 只有状态type=2时需要
+            if($type == 1){
+                $this->check_login();
+                $user_id = $this->user['id'];
+            }elseif($type == 2){
+                if(! $user_id){
+                    $json['status'] = 110;
+                    $json['msg'] = '请选择查看用户ID';
+                    break;
+                }
+            }
+            $total = M('users_record')->where(['user_id'=>$user_id])->count();
+            $list = M()->where(['user_id'=>$user_id])->select();
+
+            $json['data']['page'] = $page;
+
+        }while(false);
+        $this->ajaxReturn($json);
+    }
+
 }
