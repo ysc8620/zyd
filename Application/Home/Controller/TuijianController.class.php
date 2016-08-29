@@ -239,7 +239,7 @@ class TuijianController extends BaseApiController {
             $data['type'] = I('request.type',0,'intval');
             $data['sub_type'] = I('request.sub_type',0,'intval');
             $data['is_fee'] = I('request.is_fee',0,'intval');
-            $data['fee'] = I('request.fee',0,'intval');
+            $data['fee'] = I('request.fee',0,'trim');
             $data['remark'] = I('request.remark','','strval,trim,strip_tags,htmlspecialchars');
             $data['guess_1'] = I('request.guess_1',0,'intval');
             $data['guess_2'] = I('request.guess_2',0,'intval');
