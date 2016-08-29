@@ -17,7 +17,6 @@ class NoticeController extends BaseApiController {
                 $json['data']['total'] = 0;
             }
 
-
         }while(false);
         $this->ajaxReturn($json);
     }

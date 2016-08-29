@@ -373,7 +373,19 @@ class TuijianController extends BaseApiController {
                     if($user['jiguang_id']){
                         $jiguang_id[$user['jiguang_id']] = $user['jiguang_id'];
                     }
+                    // 添加通知消息
+                    $notice = [
+                        'notice_type'=>2,
+                        'from_id'=>$res,
+                        'to_id'=>$user['id'],
+                        'notice_title'=>'发布竞彩',
+                        'notice_msg'=>$remark,
+                        'create_time'=>time()
+                    ];
+                    M('notice_info')->add($notice);
                 }
+
+
                 // 关注的用户发布竞猜
                 send_tuisong($jiguang_alias, $jiguang_id,$title,$remark,1,$user_id);
 
@@ -425,7 +437,6 @@ class TuijianController extends BaseApiController {
                 $json['data'] = $data;
                 break;
             }
-            $user = M('users')->where(array('id'=>$user_id))->find();
             $tuijian = M('tuijian')->where(array('id'=>$tuijian_id))->find();
 
             if(empty($tuijian)){
@@ -446,11 +457,13 @@ class TuijianController extends BaseApiController {
                 $json['data'] = $data;
                 break;
             }
-            if($user['credit'] < $tuijian['fee']){
+            if($this->user['credit'] < $tuijian['fee']){
                 $json['status'] = 112;
                 $json['msg'] = '球币不足,请先充值';
                 break;
             }
+
+            $tuijian_user = M('users')->where(['id'=>$tuijian['user_id']])->find();
             $data = [
                 'user_id' => $user_id,
                 'tuijian_id' => $tuijian_id,
@@ -460,13 +473,12 @@ class TuijianController extends BaseApiController {
             $credit_log = [
                 'type' => 2,
                 'credit' => -$tuijian['fee'],
-                'from_id' => 0,
-                'remark' => "用户购买竞猜",
+                'from_id' => $tuijian['id'],
+                'remark' => "购买竞猜",
                 'create_time' => time(),
                 'user_id' => $user_id,
                 'status' => 0
             ];
-
 
             M()->startTrans();
             $res = M('tuijian_order')->add($data);
@@ -474,15 +486,35 @@ class TuijianController extends BaseApiController {
             $credit_log['from_id'] = $res;
             $res3 = M('credit_log')->add($credit_log);
 
-
             if($res && $res2 && $res3){
                 M()->commit();
+                // 消息通知
+                $notice = [
+                    'notice_type'=>2,
+                    'from_id'=>$tuijian['id'],
+                    'to_id'=>$this->user['id'],
+                    'notice_title'=>'购买竞彩',
+                    'notice_msg'=>"您购买了".getNickName($tuijian_user['nickname'])."发布的竞彩",
+                    'create_time'=>time()
+                ];
+                M('notice_info')->add($notice);
+
+                // 消息通知
+                $notice = [
+                    'notice_type'=>2,
+                    'from_id'=>$tuijian['id'],
+                    'to_id'=>$tuijian['user_id'],
+                    'notice_title'=>'销售竞彩',
+                    'notice_msg'=>getNickName($this->user['nickname'])."购买了您发布的竞彩",
+                    'create_time'=>time()
+                ];
+                M('notice_info')->add($notice);
 
                 $credit_log2 = [
                     'type' => 3,
                     'credit' => $tuijian['fee'],
-                    'from_id' => 0,
-                    'remark' => "用户销售竞猜",
+                    'from_id' => $tuijian['id'],
+                    'remark' => "销售竞猜",
                     'create_time' => time(),
                     'user_id' => $tuijian['user_id'],
                     'status' => 0
