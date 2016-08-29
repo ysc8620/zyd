@@ -65,6 +65,14 @@ class TuijianController extends BaseApiController {
                 $item['away_name'] = $match['away_name'];
                 $item['match_time'] = $match['time'];
                 $item['match_state'] = $match['state'];
+                # 赛前
+                if($item['tuijian_match_state'] == '0'){
+
+                // 上半场
+                }elseif($item['tuijian_match_time'] == 1){
+
+                }
+                $item['tuijian_match_time'] = '';
                 #
                 $user = M('users')->where(array('id'=>$item['user_id']))->field('id,nickname,pic,total_follow_user,total_rate')->find();
                 $item['user_name'] = getNickName($user['nickname']);
@@ -296,6 +304,7 @@ class TuijianController extends BaseApiController {
                 $json['msg'] = "没找到赛事信息";
                 break;
             }
+            $data['tuijian_match_state'] = $match['state'];
 
             // 状态处理
             if(!in_array($match['state'],['0','1','2','3'])){
