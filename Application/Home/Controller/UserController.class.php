@@ -904,9 +904,9 @@ class UserController extends BaseApiController {
                     break;
                 }
             }
-            $total = M('users_record')->where(['user_id'=>$user_id])->count();
+            $total = M('credit_log')->where(['user_id'=>$user_id])->count();
             $pagevo = new Page($total, $limit);
-            $list = M('users_record')->where(['user_id'=>$user_id])->order('id DESC')->limit($pagevo->firstRow . ',' . $pagevo->listRows)->select();
+            $list = M('credit_log')->where(['user_id'=>$user_id])->order('id DESC')->limit($pagevo->firstRow . ',' . $pagevo->listRows)->select();
 
             $json['data']['list'] = $list;
             $json['data']['total'] = $total;
