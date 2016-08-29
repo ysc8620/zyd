@@ -70,7 +70,7 @@ foreach($match_list as $match){
                         $status = 9;
                     }
                     if($status == 9){
-                        echo "match_id={$match['match_id']},,$result = {$match['home_half_score']} + {$match['away_half_score']} - {$tuijian['rate_5']}\r\n";
+                        echo "match_id={$match['match_id']},tuijian_id={$tuijian['id']},$result = {$match['home_half_score']} + {$match['away_half_score']} - {$tuijian['rate_5']}\r\n";
                     }
                 // 小球计算
                 }elseif($tuijian['guess_1'] == 6){
@@ -90,7 +90,7 @@ foreach($match_list as $match){
                     }
 
                     if($status == 9){
-                        echo "match_id={$match['match_id']},,$result = {$tuijian['rate_5']} -( {$match['home_half_score']} + {$match['away_half_score']})\r\n";
+                        echo "match_id={$match['match_id']},tuijian_id={$tuijian['id']},$result = {$tuijian['rate_5']} -( {$match['home_half_score']} + {$match['away_half_score']})\r\n";
                     }
                 }
                 M('tuijian')->where(array('id'=>$tuijian['id']))->save(['is_win'=>$status, 'status'=>$status, 'count_time'=>time()]);
@@ -116,7 +116,7 @@ foreach($match_list as $match){
                         $status = 9;
                     }
                     if($status == 9){
-                        echo "match_id={$match['match_id']},,$result = {$match['home_half_score']} - {$match['away_half_score']} + {$tuijian['rate_5']} - ({$tuijian['tuijian_home_score']} - {$tuijian['tuijian_away_score']});\r\n";
+                        echo "match_id={$match['match_id']},tuijian_id={$tuijian['id']},$result = {$match['home_half_score']} - {$match['away_half_score']} + {$tuijian['rate_5']} - ({$tuijian['tuijian_home_score']} - {$tuijian['tuijian_away_score']});\r\n";
                     }
                 // 客队赢
                 }elseif($tuijian['guess_1'] == 6){
@@ -136,7 +136,7 @@ foreach($match_list as $match){
                         $status = 9;
                     }
                     if($status == 9){
-                        echo "match_id={$match['match_id']},,$result = {$match['away_half_score']} - {$match['home_half_score']} - {$tuijian['rate_5']} - ({$tuijian['tuijian_away_score']} - {$tuijian['tuijian_home_score']});\r\n";
+                        echo "match_id={$match['match_id']},tuijian_id={$tuijian['id']},$result = {$match['away_half_score']} - {$match['home_half_score']} - {$tuijian['rate_5']} - ({$tuijian['tuijian_away_score']} - {$tuijian['tuijian_home_score']});\r\n";
                     }
                 }
                 // 保存计算结果
@@ -152,13 +152,13 @@ $match_list = M("match")->where(array('state'=>"-1", 'is_full_count'=>0))->field
 foreach($match_list as $match){
     echo "full_jiesuan=".$match["match_id"]."\r\n";
     // 获取所有竞猜信息 array('match_id'=>$match['match_id'],  'is_win'=>0)
-    $tuijian_list = M('tuijian')->where("match_id='{$match['match_id']}' AND (type=1 OR (type in(2,3,4) AND sub_type=2)) AND is_win=0")->select();
+    $tuijian_list = M('tuijian')->where("match_id='{$match['match_id']}' AND is_win=0")->select();
     foreach($tuijian_list as $tuijian){
         // 竞彩
         if($tuijian['type'] == 1){
             // 让球竞彩
             if($tuijian['sub_type'] == 1){
-                $result = $match['home_score'] + $tuijian['rate_2'] - $match['away_score'];//主队进球数+让球盘口-客队进球数
+                $result = $match['home_score'] + $tuijian['left_ball'] - $match['away_score'];//主队进球数+让球盘口-客队进球数
                 // 主胜
                 if($result > 0){
                     if($tuijian['guess_1'] == 4 || $tuijian['guess_2'] == 4){
@@ -260,7 +260,7 @@ foreach($match_list as $match){
                         $status = 9;
                     }
                     if($status == 9){
-                        echo "match_id={$match['match_id']},,$result = {$match['home_score']} + {$match['away_score']} - {$tuijian['rate_2']}\r\n";
+                        echo "match_id={$match['match_id']},tuijian_id={$tuijian['id']},$result = {$match['home_score']} + {$match['away_score']} - {$tuijian['rate_2']}\r\n";
                     }
                     // 小球计算
                 }elseif($tuijian['guess_1'] == 3){
@@ -279,7 +279,7 @@ foreach($match_list as $match){
                         $status = 9;
                     }
                     if($status == 9){
-                        echo "match_id={$match['match_id']},,$result = {$tuijian['rate_2']} -( {$match['home_score']} + {$match['away_score']})\r\n";
+                        echo "match_id={$match['match_id']},tuijian_id={$tuijian['id']},$result = {$tuijian['rate_2']} -( {$match['home_score']} + {$match['away_score']})\r\n";
                     }
                 }
                 M('tuijian')->where(array('id'=>$tuijian['id']))->save(['is_win'=>$status, 'status'=>$status, 'count_time'=>time()]);
@@ -305,7 +305,7 @@ foreach($match_list as $match){
                         $status = 9;
                     }
                     if($status == 9){
-                        echo "match_id={$match['match_id']},,$result = {$match['home_score']} - {$match['away_score']} + {$tuijian['rate_2']} - ({$tuijian['tuijian_home_score']} - {$tuijian['tuijian_away_score']});\r\n";
+                        echo "match_id={$match['match_id']},tuijian_id={$tuijian['id']},$result = {$match['home_score']} - {$match['away_score']} + {$tuijian['rate_2']} - ({$tuijian['tuijian_home_score']} - {$tuijian['tuijian_away_score']});\r\n";
                     }
                     // 客队赢
                 }elseif($tuijian['guess_1'] == 3){
@@ -325,7 +325,7 @@ foreach($match_list as $match){
                         $status = 9;
                     }
                     if($status == 9){
-                        echo "match_id={$match['match_id']},,$result = {$match['away_score']} - {$match['home_score']} - {$tuijian['rate_2']} - ({$tuijian['tuijian_away_score']} - {$tuijian['tuijian_home_score']})\r\n";
+                        echo "match_id={$match['match_id']},tuijian_id={$tuijian['id']},$result = {$match['away_score']} - {$match['home_score']} - {$tuijian['rate_2']} - ({$tuijian['tuijian_away_score']} - {$tuijian['tuijian_home_score']})\r\n";
                     }
                 }
                 // 保存计算结果
