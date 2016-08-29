@@ -69,6 +69,9 @@ foreach($match_list as $match){
                     }else{
                         $status = 9;
                     }
+                    if($status == 9){
+                        echo "match_id={$match['match_id']},,$result = {$match['home_half_score']} + {$match['away_half_score']} - {$tuijian['rate_5']}\r\n";
+                    }
                 // 小球计算
                 }elseif($tuijian['guess_1'] == 6){
                     $result = $tuijian['rate_5'] -( $match['home_half_score'] + $match['away_half_score']);
@@ -84,6 +87,10 @@ foreach($match_list as $match){
                         $status = 2;
                     }else{
                         $status = 9;
+                    }
+
+                    if($status == 9){
+                        echo "match_id={$match['match_id']},,$result = {$tuijian['rate_5']} -( {$match['home_half_score']} + {$match['away_half_score']})\r\n";
                     }
                 }
                 M('tuijian')->where(array('id'=>$tuijian['id']))->save(['is_win'=>$status, 'status'=>$status, 'count_time'=>time()]);
@@ -108,10 +115,12 @@ foreach($match_list as $match){
                     }else{
                         $status = 9;
                     }
+                    if($status == 9){
+                        echo "match_id={$match['match_id']},,$result = {$match['home_half_score']} - {$match['away_half_score']} + {$tuijian['rate_5']} - ({$tuijian['tuijian_home_score']} - {$tuijian['tuijian_away_score']});\r\n";
+                    }
                 // 客队赢
                 }elseif($tuijian['guess_1'] == 6){
                     // 最终主队进球数-最终客队进球数+竞猜时的盘口-（竞猜时的主队进球数-竞猜时的客队进球数）
-                    $status = 0;
                     $result = $match['away_half_score'] - $match['home_half_score'] - $tuijian['rate_5'] - ($tuijian['tuijian_away_score'] - $tuijian['tuijian_home_score']);
                     if($result >= 0.5){
                         $status = 1;
@@ -125,6 +134,9 @@ foreach($match_list as $match){
                         $status = 2;
                     }else{
                         $status = 9;
+                    }
+                    if($status == 9){
+                        echo "match_id={$match['match_id']},,$result = {$match['away_half_score']} - {$match['home_half_score']} - {$tuijian['rate_5']} - ({$tuijian['tuijian_away_score']} - {$tuijian['tuijian_home_score']});\r\n";
                     }
                 }
                 // 保存计算结果
@@ -247,6 +259,9 @@ foreach($match_list as $match){
                     }else{
                         $status = 9;
                     }
+                    if($status == 9){
+                        echo "match_id={$match['match_id']},,$result = {$match['home_score']} + {$match['away_score']} - {$tuijian['rate_2']}\r\n";
+                    }
                     // 小球计算
                 }elseif($tuijian['guess_1'] == 3){
                     $result = $tuijian['rate_2'] -( $match['home_score'] + $match['away_score']);
@@ -262,6 +277,9 @@ foreach($match_list as $match){
                         $status = 2;
                     }else{
                         $status = 9;
+                    }
+                    if($status == 9){
+                        echo "match_id={$match['match_id']},,$result = {$tuijian['rate_2']} -( {$match['home_score']} + {$match['away_score']})\r\n";
                     }
                 }
                 M('tuijian')->where(array('id'=>$tuijian['id']))->save(['is_win'=>$status, 'status'=>$status, 'count_time'=>time()]);
@@ -286,6 +304,9 @@ foreach($match_list as $match){
                     }else{
                         $status = 9;
                     }
+                    if($status == 9){
+                        echo "match_id={$match['match_id']},,$result = {$match['home_score']} - {$match['away_score']} + {$tuijian['rate_2']} - ({$tuijian['tuijian_home_score']} - {$tuijian['tuijian_away_score']});\r\n";
+                    }
                     // 客队赢
                 }elseif($tuijian['guess_1'] == 3){
                     // 最终主队进球数-最终客队进球数+竞猜时的盘口-（竞猜时的主队进球数-竞猜时的客队进球数）
@@ -302,6 +323,9 @@ foreach($match_list as $match){
                         $status = 2;
                     }else{
                         $status = 9;
+                    }
+                    if($status == 9){
+                        echo "match_id={$match['match_id']},,$result = {$match['away_score']} - {$match['home_score']} - {$tuijian['rate_2']} - ({$tuijian['tuijian_away_score']} - {$tuijian['tuijian_home_score']})\r\n";
                     }
                 }
                 // 保存计算结果
