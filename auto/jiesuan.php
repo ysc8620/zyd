@@ -64,7 +64,7 @@ foreach($match_list as $match){
                         $status = 5;
                     }elseif($result == -0.25){
                         $status = 4;
-                    }elseif($result < -0.5){
+                    }elseif($result <= -0.5){
                         $status = 2;
                     }else{
                         $status = 9;
@@ -83,7 +83,7 @@ foreach($match_list as $match){
                         $status = 5;
                     }elseif($result == -0.25){
                         $status = 4;
-                    }elseif($result < -0.5){
+                    }elseif($result <= -0.5){
                         $status = 2;
                     }else{
                         $status = 9;
@@ -254,7 +254,7 @@ foreach($match_list as $match){
                         $status = 5;
                     }elseif($result == -0.25){
                         $status = 4;
-                    }elseif($result < -0.5){
+                    }elseif($result <= -0.5){
                         $status = 2;
                     }else{
                         $status = 9;
@@ -273,7 +273,7 @@ foreach($match_list as $match){
                         $status = 5;
                     }elseif($result == -0.25){
                         $status = 4;
-                    }elseif($result < -0.5){
+                    }elseif($result <= -0.5){
                         $status = 2;
                     }else{
                         $status = 9;
@@ -299,7 +299,7 @@ foreach($match_list as $match){
                         $status = 5;
                     }elseif($result == -0.25){
                         $status = 4;
-                    }elseif($result <= 0.5){
+                    }elseif($result <= -0.5){
                         $status = 2;
                     }else{
                         $status = 9;
