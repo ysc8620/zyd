@@ -71,7 +71,7 @@
             });
             $.ajax({
                 type: "post",
-                url: "{:U('/response/post')}",
+                url: "/response/post.html",
                 dataType: "json",
                 data:{username:username, contact:contact, content:content,sign:sign},
                 success: function (data) {
