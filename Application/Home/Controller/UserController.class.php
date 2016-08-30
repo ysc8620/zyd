@@ -905,7 +905,7 @@ class UserController extends BaseApiController {
                 }
             }
             $total = M('credit_log')->where(['user_id'=>$user_id])->count();
-            $pagevo = new Page($total, $limit);
+            $pagevo = new \Think\Page($total, $limit);
             $list = M('credit_log')->where(['user_id'=>$user_id])->order('id DESC')->limit($pagevo->firstRow . ',' . $pagevo->listRows)->select();
 
             $json['data']['list'] = $list;
