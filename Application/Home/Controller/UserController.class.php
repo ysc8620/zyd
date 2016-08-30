@@ -917,17 +917,18 @@ class UserController extends BaseApiController {
                     $list[$i]['title'] = '竞猜购买';
                     $tuijian = M('tuijian')->where(['id'=>$item['from_id']])->find();
                     $match = M('match')->where(['id'=>$tuijian['match_id']])->find();
-                    $user = M('users')->where(['id'=>$tuijian['user_id']])->find();
-                    $list[$i]['content'] = "您花了{$tuijian['fee']}个球币,购买了".getNickName($user['nickname'])."发布的{$match['league_name']} {$match['home_name']} VS {$match['away_name']} 竞猜";
+                    //$user = M('users')->where(['id'=>$tuijian['user_id']])->find();
+                    $list[$i]['content'] = "您花了{$tuijian['fee']}个球币,购买了{$match['league_name']} {$match['home_name']} VS {$match['away_name']} 竞猜";
                 }elseif($item['type'] == 3){
                     $list[$i]['title'] = '竞猜销售';
                     $tuijian = M('tuijian')->where(['id'=>$item['from_id']])->find();
                     $match = M('match')->where(['id'=>$tuijian['match_id']])->find();
-                    $user = M('users')->where(['id'=>$tuijian['user_id']])->find();
-                    $list[$i]['content'] = "您花了{$tuijian['fee']}个球币,购买了".getNickName($user['nickname'])."发布的{$match['league_name']} {$match['home_name']} VS {$match['away_name']} 竞猜";
-
+                    //$user = M('users')->where(['id'=>$item['from_user']])->find();
+                    $list[$i]['content'] = "您挣了{$tuijian['fee']}个球币,销售了 {$match['league_name']} {$match['home_name']} VS {$match['away_name']} 竞猜";
                 }elseif($item['type'] == 4){
 
+                    $list[$i]['title'] = "球币提现";
+                    $list[$i]['content'] = "您提现了{$item['credit']}个球币";
                 }
             }
             $json['data']['list'] = $list;
