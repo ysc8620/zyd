@@ -538,6 +538,7 @@ class TuijianController extends BaseApiController {
             $credit_log = [
                 'type' => 2,
                 'credit' => -$tuijian['fee'],
+                'from_user'=>$tuijian['user_id'],
                 'from_id' => $tuijian['id'],
                 'remark' => "购买竞猜",
                 'create_time' => time(),
@@ -556,8 +557,8 @@ class TuijianController extends BaseApiController {
                 // 消息通知
                 $notice = [
                     'notice_type'=>2,
+                    'from_user'=>$user_id,
                     'from_id'=>$tuijian['id'],
-                    'to_id'=>$this->user['id'],
                     'notice_title'=>'购买竞彩',
                     'notice_msg'=>"您购买了".getNickName($tuijian_user['nickname'])."发布的竞彩",
                     'create_time'=>time()
@@ -578,6 +579,7 @@ class TuijianController extends BaseApiController {
                 $credit_log2 = [
                     'type' => 3,
                     'credit' => $tuijian['fee'],
+                    'from_user'=>$this->user['id'],
                     'from_id' => $tuijian['id'],
                     'remark' => "销售竞猜",
                     'create_time' => time(),

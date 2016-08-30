@@ -907,7 +907,29 @@ class UserController extends BaseApiController {
             $total = M('credit_log')->where(['user_id'=>$user_id])->count();
             $pagevo = new \Think\Page($total, $limit);
             $list = M('credit_log')->where(['user_id'=>$user_id])->order('id DESC')->limit($pagevo->firstRow . ',' . $pagevo->listRows)->select();
+            foreach($list as $i=>$item){
+                // 充值
+                if($item['type'] == '1'){
+                    $list[$i]['title'] = "球币充值";
+                    $list[$i]['content'] = "您充值了{$item['credit']}个球币";
+                // 购买
+                }elseif($item['type'] == 2){
+                    $list[$i]['title'] = '竞猜购买';
+                    $tuijian = M('tuijian')->where(['id'=>$item['from_id']])->find();
+                    $match = M('match')->where(['id'=>$tuijian['match_id']])->find();
+                    $user = M('users')->where(['id'=>$tuijian['user_id']])->find();
+                    $list[$i]['content'] = "您花了{$tuijian['fee']}个球币,购买了".getNickName($user['nickname'])."发布的{$match['league_name']} {$match['home_name']} VS {$match['away_name']} 竞猜";
+                }elseif($item['type'] == 3){
+                    $list[$i]['title'] = '竞猜销售';
+                    $tuijian = M('tuijian')->where(['id'=>$item['from_id']])->find();
+                    $match = M('match')->where(['id'=>$tuijian['match_id']])->find();
+                    $user = M('users')->where(['id'=>$tuijian['user_id']])->find();
+                    $list[$i]['content'] = "您花了{$tuijian['fee']}个球币,购买了".getNickName($user['nickname'])."发布的{$match['league_name']} {$match['home_name']} VS {$match['away_name']} 竞猜";
 
+                }elseif($item['type'] == 4){
+
+                }
+            }
             $json['data']['list'] = $list;
             $json['data']['total'] = $total;
             $json['data']['page'] = $page;
