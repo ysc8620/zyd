@@ -19,7 +19,7 @@ function httpPost($url, $data = null)
         'systemVersion' => '9.3.2',
         'model' => 'iPhone 6S Plus',
         'imei' => '3580865021934706',
-        'ssid'=>'28c552a7526cc63017f2c624d1f8d2be'//1a02be1c9d62843b8bf973b98c2180a9
+        'ssid'=>'c06f0b748aa4fa267f7005280b24782d'//1a02be1c9d62843b8bf973b98c2180a9
 
     ];
     $param['sign'] = sign($param,'b8e586b6eb3530f1c5efad7ea3f1359e');

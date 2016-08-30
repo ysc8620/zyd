@@ -532,6 +532,8 @@ class TuijianController extends BaseApiController {
             $data = [
                 'user_id' => $user_id,
                 'tuijian_id' => $tuijian_id,
+                'match_id'=>$tuijian['match_id'],
+                'tuijian_user'=>$tuijian['user_id'],
                 'credit' => $tuijian['fee'],
                 'create_time' => time()
             ];
