@@ -69,15 +69,15 @@ class TuijianController extends BaseApiController {
 
                 if($item['tuijian_match_state'] == '0'){
                     $str = "";
-                    $date = date("d", $item['create_time']-strtotime($match['time']));
+                    $date = date("j", $item['create_time']-strtotime($match['time']));
                     if($date > 0){
                         $str = $date."天";
                     }else{
-                        $date = date("H", $item['create_time']-strtotime($match['time']));
+                        $date = date("G", $item['create_time']-strtotime($match['time']));
                         if($date > 0){
                             $str = $date."时";
                         }else{
-                            $date = date("i", $item['create_time']-strtotime($match['time']));
+                            $date = trim(date("i", $item['create_time']-strtotime($match['time'])),'0');
                             $str = $date."'";
                         }
                     }
@@ -210,15 +210,15 @@ class TuijianController extends BaseApiController {
 
                 if($item['tuijian_match_state'] == '0'){
                     $str = "";
-                    $date = date("d", $item['create_time']-strtotime($match['time']));
+                    $date = date("j", $item['create_time']-strtotime($match['time']));
                     if($date > 0){
                         $str = $date."天";
                     }else{
-                        $date = date("H", $item['create_time']-strtotime($match['time']));
+                        $date = date("G", $item['create_time']-strtotime($match['time']));
                         if($date > 0){
                             $str = $date."时";
                         }else{
-                            $date = date("i", $item['create_time']-strtotime($match['time']));
+                            $date = trim(date("i", $item['create_time']-strtotime($match['time'])),'0');
                             $str = $date."'";
                         }
                     }
@@ -642,15 +642,15 @@ class TuijianController extends BaseApiController {
 
                 if($tuijian['tuijian_match_state'] == '0'){
                     $str = "";
-                    $date = date("d", $tuijian['create_time']-strtotime($match['time']));
+                    $date = date("j", $tuijian['create_time']-strtotime($match['time']));
                     if($date > 0){
                         $str = $date."天";
                     }else{
-                        $date = date("H", $tuijian['create_time']-strtotime($match['time']));
+                        $date = date("G", $tuijian['create_time']-strtotime($match['time']));
                         if($date > 0){
                             $str = $date."时";
                         }else{
-                            $date = date("i", $tuijian['create_time']-strtotime($match['time']));
+                            $date = trim(date("i", $tuijian['create_time']-strtotime($match['time'])),'0');
                             $str = $date."'";
                         }
                     }

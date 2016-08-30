@@ -67,7 +67,7 @@ $data = [
 ];
 
 //$data['apple_receipt'] = $apple_receipt;
-$result = httpPost("https://api.zydzuqiu.com/live/tuijian.html?show=", $data);
+$result = httpPost("https://api.zydzuqiu.com/tuijian/index.html?show=", $data);
 //var_dump($result);
 echo ($result);
 print_r(json_decode($result, true));
