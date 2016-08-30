@@ -27,8 +27,7 @@ class ResponseController extends BaseController {
      */
     public function post(){
         $json = ['state' => 1, 'msg' => ''];
-        $mongo = $this->initMongo();
-        $curr = $mongo->zyd->response;
+
         do{
             $sign = I('post.sign','','strval');
             if($sign != session('sign')){
@@ -36,12 +35,12 @@ class ResponseController extends BaseController {
                 $json['msg'] = '验证不通过~';
                 break;
             }
-
+            session('sign','-');
             $data['username'] = I('post.username','','strip_tags,htmlspecialchars');
             $data['contact'] = I('post.contact','','strip_tags,htmlspecialchars');
             $data['content'] = I('post.content','','strip_tags,htmlspecialchars');
             $data['create_time'] = date("Y-m-d H:i:s");
-            $curr->insert($data);
+            M('response')->add($data);
 
         }while(false);
         $this->ajaxReturn($json);

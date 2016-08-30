@@ -346,8 +346,10 @@ function sock_post($url,$query){
  * text 为短信内容
  * mobile 为接受短信的手机号
  * tpl_send_sms('153530eaf64e1d0e93856917ffc11d37',690423,'#name#='.$text.'网站访问异常',18668112791);
+ * // e6e01c753baaf3a6f049b61bbcd4429b
+ * // 153530eaf64e1d0e93856917ffc11d37
  */
-function send_sms($mobile,$text,$apikey='153530eaf64e1d0e93856917ffc11d37' ){
+function send_sms($mobile,$text,$apikey='e6e01c753baaf3a6f049b61bbcd4429b' ){
     // 【云片网】您的验证码是
     $url="http://yunpian.com/v1/sms/send.json";
     $encoded_text = urlencode("$text");
