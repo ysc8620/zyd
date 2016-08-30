@@ -916,13 +916,13 @@ class UserController extends BaseApiController {
                 }elseif($item['type'] == 2){
                     $list[$i]['title'] = '竞猜购买';
                     $tuijian_order = M('tuijian_order')->where(['id'=>$item['from_id']])->find();
-                    $match = M('match')->where(['id'=>$tuijian_order['match_id']])->find();
+                    $match = M('match')->where(['id'=>$tuijian_order['match_id']])->field('id,match_id,league_name,home_name,away_name')->find();
                     //$user = M('users')->where(['id'=>$tuijian['user_id']])->find();
                     $list[$i]['content'] = "您花了{$tuijian_order['credit']}个球币,购买了{$match['league_name']} {$match['home_name']} VS {$match['away_name']} 竞猜";
                 }elseif($item['type'] == 3){
                     $list[$i]['title'] = '竞猜销售';
                     $tuijian_order = M('tuijian_order')->where(['id'=>$item['from_id']])->find();
-                    $match = M('match')->where(['id'=>$tuijian_order['match_id']])->find();
+                    $match = M('match')->where(['id'=>$tuijian_order['match_id']])->field('id,match_id,league_name,home_name,away_name')->find();
                     //$user = M('users')->where(['id'=>$item['from_user']])->find();
                     $list[$i]['content'] = "您挣了{$tuijian_order['credit']}个球币,销售了 {$match['league_name']} {$match['home_name']} VS {$match['away_name']} 竞猜";
                 }elseif($item['type'] == 4){
