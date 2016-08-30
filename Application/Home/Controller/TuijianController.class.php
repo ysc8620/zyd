@@ -88,7 +88,7 @@ class TuijianController extends BaseApiController {
                     $time = $time?$time:"0";
                     $str = "上半场".$time."'";
                 }elseif($item['tuijian_match_state'] == 2){
-                    $str = "中场场";
+                    $str = "中场";
                 }elseif($item['tuijian_match_state'] == 3){
                     $time = str_replace('分','',$item['tuijian_match_time']);
                     $str = "下半场".$time."'";
@@ -229,7 +229,7 @@ class TuijianController extends BaseApiController {
                     $time = $time?$time:"0";
                     $str = "上半场".$time."'";
                 }elseif($item['tuijian_match_state'] == 2){
-                    $str = "中场场";
+                    $str = "中场";
                 }elseif($item['tuijian_match_state'] == 3){
                     $time = str_replace('分','',$item['tuijian_match_time']);
                     $str = "下半场".$time."'";
@@ -238,7 +238,7 @@ class TuijianController extends BaseApiController {
                     $str = "加时".$time."'";;
                 }
                 $item['tuijian_match_time'] = $str;
-                
+
                 # 是否购买
                 $is_buy = 0;
                 if($item['is_fee']){
@@ -637,6 +637,39 @@ class TuijianController extends BaseApiController {
                 $tuijian['user_pic'] = pic_url($user['pic']);
                 $tuijian['user_follow'] = $user['total_follow_user'];
                 $tuijian['user_rate'] = $user['total_rate'];
+
+                # 赛前
+
+                if($tuijian['tuijian_match_state'] == '0'){
+                    $str = "";
+                    $date = date("d", $tuijian['create_time']-strtotime($match['time']));
+                    if($date > 0){
+                        $str = $date."天";
+                    }else{
+                        $date = date("H", $tuijian['create_time']-strtotime($match['time']));
+                        if($date > 0){
+                            $str = $date."时";
+                        }else{
+                            $date = date("i", $tuijian['create_time']-strtotime($match['time']));
+                            $str = $date."'";
+                        }
+                    }
+                    $str = "赛前".$str;
+                    // 上半场
+                }elseif($tuijian['tuijian_match_state'] == 1){
+                    $time = str_replace('分','',$tuijian['tuijian_match_time']);
+                    $time = $time?$time:"0";
+                    $str = "上半场".$time."'";
+                }elseif($tuijian['tuijian_match_state'] == 2){
+                    $str = "中场";
+                }elseif($tuijian['tuijian_match_state'] == 3){
+                    $time = str_replace('分','',$tuijian['tuijian_match_time']);
+                    $str = "下半场".$time."'";
+                }else{
+                    $time = str_replace('分','',$tuijian['tuijian_match_time']);
+                    $str = "加时".$time."'";;
+                }
+                $tuijian['tuijian_match_time'] = $str;
 
                 # 是否购买
                 $is_buy = 0;
