@@ -363,6 +363,7 @@ class LiveController extends BaseApiController {
             $tuijian['away_score'] = $match['away_score'];
             $tuijian['total_collect'] = $match['total_collect'];
             $tuijian['total_tuijian'] = $match['total_tuijian'];
+            $tuijian['tuijian_match_state'] = $match['state'];
 
             $tuijian['state'] = $match['state'];
             if(in_array($tuijian['state'],[0,1,2,3,4])){

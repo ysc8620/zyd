@@ -261,6 +261,7 @@ class TuijianController extends BaseApiController {
             $data['rate_6'] = I('request.rate_6',0,'trim');
             $data['left_ball'] = I('request.left_ball',0,'trim');
             $data['tuijian_match_time'] = I('request.tuijian_match_time','','trim');
+            $data['tuijian_match_state'] = I('request.tuijian_match_state','','trim');
 
             if(empty($data['match_id'])){
                 $json['status'] = 110;
@@ -304,7 +305,7 @@ class TuijianController extends BaseApiController {
                 $json['msg'] = "没找到赛事信息";
                 break;
             }
-            $data['tuijian_match_state'] = $match['state'];
+
 
             // 状态处理
             if(!in_array($match['state'],['0','1','2','3'])){
