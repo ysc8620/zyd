@@ -348,7 +348,7 @@ class MatchController extends BaseApiController {
             $match['jingcai']['draw_win_rate'] = $jingcai['draw_win_rate'];
 
 
-            $peilv = get_rate_list($match['match_id'],$match['time']);
+            $peilv = get_rate_list($match['match_id'],date("Y-m-d H:i:s"));
             $match['live_oupei'] = $peilv['oupei'];
             $match['live_rangqiu'] = $peilv['rangqiu'];
             $match['live_daxiaoqiu'] = $peilv['daxiaoqiu'];

@@ -78,7 +78,7 @@ $data = [
 
 //$data['apple_receipt'] = $apple_receipt;
 
-$result = httpPost("https://api.zydzuqiu.com/sms/send.html?show=", $data);
+$result = httpPost("https://api.zydzuqiu.com/tuijian/index.html?show=", $data);
 
 //var_dump($result);
 echo ($result);
