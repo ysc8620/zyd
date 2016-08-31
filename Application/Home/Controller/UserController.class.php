@@ -930,6 +930,7 @@ class UserController extends BaseApiController {
                     $list[$i]['title'] = "球币提现";
                     $list[$i]['content'] = "您提现了{$item['credit']}个球币";
                 }
+                $list[$i]['create_date'] = date("Y-m-d H:i:s",$item['create_time']);
             }
             $json['data']['list'] = $list;
             $json['data']['total'] = $total;
