@@ -40,6 +40,7 @@ do{
             if($data['type'] == 1){
                 $data['rate_2'] = -$data['rate_2'];
             }
+            $data['time'] = trim(str_replace('分',$data['time']));
             $has = M('zoudi')->where(array('zoudi_id'=>$data['zoudi_id']))->field('id')->find();
             if(!$has){
                 M('zoudi')->add($data);
