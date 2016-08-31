@@ -46,7 +46,7 @@ class TuijianController extends BaseApiController {
                 $this->check_login();
                 $user_id = $this->user['id'];
 
-                $where['id'] = array('exp', "in(SELECT tuijian_id FROM ".C('DB_PREFIX')."tuijian_order WHERE user_id='{$user_id}')");
+                $where['id'] = array('exp', "in(SELECT tuijian_id as id FROM ".C('DB_PREFIX')."tuijian_order WHERE user_id='{$user_id}')");
             }elseif($type == 6){
                 $this->check_login();
                 $user_id = $this->user['id'];
@@ -180,7 +180,7 @@ class TuijianController extends BaseApiController {
                 $this->check_login();
                 $user_id = $this->user['id'];
 
-                $where['id'] = array('exp', "in(SELECT tuijian_id FROM ".C('DB_PREFIX')."tuijian_order WHERE user_id='{$user_id}')");
+                $where['id'] = array('exp', "in(SELECT tuijian_id as id FROM ".C('DB_PREFIX')."tuijian_order WHERE user_id='{$user_id}')");
             }elseif($type == 6){
                 $this->check_login();
                 $user_id = $this->user['id'];
@@ -191,6 +191,7 @@ class TuijianController extends BaseApiController {
             $Page = new Page($total, $limit);
             $list = M('tuijian')->where($where)->limit($Page->firstRow, $Page->listRows)->order(" id DESC")->
             field('*')->select();
+            $json['sql'] = M()->getLastSql();
             // 赛事
             foreach($list as $i=>$item){
                 $match = M('match')->where(array('match_id'=>$item['match_id']))->field('id,match_id,league_id,league_name,home_name,away_name,time,state')->find();
@@ -548,13 +549,30 @@ class TuijianController extends BaseApiController {
                 'status' => 0
             ];
 
+            $credit_log2 = [
+                'type' => 3,
+                'credit' => $tuijian['fee'],
+                'from_user'=>$this->user['id'],
+                'from_id' => $tuijian['id'],
+                'remark' => "销售竞猜",
+                'create_time' => time(),
+                'user_id' => $tuijian['user_id'],
+                'status' => 0
+            ];
+
             M()->startTrans();
             $res = M('tuijian_order')->add($data);
             $res2 = M()->execute("UPDATE ".C('DB_PREFIX')."users SET credit=credit-'{$tuijian['fee']}' WHERE id='{$user_id}' AND credit>='{$tuijian['fee']}'");
+            $user1 = M("users")->where(['id'=>$user_id])->field('id,credit')->find();
+            $res3 = M()->execute("UPDATE ".C('DB_PREFIX')."users SET credit=credit+'{$tuijian['fee']}' WHERE id='{$tuijian['user_id']}'");
+            $user2 = M("users")->where(['id'=>$tuijian['user_id']])->field('id,credit')->find();
+            $credit_log['total_credit'] = $user1['credit'];
             $credit_log['from_id'] = $res;
-            $res3 = M('credit_log')->add($credit_log);
-
-            if($res && $res2 && $res3){
+            $res4 = M('credit_log')->add($credit_log);
+            $credit_log2['total_credit'] = $user2['credit'];
+            $credit_log2['from_id'] = $res;
+            $res5 = M('credit_log')->add($credit_log2);
+            if($res && $res2 && $res3 && $res4 && $res5){
                 M()->commit();
                 // 消息通知
                 $notice = [
@@ -578,18 +596,6 @@ class TuijianController extends BaseApiController {
                 ];
                 M('notice_info')->add($notice);
 
-                $credit_log2 = [
-                    'type' => 3,
-                    'credit' => $tuijian['fee'],
-                    'from_user'=>$this->user['id'],
-                    'from_id' => $tuijian['id'],
-                    'remark' => "销售竞猜",
-                    'create_time' => time(),
-                    'user_id' => $tuijian['user_id'],
-                    'status' => 0
-                ];
-                $credit_log2['from_id'] = $res;
-                M('credit_log')->add($credit_log2);
                 // 更新用户购买总数
                 M('users')->where(array('id'=>$user_id))->setInc('total_buy_info',1);
                 // 更新销售总数
