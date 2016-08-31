@@ -349,7 +349,7 @@ function sock_post($url,$query){
  * // e6e01c753baaf3a6f049b61bbcd4429b
  * // 153530eaf64e1d0e93856917ffc11d37
  */
-function send_sms($mobile,$text,$apikey='e6e01c753baaf3a6f049b61bbcd4429b' ){
+function send_sms($mobile,$text,$apikey='d46a823ad4933584ba760468027aab8e' ){
     // 【云片网】您的验证码是
     $url="http://yunpian.com/v1/sms/send.json";
     $encoded_text = urlencode("$text");
