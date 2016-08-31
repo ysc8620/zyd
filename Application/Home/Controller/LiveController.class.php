@@ -373,10 +373,10 @@ class LiveController extends BaseApiController {
             }
 
             // 一分钟内有进球 禁止发布竞猜
-//            $event = M('event')->where(array('match_id'=>$match['match_id'], 'event_type'=>1))->order("id DESC")->find();
-//            if($event['create_time'] > time()-60){
-//                $tuijian['status'] = 0;
-//            }
+            $event = M('event')->where(array('match_id'=>$match['match_id'], 'event_type'=>1))->order("id DESC")->find();
+            if($event['create_time'] > time()-60){
+                $tuijian['status'] = 0;
+            }
             $tuijian['tuijian_match_time'] = '';
             // 走地封盘
             $zoudi = M('zoudi')->where(array('match_id'=>$match['match_id']))->field('id,type,time')->order("zoudi_id DESC")->find();
