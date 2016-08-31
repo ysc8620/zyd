@@ -19,7 +19,7 @@ function httpPost($url, $data = null)
         'systemVersion' => '9.3.2',
         'model' => 'iPhone 6S Plus',
         'imei' => '3580865021934706',
-        'ssid'=>'269a45d0ca51da7ffbaecc64ca3689d3'//1a02be1c9d62843b8bf973b98c2180a9
+        'ssid'=>'74d95e2c110648778ab54d6ca6d8a73c'//1a02be1c9d62843b8bf973b98c2180a9
 
     ];
     $param['sign'] = sign($param,'b8e586b6eb3530f1c5efad7ea3f1359e');
@@ -72,12 +72,13 @@ $data = [
    'mobile'=>'13800138000',
     'user_id' => '10016',
     'password'=>'a123456',
+    'tuijian_id'=>5,
     'match_id' =>1304455 //1304513
 ];
 
 //$data['apple_receipt'] = $apple_receipt;
 
-$result = httpPost("https://api.zydzuqiu.com/tuijian/index2.html?show=", $data);
+$result = httpPost("https://api.zydzuqiu.com/tuijian/pay.html?show=", $data);
 
 //var_dump($result);
 echo ($result);

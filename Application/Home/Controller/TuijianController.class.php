@@ -563,9 +563,9 @@ class TuijianController extends BaseApiController {
             M()->startTrans();
             $res = M('tuijian_order')->add($data);
             $res2 = M()->execute("UPDATE ".C('DB_PREFIX')."users SET credit=credit-'{$tuijian['fee']}' WHERE id='{$user_id}' AND credit>='{$tuijian['fee']}'");
-            $user1 = M("uesrs")->where(['id'=>$user_id])->field('id,credit')->find();
+            $user1 = M("users")->where(['id'=>$user_id])->field('id,credit')->find();
             $res3 = M()->execute("UPDATE ".C('DB_PREFIX')."users SET credit=credit+'{$tuijian['fee']}' WHERE id='{$tuijian['user_id']}'");
-            $user2 = M("uesrs")->where(['id'=>$tuijian['user_id']])->field('id,credit')->find();
+            $user2 = M("users")->where(['id'=>$tuijian['user_id']])->field('id,credit')->find();
             $credit_log['total_credit'] = $user1['credit'];
             $credit_log['from_id'] = $res;
             $res4 = M('credit_log')->add($credit_log);
