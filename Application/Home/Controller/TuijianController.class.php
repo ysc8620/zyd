@@ -68,33 +68,20 @@ class TuijianController extends BaseApiController {
                 # 赛前
 
                 if($item['tuijian_match_state'] == '0'){
-                    $str = "";
-                    $date = date("j", $item['create_time']-strtotime($match['time']));
-                    if($date > 0){
-                        $str = $date."天";
-                    }else{
-                        $date = date("G", $item['create_time']-strtotime($match['time']));
-                        if($date > 0){
-                            $str = $date."时";
-                        }else{
-                            $date = trim(date("i", $item['create_time']-strtotime($match['time'])),'0');
-                            $str = $date."'";
-                        }
-                    }
-                    $str = "赛前".$str;
+                    $str = "赛前";
                 // 上半场
                 }elseif($item['tuijian_match_state'] == 1){
                     $time = str_replace('分','',$item['tuijian_match_time']);
                     $time = $time?$time:"0";
-                    $str = "上半场".$time."'";
+                    $str = "上半场".$time."',比分{$item['tuijian_home_score']}:{$item['tuijian_away_score']}";
                 }elseif($item['tuijian_match_state'] == 2){
-                    $str = "中场";
+                    $str = "中场,比分{$item['tuijian_home_score']}:{$item['tuijian_away_score']}";
                 }elseif($item['tuijian_match_state'] == 3){
                     $time = str_replace('分','',$item['tuijian_match_time']);
-                    $str = "下半场".$time."'";
+                    $str = "下半场".$time."',比分{$item['tuijian_home_score']}:{$item['tuijian_away_score']}";
                 }else{
                     $time = str_replace('分','',$item['tuijian_match_time']);
-                    $str = "加时".$time."'";;
+                    $str = "加时".$time."',比分{$item['tuijian_home_score']}:{$item['tuijian_away_score']}";;
                 }
                 $item['tuijian_match_time'] = $str;
                 #
@@ -211,32 +198,21 @@ class TuijianController extends BaseApiController {
 
                 if($item['tuijian_match_state'] == '0'){
                     $str = "";
-                    $date = date("j", $item['create_time']-strtotime($match['time']));
-                    if($date > 0){
-                        $str = $date."天";
-                    }else{
-                        $date = date("G", $item['create_time']-strtotime($match['time']));
-                        if($date > 0){
-                            $str = $date."时";
-                        }else{
-                            $date = trim(date("i", $item['create_time']-strtotime($match['time'])),'0');
-                            $str = $date."'";
-                        }
-                    }
+
                     $str = "赛前".$str;
                     // 上半场
                 }elseif($item['tuijian_match_state'] == 1){
                     $time = str_replace('分','',$item['tuijian_match_time']);
                     $time = $time?$time:"0";
-                    $str = "上半场".$time."'";
+                    $str = "上半场".$time."',比分{$item['tuijian_home_score']}:{$item['tuijian_away_score']}";
                 }elseif($item['tuijian_match_state'] == 2){
                     $str = "中场";
                 }elseif($item['tuijian_match_state'] == 3){
                     $time = str_replace('分','',$item['tuijian_match_time']);
-                    $str = "下半场".$time."'";
+                    $str = "下半场".$time."',比分{$item['tuijian_home_score']}:{$item['tuijian_away_score']}";
                 }else{
                     $time = str_replace('分','',$item['tuijian_match_time']);
-                    $str = "加时".$time."'";;
+                    $str = "加时".$time."',比分{$item['tuijian_home_score']}:{$item['tuijian_away_score']}";;
                 }
                 $item['tuijian_match_time'] = $str;
 
@@ -652,32 +628,21 @@ class TuijianController extends BaseApiController {
 
                 if($tuijian['tuijian_match_state'] == '0'){
                     $str = "";
-                    $date = date("j", $tuijian['create_time']-strtotime($match['time']));
-                    if($date > 0){
-                        $str = $date."天";
-                    }else{
-                        $date = date("G", $tuijian['create_time']-strtotime($match['time']));
-                        if($date > 0){
-                            $str = $date."时";
-                        }else{
-                            $date = trim(date("i", $tuijian['create_time']-strtotime($match['time'])),'0');
-                            $str = $date."'";
-                        }
-                    }
+
                     $str = "赛前".$str;
                     // 上半场
                 }elseif($tuijian['tuijian_match_state'] == 1){
                     $time = str_replace('分','',$tuijian['tuijian_match_time']);
                     $time = $time?$time:"0";
-                    $str = "上半场".$time."'";
+                    $str = "上半场".$time."',比分{$tuijian['tuijian_home_score']}:{$tuijian['tuijian_away_score']}";
                 }elseif($tuijian['tuijian_match_state'] == 2){
                     $str = "中场";
                 }elseif($tuijian['tuijian_match_state'] == 3){
                     $time = str_replace('分','',$tuijian['tuijian_match_time']);
-                    $str = "下半场".$time."'";
+                    $str = "下半场".$time."',比分{$tuijian['tuijian_home_score']}:{$tuijian['tuijian_away_score']}";
                 }else{
                     $time = str_replace('分','',$tuijian['tuijian_match_time']);
-                    $str = "加时".$time."'";;
+                    $str = "加时".$time."',比分{$tuijian['tuijian_home_score']}:{$tuijian['tuijian_away_score']}";;
                 }
                 $tuijian['tuijian_match_time'] = $str;
 
