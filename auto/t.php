@@ -8,4 +8,5 @@
 
 require __DIR__ .'/config.php';
 
-echo encrypt_password('123456', 'adflernsk=');
+$res = send_sms(13922806074,'888888');
+var_dump($res);

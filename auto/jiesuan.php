@@ -192,7 +192,7 @@ foreach($match_list as $match){
                         $status = 2;
                     }
                 // 客胜
-                }elseif($match['home_score'] > $match['away_score']){
+                }elseif($match['home_score'] < $match['away_score']){
                     if($tuijian['guess_1'] == 3 || $tuijian['guess_2'] == 3){
                         $status = 1;
                     }else{
