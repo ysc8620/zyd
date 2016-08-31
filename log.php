@@ -73,12 +73,12 @@ $data = [
     'user_id' => '10016',
     'password'=>'a123456',
     'tuijian_id'=>5,
-    'match_id' =>1304455 //1304513
+    'match_id' =>1301561 //1304513
 ];
 
 //$data['apple_receipt'] = $apple_receipt;
 
-$result = httpPost("https://api.zydzuqiu.com/tuijian/index.html?show=", $data);
+$result = httpPost("https://api.zydzuqiu.com/match/info.html?show=yes", $data);
 
 //var_dump($result);
 echo ($result);
