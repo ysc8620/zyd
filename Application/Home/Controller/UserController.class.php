@@ -36,6 +36,7 @@ class UserController extends BaseApiController {
         $loss = M('tuijian')->where(['is_count'=>1, 'status'=>['in',[2,4]], 'create_time'=>['gt', time()-2592000]])->count();
         $member['win'] = $win;
         $member['loss'] = $loss;
+        $member['sql'] = M()->getLastSql();
         $total = $win + $loss;
         $member['total_month_rate'] = $total > 0?number_format(($win/$total),2,'.','')*100:0.00;
         $member['before_match_rate'] = $member['before_match_rate']*100;
