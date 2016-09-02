@@ -31,7 +31,7 @@ class UserController extends BaseApiController {
         unset($member['loss_total']);
         unset($member['zoudi_win_total']);
         unset($member['zoudi_loss_total']);
-        $member['total_rate'] = $member['total_rate']*100;
+        $member['total_rate'] = $member['total_rate'];
         $win = M('tuijian')->where(['is_count'=>1, 'status'=>['in',[1,3]], 'create_time'=>['gt', time()-2592000]])->count();
         $loss = M('tuijian')->where(['is_count'=>1, 'status'=>['in',[2,4]], 'create_time'=>['gt', time()-2592000]])->count();
         $member['win'] = $win;
@@ -41,7 +41,7 @@ class UserController extends BaseApiController {
         $member['total_month_rate'] = $total > 0?number_format(($win/$total),4,'.','')*100:0.00;
         $member['before_match_rate'] = $member['before_match_rate']*100;
         $member['grounder_rate'] = $member['grounder_rate']*100;
-        $member['total_rate'] = $member['total_rate']*100;
+
         if(!$mysalf){
             if($member['mobile']){$member['mobile'] = substr_replace($member['mobile'],'*****',3,5);}
             if(is_mobile($member['nickname'])){
