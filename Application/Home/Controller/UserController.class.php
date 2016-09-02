@@ -38,7 +38,7 @@ class UserController extends BaseApiController {
         $member['loss'] = $loss;
         $member['sql'] = M()->getLastSql();
         $total = $win + $loss;
-        $member['total_month_rate'] = $total > 0?number_format(($win/$total)*100,4,'.',''):0.00;
+        $member['total_month_rate'] = $total > 0?number_format(($win/$total)*100,2,'.',''):0.00;
         $member['before_match_rate'] = number_format($member['before_match_rate']*100,2,'.','');
         $member['grounder_rate'] = number_format($member['grounder_rate']*100,2,'.','');
 
