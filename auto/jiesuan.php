@@ -52,8 +52,15 @@ foreach($match_list as $match){
                     }
                 }
 
+                $is_count = 0;
+                if($rate>1.5){
+                    if($status == 1 || $status == 3 || $status == 2 || $status == 4){
+                        $is_count = 1;
+                    }
+                }
+
                 // 结算记录
-                M('tuijian')->where(array('id'=>$tuijian['id']))->save(['is_win'=>$status, 'status'=>$status,'count_time'=>time()]);
+                M('tuijian')->where(array('id'=>$tuijian['id']))->save(['is_win'=>$status, 'status'=>$status,'is_count'=>$is_count, 'count_time'=>time()]);
                 if($rate > 1.5){
                     // 赛前
                     if($tuijian['tuijian_type'] == 1){
@@ -126,7 +133,14 @@ foreach($match_list as $match){
                         echo "match_id={$match['match_id']},tuijian_id={$tuijian['id']},$result = {$tuijian['rate_5']} -( {$match['home_half_score']} + {$match['away_half_score']})\r\n";
                     }
                 }
-                M('tuijian')->where(array('id'=>$tuijian['id']))->save(['is_win'=>$status, 'status'=>$status, 'count_time'=>time()]);
+                $is_count = 0;
+                if($rate>0.5){
+                    if($status == 1 || $status == 3 || $status == 2 || $status == 4){
+                        $is_count = 1;
+                    }
+                }
+
+                M('tuijian')->where(array('id'=>$tuijian['id']))->save(['is_win'=>$status, 'status'=>$status, 'is_count'=>$is_count, 'count_time'=>time()]);
 
                 // 盘口大于0.5才参与计算
                 if($rate > 0.5){
@@ -199,8 +213,16 @@ foreach($match_list as $match){
                         echo "match_id={$match['match_id']},tuijian_id={$tuijian['id']},$result = {$match['away_half_score']} - {$match['home_half_score']} - {$tuijian['rate_5']} - ({$tuijian['tuijian_away_score']} - {$tuijian['tuijian_home_score']});\r\n";
                     }
                 }
+
+                $is_count = 0;
+                if($rate>0.5){
+                    if($status == 1 || $status == 3 || $status == 2 || $status == 4){
+                        $is_count = 1;
+                    }
+                }
+
                 // 保存计算结果
-                M('tuijian')->where(array('id'=>$tuijian['id']))->save(['is_win'=>$status, 'status'=>$status, 'count_time'=>time()]);
+                M('tuijian')->where(array('id'=>$tuijian['id']))->save(['is_win'=>$status, 'status'=>$status,'is_count'=>$is_count, 'count_time'=>time()]);
                 if($rate > 0.5){
                     // 赛前
                     if($tuijian['tuijian_type'] == 1){
@@ -323,8 +345,16 @@ foreach($match_list as $match){
                         $status = 2;
                     }
                 }
+
+                $is_count = 0;
+                if($rate>1.5){
+                    if($status == 1 || $status == 3 || $status == 2 || $status == 4){
+                        $is_count = 1;
+                    }
+                }
+
                 // 结算记录
-                M('tuijian')->where(array('id'=>$tuijian['id']))->save(['is_win'=>$status, 'status'=>$status,'count_time'=>time()]);
+                M('tuijian')->where(array('id'=>$tuijian['id']))->save(['is_win'=>$status, 'status'=>$status,'is_count'=>$is_count, 'count_time'=>time()]);
                 if($rate > 1.5){
                     // 赛前
                     if($tuijian['tuijian_type'] == 1){
@@ -392,7 +422,14 @@ foreach($match_list as $match){
                         echo "match_id={$match['match_id']},tuijian_id={$tuijian['id']},$result = {$tuijian['rate_2']} -( {$match['home_score']} + {$match['away_score']})\r\n";
                     }
                 }
-                M('tuijian')->where(array('id'=>$tuijian['id']))->save(['is_win'=>$status, 'status'=>$status, 'count_time'=>time()]);
+                $is_count = 0;
+                if($rate>0.5){
+                    if($status == 1 || $status == 3 || $status == 2 || $status == 4){
+                        $is_count = 1;
+                    }
+                }
+
+                M('tuijian')->where(array('id'=>$tuijian['id']))->save(['is_win'=>$status, 'status'=>$status,'is_count'=> $is_count'count_time'=>time()]);
                 if($rate > 0.5){
                     // 赛前
                     if($tuijian['tuijian_type'] == 1){
@@ -462,8 +499,15 @@ foreach($match_list as $match){
                         echo "match_id={$match['match_id']},tuijian_id={$tuijian['id']},$result = {$match['away_score']} - {$match['home_score']} - {$tuijian['rate_2']} - ({$tuijian['tuijian_away_score']} - {$tuijian['tuijian_home_score']})\r\n";
                     }
                 }
+                $is_count = 0;
+                if($rate>0.5){
+                    if($status == 1 || $status == 3 || $status == 2 || $status == 4){
+                        $is_count = 1;
+                    }
+                }
+
                 // 保存计算结果
-                M('tuijian')->where(array('id'=>$tuijian['id']))->save(['is_win'=>$status, 'status'=>$status, 'count_time'=>time()]);
+                M('tuijian')->where(array('id'=>$tuijian['id']))->save(['is_win'=>$status, 'status'=>$status,'is_count'=>$is_count, 'count_time'=>time()]);
 
                 if($rate > 0.5){
                     // 赛前
