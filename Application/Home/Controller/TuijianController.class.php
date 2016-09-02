@@ -89,7 +89,7 @@ class TuijianController extends BaseApiController {
                 $item['user_name'] = getNickName($user['nickname']);
                 $item['user_pic'] = pic_url($user['pic']);
                 $item['user_follow'] = $user['total_follow_user'];
-                $item['user_rate'] = $user['total_rate']*100;
+                $item['user_rate'] = number_format($user['total_rate']*100,2,'.','');
                 # 是否购买
                 $is_buy = 0;
                 if($item['is_fee']){
@@ -194,7 +194,7 @@ class TuijianController extends BaseApiController {
                 $item['user_name'] = getNickName($user['nickname']);
                 $item['user_pic'] = pic_url($user['pic']);
                 $item['user_follow'] = $user['total_follow_user'];
-                $item['user_rate'] = $user['total_rate']*100;
+                $item['user_rate'] = number_format($user['total_rate']*100,2,'.','');
 
                 if($item['tuijian_match_state'] == '0'){
                     $str = "";
@@ -622,7 +622,7 @@ class TuijianController extends BaseApiController {
                 $tuijian['user_name'] = getNickName($user['nickname']);
                 $tuijian['user_pic'] = pic_url($user['pic']);
                 $tuijian['user_follow'] = $user['total_follow_user'];
-                $tuijian['user_rate'] = $user['total_rate']*100;
+                $tuijian['user_rate'] = number_format($user['total_rate']*100,2,'.','');
 
                 # 赛前
 
