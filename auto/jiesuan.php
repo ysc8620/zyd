@@ -429,7 +429,7 @@ foreach($match_list as $match){
                     }
                 }
 
-                M('tuijian')->where(array('id'=>$tuijian['id']))->save(['is_win'=>$status, 'status'=>$status,'is_count'=> $is_count'count_time'=>time()]);
+                M('tuijian')->where(array('id'=>$tuijian['id']))->save(['is_win'=>$status, 'status'=>$status,'is_count'=> $is_count,'count_time'=>time()]);
                 if($rate > 0.5){
                     // 赛前
                     if($tuijian['tuijian_type'] == 1){
