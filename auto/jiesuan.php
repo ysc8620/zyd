@@ -59,23 +59,21 @@ foreach($match_list as $match){
                     if($tuijian['tuijian_type'] == 1){
                         // 赢
                         if($status == 1){
-                            M('users')->where(['id'=>$tuijian['id']])->setInc('before_win_total', 1);
-                            M('users')->where(['id'=>$tuijian['id']])->setInc('win_total', 1);
-
-                            M()->execute("UPDATE t_users SET before_win_total=before_win_total+1, win_total=win_total+1,
+                            echo("UPDATE t_users SET before_win_total=before_win_total+1, win_total=win_total+1,
                             before_match_rate=before_win_total/(before_win_total+before_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
-                        // 输
+                        
+                            // 输
                         }else{
-                            M()->execute("UPDATE t_users SET before_loss_total=before_loss_total+1, loss_total=loss_total+1,
+                            echo("UPDATE t_users SET before_loss_total=before_loss_total+1, loss_total=loss_total+1,
                             before_match_rate=before_win_total/(before_win_total+before_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
                         }
                     // 走地
                     }else{
                         if($status == 1){
-                            M()->execute("UPDATE t_users SET zoudi_win_total=zoudi_win_total+1, win_total=win_total+1,
+                            echo("UPDATE t_users SET zoudi_win_total=zoudi_win_total+1, win_total=win_total+1,
                             grounder_rate=zoudi_win_total/(zoudi_win_total+zoudi_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
                         }else{
-                            M()->execute("UPDATE t_users SET zoudi_loss_total=zoudi_loss_total+1, loss_total=loss_total+1,
+                            echo("UPDATE t_users SET zoudi_loss_total=zoudi_loss_total+1, loss_total=loss_total+1,
                             grounder_rate=zoudi_win_total/(zoudi_win_total+zoudi_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
 
                         }
@@ -135,21 +133,21 @@ foreach($match_list as $match){
                     // 赛前
                     if($tuijian['tuijian_type'] == 1){
                         if($status == 1 || $status == 3){
-                            M()->execute("UPDATE t_users SET before_win_total=before_win_total+1, win_total=win_total+1,
+                            echo("UPDATE t_users SET before_win_total=before_win_total+1, win_total=win_total+1,
                             before_match_rate=before_win_total/(before_win_total+before_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
 
                         }elseif($status == 2 || $status == 4){
-                            M()->execute("UPDATE t_users SET before_loss_total=before_loss_total+1, loss_total=loss_total+1,
+                            echo("UPDATE t_users SET before_loss_total=before_loss_total+1, loss_total=loss_total+1,
                             before_match_rate=before_win_total/(before_win_total+before_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
                         }
                     // 走地
                     }else{
                         if($status == 1 || $status == 3){
-                            M()->execute("UPDATE t_users SET zoudi_win_total=zoudi_win_total+1, win_total=win_total+1,
+                            echo("UPDATE t_users SET zoudi_win_total=zoudi_win_total+1, win_total=win_total+1,
                             grounder_rate=zoudi_win_total/(zoudi_win_total+zoudi_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
 
                         }elseif($status == 2 || $status == 4){
-                            M()->execute("UPDATE t_users SET zoudi_loss_total=zoudi_loss_total+1, loss_total=loss_total+1,
+                            echo("UPDATE t_users SET zoudi_loss_total=zoudi_loss_total+1, loss_total=loss_total+1,
                             grounder_rate=zoudi_win_total/(zoudi_win_total+zoudi_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
                         }
                     }
@@ -207,21 +205,21 @@ foreach($match_list as $match){
                     // 赛前
                     if($tuijian['tuijian_type'] == 1){
                         if($status == 1 || $status == 3){
-                            M()->execute("UPDATE t_users SET before_win_total=before_win_total+1, win_total=win_total+1,
+                            echo("UPDATE t_users SET before_win_total=before_win_total+1, win_total=win_total+1,
                             before_match_rate=before_win_total/(before_win_total+before_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
 
                         }elseif($status == 2 || $status == 4){
-                            M()->execute("UPDATE t_users SET before_loss_total=before_loss_total+1, loss_total=loss_total+1,
+                            echo("UPDATE t_users SET before_loss_total=before_loss_total+1, loss_total=loss_total+1,
                             before_match_rate=before_win_total/(before_win_total+before_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
                         }
                     // 走地
                     }else{
                         if($status == 1 || $status == 3){
-                            M()->execute("UPDATE t_users SET zoudi_win_total=zoudi_win_total+1, win_total=win_total+1,
+                            echo("UPDATE t_users SET zoudi_win_total=zoudi_win_total+1, win_total=win_total+1,
                             grounder_rate=zoudi_win_total/(zoudi_win_total+zoudi_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
 
                         }elseif($status == 2 || $status == 4){
-                            M()->execute("UPDATE t_users SET zoudi_loss_total=zoudi_loss_total+1, loss_total=loss_total+1,
+                            echo("UPDATE t_users SET zoudi_loss_total=zoudi_loss_total+1, loss_total=loss_total+1,
                             grounder_rate=zoudi_win_total/(zoudi_win_total+zoudi_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
                         }
                     }
@@ -331,20 +329,20 @@ foreach($match_list as $match){
                     // 赛前
                     if($tuijian['tuijian_type'] == 1){
                         if($status == 1 ){
-                            M()->execute("UPDATE t_users SET before_win_total=before_win_total+1, win_total=win_total+1,
+                            echo("UPDATE t_users SET before_win_total=before_win_total+1, win_total=win_total+1,
                             before_match_rate=before_win_total/(before_win_total+before_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
 
                         }elseif($status == 2 ){
-                            M()->execute("UPDATE t_users SET before_loss_total=before_loss_total+1, loss_total=loss_total+1,
+                            echo("UPDATE t_users SET before_loss_total=before_loss_total+1, loss_total=loss_total+1,
                             before_match_rate=before_win_total/(before_win_total+before_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
                         }
                     // 走地
                     }else{
                         if($status == 1 ){
-                            M()->execute("UPDATE t_users SET zoudi_win_total=zoudi_win_total+1, win_total=win_total+1,
+                            echo("UPDATE t_users SET zoudi_win_total=zoudi_win_total+1, win_total=win_total+1,
                             grounder_rate=zoudi_win_total/(zoudi_win_total+zoudi_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
                         }elseif($status == 2 ){
-                            M()->execute("UPDATE t_users SET zoudi_loss_total=zoudi_loss_total+1, loss_total=loss_total+1,
+                            echo("UPDATE t_users SET zoudi_loss_total=zoudi_loss_total+1, loss_total=loss_total+1,
                             grounder_rate=zoudi_win_total/(zoudi_win_total+zoudi_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
                         }
                     }
@@ -399,21 +397,21 @@ foreach($match_list as $match){
                     // 赛前
                     if($tuijian['tuijian_type'] == 1){
                         if($status == 1 || $status == 3){
-                            M()->execute("UPDATE t_users SET before_win_total=before_win_total+1, win_total=win_total+1,
+                            echo("UPDATE t_users SET before_win_total=before_win_total+1, win_total=win_total+1,
                             before_match_rate=before_win_total/(before_win_total+before_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
 
                         }elseif($status == 2 || $status == 4){
-                            M()->execute("UPDATE t_users SET before_loss_total=before_loss_total+1, loss_total=loss_total+1,
+                            echo("UPDATE t_users SET before_loss_total=before_loss_total+1, loss_total=loss_total+1,
                             before_match_rate=before_win_total/(before_win_total+before_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
                         }
                         // 走地
                     }else{
                         if($status == 1 || $status == 3){
-                            M()->execute("UPDATE t_users SET zoudi_win_total=zoudi_win_total+1, win_total=win_total+1,
+                            echo("UPDATE t_users SET zoudi_win_total=zoudi_win_total+1, win_total=win_total+1,
                             grounder_rate=zoudi_win_total/(zoudi_win_total+zoudi_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
 
                         }elseif($status == 2 || $status == 4){
-                            M()->execute("UPDATE t_users SET zoudi_loss_total=zoudi_loss_total+1, loss_total=loss_total+1,
+                            echo("UPDATE t_users SET zoudi_loss_total=zoudi_loss_total+1, loss_total=loss_total+1,
                             grounder_rate=zoudi_win_total/(zoudi_win_total+zoudi_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
                         }
                     }
@@ -471,20 +469,20 @@ foreach($match_list as $match){
                     // 赛前
                     if($tuijian['tuijian_type'] == 1){
                         if($status == 1 || $status == 3){
-                            M()->execute("UPDATE t_users SET before_win_total=before_win_total+1, win_total=win_total+1,
+                            echo("UPDATE t_users SET before_win_total=before_win_total+1, win_total=win_total+1,
                             before_match_rate=before_win_total/(before_win_total+before_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
 
                         }elseif($status == 2 || $status == 4){
-                            M()->execute("UPDATE t_users SET before_loss_total=before_loss_total+1, loss_total=loss_total+1,
+                            echo("UPDATE t_users SET before_loss_total=before_loss_total+1, loss_total=loss_total+1,
                             before_match_rate=before_win_total/(before_win_total+before_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
                         }
                         // 走地
                     }else{
                         if($status == 1 || $status == 3){
-                            M()->execute("UPDATE t_users SET zoudi_win_total=zoudi_win_total+1, win_total=win_total+1,
+                            echo ("UPDATE t_users SET zoudi_win_total=zoudi_win_total+1, win_total=win_total+1,
                             grounder_rate=zoudi_win_total/(zoudi_win_total+zoudi_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
                         }elseif($status == 2 || $status == 4){
-                            M()->execute("UPDATE t_users SET zoudi_loss_total=zoudi_loss_total+1, loss_total=loss_total+1,
+                            echo("UPDATE t_users SET zoudi_loss_total=zoudi_loss_total+1, loss_total=loss_total+1,
                             grounder_rate=zoudi_win_total/(zoudi_win_total+zoudi_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
                         }
                     }
