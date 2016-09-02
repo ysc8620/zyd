@@ -11,6 +11,7 @@ namespace auto;
 require_once __DIR__ .'/config.php';
 echo date("Y-m-d H:i:s")."=match_api=\r\n";
 // 0 等待结果， 1 赢， 2输，3赢半,4输半,5走
+// 类型：1, 竞彩, 2欧赔,3大小球,4 让球
 // 计算半场竞猜输赢
 $match_list = M("match")->where(array('state'=>array('in',[2,3,-1]), 'is_half_count'=>0))->field('id,match_id,home_score,away_score,home_half_score,away_half_score')->select();
 foreach($match_list as $match){
@@ -18,14 +19,16 @@ foreach($match_list as $match){
     // 获取所有竞猜信息
     $tuijian_list = M('tuijian')->where(array('match_id'=>$match['match_id'], 'sub_type'=>1,  'is_win'=>0))->select();
     foreach($tuijian_list as $tuijian){
+        // < 1.5
         // 欧赔
         if($tuijian['type'] == 2){
-
             // 半场欧赔
             if($tuijian['sub_type'] == 1){
                 $status = 0;
+                $rate = 0;
                 // 主胜
                 if($tuijian['guess_1'] == 4){
+                    $rate = $tuijian['rate_4'];
                     if($match['home_half_score'] > $match['away_half_score']){
                         $status = 1;
                     }else{
@@ -33,6 +36,7 @@ foreach($match_list as $match){
                     }
                 // 和局
                 }elseif($tuijian['guess_1'] == 5){
+                    $rate = $tuijian['rate_5'];
                     if($match['home_half_score'] == $match['away_half_score']){
                         $status = 1;
                     }else{
@@ -40,21 +44,52 @@ foreach($match_list as $match){
                     }
                 // 客胜
                 }elseif($tuijian['guess_1'] == 6){
+                    $rate = $tuijian['rate_6'];
                     if($match['home_half_score'] < $match['away_half_score']){
                         $status = 1;
                     }else{
                         $status = 2;
                     }
                 }
+
                 // 结算记录
                 M('tuijian')->where(array('id'=>$tuijian['id']))->save(['is_win'=>$status, 'status'=>$status,'count_time'=>time()]);
+                if($rate > 1.5){
+                    // 赛前
+                    if($tuijian['tuijian_type'] == 1){
+                        // 赢
+                        if($status == 1){
+                            M('users')->where(['id'=>$tuijian['id']])->setInc('before_win_total', 1);
+                            M('users')->where(['id'=>$tuijian['id']])->setInc('win_total', 1);
+
+                            M()->execute("UPDATE t_users SET before_win_total=before_win_total+1, win_total=win_total+1,
+                            before_match_rate=before_win_total/(before_win_total+before_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
+                        // 输
+                        }else{
+                            M()->execute("UPDATE t_users SET before_loss_total=before_loss_total+1, loss_total=loss_total+1,
+                            before_match_rate=before_win_total/(before_win_total+before_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
+                        }
+                    // 走地
+                    }else{
+                        if($status == 1){
+                            M()->execute("UPDATE t_users SET zoudi_win_total=zoudi_win_total+1, win_total=win_total+1,
+                            grounder_rate=zoudi_win_total/(zoudi_win_total+zoudi_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
+                        }else{
+                            M()->execute("UPDATE t_users SET zoudi_loss_total=zoudi_loss_total+1, loss_total=loss_total+1,
+                            grounder_rate=zoudi_win_total/(zoudi_win_total+zoudi_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
+
+                        }
+                    }
+                }
             }
         }elseif($tuijian['type'] == 3){
             // 半场大小球
             if($tuijian['sub_type'] == 1){
                 $status = 0;
+                $rate = $tuijian['rate_5'];
                 // 大球计算
                 if($tuijian['guess_1'] == 4){
+
                     $result = $match['home_half_score'] + $match['away_half_score'] - $tuijian['rate_5'];
                     if($result >= 0.5){
                         $status = 1;
@@ -94,10 +129,37 @@ foreach($match_list as $match){
                     }
                 }
                 M('tuijian')->where(array('id'=>$tuijian['id']))->save(['is_win'=>$status, 'status'=>$status, 'count_time'=>time()]);
+
+                // 盘口大于0.5才参与计算
+                if($rate > 0.5){
+                    // 赛前
+                    if($tuijian['tuijian_type'] == 1){
+                        if($status == 1 || $status == 3){
+                            M()->execute("UPDATE t_users SET before_win_total=before_win_total+1, win_total=win_total+1,
+                            before_match_rate=before_win_total/(before_win_total+before_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
+
+                        }elseif($status == 2 || $status == 4){
+                            M()->execute("UPDATE t_users SET before_loss_total=before_loss_total+1, loss_total=loss_total+1,
+                            before_match_rate=before_win_total/(before_win_total+before_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
+                        }
+                    // 走地
+                    }else{
+                        if($status == 1 || $status == 3){
+                            M()->execute("UPDATE t_users SET zoudi_win_total=zoudi_win_total+1, win_total=win_total+1,
+                            grounder_rate=zoudi_win_total/(zoudi_win_total+zoudi_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
+
+                        }elseif($status == 2 || $status == 4){
+                            M()->execute("UPDATE t_users SET zoudi_loss_total=zoudi_loss_total+1, loss_total=loss_total+1,
+                            grounder_rate=zoudi_win_total/(zoudi_win_total+zoudi_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
+                        }
+                    }
+                }
+
             }
         }elseif($tuijian['type'] == 4){
             // 半场让球
             if($tuijian['sub_type'] == 1){
+                $state = $tuijian['rate_5'];
                 // 主队赢
                 if($tuijian['guess_1'] == 4){
                     // 最终主队进球数-最终客队进球数+竞猜时的盘口-（竞猜时的主队进球数-竞猜时的客队进球数）
@@ -141,6 +203,29 @@ foreach($match_list as $match){
                 }
                 // 保存计算结果
                 M('tuijian')->where(array('id'=>$tuijian['id']))->save(['is_win'=>$status, 'status'=>$status, 'count_time'=>time()]);
+                if($rate > 0.5){
+                    // 赛前
+                    if($tuijian['tuijian_type'] == 1){
+                        if($status == 1 || $status == 3){
+                            M()->execute("UPDATE t_users SET before_win_total=before_win_total+1, win_total=win_total+1,
+                            before_match_rate=before_win_total/(before_win_total+before_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
+
+                        }elseif($status == 2 || $status == 4){
+                            M()->execute("UPDATE t_users SET before_loss_total=before_loss_total+1, loss_total=loss_total+1,
+                            before_match_rate=before_win_total/(before_win_total+before_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
+                        }
+                    // 走地
+                    }else{
+                        if($status == 1 || $status == 3){
+                            M()->execute("UPDATE t_users SET zoudi_win_total=zoudi_win_total+1, win_total=win_total+1,
+                            grounder_rate=zoudi_win_total/(zoudi_win_total+zoudi_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
+
+                        }elseif($status == 2 || $status == 4){
+                            M()->execute("UPDATE t_users SET zoudi_loss_total=zoudi_loss_total+1, loss_total=loss_total+1,
+                            grounder_rate=zoudi_win_total/(zoudi_win_total+zoudi_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
+                        }
+                    }
+                }
             }
         }
     }
@@ -214,8 +299,10 @@ foreach($match_list as $match){
             // 半场欧赔
             if($tuijian['sub_type'] == 2){
                 $status = 0;
+                $rate = 0;
                 // 主胜
                 if($tuijian['guess_1'] == 1){
+                    $rate = $tuijian['rate_1'];
                     if($match['home_score'] > $match['away_score']){
                         $status = 1;
                     }else{
@@ -223,6 +310,7 @@ foreach($match_list as $match){
                     }
                     // 和局
                 }elseif($tuijian['guess_1'] == 2){
+                    $rate = $tuijian['rate_2'];
                     if($match['home_score'] == $match['away_score']){
                         $status = 1;
                     }else{
@@ -230,6 +318,7 @@ foreach($match_list as $match){
                     }
                     // 客胜
                 }elseif($tuijian['guess_1'] == 3){
+                    $rate = $tuijian['rate_3'];
                     if($match['home_score'] < $match['away_score']){
                         $status = 1;
                     }else{
@@ -238,11 +327,34 @@ foreach($match_list as $match){
                 }
                 // 结算记录
                 M('tuijian')->where(array('id'=>$tuijian['id']))->save(['is_win'=>$status, 'status'=>$status,'count_time'=>time()]);
+                if($rate > 1.5){
+                    // 赛前
+                    if($tuijian['tuijian_type'] == 1){
+                        if($status == 1 ){
+                            M()->execute("UPDATE t_users SET before_win_total=before_win_total+1, win_total=win_total+1,
+                            before_match_rate=before_win_total/(before_win_total+before_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
+
+                        }elseif($status == 2 ){
+                            M()->execute("UPDATE t_users SET before_loss_total=before_loss_total+1, loss_total=loss_total+1,
+                            before_match_rate=before_win_total/(before_win_total+before_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
+                        }
+                    // 走地
+                    }else{
+                        if($status == 1 ){
+                            M()->execute("UPDATE t_users SET zoudi_win_total=zoudi_win_total+1, win_total=win_total+1,
+                            grounder_rate=zoudi_win_total/(zoudi_win_total+zoudi_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
+                        }elseif($status == 2 ){
+                            M()->execute("UPDATE t_users SET zoudi_loss_total=zoudi_loss_total+1, loss_total=loss_total+1,
+                            grounder_rate=zoudi_win_total/(zoudi_win_total+zoudi_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
+                        }
+                    }
+                }
             }
         }elseif($tuijian['type'] == 3){
             // 全场大小球
             if($tuijian['sub_type'] == 2){
                 $status = 0;
+                $rate = $tuijian['rate_2'];
                 // 大球计算
                 if($tuijian['guess_1'] == 1){
                     $result = $match['home_score'] + $match['away_score'] - $tuijian['rate_2'];
@@ -283,10 +395,34 @@ foreach($match_list as $match){
                     }
                 }
                 M('tuijian')->where(array('id'=>$tuijian['id']))->save(['is_win'=>$status, 'status'=>$status, 'count_time'=>time()]);
+                if($rate > 0.5){
+                    // 赛前
+                    if($tuijian['tuijian_type'] == 1){
+                        if($status == 1 || $status == 3){
+                            M()->execute("UPDATE t_users SET before_win_total=before_win_total+1, win_total=win_total+1,
+                            before_match_rate=before_win_total/(before_win_total+before_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
+
+                        }elseif($status == 2 || $status == 4){
+                            M()->execute("UPDATE t_users SET before_loss_total=before_loss_total+1, loss_total=loss_total+1,
+                            before_match_rate=before_win_total/(before_win_total+before_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
+                        }
+                        // 走地
+                    }else{
+                        if($status == 1 || $status == 3){
+                            M()->execute("UPDATE t_users SET zoudi_win_total=zoudi_win_total+1, win_total=win_total+1,
+                            grounder_rate=zoudi_win_total/(zoudi_win_total+zoudi_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
+
+                        }elseif($status == 2 || $status == 4){
+                            M()->execute("UPDATE t_users SET zoudi_loss_total=zoudi_loss_total+1, loss_total=loss_total+1,
+                            grounder_rate=zoudi_win_total/(zoudi_win_total+zoudi_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
+                        }
+                    }
+                }
             }
         }elseif($tuijian['type'] == 4){
             // 半场让球
             if($tuijian['sub_type'] == 2){
+                $rate = $tuijian['rate_2'];
                 // 主队赢
                 if($tuijian['guess_1'] == 1){
                     // 最终主队进球数-最终客队进球数+竞猜时的盘口-（竞猜时的主队进球数-竞猜时的客队进球数）
@@ -330,6 +466,29 @@ foreach($match_list as $match){
                 }
                 // 保存计算结果
                 M('tuijian')->where(array('id'=>$tuijian['id']))->save(['is_win'=>$status, 'status'=>$status, 'count_time'=>time()]);
+
+                if($rate > 0.5){
+                    // 赛前
+                    if($tuijian['tuijian_type'] == 1){
+                        if($status == 1 || $status == 3){
+                            M()->execute("UPDATE t_users SET before_win_total=before_win_total+1, win_total=win_total+1,
+                            before_match_rate=before_win_total/(before_win_total+before_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
+
+                        }elseif($status == 2 || $status == 4){
+                            M()->execute("UPDATE t_users SET before_loss_total=before_loss_total+1, loss_total=loss_total+1,
+                            before_match_rate=before_win_total/(before_win_total+before_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
+                        }
+                        // 走地
+                    }else{
+                        if($status == 1 || $status == 3){
+                            M()->execute("UPDATE t_users SET zoudi_win_total=zoudi_win_total+1, win_total=win_total+1,
+                            grounder_rate=zoudi_win_total/(zoudi_win_total+zoudi_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
+                        }elseif($status == 2 || $status == 4){
+                            M()->execute("UPDATE t_users SET zoudi_loss_total=zoudi_loss_total+1, loss_total=loss_total+1,
+                            grounder_rate=zoudi_win_total/(zoudi_win_total+zoudi_loss_total),total_rate=win_total/(win_total+loss_total) WHERE id='{$tuijian['user_id']}'");
+                        }
+                    }
+                }
             }
         }
     }
