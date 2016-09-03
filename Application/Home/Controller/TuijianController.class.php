@@ -565,7 +565,8 @@ class TuijianController extends BaseApiController {
                     'user_id' => 10000,
                     'status' => 0
                 ];
-
+                $user3 = M("users")->where(['id'=>'10000'])->field('id,credit')->find();
+                $credit_sys['total_credit'] = $user3['credit'];
                 M('credit_log')->add($credit_sys);
 
                 // 消息通知
