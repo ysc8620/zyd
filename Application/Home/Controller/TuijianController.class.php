@@ -524,8 +524,8 @@ class TuijianController extends BaseApiController {
                 'user_id' => $user_id,
                 'status' => 0
             ];
-            $credit = number_format($tuijian['fee'] * 0.7,2,'.','');
-            $sys_credit = $tuijian['fee'] - $credit;
+            $credit = bcmul($tuijian['fee'],  0.7, 2);
+            $sys_credit = bcsub($tuijian['fee'],$credit,2);//$tuijian['fee'] - $credit;
             $credit_log2 = [
                 'type' => 3,
                 'credit' => $credit,
