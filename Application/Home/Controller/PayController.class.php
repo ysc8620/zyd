@@ -99,6 +99,20 @@ class PayController extends BaseApiController {
                         // credit, total_top_credit
                         M('users')->where(array('id'=>$top['user_id']))->save(array('credit'=>array('exp',"credit+{$top['credit']}"),'total_top_credit'=>array('exp',"total_top_credit+{$top['credit']}")));
 
+                        $credit_log2 = [
+                            'type' => 1,
+                            'credit' => $top['credit'],
+                            'from_id' => 0,
+                            'remark' => "用户充值",
+                            'create_time' => time(),
+                            'user_id' => $top['user_id'],
+                            'status' => 0,
+                            'from_id'=>$top['id']
+                        ];
+
+                        $user3 = M("users")->where(['id'=>$top['user_id']])->field('id,credit')->find();
+                        $credit_log2['total_credit'] = $user3['credit'];
+
                     }
                    $json['data']['status'] = 0;
                     break;

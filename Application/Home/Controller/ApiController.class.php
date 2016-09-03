@@ -66,6 +66,8 @@ class ApiController extends BaseController {
                                     'status' => 0,
                                     'from_id'=>$info['id']
                                 ];
+                                $user3 = M("users")->where(['id'=>$info['user_id']])->field('id,credit')->find();
+                                $credit_log2['total_credit'] = $user3['credit'];
                                 M('credit_log')->add($credit_log2);
                             } else {
                                 M()->rollback();
@@ -101,6 +103,8 @@ class ApiController extends BaseController {
                                     'status' => 0,
                                     'from_id'=>$info['id']
                                 ];
+                                $user3 = M("users")->where(['id'=>$info['user_id']])->field('id,credit')->find();
+                                $credit_log2['total_credit'] = $user3['credit'];
                                 M('credit_log')->add($credit_log2);
                             } else {
                                 M()->rollback();
