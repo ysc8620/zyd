@@ -524,10 +524,11 @@ class TuijianController extends BaseApiController {
                 'user_id' => $user_id,
                 'status' => 0
             ];
-
+            $credit = number_format($tuijian['fee'] * 0.7,2,'.','');
+            $sys_credit = $tuijian['fee'] - $credit;
             $credit_log2 = [
                 'type' => 3,
-                'credit' => $tuijian['fee'],
+                'credit' => $credit,
                 'from_user'=>$this->user['id'],
                 'from_id' => $tuijian['id'],
                 'remark' => "销售竞猜",
@@ -540,7 +541,7 @@ class TuijianController extends BaseApiController {
             $res = M('tuijian_order')->add($data);
             $res2 = M()->execute("UPDATE ".C('DB_PREFIX')."users SET credit=credit-'{$tuijian['fee']}' WHERE id='{$user_id}' AND credit>='{$tuijian['fee']}'");
             $user1 = M("users")->where(['id'=>$user_id])->field('id,credit')->find();
-            $res3 = M()->execute("UPDATE ".C('DB_PREFIX')."users SET credit=credit+'{$tuijian['fee']}' WHERE id='{$tuijian['user_id']}'");
+            $res3 = M()->execute("UPDATE ".C('DB_PREFIX')."users SET credit=credit+'{$credit}' WHERE id='{$tuijian['user_id']}'");
             $user2 = M("users")->where(['id'=>$tuijian['user_id']])->field('id,credit')->find();
             $credit_log['total_credit'] = $user1['credit'];
             $credit_log['from_id'] = $res;
@@ -550,6 +551,23 @@ class TuijianController extends BaseApiController {
             $res5 = M('credit_log')->add($credit_log2);
             if($res && $res2 && $res3 && $res4 && $res5){
                 M()->commit();
+
+                // 平台收取 30%佣金
+                M()->execute("UPDATE ".C('DB_PREFIX')."users SET credit=credit+'{$sys_credit}' WHERE id='10000'");
+
+                $credit_sys= [
+                    'type' => 3,
+                    'credit' => $sys_credit,
+                    'from_user'=>$tuijian['user_id'],
+                    'from_id' => $tuijian['id'],
+                    'remark' => "平台抽佣",
+                    'create_time' => time(),
+                    'user_id' => 10000,
+                    'status' => 0
+                ];
+
+                M('credit_log')->add($credit_sys);
+
                 // 消息通知
                 $notice = [
                     'notice_type'=>2,
