@@ -35,7 +35,7 @@ class NoticeController extends BaseApiController {
                 // status 1待发， 2已发，3已读
                 $total = M('notice_info')->where(array('to_id'=>$user_id))->count();
                 $page = new Page($total, $limit);
-                $list = M('notice_info')->where(array('to_id'=>$user_id,'status'=>array('lt', 4)))->limit($page->firstRow, $page->listRows)->order("status ASC, create_time ASC")->select();
+                $list = M('notice_info')->where(array('to_id'=>$user_id,'status'=>array('lt', 4)))->limit($page->firstRow, $page->listRows)->order(" create_time DESC")->select();
                 $ids = [];
                 foreach($list as $item){
                     $ids[] = $item['id'];
