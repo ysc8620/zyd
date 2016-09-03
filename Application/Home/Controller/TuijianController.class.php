@@ -573,6 +573,7 @@ class TuijianController extends BaseApiController {
                     'notice_type'=>2,
                     'from_user'=>$user_id,
                     'from_id'=>$tuijian['id'],
+                    'to_id'=>$this->user['id'],
                     'notice_title'=>'购买竞彩',
                     'notice_msg'=>"您购买了".getNickName($tuijian_user['nickname'])."发布的竞彩",
                     'create_time'=>time()
@@ -582,6 +583,7 @@ class TuijianController extends BaseApiController {
                 // 消息通知
                 $notice = [
                     'notice_type'=>2,
+                    'from_user'=>$this->user['id'],
                     'from_id'=>$tuijian['id'],
                     'to_id'=>$tuijian['user_id'],
                     'notice_title'=>'销售竞彩',
