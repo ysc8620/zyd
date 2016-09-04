@@ -126,6 +126,14 @@ class UserController extends BaseApiController {
 
             $user_id = M('users')->add($user);
             if($user_id){
+                // 默认关注 杨林
+                $data = [
+                    'from_user_id' => $user_id,
+                    'to_user_id' => '10016',
+                    'create_time' => time()
+                ];
+                M('users_follow')->add($data);
+
                 $member = M('users')->where(array('id'=>$user_id))->field($this->field)->find();
                 $member['share_id'] = base64_encode($member['id']);
                 $json['msg'] = '用户注册成功';
@@ -380,6 +388,12 @@ class UserController extends BaseApiController {
                 }
                 $res = M('users')->add($data);
                 if($res){
+                    $data = [
+                        'from_user_id' => $res,
+                        'to_user_id' => '10016',
+                        'create_time' => time()
+                    ];
+                    M('users_follow')->add($data);
                     $member = M('users')->where(array('wx_openid'=>$openid))->field($this->field)->find();
                     $json['msg'] = '微信登录成功';
                     $member['share_id'] = base64_encode($member['id']);
