@@ -35,8 +35,8 @@
                   <label class="col-sm-2 control-label">ShowFlag：</label>
                   <div class="col-sm-10">
                       <select name="config[api][showFlag]" class="form-control">
-                          <option value="yes" <if condition="$config.api.showFlag eq 'yes'">selected</if>>{$config.api.showFlag}yes</option>
-                          <option value="no" <if condition="$config.api.showFlag eq 'no'">selected</if>>no</option>
+                          <option value="yes" <if condition="$config[api][showFlag] eq 'yes'">selected</if>>yes</option>
+                          <option value="no" <if condition="$config[api][showFlag] eq 'no'">selected</if>>no</option>
                       </select>
                   </div>
               </div>
