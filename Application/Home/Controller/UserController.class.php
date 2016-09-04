@@ -958,4 +958,12 @@ class UserController extends BaseApiController {
         $this->ajaxReturn($json);
     }
 
+    /**
+     * 用户申请提现
+     */
+    public function withdrawal(){
+        $json = $this->simpleJson();
+        do{}while(false);
+        $this->ajaxReturn($json);
+    }
 }
