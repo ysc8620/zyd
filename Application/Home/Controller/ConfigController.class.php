@@ -9,11 +9,15 @@ class ConfigController extends BaseApiController {
     public function init(){
         $json = $this->simpleJson();
         $json['data'] = array();
+
+        $config = array();
+        if(file_exists(APP_PATH .'/Runtime/Conf/config.php')){
+            $config = include(APP_PATH .'/Runtime/Conf/config.php');
+        }
+
         do{
             //
-            $json['data']['share_url'] = 'http://api2.zydzuqiu.com/response/reg.html?share_id=';
-            $json['data']['test_user'] = 10001;
-            $json['data']['showflag'] = "yes";
+            $json['data'] = $config['api'];
         }while(false);
         $this->ajaxReturn($json);
     }
