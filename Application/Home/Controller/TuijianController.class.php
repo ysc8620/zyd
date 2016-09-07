@@ -381,10 +381,6 @@ class TuijianController extends BaseApiController {
                 M('match')->where(array('match_id'=>$data['match_id']))->setInc('total_tuijian',1);
                 // 更新用户发布总数
                 M('users')->where(array('id'=>$data['user_id']))->setInc('total_send_info',1);
-                // total_month_tuijian
-                $time = time()-2592000;
-                $total_month_tuijian = M('tuijian')->where(array('user_id'=>$user_id,'create_time'=>array('gt',$time)))->count();
-                M('users')->where(array('id'=>$data['user_id']))->save(array('total_month_tuijian'=>$total_month_tuijian));
 
                 // 用户关注该比赛 `user_id`, `match_id`
                 $follow = M('match_follow')->where(array('user_id'=>$user_id, 'match_id'=>$data['match_id']))->field('id')->find();
