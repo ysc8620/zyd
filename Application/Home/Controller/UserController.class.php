@@ -32,7 +32,7 @@ class UserController extends BaseApiController {
         unset($member['zoudi_win_total']);
         unset($member['zoudi_loss_total']);
         $member['total_rate'] = number_format($member['total_rate']*100,2,'.','');
-        if($member['last_time'] < time()-1800){
+        if($member['last_time'] < time()-600){
             $win = M('tuijian')->where(['is_count'=>1, 'status'=>['in',[1,3]], 'create_time'=>['gt', time()-2592000]])->count();
             $loss = M('tuijian')->where(['is_count'=>1, 'status'=>['in',[2,4]], 'create_time'=>['gt', time()-2592000]])->count();
             $total = $win + $loss;
