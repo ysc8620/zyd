@@ -34,40 +34,69 @@
               <div class="form-group">
                   <label class="col-sm-2 control-label">ShowFlag：</label>
                   <div class="col-sm-10">
-                      <select name="config[api][showFlag]" class="form-control">
-                          <option value="yes" <if condition="$config[api][showFlag] eq 'yes'">selected</if>>yes</option>
-                          <option value="no" <if condition="$config[api][showFlag] eq 'no'">selected</if>>no</option>
+                      <select name="config[api][showflag]" class="form-control">
+                          <option value="yes" <if condition="$config[api][showflag] eq 'yes'">selected</if>>yes</option>
+                          <option value="no" <if condition="$config[api][showflag] eq 'no'">selected</if>>no</option>
                       </select>
                   </div>
               </div>
               <div class="hr-line-dashed"></div>
               <div class="form-group">
-                  <label class="col-sm-2 control-label">Test User：</label>
+                  <label class="col-sm-2 control-label">测试用户：</label>
                   <div class="col-sm-10">
                       <input name="config[api][test_user]" class="form-control"  value="{$config.api.test_user}"/>
                   </div>
               </div>
               <div class="hr-line-dashed"></div>
               <div class="form-group">
-                  <label class="col-sm-2 control-label">Share Url：</label>
+                  <label class="col-sm-2 control-label">分享链接：</label>
                   <div class="col-sm-10">
                       <input name="config[api][share_url]" class="form-control"  value="{$config.api.share_url}"/>
                   </div>
               </div>
               <div class="hr-line-dashed"></div>
               <div class="form-group">
-                  <label class="col-sm-2 control-label">Android Version：</label>
-                  <div class="col-sm-10">
-                      <input name="config[api][android_version]" class="form-control"  value="{$config.api.android_version}"/>
-                  </div>
+              <label class="col-sm-2 control-label">安卓版本：</label>
+              <div class="col-sm-10">
+                  <input name="config[api][android_version]" class="form-control"  value="{$config.api.android_version}"/>
               </div>
+          </div>
               <div class="hr-line-dashed"></div>
               <div class="form-group">
-                  <label class="col-sm-2 control-label">Android Download URL：</label>
+                  <label class="col-sm-2 control-label">安卓链接：</label>
                   <div class="col-sm-10">
                       <input name="config[api][android_down_url]" class="form-control"  value="{$config.api.android_down_url}"/>
                   </div>
               </div>
+              <div class="hr-line-dashed"></div>
+              <div class="form-group">
+                  <label class="col-sm-2 control-label">安卓更新说明：</label>
+                  <div class="col-sm-10">
+                      <textarea name="config[api][android_remark]" class="form-control" >{$config.api.android_remark}</textarea>
+                  </div>
+              </div>
+              <div class="hr-line-dashed"></div>
+              <div class="form-group">
+                  <label class="col-sm-2 control-label">iOS版本：</label>
+                  <div class="col-sm-10">
+                      <input name="config[api][ios_version]" class="form-control"  value="{$config.api.ios_version}"/>
+                  </div>
+              </div>
+              <div class="hr-line-dashed"></div>
+              <div class="form-group">
+                  <label class="col-sm-2 control-label">iOS链接：</label>
+                  <div class="col-sm-10">
+                      <input name="config[api][ios_down_url]" class="form-control"  value="{$config.api.ios_down_url}"/>
+                  </div>
+              </div>
+              <div class="hr-line-dashed"></div>
+              <div class="form-group">
+                  <label class="col-sm-2 control-label">iOS更新说明：</label>
+                  <div class="col-sm-10">
+                      <textarea name="config[api][ios_remark]" class="form-control">{$config.api.ios_remark}</textarea>
+                  </div>
+                  </div>
+              
               <div class="hr-line-dashed"></div>
               <div class="form-group">
               <div class="col-sm-4 col-sm-offset-2">

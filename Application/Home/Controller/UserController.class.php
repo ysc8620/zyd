@@ -44,8 +44,6 @@ class UserController extends BaseApiController {
             M('users')->where(['id'=>$member['id']])->save(['total_month_rate'=>$member['total_month_rate'],'total_month_tuijian'=>$total_month_tuijian,'last_time'=>time()]);
         }
 
-
-
         $member['before_match_rate'] = number_format($member['before_match_rate']*100,2,'.','');
         $member['grounder_rate'] = number_format($member['grounder_rate']*100,2,'.','');
 
