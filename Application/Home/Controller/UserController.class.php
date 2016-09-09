@@ -142,6 +142,10 @@ class UserController extends BaseApiController {
                     'create_time' => time()
                 ];
                 M('users_follow')->add($data);
+                // 增加用户收藏总数
+                M('users')->where(array('id'=>$user_id))->setInc('total_collect_user', 1);
+                // 增加用户粉丝总数
+                M('users')->where(array('id'=>'10016'))->setInc('total_follow_user', 1);
 
                 $member = M('users')->where(array('id'=>$user_id))->field($this->field)->find();
                 $member['share_id'] = base64_encode($member['id']);
@@ -395,14 +399,19 @@ class UserController extends BaseApiController {
                     $data['share_user_id'] = $share_user_id;
 
                 }
-                $res = M('users')->add($data);
-                if($res){
+                $user_id = M('users')->add($data);
+                if($user_id){
                     $data = [
-                        'from_user_id' => $res,
+                        'from_user_id' => $user_id,
                         'to_user_id' => '10016',
                         'create_time' => time()
                     ];
                     M('users_follow')->add($data);
+                    // 增加用户收藏总数
+                    M('users')->where(array('id'=>$user_id))->setInc('total_collect_user', 1);
+                    // 增加用户粉丝总数
+                    M('users')->where(array('id'=>'10016'))->setInc('total_follow_user', 1);
+
                     $member = M('users')->where(array('wx_openid'=>$openid))->field($this->field)->find();
                     $json['msg'] = '微信登录成功';
                     $member['share_id'] = base64_encode($member['id']);
