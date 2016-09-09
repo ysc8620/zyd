@@ -1,6 +1,7 @@
 <?php	return array (
    // 'DB_DEPLOY_TYPE'=> true,
     'MONGO_HOST' => 'localhost',
+    'DB_CHARSET'=> 'utf8mb4',
     'MONGO_USER' => 'root',
     'MONGO_NAME' => 'zyd',
     'MONGO_PWD'  => 'LEsc123456',
