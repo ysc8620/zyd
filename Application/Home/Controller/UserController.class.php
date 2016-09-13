@@ -709,11 +709,11 @@ class UserController extends BaseApiController {
             $page = I('request.p',1,'intval');
             $type = I('request.type',1,'intval'); // 专家类型： 1 按30天胜率， 2，按关注数， 3, 我关注的
             if($type == 1){
-                $total = M('users')->where("is_expert=1 AND status = 1")->count();
+                $total = M('users')->where("status = 1")->count();
                 $Page = new \Think\Page($total, $limit); // 实例化分页类 传入总记录数和每页显示的记录数(25)
                 $Page->show();
 
-                $list = M('users')->where("is_expert=1 AND status = 1")
+                $list = M('users')->where("status = 1")
                     ->field($this->field)
                     ->limit($Page->firstRow . ',' . $Page->listRows)->order("total_month_rate DESC, total_rate DESC")->select();
 
@@ -738,11 +738,11 @@ class UserController extends BaseApiController {
                     'type' => $type
                 ];
             }elseif($type == 2){
-                $total = M('users')->where("is_expert=1 AND status = 1")->count();
+                $total = M('users')->where("status = 1")->count();
                 $Page = new \Think\Page($total, $limit); // 实例化分页类 传入总记录数和每页显示的记录数(25)
                 $Page->show();
 
-                $list = M('users')->where("is_expert=1 AND status = 1")
+                $list = M('users')->where(" status = 1")
                     ->field($this->field)
                     ->limit($Page->firstRow . ',' . $Page->listRows)->order("total_follow_user DESC,total_rate DESC")->select();
                 foreach($list as $i=>$item){
@@ -767,11 +767,11 @@ class UserController extends BaseApiController {
             }elseif($type == 3){
                 $this->check_login();
 
-                $total = M()->table(C('DB_PREFIX').'users as u, '.C('DB_PREFIX').'users_follow as uf')->where("u.is_expert=1 AND u.status = 1 AND uf.from_user_id=$user_id AND u.id = uf.from_user_id")->count();
+                $total = M()->table(C('DB_PREFIX').'users as u, '.C('DB_PREFIX').'users_follow as uf')->where("u.status = 1 AND uf.from_user_id=$user_id AND u.id = uf.from_user_id")->count();
                 $Page = new \Think\Page($total, $limit); // 实例化分页类 传入总记录数和每页显示的记录数(25)
                 $Page->show();
 
-                $list = M()->table(C('DB_PREFIX').'users as u, '.C('DB_PREFIX').'users_follow as uf')->where("u.is_expert=1 AND u.status = 1 AND uf.from_user_id=$user_id AND u.id = uf.from_user_id")
+                $list = M()->table(C('DB_PREFIX').'users as u, '.C('DB_PREFIX').'users_follow as uf')->where("u.status = 1 AND uf.from_user_id=$user_id AND u.id = uf.from_user_id")
                     ->field($this->getField('u'))
                     ->limit($Page->firstRow . ',' . $Page->listRows)->order("uf.create_time DESC")->select();
 
