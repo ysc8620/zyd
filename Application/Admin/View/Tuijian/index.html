@@ -91,7 +91,8 @@
                                             <elseif condition="$item[status] eq 3" /><font color="blue">赢半</font><elseif condition="$item[status] eq 4" /><font color="#a52a2a" >输半</font><elseif condition="$item[status] eq 5" /><font color="#5f9ea0" >走</font>
                                             <else/>取消</if></td>
                                         <td class="center">
-                                            <a href="{:U('tuijian/edit', ['id' => $item['id']])}"><i class="fa fa-check text-navy"></i>编辑</a>
+                                            <a href="{:U('tuijian/edit', ['id' => $item['id']])}"><i class="fa fa-check text-navy"></i>编辑</a> |
+                                            <a href="{:U('tuijian/del', ['id' => $item['id']])}" onclick="return confirm('您确定要删除操作吗？')"><i class="fa fa-check text-navy"></i>删除</a>
                                         </td>
                                     </tr>
                                 </volist>
