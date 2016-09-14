@@ -22,7 +22,7 @@ class ConfigController extends BaseApiController {
                 $data['showflag'] = 'no';
             }
             //
-            $json['data'] = $config['api'];
+            $json['data'] = $data;
         }while(false);
         $this->ajaxReturn($json);
     }
