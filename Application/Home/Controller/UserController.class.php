@@ -132,6 +132,7 @@ class UserController extends BaseApiController {
             $user['register_time'] = time();
             $user['update_time'] = time();
             $user['ssid'] = get_login_ssid();
+            $user['from_client']=json_encode($this->header);
 
             $user_id = M('users')->add($user);
             if($user_id){
@@ -399,6 +400,9 @@ class UserController extends BaseApiController {
                     $data['share_user_id'] = $share_user_id;
 
                 }
+
+                $data['from_client']=json_encode($this->header);
+
                 $user_id = M('users')->add($data);
                 if($user_id){
                     $data = [

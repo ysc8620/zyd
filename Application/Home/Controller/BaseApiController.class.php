@@ -48,6 +48,11 @@ class BaseApiController extends BaseController {
             $this->ssid = $user_ssid;
             if($user_ssid){
                 $user = M('users')->where(array('ssid'=>$user_ssid))->find();
+                if($user){
+                    if(empty($user['from_client'])){
+                        M('users')->where(['id'=>$user['id']])->save(['from_client'=>json_encode($this->header)]);
+                    }
+                }
                 if($user && $user['ssid'] == $user_ssid){
                     $this->ssid = $user_ssid;
                     $this->user = $user;
