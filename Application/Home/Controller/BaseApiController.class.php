@@ -11,6 +11,7 @@ class BaseApiController extends BaseController {
     public static $mongo = null;
     public $user = [];
     public $ssid = '';
+    public $header = [];
 
     /**
      * 初始化操作
@@ -30,6 +31,7 @@ class BaseApiController extends BaseController {
             }
 
             $header['appsecret'] = C('app')[$appid];
+            $this->header = $header;
 
             if(strtolower($sign) != $this->sign($header)){
                 $json = $this->simpleJson();
