@@ -17,9 +17,8 @@ class ConfigController extends BaseApiController {
 
         do{
             $data = $config['api'];
-            if($this->header['appversion'] == '1.0.3'){
-                $data['showflag'] = 'yes';
-            }else{
+            $data['showflag'] = 'yes';
+            if($this->header['appversion'] == '1.0.2'){
                 $data['showflag'] = 'no';
             }
             //
