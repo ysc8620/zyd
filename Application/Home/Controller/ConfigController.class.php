@@ -18,7 +18,7 @@ class ConfigController extends BaseApiController {
         do{
             $data = $config['api'];
             $data['showflag'] = 'yes';
-            if($this->header['appversion'] == '1.0.2'){
+            if($this->header['appversion'] == '1.0.2' || $this->header['appversion'] == 'ZYDfax iOS Client/1.0.2'){
                 $data['showflag'] = 'no';
             }
             //
