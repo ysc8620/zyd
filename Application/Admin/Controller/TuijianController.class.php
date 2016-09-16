@@ -59,4 +59,12 @@ class TuijianController extends BaseController {
         $this->assign('page', $show);// 赋值分页输出
         $this->display();
     }
+
+    public function del(){
+        $id = I('request.id',0,'intval');
+        if($id){
+            M('tuijian')->where(['id'=>$id])->delete();
+        }
+        $this->success('删除成功');
+    }
 }

@@ -11,6 +11,7 @@ class BaseApiController extends BaseController {
     public static $mongo = null;
     public $user = [];
     public $ssid = '';
+    public $header = [];
 
     /**
      * 初始化操作
@@ -30,6 +31,7 @@ class BaseApiController extends BaseController {
             }
 
             $header['appsecret'] = C('app')[$appid];
+            $this->header = $header;
 
             if(strtolower($sign) != $this->sign($header)){
                 $json = $this->simpleJson();
@@ -46,6 +48,11 @@ class BaseApiController extends BaseController {
             $this->ssid = $user_ssid;
             if($user_ssid){
                 $user = M('users')->where(array('ssid'=>$user_ssid))->find();
+                if($user){
+                    if(empty($user['from_client'])){
+                        M('users')->where(['id'=>$user['id']])->save(['from_client'=>json_encode($this->header)]);
+                    }
+                }
                 if($user && $user['ssid'] == $user_ssid){
                     $this->ssid = $user_ssid;
                     $this->user = $user;

@@ -31,6 +31,7 @@ class UserController extends BaseApiController {
         unset($member['loss_total']);
         unset($member['zoudi_win_total']);
         unset($member['zoudi_loss_total']);
+        unset($member['from_client']);
         $member['total_rate'] = number_format($member['total_rate']*100,2,'.','');
         if($member['last_time'] < time()-600){
             $win = M('tuijian')->where(['user_id'=>$member['id'],'is_count'=>1, 'status'=>['in',[1,3]], 'create_time'=>['gt', time()-2592000]])->count();
@@ -132,6 +133,7 @@ class UserController extends BaseApiController {
             $user['register_time'] = time();
             $user['update_time'] = time();
             $user['ssid'] = get_login_ssid();
+            $user['from_client']=json_encode($this->header);
 
             $user_id = M('users')->add($user);
             if($user_id){
@@ -399,6 +401,9 @@ class UserController extends BaseApiController {
                     $data['share_user_id'] = $share_user_id;
 
                 }
+
+                $data['from_client']=json_encode($this->header);
+
                 $user_id = M('users')->add($data);
                 if($user_id){
                     $data = [
