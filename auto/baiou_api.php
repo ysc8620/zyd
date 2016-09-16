@@ -32,6 +32,9 @@ do{
         ];
         foreach($item['odds']['o'] as $odds){
             $row = explode(',', $odds);
+            if(!in_array($row[0], [3,24,31,8])){
+                continue;
+            }
             $info1= [
                 'company_id' => getValue($row[0]),
                 'company_name' => getValue($row[1]),

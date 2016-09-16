@@ -22,7 +22,9 @@ do{
     $data = json_decode(json_encode($obj), true);
 
     foreach($data['match'] as $match){
-
+        if(!in_array($match['CompanyID'], [3,24,31,8])){
+            continue;
+        }
             $info = [
                 'schedule_id' => $match['scheduleID'],
                 'company_id' => $match['CompanyID'],

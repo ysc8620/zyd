@@ -21,6 +21,9 @@ do{
     foreach($list['h'] as $zoudi){
         $item = explode(',',$zoudi);
         if(count($item) == 13){
+            if(!in_array($item[8], [3,24,31,8])){
+                continue;
+            }
             $data = [
                 'zoudi_id' => $item[0],
                 'match_id' => $item[1],

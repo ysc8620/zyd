@@ -66,6 +66,9 @@ do{
         $info = explode(',', $asia);
         $match_id = $info[0];
         if(empty($match_id)){continue;}
+        if(!in_array($info[1], [3,24,31,8])){
+            continue;
+        }
         $data = [
             'match_id' => intval($info[0]),
             'company_id' => intval($info[1]),
@@ -95,6 +98,9 @@ do{
         $info = explode(',', $oupei);
         $match_id = $info[0];
         if(empty($match_id)){continue;}
+        if(!in_array($info[1], [3,24,31,8])){
+            continue;
+        }
         $data = [
             'match_id' => intval($info[0]),
             'company_id' => intval($info[1]),
@@ -121,6 +127,9 @@ do{
         $info = explode(',', $daxiaoqiu);
         $match_id = $info[0];
         if(empty($match_id)){continue;}
+        if(!in_array($info[1], [3,24,31,8])){
+            continue;
+        }
         $data = [
             'match_id' => intval($info[0]),
             'company_id' => intval($info[1]),
@@ -147,6 +156,9 @@ do{
         $info = explode(',', $half);
         $match_id = $info[0];
         if(empty($match_id)){continue;}
+        if(!in_array($info[1], [3,24,31,8])){
+            continue;
+        }
         $data = [
             'match_id' => intval($info[0]),
             'company_id' => intval($info[1]),
@@ -175,6 +187,9 @@ do{
         $info = explode(',', $half_daxiaoqiu);
         $match_id = $info[0];
         if(empty($match_id)){continue;}
+        if(!in_array($info[1], [3,24,31,8])){
+            continue;
+        }
         $data = [
             'match_id' => intval($info[0]),
             'company_id' => intval($info[1]),

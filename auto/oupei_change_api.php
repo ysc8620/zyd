@@ -29,6 +29,10 @@ do{
             //print_r($match['odds']);
             foreach($match['odds']['o'] as $rate){
                 $item = explode(',',$rate);
+
+                if(!in_array($item[0], [3,24,31,8])){
+                    continue;
+                }
                 //`match_id`, `company_id`, `begin_home_rate`, `begin_draw_rate`, `begin_away_rate`, `change_home_rate`,
                 // `change_draw_rate`, `change_away_rate`, `change_date`, `update_time`
                 $data = [
