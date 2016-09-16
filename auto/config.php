@@ -10,7 +10,7 @@
 // +----------------------------------------------------------------------
 
 // 应用入口文件
-set_time_limit(0);
+set_time_limit(300);
 ini_set('memory_limit','1024M');
 header("Content-type:text/html;charset=utf-8");
 global $mongo;
