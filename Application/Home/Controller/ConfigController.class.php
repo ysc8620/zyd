@@ -19,7 +19,7 @@ class ConfigController extends BaseApiController {
             $data = $config['api'];
             $data['showflag'] = 'yes';
             $showflags = $data['showflags'];
-            unset($data['showflags']);
+            //unset($data['showflags']);
             $showflags_list = explode(',', $showflags);
             foreach($showflags_list as $i=>$item){
                 $showflags_list[$i] = trim($item);
