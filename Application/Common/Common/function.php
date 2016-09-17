@@ -139,7 +139,7 @@ function getNickName($nickname){
 
 function Getzimu($str)
 {
-    $str= iconv("UTF-8","gb2312", $str);//如果程序是gbk的，此行就要注释掉
+    $str= iconv("UTF-8","gb2312//IGNORE", $str);//如果程序是gbk的，此行就要注释掉
     if (preg_match("/^[\x7f-\xff]/", $str))
     {
         $fchar=ord($str{0});
