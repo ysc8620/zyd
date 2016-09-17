@@ -136,7 +136,10 @@ class ResponseController extends BaseController {
             }
             if($json['status'] == 100){
                 M('sms_log')->add($data);
-                $res = send_sms($mobile, $data['log']);
+                if($data['log']){
+                    $res = send_sms($mobile, $data['log']);
+                }
+
                 $json['data'] = [
                     'mobile' => $mobile,
                     'res' => $res

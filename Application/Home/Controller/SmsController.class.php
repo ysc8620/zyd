@@ -37,20 +37,23 @@ class SmsController extends BaseApiController {
             switch($type){
                 // 注册【章鱼帝】您的验证码是
                 case 1:
-                    $data['log'] = "【章鱼帝】您的验证码是{$data['msg']}";
+
                     $member = M('users')->where(array('mobile'=>$mobile))->find();
                     if($member){
                         $json['status'] = 111;
                         $json['msg'] = '该手机号已被注册';
-                        break;
+                        $this->ajaxReturn($json);
+                        die();
                     }
+                    $data['log'] = "【章鱼帝】您的验证码是{$data['msg']}";
                     break;
                 case 2:
                     $member = M('users')->where(array('mobile'=>$mobile))->find();
                     if(!$member){
                         $json['status'] = 111;
                         $json['msg'] = '没找到用户信息';
-                        break;
+                        $this->ajaxReturn($json);
+                        die();
                     }
                     $data['log'] = "【章鱼帝】您的验证码是{$data['msg']}";
                     break;
@@ -59,7 +62,8 @@ class SmsController extends BaseApiController {
                     if(!$member){
                         $json['status'] = 111;
                         $json['msg'] = '没找到用户信息';
-                        break;
+                        $this->ajaxReturn($json);
+                        die();
                     }
                     $data['log'] = "【章鱼帝】您的验证码是{$data['msg']}";
                     break;
@@ -67,8 +71,12 @@ class SmsController extends BaseApiController {
                     $data['log'] = "【章鱼帝】您的验证码是{$data['msg']}";
                     break;
             }
-            M('sms_log')->add($data);
-            $res = send_sms($mobile, $data['log']);
+
+            if($data['log']){
+                M('sms_log')->add($data);
+                $res = send_sms($mobile, $data['log']);
+            }
+
             $json['data'] = [
                 'code' => $data['msg'],
                 'send_time' => $data['send_time'],
