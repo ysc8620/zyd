@@ -146,33 +146,33 @@ function Getzimu($str)
         if($fchar>=ord("A") and $fchar<=ord("z") )return strtoupper($str{0});
         $a = $str;
         $val=ord($a{0})*256+ord($a{1})-65536;
-        if($val>=-20319 and $val<=-20284)return "A";
-        if($val>=-20283 and $val<=-19776)return "B";
-        if($val>=-19775 and $val<=-19219)return "C";
-        if($val>=-19218 and $val<=-18711)return "D";
-        if($val>=-18710 and $val<=-18527)return "E";
-        if($val>=-18526 and $val<=-18240)return "F";
-        if($val>=-18239 and $val<=-17923)return "G";
-        if($val>=-17922 and $val<=-17418)return "H";
-        if($val>=-17417 and $val<=-16475)return "J";
-        if($val>=-16474 and $val<=-16213)return "K";
-        if($val>=-16212 and $val<=-15641)return "L";
-        if($val>=-15640 and $val<=-15166)return "M";
-        if($val>=-15165 and $val<=-14923)return "N";
-        if($val>=-14922 and $val<=-14915)return "O";
-        if($val>=-14914 and $val<=-14631)return "P";
-        if($val>=-14630 and $val<=-14150)return "Q";
-        if($val>=-14149 and $val<=-14091)return "R";
-        if($val>=-14090 and $val<=-13319)return "S";
-        if($val>=-13318 and $val<=-12839)return "T";
-        if($val>=-12838 and $val<=-12557)return "W";
-        if($val>=-12556 and $val<=-11848)return "X";
-        if($val>=-11847 and $val<=-11056)return "Y";
-        if($val>=-11055 and $val<=-10247)return "Z";
+        if($val>=-20319 and $val<=-20284){return "A";}
+        elseif($val>=-20283 and $val<=-19776){return "B";}
+        elseif($val>=-19775 and $val<=-19219){return "C";}
+        elseif($val>=-19218 and $val<=-18711){return "D";}
+        elseif($val>=-18710 and $val<=-18527){return "E";}
+        elseif($val>=-18526 and $val<=-18240){return "F";}
+        elseif($val>=-18239 and $val<=-17923){return "G";}
+        elseif($val>=-17922 and $val<=-17418){return "H";}
+        elseif($val>=-17417 and $val<=-16475){return "J";}
+        elseif($val>=-16474 and $val<=-16213){return "K";}
+        elseif($val>=-16212 and $val<=-15641){return "L";}
+        elseif($val>=-15640 and $val<=-15166){return "M";}
+        elseif($val>=-15165 and $val<=-14923){return "N";}
+        elseif($val>=-14922 and $val<=-14915){return "O";}
+        elseif($val>=-14914 and $val<=-14631){return "P";}
+        elseif($val>=-14630 and $val<=-14150){return "Q";}
+        elseif($val>=-14149 and $val<=-14091){return "R";}
+        elseif($val>=-14090 and $val<=-13319){return "S";}
+        elseif($val>=-13318 and $val<=-12839){return "T";}
+        elseif($val>=-12838 and $val<=-12557){return "W";}
+        elseif($val>=-12556 and $val<=-11848){return "X";}
+        elseif($val>=-11847 and $val<=-11056){return "Y";}
+        elseif($val>=-11055 and $val<=-10247){return "Z";}
     }
     else
     {
-        return false;
+        return "";
     }
 }
 
