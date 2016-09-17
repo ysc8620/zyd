@@ -8,7 +8,7 @@
     'MONGO_PORT' => '27017',
 
     'DB_TYPE' => 'mysql',
-    'DB_HOST' => '127.0.0.1',
+    'DB_HOST' => '120.76.250.143',
     'DB_NAME' => 'zyd',
     'DB_USER' => 'root',
     'DB_PWD' => 'LEsc2008=',

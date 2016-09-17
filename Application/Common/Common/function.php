@@ -385,19 +385,19 @@ function get_rate($match_id, $type='',$state=''){
 
         $oupei = M('asia_oupei')->where(array('match_id'=>$match_id, 'company_id'=>3))->order('id DESC')->field("begin_home_rate, begin_draw_rate, begin_away_rate")->find();
         if($oupei){
-            $data = array_merge($data,$oupei);;
+            $data = array_merge($data,$oupei);
         }else{
             $oupei = M('asia_oupei')->where(array('match_id'=>$match_id, 'company_id'=>24))->order('id DESC')->field("begin_home_rate, begin_draw_rate, begin_away_rate")->find();
             if($oupei){
-                $data = array_merge($data,$oupei);;
+                $data = array_merge($data,$oupei);
             }else{
                 $oupei = M('asia_oupei')->where(array('match_id'=>$match_id, 'company_id'=>31))->order('id DESC')->field("begin_home_rate, begin_draw_rate, begin_away_rate")->find();
                 if($oupei){
-                    $data = array_merge($data,$oupei);;
+                    $data = array_merge($data,$oupei);
                 }else{
                     $oupei = M('asia_oupei')->where(array('match_id'=>$match_id, 'company_id'=>8))->order('id DESC')->field("begin_home_rate, begin_draw_rate, begin_away_rate")->find();
                     if($oupei){
-                        $data = array_merge($data,$oupei);;
+                        $data = array_merge($data,$oupei);
                     }
                 }
             }
