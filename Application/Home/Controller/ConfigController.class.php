@@ -19,13 +19,14 @@ class ConfigController extends BaseApiController {
             $data = $config['api'];
             $data['showflag'] = 'yes';
             $showflags = $data['showflags'];
-            //unset($data['showflags']);
+            unset($data['showflags']);
             $showflags_list = explode(',', $showflags);
             foreach($showflags_list as $i=>$item){
                 $showflags_list[$i] = trim($item);
             }
             //  == '1.0.2'
             //|| $this->header['appversion'] == 'ZYDfax iOS Client/1.0.2'
+            $data['list'] = $showflags_list;
             if(in_array($this->header['appversion'], $showflags_list)){
                 $data['showflag'] = 'no';
             }
