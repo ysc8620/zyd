@@ -36,6 +36,7 @@ class ConfigController extends BaseApiController {
             if(in_array($this->header['appversion'], $showflags_list)){
                 $data['showflag'] = 'no';
             }
+            $data['header'] = $this->header;
             //
             $json['data'] = $data;
         }while(false);
