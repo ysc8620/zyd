@@ -714,11 +714,11 @@ class UserController extends BaseApiController {
             $page = I('request.p',1,'intval');
             $type = I('request.type',1,'intval'); // 专家类型： 1 按30天胜率， 2，按关注数， 3, 我关注的
             if($type == 1){
-                $total = M('users')->where("status = 1")->count();
+                $total = M('users')->where("status = 1 AND total_send_info>5")->count();
                 $Page = new \Think\Page($total, $limit); // 实例化分页类 传入总记录数和每页显示的记录数(25)
                 $Page->show();
 
-                $list = M('users')->where("status = 1")
+                $list = M('users')->where("status = 1 AND total_send_info>5")
                     ->field($this->field)
                     ->limit($Page->firstRow . ',' . $Page->listRows)->order("total_month_rate DESC, total_rate DESC")->select();
 
