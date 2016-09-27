@@ -18,6 +18,7 @@ do{
 //    global $mongo;
 //    $curr = $mongo->zyd->match;
     $date = date("Y-m-d");
+    echo $date."\r\n";
     $postStr = file_get_contents("http://interface.win007.com/zq/BF_XML.aspx?date={$date}");
     $obj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
     $data = json_decode(json_encode($obj), true);
@@ -71,6 +72,7 @@ do{
     }
 
     $date = date("Y-m-d", strtotime("+1 day"));
+    echo $date."\r\n";
     $postStr = file_get_contents("http://interface.win007.com/zq/BF_XML.aspx?date={$date}");
     $obj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
     $data = json_decode(json_encode($obj), true);
@@ -124,6 +126,7 @@ do{
     }
 
     $date = date("Y-m-d", strtotime("+2 day"));
+    echo $date."\r\n";
     $postStr = file_get_contents("http://interface.win007.com/zq/BF_XML.aspx?date={$date}");
     $obj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
     $data = json_decode(json_encode($obj), true);
@@ -178,6 +181,7 @@ do{
 
 
     $date = date("Y-m-d", strtotime("+3 day"));
+    echo $date."\r\n";
     $postStr = file_get_contents("http://interface.win007.com/zq/BF_XML.aspx?date={$date}");
     $obj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
     $data = json_decode(json_encode($obj), true);
