@@ -8,12 +8,12 @@ class BaseController extends Controller {
          * 验证登陆
          */
         if(! session('is_login')){
-            return redirect(U('login/index'));
+            return redirect(U('/admin/login/index'));
         }
 
         $this->admin = M('admin')->find(session('login_user_id'));
         if(!$this->admin){
-            return redirect(U('login/index'));
+            return redirect(U('/admin/login/index'));
         }
 
         $this->assign('admin', $this->admin);
