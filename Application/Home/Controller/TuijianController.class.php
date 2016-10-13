@@ -15,6 +15,7 @@ class TuijianController extends BaseApiController {
             $match_id = I('request.match_id', 0,'intval');
             $user_id = I('request.user_id',0,'intval');
             $limit = I('request.limit', 10, 'intval');
+            $limit = $limit<1?10:$limit;
             $p = I('request.p',1,'intval');
 
             $where = [];
