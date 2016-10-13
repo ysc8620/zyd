@@ -137,6 +137,7 @@ class TuijianController extends BaseApiController {
             $match_id = I('request.match_id', 0,'intval');
             $user_id = I('request.user_id',0,'intval');
             $limit = I('request.limit', 10, 'intval');
+            $limit = $limit<1?10:$limit;
             $p = I('request.p',1,'intval');
 
             $where = [];
@@ -700,7 +701,7 @@ class TuijianController extends BaseApiController {
             $tuijian_id = I('request.tuijian_id', 0, 'intval');
             $p = I('request.p',1,'intval');
             $limit = I('request.limit',10,'intval');
-
+            $limit = $limit<1?10:$limit;
             if (empty($tuijian_id)) {
                 $json['status'] = 110;
                 $json['msg'] = '用户不能为空';
